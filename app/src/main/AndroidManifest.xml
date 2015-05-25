@@ -28,6 +28,18 @@ package="com.glassbyte.drinktracker" >
                 android:name="android.intent.category.DEFAULT" />
         </intent-filter>
     </activity>
+
+    <activity
+        android:name=".IntroActivity"
+        android:screenOrientation="portrait"
+        android:label="@string/app_name">
+        <intent-filter>
+            <action
+                android:name="com.glassbyte.drinktracker.IntroScreen" />
+            <category
+                android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+    </activity>
 </application>
 
 </manifest>

@@ -28,7 +28,7 @@
     <color name="input_register_hint">#5e6266</color>
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
-    <color name="orange">#ff6861</color>
+    <color name="orange">#E57E00</color>
 
     <color name="transparent">#9FFFFFFF</color>
 </resources>
