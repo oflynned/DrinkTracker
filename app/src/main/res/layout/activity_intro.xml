@@ -36,8 +36,9 @@
         android:layout_gravity="center_horizontal" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical">
         <RadioButton
             android:onClick="onRadioButtonClicked"
@@ -45,7 +46,6 @@
             android:layout_height="wrap_content"
             android:text="Male"
             android:id="@+id/radioButtonMale"
-            android:layout_gravity="center_horizontal"
             android:checked="false" />
 
         <RadioButton
@@ -54,7 +54,6 @@
             android:layout_height="wrap_content"
             android:text="Female"
             android:id="@+id/radioButtonFemale"
-            android:layout_gravity="center_horizontal"
             android:checked="false" />
     </RadioGroup>
 
@@ -64,7 +63,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Weight"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:id="@+id/textView3"
         android:layout_gravity="center_horizontal" />
 
@@ -81,6 +79,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Height"
+        android:layout_marginTop="20dp"
         android:id="@+id/textView4"
         android:layout_gravity="center_horizontal" />
 
