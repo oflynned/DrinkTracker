@@ -28,7 +28,17 @@
     <color name="input_register_hint">#5e6266</color>
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
-    <color name="orange">#E57E00</color>
+
+
+    <color name="dt_orange">#E57E00</color>
+    <color name="dt_lightgreen">#A8C686</color>
+    <color name="dt_white">#F0F8EA</color>
+    <color name="dt_yellow">#F0F66E</color>
+    <color name="dt_brown">#9D9C62</color>
+    <color name="dt_greenblue">#B7F0AD</color>
+    <color name="dt_wine">#4C061D</color>
+    <color name="dt_grey">#736F4E</color>
+    <color name="dt_black">#010001</color>
 
     <color name="transparent">#9FFFFFFF</color>
 </resources>
