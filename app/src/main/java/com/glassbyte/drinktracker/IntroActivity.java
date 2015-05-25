@@ -24,11 +24,11 @@ public class IntroActivity extends ActionBarActivity {
         switch(view.getId()) {
             case R.id.radioButtonMale:
                 if (checked)
-
+                    //male
                     break;
             case R.id.radioButtonFemale:
                 if (checked)
-
+                    //female
                     break;
         }
     }
