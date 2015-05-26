@@ -9,7 +9,7 @@
 
 
     <Button
-        android:id="@+id/lineGraph"
+        android:id="@+id/LineGraph"
         android:layout_height="wrap_content"
         android:onClick="lineGraphHandler"
         android:layout_width="fill_parent"
@@ -20,21 +20,21 @@
         android:layout_height="wrap_content"
         android:onClick="barGraphHandler"
         android:layout_width="fill_parent"
-        android:text="Line Graph" />
+        android:text="Bar Graph" />
 
     <Button
         android:id="@+id/ScatterGraph"
         android:layout_height="wrap_content"
         android:onClick="scatterGraphHandler"
         android:layout_width="fill_parent"
-        android:text="Line Graph" />
+        android:text="Scatter Graph" />
 
     <Button
         android:id="@+id/PieGraph"
         android:layout_height="wrap_content"
         android:onClick="pieGraphHandler"
         android:layout_width="fill_parent"
-        android:text="Line Graph" />
+        android:text="Pie Graph" />
 
     <LinearLayout
         android:orientation="horizontal"

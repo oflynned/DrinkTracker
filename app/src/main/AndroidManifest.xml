@@ -42,11 +42,12 @@ package="com.glassbyte.drinktracker" >
     </activity>
 
     <activity
-        android:name=".GraphsActivity"
-        android:screenOrientation="portrait"
-        android:label="Drinktracker">
-        
-    </activity>
+        android:name=".GraphsActivity" />
+
+
+
+
+
 </application>
 
 </manifest>

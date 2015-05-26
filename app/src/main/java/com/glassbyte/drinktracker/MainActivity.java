@@ -22,9 +22,14 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+<<<<<<< Updated upstream
         sharedPreference = new SharedPreferencesActivity();
         run = sharedPreference.getValue(getBaseContext());
         Toast.makeText(this,run,Toast.LENGTH_SHORT).show();
+=======
+        Intent intent = new Intent(getBaseContext(),GraphsActivity.class);
+        startActivity(intent);
+>>>>>>> Stashed changes
 
         if (run == "") {
             Toast.makeText(getBaseContext(),"first run being executed",Toast.LENGTH_SHORT).show();
