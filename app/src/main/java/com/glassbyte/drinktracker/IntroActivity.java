@@ -56,9 +56,6 @@ public class IntroActivity extends ActionBarActivity{
                 }
 
                 else {
-
-                    String gender = mGender;
-
                     //height
                     String height = mHeight.getText().toString();
                     int fHeight = Integer.parseInt(height);
@@ -67,12 +64,18 @@ public class IntroActivity extends ActionBarActivity{
                     String weight = mWeight.getText().toString();
                     int fWeight = Integer.parseInt(weight);
 
+                    String gender = mGender;
                     String run = "true";
 
                     sharedPreference.save(getBaseContext(), run);
-                    //sharedPreference.save(getBaseContext(), gender);
-                    //sharedPreference.save(getBaseContext(), weight);
-                    //sharedPreference.save(getBaseContext(), height);
+
+                    DatabaseOperations DO = new DatabaseOperations(getBaseContext()); //pass context to class
+
+                    //insert this data into the table
+                    DO.putInfo(DO,fHeight,fWeight,gender);
+                    Toast.makeText(getBaseContext(),"Details successfully inputted",Toast.LENGTH_LONG).show();
+                    DO.close();
+                    finish(); //end activity
 
                     Toast.makeText(getBaseContext(), "SharedPreference saved: " + run, Toast.LENGTH_SHORT).show();
 

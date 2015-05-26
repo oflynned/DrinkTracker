@@ -837,7 +837,8 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
         lcrud.setId(my_var);
         lcrud.addView(crud_dropdown,paramcrudtext);
 
-        RelativeLayout.LayoutParams rlcrudparam = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams rlcrudparam = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
         rlcrudparam.addRule(RelativeLayout.BELOW,lastrid);
 
         lp.addView(lcrud, rlcrudparam);
