@@ -70,9 +70,9 @@ public class IntroActivity extends ActionBarActivity{
                     String run = "true";
 
                     sharedPreference.save(getBaseContext(), run);
-                    sharedPreference.save(getBaseContext(), gender);
-                    sharedPreference.save(getBaseContext(), weight);
-                    sharedPreference.save(getBaseContext(), height);
+                    //sharedPreference.save(getBaseContext(), gender);
+                    //sharedPreference.save(getBaseContext(), weight);
+                    //sharedPreference.save(getBaseContext(), height);
 
                     Toast.makeText(getBaseContext(), "SharedPreference saved: " + run, Toast.LENGTH_SHORT).show();
 
