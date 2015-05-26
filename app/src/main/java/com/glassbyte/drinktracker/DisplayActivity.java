@@ -5,12 +5,14 @@ package com.glassbyte.drinktracker;
  *
  */
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Context;
 import android.content.Intent;
 
 import org.achartengine.ChartFactory;
+import org.achartengine.chart.PointStyle;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
@@ -31,9 +33,26 @@ public class DisplayActivity{
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
         dataset.addSeries(series);
 
+        XYSeriesRenderer renderer =new XYSeriesRenderer();
+        renderer.setColor(Color.RED);
+        renderer.setLineWidth(50);
+        renderer.setPointStyle(PointStyle.SQUARE);
+        renderer.setFillPoints(true);
+
+        renderer.setDisplayChartValues(true);
+        renderer.setChartValuesTextSize(60);
+
+
+
+
+
+
         XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
-        XYSeriesRenderer renderer = new XYSeriesRenderer();
+
         mRenderer.addSeriesRenderer(renderer);
+
+        mRenderer.setChartTitle("Units of Alcohol Drank");
+        
 
         Intent intent = ChartFactory.getLineChartIntent(context,dataset,mRenderer,"LINE GRAPH TITLE");
         return intent;

@@ -33,12 +33,7 @@ public class GraphsActivity extends Activity{
     public void barGraphHandler(View view){
 
     }
-    public void pieGraphHandler(View view){
 
-    }
-    public void scatterGraphHandler(View view){
-
-    }
 
 
 
