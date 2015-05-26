@@ -31,7 +31,6 @@ public class DisplayActivity{
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
         dataset.addSeries(series);
 
-
         XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
         XYSeriesRenderer renderer = new XYSeriesRenderer();
         mRenderer.addSeriesRenderer(renderer);
