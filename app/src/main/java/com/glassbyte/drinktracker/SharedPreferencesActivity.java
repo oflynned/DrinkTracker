@@ -16,13 +16,12 @@ public class SharedPreferencesActivity {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
 
-        //settings = PreferenceManager.getDefaultSharedPreferences(context);
-        settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE); //1
-        editor = settings.edit(); //2
+        settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        editor = settings.edit();
 
-        editor.putString(PREFS_KEY, text); //3
+        editor.putString(PREFS_KEY, text);
 
-        editor.apply(); //4
+        editor.apply();
     }
 
     public String getValue(Context context) {
