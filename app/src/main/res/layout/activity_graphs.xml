@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+
+
+    <Button
+        android:id="@+id/lineGraph"
+        android:layout_height="wrap_content"
+        android:onClick="lineGraphHandler"
+        android:layout_width="fill_parent"
+        android:text="Line Graph" />
+
+    <Button
+        android:id="@+id/BarGraph"
+        android:layout_height="wrap_content"
+        android:onClick="barGraphHandler"
+        android:layout_width="fill_parent"
+        android:text="Line Graph" />
+
+    <Button
+        android:id="@+id/ScatterGraph"
+        android:layout_height="wrap_content"
+        android:onClick="scatterGraphHandler"
+        android:layout_width="fill_parent"
+        android:text="Line Graph" />
+
+    <Button
+        android:id="@+id/PieGraph"
+        android:layout_height="wrap_content"
+        android:onClick="pieGraphHandler"
+        android:layout_width="fill_parent"
+        android:text="Line Graph" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"></LinearLayout>
+
+
+</LinearLayout>
+
+
+
+
