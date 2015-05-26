@@ -12,14 +12,16 @@ import android.content.Context;
 import android.content.Intent;
 
 import org.achartengine.ChartFactory;
+import org.achartengine.chart.BarChart;
 import org.achartengine.chart.PointStyle;
+import org.achartengine.model.CategorySeries;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
 public class DisplayActivity{
-
+    //Line Graph
     public Intent getIntent(Context context)
     {
         int [] x = {1,2,3,4,5,6,7,8,9,10};
@@ -41,17 +43,10 @@ public class DisplayActivity{
         }
 
 
-
-
-
-
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
         dataset.addSeries(series);
         //XYMultipleSeriesDataset dataset1 = new XYMultipleSeriesDataset();
         dataset.addSeries(series1);
-
-
-
 
 
         //Drunk level line
@@ -72,11 +67,6 @@ public class DisplayActivity{
         renderer1.setDisplayChartValues(true);
        // renderer1.setChartValuesTextSize(60);
 
-
-
-
-
-
         XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
 
         mRenderer.addSeriesRenderer(renderer);
@@ -91,6 +81,28 @@ public class DisplayActivity{
 
         Intent intent = ChartFactory.getLineChartIntent(context,dataset,mRenderer,"LINE GRAPH TITLE");
         return intent;
+    }
+    //Bar Graph
+    public Intent getIntent2(Context context)
+    {
+        int [] y2 = {30,34,45,57,77,89,100,111,123,145};
+
+        CategorySeries series = new CategorySeries("Bar Graph");
+        for(int i=0; i<y2.length;i++)
+        {
+            series.add("Bar" +(i+1),y2[i]);
+        }
+
+        XYMultipleSeriesDataset dataset2 = new XYMultipleSeriesDataset();
+        dataset2.addSeries(series.toXYSeries());
+
+        XYMultipleSeriesRenderer mRenderer1 = new XYMultipleSeriesRenderer();
+        XYSeriesRenderer renderer2= new XYSeriesRenderer();
+        mRenderer1.addSeriesRenderer(renderer2);
+
+        Intent intent1 = ChartFactory.getBarChartIntent(context,dataset2, mRenderer1, BarChart.Type.DEFAULT);
+
+        return intent1;
     }
 
 }

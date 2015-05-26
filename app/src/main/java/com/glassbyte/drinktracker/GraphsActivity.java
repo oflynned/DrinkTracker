@@ -31,6 +31,9 @@ public class GraphsActivity extends Activity{
 
     }
     public void barGraphHandler(View view){
+        DisplayActivity bar = new DisplayActivity();
+        Intent lineintent = bar.getIntent2(this);
+        startActivity(lineintent);
 
     }
 
