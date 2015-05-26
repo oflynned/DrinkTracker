@@ -14,17 +14,19 @@ import android.widget.Toast;
 
 
 public class IntroActivity extends ActionBarActivity{
+    SharedPreferencesActivity sharedPreference;
 
     RadioButton mGender;
     EditText mWeight;
     EditText mHeight;
     Button btnContinue;
-    final String firstRun = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
+        sharedPreference = new SharedPreferencesActivity();
 
         mWeight = (EditText) findViewById(R.id.weightET);
         mHeight = (EditText) findViewById(R.id.heightET);
@@ -34,9 +36,12 @@ public class IntroActivity extends ActionBarActivity{
         {
             public void onClick(View v)
             {
+                String run = "true";
 
-                Toast.makeText(getBaseContext(),"Button clicked",Toast.LENGTH_SHORT).show();
-                //Intent intent = new Intent(this,AddDrinkActivity.class);
+                sharedPreference.save(getBaseContext(),run);
+                Toast.makeText(getBaseContext(),"SharedPreference saved: " + run,Toast.LENGTH_SHORT).show();
+
+                //Intent intent = new Intent(this,MainActivity.class);
                 //startActivity(intent);
             }
         });

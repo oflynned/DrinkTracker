@@ -13,15 +13,37 @@ import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
-
-
+    private SharedPreferencesActivity sharedPreference;
+    private String run;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sharedPreference = new SharedPreferencesActivity();
+        run = sharedPreference.getValue(getBaseContext());
+        Toast.makeText(this,run,Toast.LENGTH_SHORT).show();
 
+        if (run == "") {
+            Toast.makeText(getBaseContext(),"first run being executed",Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, IntroActivity.class);
+            startActivity(intent);
+        }
+        else if (run == null) {
+            Toast.makeText(getBaseContext(),"first run being executed",Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, IntroActivity.class);
+            startActivity(intent);
+        }
+        else if (run.equals("true")){
+            Toast.makeText(getBaseContext(),"first run already executed",Toast.LENGTH_SHORT).show();
+
+            //Intent intent = new Intent(this, AddDrinkActivity.class);
+            //startActivity(intent);
+        }
     }
 
     @Override
