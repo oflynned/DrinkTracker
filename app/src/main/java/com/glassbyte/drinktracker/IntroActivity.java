@@ -1,6 +1,7 @@
 package com.glassbyte.drinktracker;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +19,7 @@ public class IntroActivity extends ActionBarActivity{
     EditText mWeight;
     EditText mHeight;
     Button btnContinue;
+    final String firstRun = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class IntroActivity extends ActionBarActivity{
 
                 Toast.makeText(getBaseContext(),"Button clicked",Toast.LENGTH_SHORT).show();
                 //Intent intent = new Intent(this,AddDrinkActivity.class);
-                //startActivity(intent);;
+                //startActivity(intent);
             }
         });
     }
