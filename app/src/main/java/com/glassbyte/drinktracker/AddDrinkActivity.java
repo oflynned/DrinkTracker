@@ -43,7 +43,13 @@ public class AddDrinkActivity extends FragmentActivity{
 
         @Override
         public Fragment getItem(int position){
-            return new PresetDrink();
+            if (position == 0) {
+                return new PresetDrink();
+            } else if (position == 1) {
+                return new ChooseDrink();
+            } else {
+                return new CustomDrink();
+            }
         }
 
         @Override
