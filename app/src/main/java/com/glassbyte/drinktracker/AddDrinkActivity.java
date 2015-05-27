@@ -24,6 +24,7 @@ public class AddDrinkActivity extends FragmentActivity{
         //Instantiate a ViewPager and a PAgerAdapter
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
     }
 
     @Override
