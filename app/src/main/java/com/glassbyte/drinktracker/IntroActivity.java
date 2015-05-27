@@ -1,5 +1,6 @@
 package com.glassbyte.drinktracker;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
@@ -72,15 +73,15 @@ public class IntroActivity extends ActionBarActivity{
                     DatabaseOperations DO = new DatabaseOperations(getBaseContext()); //pass context to class
 
                     //insert this data into the table
-                    DO.putInfo(DO,fHeight,fWeight,gender);
+                    DO.putInfo(DO, fHeight, fWeight, gender);
                     Toast.makeText(getBaseContext(),"Details successfully inputted",Toast.LENGTH_LONG).show();
                     DO.close();
                     finish(); //end activity
 
                     Toast.makeText(getBaseContext(), "SharedPreference saved: " + run, Toast.LENGTH_SHORT).show();
 
-                    //Intent intent = new Intent(this,MainActivity.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(v.getContext(), AddDrinkActivity.class);
+                    startActivity(intent);
                 }
             }
         });
