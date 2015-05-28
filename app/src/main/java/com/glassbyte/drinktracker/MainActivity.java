@@ -51,13 +51,7 @@ public class MainActivity extends Activity {
 
         }
 
-        if (run == "") {
-            Toast.makeText(getBaseContext(),"first run being executed",Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(this, IntroActivity.class);
-            startActivity(intent);
-        }
-        else if (run == null) {
+        if (run == "" || run == "true") {
             Toast.makeText(getBaseContext(),"first run being executed",Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(this, IntroActivity.class);
