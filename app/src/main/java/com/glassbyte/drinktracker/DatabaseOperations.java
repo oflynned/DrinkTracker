@@ -20,6 +20,8 @@ public class DatabaseOperations extends SQLiteOpenHelper {
                     " TEXT," +
                     TableData.TableInfo.WEIGHT +
                     " TEXT," + //data type for table
+                    TableData.TableInfo.UNITS_MEASUREMENT +
+                    " TEXT," + //data type for table
                     TableData.TableInfo.GENDER +
                     " TEXT);";
     //; ends query field within query -> ()
@@ -41,12 +43,13 @@ public class DatabaseOperations extends SQLiteOpenHelper {
     }
 
     //insert data into database
-    public void putInfo(DatabaseOperations DO, int height, int weight, String gender){
+    public void putInfo(DatabaseOperations DO, int height, int weight, String gender, String units_measurement){
         SQLiteDatabase SQ = DO.getWritableDatabase(); //writes data to database
         ContentValues CV = new ContentValues(); //create instance
         CV.put(TableData.TableInfo.HEIGHT, height); //coll 0
         CV.put(TableData.TableInfo.WEIGHT, weight); //coll 1
         CV.put(TableData.TableInfo.GENDER, gender); //coll 2
+        CV.put(TableData.TableInfo.UNITS_MEASUREMENT, units_measurement); //coll 3
         long k = SQ.insert(TableData.TableInfo.TABLE_NAME, null, CV);
         Log.d("Database operations", "1 row inserted into database");
     }

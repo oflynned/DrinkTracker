@@ -15,6 +15,7 @@ public class TableData {
         public static final String HEIGHT = "height";
         public static final String WEIGHT = "weight";
         public static final String GENDER = "gender";
+        public static final String UNITS_MEASUREMENT = "units_measurement";
         public static final String DATABASE_NAME = "setup_prefs";
         public static final String TABLE_NAME = "reg_info";
     }
