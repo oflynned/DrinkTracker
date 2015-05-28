@@ -19,6 +19,10 @@ import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+import org.achartengine.GraphicalView;
+
+
+
 
 public class DisplayActivity{
     //Line Graph
@@ -104,5 +108,54 @@ public class DisplayActivity{
 
         return intent1;
     }
+
+
+    private GraphicalView view;
+
+
+    private TimeSeries dataset = new TimeSeries("Units Drank");
+    private XYMultipleSeriesDataset mDataset = new XYMultipleSeriesDataset();
+    private XYSeriesRenderer renderer =new XYSeriesRenderer();
+    private  XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
+
+
+
+    public DisplayActivity(){
+        //add data set
+        mDataset.addSeries(dataset);
+        //customize line 1
+        renderer.setColor(Color.RED);
+        renderer.setPointStyle(PointStyle.SQUARE);
+        renderer.setFillPoints(true);
+        //enable zoom stuff
+        mRenderer.setZoomButtonsVisible(true);
+        mRenderer.setXTitle("day #");
+        mRenderer.setYTitle("alcohol in units");
+
+
+        //add a single render to multiple render
+        mRenderer.addSeriesRenderer(renderer);
+
+    }
+    public GraphicalView getView(Context context){
+
+        view = ChartFactory.getLineChartView(context, mDataset,mRenderer);
+        return view;
+
+    }
+
+    public void addNewPoints(Point p){
+
+        dataset.add(p.getX(),p.getY());
+
+
+    }
+
+
+
+
+
+
+
 
 }
