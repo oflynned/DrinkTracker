@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends Activity {
@@ -29,12 +33,23 @@ public class MainActivity extends Activity {
         //retrieve data from sharedreferences for initial run setup
         sharedPreference = new SharedPreferencesActivity();
         run = sharedPreference.getValue(getBaseContext());
+        DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getBaseContext());
+        Boolean exists;
+        Cursor CR = DOU.getInfo(DOU);
 
         //sample database logging for units
-        DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getBaseContext());
-        Toast.makeText(getBaseContext(),"DOU successfully inputted",Toast.LENGTH_LONG).show();
-        DOU.putInfo(DOU, 5, DOU.getDateTime(), DOU.getDateTime(), DOU.getDateTime());
-        Toast.makeText(getBaseContext(),"Time inputted: " + DOU.getDateTime(),Toast.LENGTH_SHORT).show();
+        for(int i = 0; i < 30; i++) {
+                CR.moveToLast();
+                DOU.putInfo(
+                        DOU,
+                        i, //units of alcohol
+                        DOU.getDateTime(), //start time
+                        DOU.getDateTime(), //end time
+                        "1" //duration
+                );
+                CR.moveToNext();
+
+        }
 
         if (run == "") {
             Toast.makeText(getBaseContext(),"first run being executed",Toast.LENGTH_SHORT).show();

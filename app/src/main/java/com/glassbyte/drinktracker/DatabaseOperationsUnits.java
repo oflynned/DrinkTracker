@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class DatabaseOperationsUnits extends SQLiteOpenHelper {
     public static final int database_version = 2;
@@ -120,5 +121,10 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.UK);
         Date date = new Date();
         return dateFormat.format(date);
+    }
+
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 }
