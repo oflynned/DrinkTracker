@@ -26,9 +26,15 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //retrieve data from sharedreferences for initial run setup
         sharedPreference = new SharedPreferencesActivity();
         run = sharedPreference.getValue(getBaseContext());
-        Toast.makeText(this,run,Toast.LENGTH_SHORT).show();
+
+        //sample database logging for units
+        DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getBaseContext());
+        Toast.makeText(getBaseContext(),"DOU successfully inputted",Toast.LENGTH_LONG).show();
+        DOU.putInfo(DOU, 5, DOU.getDateTime(), DOU.getDateTime(), DOU.getDateTime());
+        Toast.makeText(getBaseContext(),"Time inputted: " + DOU.getDateTime(),Toast.LENGTH_SHORT).show();
 
         if (run == "") {
             Toast.makeText(getBaseContext(),"first run being executed",Toast.LENGTH_SHORT).show();

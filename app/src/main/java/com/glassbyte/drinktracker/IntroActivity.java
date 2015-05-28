@@ -14,6 +14,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.Random;
+
 
 public class IntroActivity extends ActionBarActivity{
     SharedPreferencesActivity sharedPreference;
