@@ -50,18 +50,7 @@ public class GraphsActivity extends Activity{
         thread.start();
 
     }
-   /* public void lineGraphHandler(View view) {
-        DisplayActivity line =new DisplayActivity();
-        Intent lineIntent = line.getIntent(this);
-        startActivity(lineIntent);
 
-    }
-    public void barGraphHandler(View view){
-        DisplayActivity bar = new DisplayActivity();
-        Intent lineintent = bar.getIntent2(this);
-        startActivity(lineintent);
-
-    }*/
     @Override
     protected void onStart(){
         super.onStart();
