@@ -39,13 +39,17 @@ public class DisplayActivity{
         mDataset.addSeries(dataset);
         //customize line 1
         renderer.setColor(Color.RED);
-        renderer.setPointStyle(PointStyle.CIRCLE);
+        renderer.setPointStyle(PointStyle.SQUARE);
+        renderer.setGradientEnabled(true);
         renderer.setFillPoints(true);
         renderer.setDisplayChartValues(true);
         renderer.setDisplayBoundingPoints(true);
         renderer.setPointStrokeWidth(80);
-        renderer.setLineWidth(20);
+        renderer.setLineWidth(10);
         renderer.setChartValuesTextSize(40);
+       // renderer.setColor(Color.CYAN);
+        //renderer.setGradientStart(0.0,Color.BLACK);
+        //renderer.setGradientStop(0.0,Color.GREEN);
 
 
 
@@ -65,6 +69,8 @@ public class DisplayActivity{
         mRenderer.setYLabelsColor(0, Color.BLUE);
         mRenderer.setXLabelsColor(Color.BLUE);
 
+
+
         //add a single render to multiple render
         mRenderer.addSeriesRenderer(renderer);
 
@@ -75,6 +81,7 @@ public class DisplayActivity{
         return view;
 
     }
+
     public void addNewPoints(Point p){
         dataset.add(p.getX(),p.getY());
     }
