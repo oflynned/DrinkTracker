@@ -5,6 +5,7 @@ package com.glassbyte.drinktracker;
  *
  */
 import android.app.Activity;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -23,33 +24,9 @@ import org.achartengine.GraphicalView;
 
 
 
+
 public class DisplayActivity{
-    //Line Graph
-
-    //Bar Graph
-   /* public Intent getIntent2(Context context)
-    {
-        int [] y2 = {30,34,45,57,77,89,100,111,123,145};
-
-        CategorySeries series = new CategorySeries("Bar Graph");
-        for(int i=0; i<y2.length;i++)
-        {
-            series.add("Bar" +(i+1),y2[i]);
-        }
-
-        XYMultipleSeriesDataset dataset2 = new XYMultipleSeriesDataset();
-        dataset2.addSeries(series.toXYSeries());
-
-        XYMultipleSeriesRenderer mRenderer1 = new XYMultipleSeriesRenderer();
-        XYSeriesRenderer renderer2= new XYSeriesRenderer();
-        mRenderer1.addSeriesRenderer(renderer2);
-
-        Intent intent1 = ChartFactory.getBarChartIntent(context,dataset2, mRenderer1, BarChart.Type.DEFAULT);
-
-        return intent1;
-    }*/
-
-
+    
     private GraphicalView view;
 
     private TimeSeries dataset = new TimeSeries("Units Drank");
@@ -72,18 +49,21 @@ public class DisplayActivity{
 
 
 
-        //enable zoom stuff
+        //Customize Graph Options
         mRenderer.setZoomButtonsVisible(true);
-        mRenderer.setXTitle("day ");
-        mRenderer.setYTitle("alcohol in units");
-        mRenderer.setShowCustomTextGrid(true);
         mRenderer.setShowGridX(true);
         mRenderer.setShowGridY(true);
         mRenderer.setShowAxes(true);
+        mRenderer.setShowCustomTextGrid(true);
+        mRenderer.setXTitle("Day ");
+        mRenderer.setYTitle("Alcohol in units");
+        mRenderer.setAxesColor(Color.BLUE);
+        mRenderer.setLabelsColor(Color.BLUE);
+        mRenderer.setLabelsTextSize(40);
         mRenderer.setGridColor(Color.BLUE);
         mRenderer.setAxisTitleTextSize(40);
-        mRenderer.setAxesColor(Color.BLUE);
         mRenderer.setYLabelsColor(0, Color.BLUE);
+        mRenderer.setXLabelsColor(Color.BLUE);
 
         //add a single render to multiple render
         mRenderer.addSeriesRenderer(renderer);
@@ -98,4 +78,6 @@ public class DisplayActivity{
     public void addNewPoints(Point p){
         dataset.add(p.getX(),p.getY());
     }
+
+
 }
