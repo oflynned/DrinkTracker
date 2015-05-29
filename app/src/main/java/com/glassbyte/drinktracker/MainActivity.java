@@ -16,9 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
 
 public class MainActivity extends Activity {
     private SharedPreferencesActivity sharedPreference;
