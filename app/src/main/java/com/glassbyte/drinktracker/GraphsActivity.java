@@ -4,15 +4,9 @@ package com.glassbyte.drinktracker;
  * Created by ed on 25/05/15.
  * Edited by Alex on 25/05/15
  */
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
-import android.view.View;
+import android.os.Bundle;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import org.achartengine.GraphicalView;
 
 

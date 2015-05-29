@@ -54,7 +54,7 @@ package="com.glassbyte.drinktracker" >
     </activity>
 
     <activity android:name="org.achartengine.GraphicalActivity" />
-
+    <activity android:name="com.glassbyte.drinktracker.RealTimeActivity" />
     <activity android:name="com.glassbyte.drinktracker.AddDrinkActivity"/>
     <activity android:name="com.glassbyte.drinktracker.AndroidDatabaseManager"/>
 
