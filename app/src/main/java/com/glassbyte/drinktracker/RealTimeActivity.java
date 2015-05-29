@@ -5,6 +5,7 @@ package com.glassbyte.drinktracker;
  *
  */
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,11 +49,24 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
         graph.addSeries(series2);
 
 
-        //legend
+        //edditing graph
         series.setTitle("foo");
+        series.setThickness(20);
+
+
         series2.setTitle("bar");
+        series.setThickness(10);
+
+
+
+
         graph.getLegendRenderer().setVisible(true);
         graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
+        //graph.getFitsSystemWindows();
+        graph.setBackgroundColor(Color.LTGRAY);
+        graph.setTitleColor(Color.BLACK);
+        graph.setTitle("GRAPH TITLE");
+
 
         return rootView;
     }
