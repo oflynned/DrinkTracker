@@ -1,32 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
+        android:title="More from GlassByte"
+        android:key="pref_key_contact">
+        <Preference android:title="Visit us at our website!"
+            android:summary="Click here to view our website for more products and news from GlassByte">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="http://www.glassbyte.com" />
+        </Preference>
+
+        <!--link below opens list of apps we have published on our account -->
+        <Preference android:title="Remove ads and help support us"
+            android:summary="Click here to purchase the ad-free version from Google Play">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="market://search?q=pub:<glassbyte>" />
+        </Preference>
+    </PreferenceCategory>-
+
+    <PreferenceCategory
         android:title="Modify Details"
         android:key="pref_key_storage_settings">
+
     <ListPreference android:title="Edit Gender"
+        android:defaultValue="genderDef"
         android:key="pref_key_editGender"
         android:entries="@array/gender"
         android:entryValues="@array/gender"
         android:summary="Modify gender from setup"   />
+
     <ListPreference android:title="Edit Units"
+        android:defaultValue="unitDef"
         android:entries="@array/units"
         android:entryValues="@array/units"
         android:key="pref_key_introUnits"
         android:summary="Modify units used from setup"   />
+
     <EditTextPreference android:title="Edit Height"
+        android:defaultValue="heightDef"
         android:key="pref_key_introHeight"
         android:summary="Modify height from setup"   />
+
     <EditTextPreference android:title="Edit Weight"
+        android:defaultValue="weightDef"
         android:key="pref_key_introWeight"
         android:summary="Modify weight from setup"   />
     </PreferenceCategory>
 
     <PreferenceCategory
-            android:title="Data Collection"
-            android:key="pref_key_dataCollection">
-    <CheckBoxPreference android:title="Allow Data Collection"
-        android:defaultValue="true"
-        android:summary="Select this option if you wish to help support us by providing feedback of data anonymously."
-        android:key="pref_key_dataCollectionPermission" />
+        android:title="Data Collection"
+        android:key="pref_key_dataCollection">
+
+        <CheckBoxPreference android:title="Allow Data Collection"
+            android:defaultValue="true"
+            android:summary="Select this option if you wish to help support us by providing feedback of data anonymously"
+            android:key="pref_key_dataCollectionPermission" />
     </PreferenceCategory>
 </PreferenceScreen>

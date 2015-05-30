@@ -32,7 +32,6 @@ public class MainActivity extends Activity {
         /*
         //add items to database
         DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getBaseContext());
-        Boolean exists;
         Cursor CR = DOU.getInfo(DOU);
 
         //sample database logging for units
@@ -45,18 +44,14 @@ public class MainActivity extends Activity {
                         i, //percentage
                         i //bac
                 );
-            CR.moveToNext();
+            CR.moveToNext(); //increment table
         }*/
 
         if (run == "" || run == null) {
-            Toast.makeText(getBaseContext(),"first run being executed",Toast.LENGTH_SHORT).show();
-
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
         else if (run.equals("true")){
-            Toast.makeText(getBaseContext(),"first run already executed",Toast.LENGTH_SHORT).show();
-
             Intent intent = new Intent(this, AddDrinkActivity.class);
             startActivity(intent);
         }

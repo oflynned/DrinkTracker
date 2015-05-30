@@ -100,8 +100,6 @@ public class IntroActivity extends Activity{
                     editor.putString(Units,um);
                     editor.apply();
 
-                    Toast.makeText(getBaseContext(), "SharedPreference saved" , Toast.LENGTH_SHORT).show();
-
                     Intent intent = new Intent(v.getContext(), AddDrinkActivity.class);
                     startActivity(intent);
                 }
