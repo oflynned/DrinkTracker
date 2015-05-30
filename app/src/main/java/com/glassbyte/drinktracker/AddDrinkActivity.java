@@ -6,12 +6,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.view.ActionMode;
 
 /**
  * Created by ed on 25/05/15.
  */
 public class AddDrinkActivity extends FragmentActivity{
-    private static final int NUM_PAGES = 5;
+    private static final int NUM_PAGES = 4;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
 
@@ -21,7 +24,7 @@ public class AddDrinkActivity extends FragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adddrink);
 
-        //Instantiate a ViewPager and a PAgerAdapter
+        //Instantiate a ViewPager and a PagerAdapter
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
@@ -50,10 +53,8 @@ public class AddDrinkActivity extends FragmentActivity{
                 return new ChooseDrink();
             } else if(position == 2){
                 return new CustomDrink();
-            } else if(position == 3){
+            } else {
                 return new RealTimeActivity();
-            } else{
-                return new SettingsFrag();
             }
         }
 

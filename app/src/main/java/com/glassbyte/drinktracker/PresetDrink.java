@@ -41,7 +41,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.btnGraphs:
-                intent = new Intent(getActivity(), GraphsActivity.class);
+                intent = new Intent(getActivity(), PreferencesActivity.class);
                 startActivity(intent);
                 break;
         }

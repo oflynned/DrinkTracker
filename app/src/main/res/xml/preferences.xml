@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Modify Details"
+        android:key="pref_key_storage_settings">
+    <ListPreference android:title="Edit Gender"
+        android:key="pref_key_editGender"
+        android:entries="@array/gender"
+        android:entryValues="@array/gender"
+        android:summary="Modify gender from setup"   />
+    <ListPreference android:title="Edit Units"
+        android:entries="@array/units"
+        android:entryValues="@array/units"
+        android:key="pref_key_introUnits"
+        android:summary="Modify units used from setup"   />
+    <EditTextPreference android:title="Edit Height"
+        android:key="pref_key_introHeight"
+        android:summary="Modify height from setup"   />
+    <EditTextPreference android:title="Edit Weight"
+        android:key="pref_key_introWeight"
+        android:summary="Modify weight from setup"   />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="Data Collection"
+            android:key="pref_key_dataCollection">
+    <CheckBoxPreference android:title="Allow Data Collection"
+        android:defaultValue="true"
+        android:summary="Select this option if you wish to help support us by providing feedback of data anonymously."
+        android:key="pref_key_dataCollectionPermission" />
+    </PreferenceCategory>
+</PreferenceScreen>

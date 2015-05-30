@@ -1,6 +1,7 @@
 package com.glassbyte.drinktracker;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
@@ -17,8 +18,7 @@ import android.widget.Toast;
 import java.util.Random;
 
 
-public class IntroActivity extends ActionBarActivity{
-    SharedPreferencesActivity sharedPreference;
+public class IntroActivity extends Activity{
 
     private boolean checkedG;
     private boolean checkedUM;
@@ -32,12 +32,17 @@ public class IntroActivity extends ActionBarActivity{
     private RadioGroup mUnitsMeasurement;
     Button btnContinue;
 
+    public static final String Prefs = "Settings" ;
+    public static final String Run = "runKey";
+    public static final String Gender = "genderKey";
+    public static final String Height = "heightKey";
+    public static final String Weight = "weightKey";
+    public static final String Units = "unitsKey";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
-
-        sharedPreference = new SharedPreferencesActivity();
 
         mWeight = (EditText) findViewById(R.id.weightET);
         mHeight = (EditText) findViewById(R.id.heightET);
@@ -84,20 +89,18 @@ public class IntroActivity extends ActionBarActivity{
                     String um = mUM;
                     Toast.makeText(getBaseContext(),um,Toast.LENGTH_SHORT).show();
 
-                    String run = "true";
+                    //store in shared preferences
+                    SharedPreferences sp = getSharedPreferences(Prefs, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
 
-                    sharedPreference.save(getBaseContext(), run);
+                    editor.putString(Run,"true");
+                    editor.putString(Gender,gender);
+                    editor.putString(Height,height);
+                    editor.putString(Weight,weight);
+                    editor.putString(Units,um);
+                    editor.apply();
 
-                    //setup database inputs
-                    DatabaseOperations DO = new DatabaseOperations(getBaseContext()); //pass context to class
-
-                    //insert this data into the table
-                    DO.putInfo(DO, fHeight, fWeight, gender, um);
-                    Toast.makeText(getBaseContext(),"Details successfully inputted",Toast.LENGTH_LONG).show();
-                    DO.close();
-                    finish(); //end activity
-
-                    Toast.makeText(getBaseContext(), "SharedPreference saved: " + run, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "SharedPreference saved" , Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(v.getContext(), AddDrinkActivity.class);
                     startActivity(intent);

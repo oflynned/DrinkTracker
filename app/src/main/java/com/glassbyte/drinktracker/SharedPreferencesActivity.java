@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 
 public class SharedPreferencesActivity {
 
-    public static final String PREFS_NAME = "AOP_PREFS";
-    public static final String PREFS_KEY = "AOP_PREFS_String";
+    public static final String PREFS_NAME = "PREFS";
+    public static final String PREFS_KEY = "PREFS_KEY";
 
     public SharedPreferencesActivity() {
         super();

@@ -57,6 +57,18 @@ package="com.glassbyte.drinktracker" >
     <activity android:name="com.glassbyte.drinktracker.AddDrinkActivity"/>
     <activity android:name="com.glassbyte.drinktracker.AndroidDatabaseManager"/>
 
+    <activity
+        android:name=".PreferencesActivity"
+        android:screenOrientation="portrait"
+        android:label="@string/app_name">
+        <intent-filter>
+            <action
+                android:name="com.glassbyte.drinktracker.PreferencesActivity" />
+            <category
+                android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+    </activity>
+
 </application>
 
 </manifest>

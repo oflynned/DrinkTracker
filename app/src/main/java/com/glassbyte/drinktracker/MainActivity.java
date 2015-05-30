@@ -18,8 +18,6 @@ import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
-    private SharedPreferencesActivity sharedPreference;
-    private String run;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +26,17 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         //retrieve data from sharedreferences for initial run setup
-        sharedPreference = new SharedPreferencesActivity();
-        run = sharedPreference.getValue(getBaseContext());
+        SharedPreferences sp = getSharedPreferences("Settings",MODE_PRIVATE);
+        String run = (sp.getString("runKey",""));
+
+        /*
+        //add items to database
         DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getBaseContext());
         Boolean exists;
         Cursor CR = DOU.getInfo(DOU);
 
         //sample database logging for units
-        for(int i = 0; i < 30; i++) {
+        /for(int i = 0; i < 30; i++) {
                 CR.moveToLast();
                 DOU.putInfo(
                         DOU,
@@ -45,8 +46,7 @@ public class MainActivity extends Activity {
                         i //bac
                 );
             CR.moveToNext();
-
-        }
+        }*/
 
         if (run == "" || run == null) {
             Toast.makeText(getBaseContext(),"first run being executed",Toast.LENGTH_SHORT).show();
