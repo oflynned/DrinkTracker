@@ -39,12 +39,12 @@ public class MainActivity extends Activity {
                 CR.moveToLast();
                 DOU.putInfo(
                         DOU,
+                        DOU.getDateTime(), //time
                         i, //units of alcohol
-                        DOU.getDateTime(), //start time
-                        DOU.getDateTime(), //end time
-                        "1" //duration
+                        i, //percentage
+                        i //bac
                 );
-                CR.moveToNext();
+            CR.moveToNext();
 
         }
 

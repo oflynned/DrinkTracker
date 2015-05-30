@@ -21,13 +21,13 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
             "CREATE TABLE " +
                     TableDataUnits.TableInfoUnits.TABLE_NAME +
                     "(" +
+                    TableDataUnits.TableInfoUnits.TIME +
+                    " TEXT," +
                     TableDataUnits.TableInfoUnits.UNITS +
                     " TEXT," +
-                    TableDataUnits.TableInfoUnits.STIME +
+                    TableDataUnits.TableInfoUnits.PERCENTAGE +
                     " TEXT," +
-                    TableDataUnits.TableInfoUnits.ETIME +
-                    " TEXT," +
-                    TableDataUnits.TableInfoUnits.DURATION +
+                    TableDataUnits.TableInfoUnits.BAC +
                     " TEXT);";
     //; ends query field within query -> ()
 
@@ -48,13 +48,13 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
     }
 
     //insert data into database
-    public void putInfo(DatabaseOperationsUnits DOU, int units, String stime, String etime, String duration){
+    public void putInfo(DatabaseOperationsUnits DOU, String time, float units, float percentage, float bac){
         SQLiteDatabase SQ = DOU.getWritableDatabase(); //writes data to database
         ContentValues CV = new ContentValues(); //create instance
-        CV.put(TableDataUnits.TableInfoUnits.UNITS, units); //coll 0
-        CV.put(TableDataUnits.TableInfoUnits.STIME, stime); //coll 1
-        CV.put(TableDataUnits.TableInfoUnits.ETIME, etime); //coll 2
-        CV.put(TableDataUnits.TableInfoUnits.DURATION, duration); //coll 3
+        CV.put(TableDataUnits.TableInfoUnits.TIME, time); //coll 0
+        CV.put(TableDataUnits.TableInfoUnits.UNITS, units); //coll 1
+        CV.put(TableDataUnits.TableInfoUnits.PERCENTAGE, percentage); //coll 2
+        CV.put(TableDataUnits.TableInfoUnits.BAC, bac); //coll 3
         long k = SQ.insert(TableDataUnits.TableInfoUnits.TABLE_NAME, null, CV);
         Log.d("Database operations", "1 row inserted into database");
     }
@@ -65,10 +65,10 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
         SQLiteDatabase SQ = DOU.getReadableDatabase();
         //columns from database
         String[] col = {
+                TableDataUnits.TableInfoUnits.TIME,
                 TableDataUnits.TableInfoUnits.UNITS,
-                TableDataUnits.TableInfoUnits.STIME,
-                TableDataUnits.TableInfoUnits.ETIME,
-                TableDataUnits.TableInfoUnits.DURATION
+                TableDataUnits.TableInfoUnits.PERCENTAGE,
+                TableDataUnits.TableInfoUnits.BAC
         };
         //get data
         Cursor CR = SQ.query(TableDataUnits.TableInfoUnits.TABLE_NAME, col, null, null, null, null, null);
@@ -118,7 +118,7 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
     }
 
     public String getDateTime() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.UK);
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy", Locale.UK);
         Date date = new Date();
         return dateFormat.format(date);
     }
