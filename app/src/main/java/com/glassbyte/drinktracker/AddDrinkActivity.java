@@ -11,7 +11,7 @@ import android.support.v4.view.ViewPager;
  * Created by ed on 25/05/15.
  */
 public class AddDrinkActivity extends FragmentActivity{
-    private static final int NUM_PAGES = 4;
+    private static final int NUM_PAGES = 5;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
 
@@ -50,9 +50,10 @@ public class AddDrinkActivity extends FragmentActivity{
                 return new ChooseDrink();
             } else if(position == 2){
                 return new CustomDrink();
-            }
-            else{
+            } else if(position == 3){
                 return new RealTimeActivity();
+            } else{
+                return new SettingsFrag();
             }
         }
 

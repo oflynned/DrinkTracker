@@ -123,6 +123,7 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/weightET"
+        android:gravity="center_horizontal"
         android:layout_gravity="center_horizontal"
         android:layout_below="@+id/weight"
         android:layout_toLeftOf="@+id/unitsMeasurement"
@@ -149,6 +150,7 @@
         android:ems="10"
         android:id="@+id/heightET"
         android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
         android:layout_toLeftOf="@+id/unitsMeasurement"
         android:layout_alignLeft="@+id/weightET"
         android:layout_alignStart="@+id/weightET" />
