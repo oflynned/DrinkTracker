@@ -14,15 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-
-import java.util.Random;
-
-
 
 public class RealTimeActivity extends android.support.v4.app.Fragment {
 
@@ -40,12 +35,16 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_realtime, container, false);
-        GraphView graph = (GraphView) rootView.findViewById(R.id.graph);
+        GraphView graph = (GraphView) rootView.findViewById(R.id.graphUnits);
         mSeries1=new LineGraphSeries<>(generateData());
         graph.addSeries(mSeries1);
 
-        return rootView;
+        graph.setTitle("BAC v Time");
+        mSeries1.setTitle("BAC");
+        mSeries1.setDrawDataPoints(true);
+        mSeries1.setColor(getResources().getColor(R.color.dt_greenblue));
 
+        return rootView;
     }
 
     @Override
@@ -85,26 +84,20 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
     {
         int count = CR.getCount();
         DataPoint[] values = new DataPoint[count];
-        //Toast.makeText(getActivity(),String.valueOf(CR.getCount()),Toast.LENGTH_SHORT).show();
 
         for(int i=0;i<count;i++)
         {
             double x = i;
-
-            //double f = mRand.nextDouble()*0.15+0.3;
             //double y = Math.sin(i*f+2) + mRand.nextDouble()*0.3;
+            //double f = mRand.nextDouble()*0.15+0.3;
 
             DataPoint v = new DataPoint(x, returnY(i));
-            Log.i("gen data","value returned: "+returnY(i));
+
+            //Log.i("gen data","value returned: "+returnY(i));
+
             values[i] = v;
         }
         return values;
-    }
-
-    double mLastRandom = 2;
-    Random mRand = new Random();
-    private double getRandom() {
-        return mLastRandom += mRand.nextDouble()*0.5 - 0.25;
     }
 
     private double returnY(int i){
@@ -126,6 +119,5 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
         }
         return y;
     }
-
 }
 

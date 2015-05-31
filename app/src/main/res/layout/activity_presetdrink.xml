@@ -36,5 +36,26 @@
             android:text="Add db member"
             android:id="@+id/btnAddDBMember"
             android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Invoke\nvibration"
+            android:id="@+id/btnVibrate"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Invoke\ndialogue"
+            android:id="@+id/btnDialogue"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Invoke Push\nNotification"
+            android:id="@+id/btnPushNot"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </ScrollView>

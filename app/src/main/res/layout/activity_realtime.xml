@@ -8,7 +8,6 @@
     android:paddingTop="10dp"
     android:paddingRight="10dp"
     android:paddingLeft="10dp"
-
     >
 
     <com.jjoe64.graphview.helper.GraphViewXML
@@ -16,12 +15,9 @@
         android:layout_height="200dip"
         app:seriesData="0=5;2=5;3=5;4=5;5=5"
         app:seriesType="line"
-        app:seriesColor="#00cc00"
-        app:seriesTitle="Foobar"
-        android:title="Graph Title"
-        android:id="@+id/graph"
+        app:seriesColor="#000000"
+        app:seriesTitle="Danger"
+        android:id="@+id/graphUnits"
         />
-
-
 
 </RelativeLayout>
