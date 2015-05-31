@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@drawable/gradient"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:background="@color/dt_orange"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dt_orange"
+        android:id="@+id/dialogTitle"/>
     <ImageView
         android:src="@drawable/glass_water"
         android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="center"
-        android:background="#FFFFBB33"
+        android:background="@color/dt_orange"
         android:contentDescription="@string/app_name" />
     <TextView
         android:id="@+id/dialog_drink"
         android:text="Drink some water!"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:background="@color/dt_orange"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
@@ -25,5 +43,9 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dismiss"/>
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:text="Dismiss"
+        android:id="@+id/btnDismiss" />
+    </LinearLayout>/>
 </LinearLayout>

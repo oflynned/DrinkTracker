@@ -1,19 +1,16 @@
 package com.glassbyte.drinktracker;
 
+import android.app.DialogFragment;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,11 +97,13 @@ public class PresetDrink extends Fragment implements View.OnClickListener{
                 v.vibrate(500);
                 break;
             case R.id.btnDialogue:
-                alertDialogBuilder = new AlertDialog.Builder(getActivity());
-                alertDialogBuilder.setTitle("Dialogue").setMessage("body dialogue").setCancelable(true).create().show();
+                DialogueFrag dialog = new DialogueFrag();
+                dialog.show(getActivity().getFragmentManager(), "MyDialogFragment");
                 break;
             case R.id.btnPushNot:
+                //random debug
                 int notification = getRandom(3);
+
                 String banner = "";
                 String title = "";
                 String body = "";
