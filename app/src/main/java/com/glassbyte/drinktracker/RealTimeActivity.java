@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -40,7 +41,7 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_realtime, container, false);
         GraphView graph = (GraphView) rootView.findViewById(R.id.graph);
-        mSeries1=new LineGraphSeries<DataPoint>(generateData());
+        mSeries1=new LineGraphSeries<>(generateData());
         graph.addSeries(mSeries1);
 
         return rootView;
@@ -82,15 +83,18 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
 
     private DataPoint[] generateData()
     {
-        int count = 30;
+        int count = CR.getCount();
         DataPoint[] values = new DataPoint[count];
+        //Toast.makeText(getActivity(),String.valueOf(CR.getCount()),Toast.LENGTH_SHORT).show();
+
         for(int i=0;i<count;i++)
         {
-            double x =i;
-            double f = mRand.nextDouble()*0.15+0.3;
-            double y = Math.sin(i*f+2) + mRand.nextDouble()*0.3;
+            double x = i;
 
-            DataPoint v = new DataPoint(i, returnY(i));
+            //double f = mRand.nextDouble()*0.15+0.3;
+            //double y = Math.sin(i*f+2) + mRand.nextDouble()*0.3;
+
+            DataPoint v = new DataPoint(x, returnY(i));
             Log.i("gen data","value returned: "+returnY(i));
             values[i] = v;
         }
@@ -109,7 +113,7 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
         try {
             if(!CR.isLast()){
                 CR.moveToPosition(i);
-                y = CR.getInt(1); //set to current bac at pos i at getInt(3)
+                y = CR.getInt(3); //set to current bac at pos i at getInt(3)
             }
         }
         catch (Exception ex){

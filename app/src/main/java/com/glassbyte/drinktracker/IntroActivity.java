@@ -95,25 +95,6 @@ public class IntroActivity extends Activity {
                     editor.putString(Units, um);
                     editor.apply();
 
-                    //add items to database
-                    DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getBaseContext());
-                    Cursor CR = DOU.getInfo(DOU);
-
-                    //sample database logging for units
-                    for(int i = 0; i < 31; i++) {
-                        CR.moveToLast();
-                        DOU.putInfo(
-                                DOU,
-                                Integer.toString(i), //DOU.getDateTime(), //time
-                                (float) Math.pow(i, 2), //units of alcohol
-                                i, //percentage
-                                i //bac
-                        );
-                        CR.moveToNext(); //increment table
-                    }
-                    //move to first for test read in values to graph
-                    CR.moveToFirst();
-
                     Intent intent = new Intent(v.getContext(), AddDrinkActivity.class);
                     startActivity(intent);
                 }
