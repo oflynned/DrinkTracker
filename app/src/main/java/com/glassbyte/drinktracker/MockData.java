@@ -5,22 +5,7 @@ package com.glassbyte.drinktracker;
  */
 import java.util.Random;
 
-
-
-
-
-
-
-
 public class MockData {
-
-
-
-
-
-
-
-
     public static Point getDataFromReceiver(int x)
     {
         return new Point(x, generateRandomData());

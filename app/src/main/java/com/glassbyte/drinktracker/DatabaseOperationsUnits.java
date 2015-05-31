@@ -33,6 +33,7 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
 
     public DatabaseOperationsUnits(Context context) {
         super(context, TableDataUnits.TableInfoUnits.DATABASE_NAME, null, database_version);
+
         Log.d("Database operations", "Created database successfully");
     }
 

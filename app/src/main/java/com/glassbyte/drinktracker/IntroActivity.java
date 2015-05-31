@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,7 +19,7 @@ import android.widget.Toast;
 import java.util.Random;
 
 
-public class IntroActivity extends Activity{
+public class IntroActivity extends Activity {
 
     private boolean checkedG;
     private boolean checkedUM;
@@ -32,7 +33,7 @@ public class IntroActivity extends Activity{
     private RadioGroup mUnitsMeasurement;
     Button btnContinue;
 
-    public static final String Prefs = "Settings" ;
+    public static final String Prefs = "Settings";
     public static final String Run = "runKey";
     public static final String Gender = "genderKey";
     public static final String Height = "heightKey";
@@ -51,30 +52,24 @@ public class IntroActivity extends Activity{
 
         btnContinue = (Button) findViewById(R.id.buttonContinue);
 
-        btnContinue.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
+        btnContinue.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
-                if(mHeight.getText().toString().trim().length() == 0){
-                    Toast.makeText(getBaseContext(),"Please fill in height",Toast.LENGTH_SHORT).show();
+                if (mHeight.getText().toString().trim().length() == 0) {
+                    Toast.makeText(getBaseContext(), "Please fill in height", Toast.LENGTH_SHORT).show();
                 }
 
-                if(mWeight.getText().toString().trim().length() == 0){
-                    Toast.makeText(getBaseContext(),"Please fill in weight",Toast.LENGTH_SHORT).show();
+                if (mWeight.getText().toString().trim().length() == 0) {
+                    Toast.makeText(getBaseContext(), "Please fill in weight", Toast.LENGTH_SHORT).show();
                 }
 
-                if (mRadioGroup.getCheckedRadioButtonId() == -1)
-                {
-                    Toast.makeText(getBaseContext(),"Please fill in gender",Toast.LENGTH_SHORT).show();
+                if (mRadioGroup.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getBaseContext(), "Please fill in gender", Toast.LENGTH_SHORT).show();
                 }
 
-                if (mUnitsMeasurement.getCheckedRadioButtonId() == -1)
-                {
-                    Toast.makeText(getBaseContext(),"Please fill in units",Toast.LENGTH_SHORT).show();
-                }
-
-                else {
+                if (mUnitsMeasurement.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getBaseContext(), "Please fill in units", Toast.LENGTH_SHORT).show();
+                } else {
                     //height
                     String height = mHeight.getText().toString();
                     int fHeight = Integer.parseInt(height);
@@ -84,21 +79,40 @@ public class IntroActivity extends Activity{
                     int fWeight = Integer.parseInt(weight);
 
                     String gender = mGender;
-                    Toast.makeText(getBaseContext(),gender,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), gender, Toast.LENGTH_SHORT).show();
 
                     String um = mUM;
-                    Toast.makeText(getBaseContext(),um,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), um, Toast.LENGTH_SHORT).show();
 
                     //store in shared preferences
                     SharedPreferences sp = getSharedPreferences(Prefs, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
 
-                    editor.putString(Run,"true");
-                    editor.putString(Gender,gender);
-                    editor.putString(Height,height);
-                    editor.putString(Weight,weight);
-                    editor.putString(Units,um);
+                    editor.putString(Run, "true");
+                    editor.putString(Gender, gender);
+                    editor.putString(Height, height);
+                    editor.putString(Weight, weight);
+                    editor.putString(Units, um);
                     editor.apply();
+
+                    //add items to database
+                    DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getBaseContext());
+                    Cursor CR = DOU.getInfo(DOU);
+
+                    //sample database logging for units
+                    for(int i = 0; i < 31; i++) {
+                        CR.moveToLast();
+                        DOU.putInfo(
+                                DOU,
+                                Integer.toString(i), //DOU.getDateTime(), //time
+                                (float) Math.pow(i, 2), //units of alcohol
+                                i, //percentage
+                                i //bac
+                        );
+                        CR.moveToNext(); //increment table
+                    }
+                    //move to first for test read in values to graph
+                    CR.moveToFirst();
 
                     Intent intent = new Intent(v.getContext(), AddDrinkActivity.class);
                     startActivity(intent);
@@ -111,15 +125,15 @@ public class IntroActivity extends Activity{
 
         checkedG = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.radioButtonMale:
                 if (checkedG)
                     mGender = "male";
-                    break;
+                break;
             case R.id.radioButtonFemale:
                 if (checkedG)
-                    mGender= "female";
-                    break;
+                    mGender = "female";
+                break;
         }
     }
 
@@ -127,7 +141,7 @@ public class IntroActivity extends Activity{
 
         checkedUM = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.metric:
                 if (checkedUM)
                     mUM = "metric";

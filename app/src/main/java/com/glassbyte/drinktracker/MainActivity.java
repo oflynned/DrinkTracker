@@ -29,24 +29,6 @@ public class MainActivity extends Activity {
         SharedPreferences sp = getSharedPreferences("Settings",MODE_PRIVATE);
         String run = (sp.getString("runKey",""));
 
-        /*
-        //add items to database
-        DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getBaseContext());
-        Cursor CR = DOU.getInfo(DOU);
-
-        //sample database logging for units
-        /for(int i = 0; i < 30; i++) {
-                CR.moveToLast();
-                DOU.putInfo(
-                        DOU,
-                        DOU.getDateTime(), //time
-                        i, //units of alcohol
-                        i, //percentage
-                        i //bac
-                );
-            CR.moveToNext(); //increment table
-        }*/
-
         if (run == "" || run == null) {
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);

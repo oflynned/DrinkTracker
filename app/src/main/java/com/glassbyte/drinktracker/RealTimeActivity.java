@@ -6,8 +6,10 @@ package com.glassbyte.drinktracker;
  */
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,8 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
     private LineGraphSeries<DataPoint>mSeries2;
     private double graph2LastXValue =5d;
 
+    private DatabaseOperationsUnits DOU;
+    private Cursor CR;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
         GraphView graph = (GraphView) rootView.findViewById(R.id.graph);
         mSeries1=new LineGraphSeries<DataPoint>(generateData());
         graph.addSeries(mSeries1);
+
         return rootView;
 
     }
@@ -45,6 +50,10 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
     public void onAttach(Activity activity)
     {
         super.onAttach( activity);
+        DOU = new DatabaseOperationsUnits(getActivity());
+        CR = DOU.getInfo(DOU);
+        CR.moveToFirst();
+
         mTimer1 = new Runnable() {
             @Override
             public void run() {
@@ -60,10 +69,14 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
     {
         mHandler.removeCallbacks(mTimer1);
         super.onPause();
-
-
-
     }
+
+    @Override
+    public void onDetach(){
+        mHandler.removeCallbacks(mTimer1);
+        super.onDetach();
+    }
+
     private DataPoint[] generateData()
     {
         int count = 30;
@@ -74,7 +87,8 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
             double f = mRand.nextDouble()*0.15+0.3;
             double y = Math.sin(i*f+2) + mRand.nextDouble()*0.3;
 
-            DataPoint v = new DataPoint(x, y);
+            DataPoint v = new DataPoint(i, returnY(i));
+            Log.i("gen data","value returned: "+returnY(i));
             values[i] = v;
         }
         return values;
@@ -86,6 +100,25 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
         return mLastRandom += mRand.nextDouble()*0.5 - 0.25;
     }
 
+    private double returnY(int i){
+        int y=0;
+        CR = DOU.getInfo(DOU);
+        try {
+            if(!CR.isLast()){
+                CR.moveToPosition(i);
+                y = CR.getInt(1); //set to current bac at pos i at getInt(3)
+            }
+        }
+        catch (Exception ex){
+            y = 0;
+            ex.getStackTrace();
+            Log.i("error","error in CR");
+        }
+        finally {
+            CR.close();
+        }
+        return y;
+    }
 
 }
 
