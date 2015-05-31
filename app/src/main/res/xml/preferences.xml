@@ -13,7 +13,7 @@
         <Preference android:title="Remove ads and help support us"
             android:summary="Click here to purchase the ad-free version from Google Play">
             <intent android:action="android.intent.action.VIEW"
-                android:data="market://search?q=pub:<glassbyte>" />
+                android:data="http://www.glassbyte.com" />
         </Preference>
     </PreferenceCategory>-
 
@@ -22,26 +22,26 @@
         android:key="pref_key_storage_settings">
 
     <ListPreference android:title="Edit Gender"
-        android:defaultValue="genderDef"
+        android:defaultValue="@string/gender"
         android:key="pref_key_editGender"
-        android:entries="@array/gender"
-        android:entryValues="@array/gender"
+        android:entries="@array/optgender"
+        android:entryValues="@array/optgender"
         android:summary="Modify gender from setup"   />
 
     <ListPreference android:title="Edit Units"
-        android:defaultValue="unitDef"
-        android:entries="@array/units"
-        android:entryValues="@array/units"
+        android:defaultValue="@string/units"
+        android:entries="@array/optunits"
+        android:entryValues="@array/optunits"
         android:key="pref_key_introUnits"
         android:summary="Modify units used from setup"   />
 
     <EditTextPreference android:title="Edit Height"
-        android:defaultValue="heightDef"
+        android:defaultValue="@string/height"
         android:key="pref_key_introHeight"
         android:summary="Modify height from setup"   />
 
     <EditTextPreference android:title="Edit Weight"
-        android:defaultValue="weightDef"
+        android:defaultValue="@string/weight"
         android:key="pref_key_introWeight"
         android:summary="Modify weight from setup"   />
     </PreferenceCategory>

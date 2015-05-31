@@ -20,7 +20,13 @@ public class PreferencesActivity extends PreferenceActivity {
         SharedPreferences spHeight = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         SharedPreferences spWeight = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
-        String stringGender = spGender.getString("pref_key_editGender", "");
+        String stringGender = spGender.getString("pref_key_editGender", null);
+        String stringUnits = spUnits.getString("pref_key_editUnits", null);
+        String stringHeight = spHeight.getString("pref_key_editHeight", null);
+        String stringWeight = spWeight.getString("pref_key_editWeight", null);
+
+        //push to xml in settings
+
 
         getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferenceFragment()).commit();
     }
