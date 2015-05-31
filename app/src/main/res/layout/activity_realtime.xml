@@ -22,14 +22,6 @@
         android:id="@+id/graph"
         />
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:id="@+id/spinner"
-        android:layout_below="@+id/graph"
-        android:layout_centerHorizontal="true" />
-
 
 
 </RelativeLayout>

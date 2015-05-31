@@ -6,6 +6,7 @@ package com.glassbyte.drinktracker;
  */
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,6 +55,7 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
         CR = DOU.getInfo(DOU);
         CR.moveToFirst();
 
+        //run indefinitely with recursive updating
         mTimer1 = new Runnable() {
             @Override
             public void run() {
@@ -61,6 +63,7 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
                 mHandler.postDelayed(this,300);
             }
         };
+
         mHandler.postDelayed(mTimer1, 300);
 
     }
