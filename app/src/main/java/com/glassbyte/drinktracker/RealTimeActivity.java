@@ -7,9 +7,11 @@ package com.glassbyte.drinktracker;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -53,9 +55,24 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
         graph.addSeries(mSeries1);
 
         graph.setTitle("BAC v Time");
+        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setTextSize(25);
+        graph.getLegendRenderer().setBackgroundColor(Color.argb(150, 50, 0, 0));
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setPathEffect(new DashPathEffect(new float[]{8,5},0));
+
+
+
+
+
         mSeries1.setTitle("BAC");
         mSeries1.setDrawDataPoints(true);
         mSeries1.setColor(getResources().getColor(R.color.dt_greenblue));
+        mSeries1.setThickness(10);
+        mSeries1.setDataPointsRadius(10);
+
+
 
         //read in presets
         SharedPreferences spGender = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
