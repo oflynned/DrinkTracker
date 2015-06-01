@@ -24,26 +24,22 @@
         android:key="pref_key_storage_settings">
 
     <ListPreference android:title="Edit Gender"
-        android:defaultValue="@string/gender"
         android:key="pref_key_editGender"
         android:entries="@array/optgender"
         android:entryValues="@array/optgender"
         android:summary="Modify gender from setup"   />
 
     <ListPreference android:title="Edit Units"
-        android:defaultValue="@string/units"
         android:entries="@array/optunits"
         android:entryValues="@array/optunits"
         android:key="pref_key_introUnits"
         android:summary="Modify units used from setup"   />
 
     <EditTextPreference android:title="Edit Height"
-        android:defaultValue="@string/height"
         android:key="pref_key_introHeight"
         android:summary="Modify height from setup"   />
 
     <EditTextPreference android:title="Edit Weight"
-        android:defaultValue="@string/weight"
         android:key="pref_key_introWeight"
         android:summary="Modify weight from setup"   />
     </PreferenceCategory>

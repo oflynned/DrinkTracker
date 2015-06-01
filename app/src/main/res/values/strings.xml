@@ -14,8 +14,12 @@
         <item>Imperial</item>
     </string-array>
 
-    <string name="gender"></string>
-    <string name="height"></string>
-    <string name="weight"></string>
-    <string name="units"></string>
+    <string-array name="drinks">
+        <item>Beer</item>
+        <item>Wine</item>
+        <item>Cocktails</item>
+        <item>Spirits</item>
+        <item>Alcopop</item>
+        <item>Death</item>
+    </string-array>
 </resources>
