@@ -102,7 +102,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener{
                 break;
             case R.id.btnPushNot:
                 //random debug
-                int notification = getRandom(3);
+                int notification = getRandom(4);
 
                 String banner = "";
                 String title = "";
@@ -111,18 +111,24 @@ public class PresetDrink extends Fragment implements View.OnClickListener{
 
                 switch(notification){
                     case 0:
-                        banner = "Stop! Take a break and drink some water.";
-                        title = "Stop drinking!";
-                        body = "Take a break and drink some water.";
+                        banner = "Unfit to drive!";
+                        title = "Don't drive!";
+                        body = "Hail a taxi or ask a sober friend to drive you home.";
                         severity = 500;
-                    break;
+                        break;
                     case 1:
                         banner = "Slow down! Take a break and drink some water.";
                         title = "Slow down drinking!";
-                        body = "Consider taking a break soon.";
-                        severity = 1500;
+                        body = "Take a break and drink some water.";
+                        severity = 1000;
                     break;
                     case 2:
+                        banner = "Stop! Take a long break and drink some water.";
+                        title = "Take a break from drinking!";
+                        body = "Consider taking a break soon.";
+                        severity = 2000;
+                    break;
+                    case 3:
                         banner = "No more drinking! You've had too much.";
                         title = "No more drinking! You've had too much! ";
                         body = "Ensure a friend looks out for you.";
