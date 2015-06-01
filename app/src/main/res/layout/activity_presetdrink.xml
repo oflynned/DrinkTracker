@@ -11,62 +11,87 @@
         android:orientation="vertical">
 
         <TextView
-            style="?android:textAppearanceMedium"
+            style="?android:textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lineSpacingMultiplier="1.2"
-            android:padding="20dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
             android:text="Preset Drink" />
 
-        <ImageView
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/dt_black" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/drawable_pintglass" />
+            android:layout_marginTop="20dp">
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/presetDrink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/drawable_pintglass" />
+
+                <Spinner
+                    android:id="@+id/spinnerPresetDrink"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/presetDrink"
+                    android:layout_gravity="center_horizontal" />
+            </RelativeLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/percentagePreset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="Please add a percentage:"
-                android:gravity="center"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:gravity="center"
-                android:id="@+id/editText"
-                android:layout_width="100dp"
-                android:layout_marginTop="30dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
+                <TextView
+                    android:id="@+id/percentagePreset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:gravity="center"
+                    android:text="Please add a percentage:" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="%"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/percentagePreset"
-                android:layout_alignEnd="@+id/percentagePreset" />
+                <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center" />
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/percentagePreset"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignRight="@+id/percentagePreset"
+                    android:layout_gravity="center_horizontal"
+                    android:text="%"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            </RelativeLayout>
         </LinearLayout>
 
         <Button
