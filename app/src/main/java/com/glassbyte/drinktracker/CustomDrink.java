@@ -1,5 +1,6 @@
 package com.glassbyte.drinktracker;
 
+import android.app.ActionBar;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.Random;
@@ -26,16 +28,39 @@ import java.util.Random;
  * Created by root on 27/05/15.
  */
 public class CustomDrink extends Fragment {
+    private final int SHOT_GLASS_ID = 0;
+    private final int WINE_GLASS_ID = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         ViewGroup V = (ViewGroup) inflater.inflate(
                 R.layout.activity_customdrink, container, false);
 
+
+        RelativeLayout l = (RelativeLayout) V.findViewById(R.id.customDrinkLayout);
+
+
         //Create shot glass instance
-        Glass shotGlass = new Glass(this.getActivity(),500);
-        V.addView(shotGlass);
+        Glass shotGlass = new DrinkingGlass(this.getActivity(),500);
+        RelativeLayout.LayoutParams shotGlassParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        shotGlassParams.addRule(RelativeLayout.LEFT_OF, WINE_GLASS_ID);
+        shotGlass.setLayoutParams(shotGlassParams);
+        shotGlass.setId(SHOT_GLASS_ID);
+        l.addView(shotGlass);
+
+        //Create wine glass instance
+        Glass wineGlass = new WineGlass(this.getActivity(),500);
+        RelativeLayout.LayoutParams wineGlassParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        wineGlassParams.addRule(RelativeLayout.RIGHT_OF, SHOT_GLASS_ID);
+        wineGlass.setLayoutParams(wineGlassParams);
+        wineGlass.setId(WINE_GLASS_ID);
+        l.addView(wineGlass);
 
         return V;
     }
@@ -47,13 +72,75 @@ public class CustomDrink extends Fragment {
     *   \___/
     *
     * */
-    public class Glass extends View implements View.OnTouchListener{
-        private float height, width, dBottomTopWidth, strokeWidth;
-        private Paint paint;
+    public class DrinkingGlass extends Glass implements View.OnTouchListener{
 
-        public Glass(Context context, float height){
+        public DrinkingGlass(Context context, float height){
             this(context,height, height/3, (height/2)-(height/3));
         }
+
+        public DrinkingGlass(Context context, float height, float width, float dBottomTopWidth){
+            super(context, height, width, dBottomTopWidth);
+        }
+
+        @Override
+        public void onDraw(Canvas canvas){
+
+            //left edge of the glass
+            canvas.drawLine(getX(), getY(), getX()+(getGlassDBottomTopWidth()/2), getY()+getGlassHeight(), getGlassPaint());
+            //right edge of the glass
+            canvas.drawLine(getX()+(getGlassDBottomTopWidth()*2)+getGlassWidth(), getY(), getX()+getGlassDBottomTopWidth()+getGlassWidth(), getY()+getGlassHeight(), getGlassPaint());
+            //bottom edge of the glass
+            canvas.drawLine(getX()+(getGlassDBottomTopWidth()/2), getY()+getGlassHeight(), getX()+(getGlassDBottomTopWidth())+getGlassWidth(), getY()+getGlassHeight(), getGlassPaint());
+        }
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            return false;
+        }
+    }
+
+    /*
+    * Glass of the following shape:
+    * \  /
+    *  \/
+    *  |
+    * ---
+    * */
+    public class WineGlass extends Glass implements View.OnTouchListener{
+
+        public WineGlass(Context context, float height){
+            this(context,height, height/2);
+        }
+
+        public WineGlass (Context context, float height, float width){
+            super(context, height, width, 0);
+        }
+
+        @Override
+        public void onDraw(Canvas canvas){
+            //Left edge of the glass
+            canvas.drawLine(getX(), getY(), getX()+getGlassWidth()/2, getY()+(getGlassHeight()/2), getGlassPaint());
+            //Right edge of the glass
+            canvas.drawLine(getX()+getGlassWidth(), getY(), getX()+(getGlassWidth()/2), getY()+(getGlassHeight()/2), getGlassPaint());
+            //Leg of the glass
+            canvas.drawLine(getX()+(getGlassWidth()/2), getY()+(getGlassHeight()/2), getX()+(getGlassWidth()/2), getY()+getGlassHeight(), getGlassPaint());
+            //Foot of the glass
+            canvas.drawLine(getX(), getY()+getGlassHeight(), getX()+getGlassWidth(), getY()+getGlassHeight(), getGlassPaint());
+        }
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            return false;
+        }
+
+    }
+
+    /*
+    * super class for all the other types of glasses. All of them will share those properties.
+    * */
+    public class Glass extends View{
+        private float height, width, dBottomTopWidth, strokeWidth;
+        private Paint paint;
 
         public Glass(Context context, float height, float width, float dBottomTopWidth){
             super(context);
@@ -68,27 +155,14 @@ public class CustomDrink extends Fragment {
             paint.setColor(Color.BLACK);
         }
 
-        @Override
-        public void onDraw(Canvas canvas){
-
-            //left edge of the glass
-            canvas.drawLine(getX(), getY(), getX()+(getGlassDBottomTopWidth()/2), getY()+getGlassHeight(), paint);
-            //right edge of the glass
-            canvas.drawLine(getX()+(getGlassDBottomTopWidth()*2)+getGlassWidth(), getY(), getX()+getGlassDBottomTopWidth()+getGlassWidth(), getY()+getGlassHeight(), paint);
-            //bottom edge of the glass
-            canvas.drawLine(getX()+(getGlassDBottomTopWidth()/2), getY()+getGlassHeight(), getX()+(getGlassDBottomTopWidth())+getGlassWidth(), getY()+getGlassHeight(), paint);
-        }
-
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            return false;
-        }
 
         public void setGlassHeight(float height){this.height = height;}
         public void setGlassWidth(float width){this.width = width;}
         public void setGlassDBottomTopWidth(float dBottomTopWidth){this.dBottomTopWidth = dBottomTopWidth;}
+        public void setGlassPaint(Paint p){paint = p;}
         public float getGlassHeight(){return height;}
         public float getGlassWidth(){return width;}
         public float getGlassDBottomTopWidth(){return dBottomTopWidth;}
+        public Paint getGlassPaint(){return paint;}
     }
 }
