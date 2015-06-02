@@ -55,7 +55,6 @@ public class ChooseDrink extends Fragment implements View.OnClickListener{
         NM = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         v = (Vibrator) this.getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
-
         random.setSeed(123456789);
 
         return V;
