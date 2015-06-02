@@ -28,8 +28,8 @@ import java.util.Random;
  * Created by root on 27/05/15.
  */
 public class CustomDrink extends Fragment {
-    private final int SHOT_GLASS_ID = 0;
-    private final int WINE_GLASS_ID = 0;
+    private final int SHOT_GLASS_ID = 9;
+    private final int WINE_GLASS_ID = 10;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,21 +47,24 @@ public class CustomDrink extends Fragment {
         RelativeLayout.LayoutParams shotGlassParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        shotGlassParams.addRule(RelativeLayout.LEFT_OF, WINE_GLASS_ID);
+        shotGlassParams.addRule(RelativeLayout.ALIGN_LEFT, RelativeLayout.TRUE);
         shotGlass.setLayoutParams(shotGlassParams);
         shotGlass.setId(SHOT_GLASS_ID);
-        l.addView(shotGlass);
 
         //Create wine glass instance
         Glass wineGlass = new WineGlass(this.getActivity(),500);
         RelativeLayout.LayoutParams wineGlassParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        wineGlassParams.addRule(RelativeLayout.RIGHT_OF, SHOT_GLASS_ID);
+        wineGlassParams.addRule(RelativeLayout.RIGHT_OF, shotGlass.getId());
         wineGlass.setLayoutParams(wineGlassParams);
         wineGlass.setId(WINE_GLASS_ID);
-        l.addView(wineGlass);
 
+        V.addView(shotGlass);
+        V.addView(wineGlass);
+
+        System.out.println("Shot Glass ID: "+shotGlass.getId());
+        System.out.println("Wine Glass ID: "+wineGlass.getId());
         return V;
     }
 
@@ -70,7 +73,6 @@ public class CustomDrink extends Fragment {
     * \       /
     *  \     /
     *   \___/
-    *
     * */
     public class DrinkingGlass extends Glass implements View.OnTouchListener{
 
