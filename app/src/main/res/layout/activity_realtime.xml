@@ -13,7 +13,7 @@
     <com.jjoe64.graphview.helper.GraphViewXML
         android:layout_width="match_parent"
         android:layout_height="200dip"
-        app:seriesData="0=5;2=5;3=5;4=5;5=5"
+        app:seriesData="0=0"
         app:seriesType="line"
         app:seriesColor="#000000"
         app:seriesTitle="Danger"

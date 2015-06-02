@@ -95,6 +95,21 @@ public class IntroActivity extends Activity {
                     editor.putString(Units, um);
                     editor.apply();
 
+                    DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getApplicationContext());
+                    Cursor CR = DOU.getInfo(DOU);
+
+                    CR.moveToLast();
+                    DOU.putInfo(
+                            DOU,
+                            DOU.getDateTime(), //time
+                            0, //units of alcohol
+                            0, //percentage
+                            0 //bac
+                    );
+
+                    CR.moveToNext(); //increment table
+                    CR.close();
+
                     Intent intent = new Intent(v.getContext(), AddDrinkActivity.class);
                     startActivity(intent);
                 }

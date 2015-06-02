@@ -30,7 +30,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class RealTimeActivity extends android.support.v4.app.Fragment {
-
     private final Handler mHandler = new Handler();
 
     private Runnable mTimer1;
@@ -54,15 +53,17 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
         mSeries1=new LineGraphSeries<>(generateData());
         graph.addSeries(mSeries1);
 
+        //format label
+        graph.setBottom(0);
+        graph.setTop((int)0.5);
+
         graph.setTitle("BAC v Time");
         graph.getLegendRenderer().setVisible(true);
         graph.getLegendRenderer().setTextSize(25);
         graph.getLegendRenderer().setBackgroundColor(Color.argb(150, 50, 0, 0));
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
-        paint.setPathEffect(new DashPathEffect(new float[]{8,5},0));
-
-
+        paint.setPathEffect(new DashPathEffect(new float[]{8, 5}, 0));
 
 
 
@@ -137,75 +138,51 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
         return values;
     }
 
-    private double returnY(int i){
-        double y=0;
-        CR = DOU.getInfo(DOU);
+    private double returnY(int i) {
+        double y = 0;
+
         try {
-            if(!CR.isLast()){
+            if (!CR.isLast()) {
                 CR.moveToPosition(i);
-                //y = CR.getInt(3); //set to current bac at pos i at getInt(3)
-                y = alcoholUnits(gender,units,weight,CR.getInt(1));
+                //run indefinitely with recursive updating
+                mTimer2 = new Runnable() {
+                    @Override
+                    public void run() {
+                        CR = DOU.getInfo(DOU);
+                        CR.moveToLast();
+
+                        double BAC = CR.getInt(3);
+                        double y = alcoholUnits("Male", "Metric", 80, BAC);
+
+                        DOU.putInfo(
+                                DOU,
+                                DOU.getDateTime(), //time
+                                1, //units of alcohol
+                                0.4, //percentage
+                                y //bac
+                        );
+
+                        CR.moveToNext(); //increment table
+                        CR.close();
+
+                        mHandler.postDelayed(this, 5000);
+                    }
+                };
+
+                CR.close();
+                mHandler.postDelayed(mTimer2, 5000);
             }
-        }
-        catch (Exception ex){
-            y = 0;
+        } catch (Exception ex) {
             ex.getStackTrace();
-            Log.i("error","error in CR");
-        }
-        finally {
-            CR.close();
+            Log.i("error", "error in CR");
+        } finally {
+            if (!CR.isClosed()) {
+                CR.close();
+            }
         }
         return y;
     }
 
-    private long timeDiff() {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy", Locale.UK);
-        Date time1 = null;
-        Date time2 = null;
-
-        if(CR.isFirst()){
-            CR.moveToFirst();
-            try {
-                time1 = formatter.parse(CR.getString(0));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } finally {
-                CR.close();
-            }
-            CR.moveToNext();
-            try {
-                time2 = formatter.parse(CR.getString(0));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } finally {
-                CR.close();
-            }
-        }
-        else {
-            CR.moveToPrevious();
-            try {
-                time1 = formatter.parse(CR.getString(0));
-                Toast.makeText(getActivity(),String.valueOf(time1),Toast.LENGTH_SHORT).show();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } finally {
-                CR.close();
-            }
-
-            CR.moveToNext();
-            try {
-                time2 = formatter.parse(CR.getString(0));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } finally {
-                CR.close();
-            }
-        }
-        if(time1 == null || time2 == null){
-            return 0;
-        }
-        return ((time2.getTime()/60000) - (time1.getTime()/60000));
-    }
 
     private double alcoholUnits(String gender, String units, double weight, double amount){
         double oz = 29.5735;
@@ -225,10 +202,10 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
 
         switch(units){
             case "Metric":
-                amountDrunk = (((amount/oz)*5.14)/((weight/pound)*r))-0.15*timeDiff();
+                amountDrunk = (((amount/oz)*5.14)/((weight/pound)*r))-0.15; //0.15*H
                 break;
             case "Imperial":
-                amountDrunk = ((amount*5.14)/(weight*r))-0.15*timeDiff();
+                amountDrunk = ((amount*5.14)/(weight*r))-0.15;
                 break;
         }
         return amountDrunk;

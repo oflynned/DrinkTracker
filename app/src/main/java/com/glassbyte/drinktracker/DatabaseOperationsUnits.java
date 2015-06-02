@@ -49,7 +49,7 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
     }
 
     //insert data into database
-    public void putInfo(DatabaseOperationsUnits DOU, String time, float units, float percentage, float bac){
+    public void putInfo(DatabaseOperationsUnits DOU, String time, double units, double percentage, double bac){
         SQLiteDatabase SQ = DOU.getWritableDatabase(); //writes data to database
         ContentValues CV = new ContentValues(); //create instance
         CV.put(TableDataUnits.TableInfoUnits.TIME, time); //coll 0
