@@ -26,11 +26,9 @@ import android.widget.Toast;
 import java.util.Random;
 
 /**
- * Created by root on 27/05/15.
+ * Created by Maciej on 27/05/15.
  */
 public class CustomDrink extends Fragment {
-    private final int SHOT_GLASS_ID = 9;
-    private final int WINE_GLASS_ID = 10;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,24 +40,35 @@ public class CustomDrink extends Fragment {
         rl.setLayoutParams(rlParams);
 
         //Create shot glass instance
-        Glass shotGlass = new DrinkingGlass(this.getActivity(),500);
+        Glass shotGlass = new DrinkingGlass(this.getActivity(),150);
         RelativeLayout.LayoutParams shotGlassParams = new RelativeLayout.LayoutParams(shotGlass.getLayoutParams());
         shotGlassParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
         shotGlass.setLayoutParams(shotGlassParams);
-        shotGlass.setBackgroundColor(Color.GREEN);
         shotGlass.setId(View.generateViewId());
 
+        Glass waterGlass = new DrinkingGlass(this.getActivity(), 250);
+        RelativeLayout.LayoutParams waterGlassParams = new RelativeLayout.LayoutParams(waterGlass.getLayoutParams());
+        waterGlassParams.addRule(RelativeLayout.RIGHT_OF, shotGlass.getId());
+        waterGlass.setLayoutParams(waterGlassParams);
+        waterGlass.setId(View.generateViewId());
+
+        Glass pintGlass = new DrinkingGlass(this.getActivity(), 400);
+        RelativeLayout.LayoutParams pintGlassParams = new RelativeLayout.LayoutParams(pintGlass.getLayoutParams());
+        pintGlassParams.addRule(RelativeLayout.RIGHT_OF, waterGlass.getId());
+        pintGlass.setLayoutParams(pintGlassParams);
+        pintGlass.setId(View.generateViewId());
+
         //Create wine glass instance
-        Glass wineGlass = new WineGlass(this.getActivity(),300);
+        Glass wineGlass = new WineGlass(this.getActivity(),400);
         RelativeLayout.LayoutParams wineGlassParams = new RelativeLayout.LayoutParams(wineGlass.getLayoutParams());
-        wineGlassParams.addRule(RelativeLayout.RIGHT_OF, shotGlass.getId());
+        wineGlassParams.addRule(RelativeLayout.RIGHT_OF, pintGlass.getId());
         wineGlass.setLayoutParams(wineGlassParams);
-        wineGlass.setBackgroundColor(Color.BLUE);
         wineGlass.setId(View.generateViewId());
 
         rl.addView(shotGlass);
+        rl.addView(waterGlass);
+        rl.addView(pintGlass);
         rl.addView(wineGlass);
-
 
         return rl;
     }
@@ -87,11 +96,11 @@ public class CustomDrink extends Fragment {
             int y = getStrokeWidth()/2;
 
             //left edge of the glass
-            canvas.drawLine(x, 0, x+(getGlassDBottomTopWidth()/2), y+getGlassHeight(), getGlassPaint());
+            canvas.drawLine(x, 0, x+getGlassDBottomTopWidth(), y+getGlassHeight(), getGlassPaint());
             //right edge of the glass
             canvas.drawLine(getGlassWidth()+getGlassDBottomTopWidth()*2-x, 0, getGlassDBottomTopWidth()+getGlassWidth(), y+getGlassHeight(), getGlassPaint());
             //bottom edge of the glass
-            canvas.drawLine(x+getGlassDBottomTopWidth()/2, getGlassHeight()-y, getGlassDBottomTopWidth()+getGlassWidth(), getGlassHeight()-y, getGlassPaint());
+            canvas.drawLine(x+getGlassDBottomTopWidth(), getGlassHeight()-y, getGlassDBottomTopWidth()+getGlassWidth(), getGlassHeight()-y, getGlassPaint());
         }
 
         @Override
