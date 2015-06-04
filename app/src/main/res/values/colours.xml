@@ -39,6 +39,7 @@
     <color name="dt_wine">#4C061D</color>
     <color name="dt_grey">#736F4E</color>
     <color name="dt_black">#010001</color>
+    <color name="dt_blue">#2274A5</color>
 
     <color name="transparent">#9FFFFFFF</color>
 </resources>

@@ -10,53 +10,75 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView style="?android:textAppearanceMedium"
+        <TextView
+            style="?android:textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:text="Choose Drink" />
+
+
+      <!--  <TextView style="?android:textAppearanceMedium"
             android:padding="16dp"
             android:lineSpacingMultiplier="1.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Choose Drink"/>
+        -->
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Database"
             android:id="@+id/btnDatabase"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/abc_button_padding_horizontal_material"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Settings"
             android:id="@+id/btnGraphs"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/abc_button_padding_horizontal_material"
+
+            />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add db member"
             android:id="@+id/btnAddDBMember"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/abc_button_padding_horizontal_material"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Invoke\nvibration"
             android:id="@+id/btnVibrate"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/abc_button_padding_horizontal_material"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Invoke\ndialogue"
             android:id="@+id/btnDialogue"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/abc_button_padding_horizontal_material"
+            />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Invoke Push\nNotification"
             android:id="@+id/btnPushNot"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/abc_button_padding_horizontal_material"
+
+            />
     </LinearLayout>
 </ScrollView>
