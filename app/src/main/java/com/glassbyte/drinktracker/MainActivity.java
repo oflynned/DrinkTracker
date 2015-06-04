@@ -18,6 +18,11 @@ import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
+    public String weight = "";
+    public String units = "";
+    public String gender = "";
+    public String run = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +32,16 @@ public class MainActivity extends Activity {
 
         //retrieve data from sharedreferences for initial run setup
         SharedPreferences sp = getSharedPreferences("Settings",MODE_PRIVATE);
-        String run = (sp.getString("runKey",""));
+        run = (sp.getString("runKey",""));
+
+        SharedPreferences spWeight = getSharedPreferences("Settings",MODE_PRIVATE);
+        weight = (spWeight.getString("weightKey",""));
+
+        SharedPreferences spUnits = getSharedPreferences("Settings",MODE_PRIVATE);
+        units = (spUnits.getString("unitsKey",""));
+
+        SharedPreferences spGender = getSharedPreferences("Settings",MODE_PRIVATE);
+        gender = (spGender.getString("genderKey",""));
 
         if (run == "" || run == null) {
             Intent intent = new Intent(this, IntroActivity.class);

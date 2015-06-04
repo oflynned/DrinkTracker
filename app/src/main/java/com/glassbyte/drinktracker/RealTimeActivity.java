@@ -131,7 +131,7 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
         {
             double x = i;
 
-            DataPoint v = new DataPoint(x, returnY(i));;
+            DataPoint v = new DataPoint(x, returnY(i));
 
             values[i] = v;
         }
@@ -144,6 +144,7 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
         try {
             if (!CR.isLast()) {
                 CR.moveToPosition(i);
+                final int h = i;
                 //run indefinitely with recursive updating
                 mTimer2 = new Runnable() {
                     @Override
@@ -151,40 +152,41 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
                         CR = DOU.getInfo(DOU);
                         CR.moveToLast();
 
+                        int H = h;
+
                         double BAC = CR.getInt(3);
-                        double y = alcoholUnits("Male", "Metric", 80, BAC);
+                        double y = alcoholUnits(gender, units, 10, BAC, H);
 
-                        DOU.putInfo(
-                                DOU,
-                                DOU.getDateTime(), //time
-                                1, //units of alcohol
-                                0.4, //percentage
-                                y //bac
-                        );
+                        if (y != 0) {
+                            DOU.putInfo(
+                                    DOU,
+                                    DOU.getDateTime(), //time
+                                    20, //units of alcohol
+                                    0.4, //percentage
+                                    y //bac
+                            );
 
-                        CR.moveToNext(); //increment table
-                        CR.close();
-
-                        mHandler.postDelayed(this, 5000);
+                            CR.moveToNext(); //increment table
+                            CR.close();
+                            mHandler.postDelayed(this, 5000);
+                            mHandler.postDelayed(mTimer2, 5000);
+                        }
                     }
                 };
-
-                CR.close();
-                mHandler.postDelayed(mTimer2, 5000);
-            }
-        } catch (Exception ex) {
-            ex.getStackTrace();
-            Log.i("error", "error in CR");
-        } finally {
-            if (!CR.isClosed()) {
-                CR.close();
             }
         }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        CR.close();
+        mHandler.postDelayed(mTimer2, 5000);
+
         return y;
     }
 
 
-    private double alcoholUnits(String gender, String units, double weight, double amount){
+    private double alcoholUnits(String gender, String units, double weight, double amount, int H){
         double oz = 29.5735;
         double pound = 2.20462;
         double unit = 10; //ml
@@ -202,10 +204,10 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
 
         switch(units){
             case "Metric":
-                amountDrunk = (((amount/oz)*5.14)/((weight/pound)*r))-0.15; //0.15*H
+                amountDrunk = (((amount/oz)*5.14)/((weight/pound)*r))-0.15*(H/3600);
                 break;
             case "Imperial":
-                amountDrunk = ((amount*5.14)/(weight*r))-0.15;
+                amountDrunk = ((amount*5.14)/(weight*r))-0.15*(H/3600);
                 break;
         }
         return amountDrunk;

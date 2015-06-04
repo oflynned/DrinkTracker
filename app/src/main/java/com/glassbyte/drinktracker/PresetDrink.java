@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -47,6 +48,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
 
         switch (view.getId()) {
             case R.id.presetAddDrink:
+
                 DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getActivity());
                 Cursor CR = DOU.getInfo(DOU);
 
@@ -82,11 +84,11 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
     }
 
     private double addUnits() {
-        return 0;
+        return 20;
     }
 
     private double drinkPercentage() {
-        return 0;
+        return 0.4;
     }
 
     private double BACformula() {
@@ -94,6 +96,6 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
     }
 
     private double updateBAC() {
-        return 1;
+        return 10;
     }
 }
