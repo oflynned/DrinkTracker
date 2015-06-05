@@ -36,6 +36,7 @@ public class CustomDrink extends Fragment {
 
         RelativeLayout rl = new RelativeLayout(this.getActivity());
         RelativeLayout.LayoutParams rlParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        rl.setBackground(getResources().getDrawable(R.drawable.bg3));
         rl.setPadding(16,16,16,16);
         rl.setLayoutParams(rlParams);
 
