@@ -2,147 +2,156 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/contentPresetDrink"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/dt_orange">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <RelativeLayout
 
-        <TextView
-            style="?android:textAppearanceLarge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            android:text="Preset Drink" />
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@color/dt_black" />
-
-        <LinearLayout
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp">
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg1" />
 
-            <RelativeLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:paddingTop="30dp"
+                style="?android:textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:text="Preset Drink" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/dt_black" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp">
 
-
-
-
-                <ImageView
-                    android:id="@+id/presetDrink"
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/drawable_pintglass"
-
-
-                    />
-
-                <Spinner
-                    android:id="@+id/spinnerPresetDrink"
-                    android:layout_marginTop="15dp"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/presetDrink"
-                    android:layout_gravity="center_horizontal"
-                    android:entries="@array/drinks"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignRight="@+id/presetDrink"
-                    android:layout_alignEnd="@+id/presetDrink"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="40dp"
-                    android:paddingEnd="10dp"
-                    android:paddingRight="10dp"
-                    >
-
+                    android:layout_height="wrap_content">
 
 
                     <ImageView
+                        android:id="@+id/presetDrink"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/imageView"
-                        android:background="@drawable/pint"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:padding="10dp"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingEnd="10dp"
-                        android:paddingRight="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/drawable_pintglass"
+
+
                         />
-                </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spinnerPresetDrink"
+                        android:layout_marginTop="15dp"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/presetDrink"
+                        android:layout_gravity="center_horizontal"
+                        android:entries="@array/drinks" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignRight="@+id/presetDrink"
+                        android:layout_alignEnd="@+id/presetDrink"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="40dp"
+                        android:paddingEnd="10dp"
+                        android:paddingRight="10dp">
 
 
-            </RelativeLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView"
+                            android:background="@drawable/pint"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:padding="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingRight="10dp" />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/percentagePreset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:gravity="center"
+                        android:text="Please add a percentage:" />
+
+                    <EditText
+                        android:id="@+id/editText"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/percentagePreset"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignRight="@+id/percentagePreset"
+                        android:layout_gravity="center_horizontal"
+                        android:text="%"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/presetAddDrink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="Add Drink"
+                android:background="@null"
+
+
+                />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/percentagePreset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:gravity="center"
-                    android:text="Please add a percentage:" />
-
-                <EditText
-                    android:id="@+id/editText"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
-                    android:gravity="center" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/percentagePreset"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignRight="@+id/percentagePreset"
-                    android:layout_gravity="center_horizontal"
-                    android:text="%"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            </RelativeLayout>
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/presetAddDrink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="Add Drink"
-            android:background="@null"
-
-
-            />
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>
