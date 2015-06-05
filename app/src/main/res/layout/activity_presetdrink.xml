@@ -45,45 +45,9 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-<<<<<<< Updated upstream
+
                     android:layout_height="wrap_content">
-=======
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/drawable_pintglass"
 
-
-                    />
-
-                <Spinner
-                    android:id="@+id/spinnerPresetDrink"
-                    android:layout_marginTop="15dp"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/presetDrink"
-                    android:layout_gravity="center_horizontal"
-                    android:entries="@array/drinks"
-                    android:backgroundTint="@color/dt_blue"
-                    android:popupBackground="@color/red"
-
-                    />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignRight="@+id/presetDrink"
-                    android:layout_alignEnd="@+id/presetDrink"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="40dp"
-                    android:paddingEnd="10dp"
-                    android:paddingRight="10dp"
-                    >
-
->>>>>>> Stashed changes
 
 
                     <ImageView
