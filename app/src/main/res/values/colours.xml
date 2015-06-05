@@ -41,5 +41,8 @@
     <color name="dt_black">#010001</color>
     <color name="dt_blue">#2274A5</color>
 
+    <!--Transparrent Colors-->
+    <color name="tc_red">#66FF0000</color>>
+
     <color name="transparent">#9FFFFFFF</color>
 </resources>

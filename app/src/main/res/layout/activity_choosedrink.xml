@@ -48,7 +48,8 @@
             android:id="@+id/btnDatabase"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@android:color/transparent"
+            android:background="@color/tc_red"
+
             />
 
         <Button
@@ -58,7 +59,8 @@
             android:id="@+id/btnGraphs"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@android:color/transparent"
+            android:background="@color/tc_red"
+
             />
 
         <Button
@@ -68,7 +70,8 @@
             android:id="@+id/btnAddDBMember"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@android:color/transparent"
+            android:background="@color/tc_red"
+
             />
 
         <Button
@@ -78,7 +81,8 @@
             android:id="@+id/btnVibrate"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@android:color/transparent"
+            android:background="@color/tc_red"
+
             />
 
         <Button
@@ -88,7 +92,8 @@
             android:id="@+id/btnDialogue"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@android:color/transparent"
+            android:background="@color/tc_red"
+
             />
 
         <Button
@@ -98,7 +103,8 @@
             android:id="@+id/btnPushNot"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@android:color/transparent"
+            android:background="@color/tc_red"
+
 
             />
     </LinearLayout>
