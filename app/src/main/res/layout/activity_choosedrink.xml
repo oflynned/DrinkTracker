@@ -68,7 +68,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
             android:background="@color/tc_red"
-
             />
 
         <Button
