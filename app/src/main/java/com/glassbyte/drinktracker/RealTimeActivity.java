@@ -76,15 +76,12 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
 
 
         //read in presets
-        SharedPreferences spGender = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        SharedPreferences spUnits = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        SharedPreferences spWeight = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        SharedPreferences spHeight = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        SharedPreferences sp = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
 
-        gender = (spGender.getString("genderKey", ""));
-        units = (spUnits.getString("unitsKey", ""));
-        weight = Integer.parseInt(spWeight.getString("weightKey", ""));
-        height = Integer.parseInt(spHeight.getString("heightKey", ""));
+        gender = (sp.getString("genderKey", ""));
+        units = (sp.getString("unitsKey", ""));
+        weight = Integer.parseInt(sp.getString("weightKey", ""));
+        height = Integer.parseInt(sp.getString("heightKey", ""));
 
         return rootView;
     }
