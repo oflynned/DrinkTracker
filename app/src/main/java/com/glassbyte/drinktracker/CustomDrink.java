@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.graphics.Path;
 
 /**
  * Created by Maciej on 27/05/15.
@@ -143,24 +144,55 @@ public class CustomDrink extends Fragment {
             this(context, viewWidth, viewHeight, glassHeight, glassWidth, glassX, glassY,(glassHeight/2)-(glassHeight/3));
         }
 
+        /*
+        * glassX - where the top-left edge of the glass is to be drawn at the x-axis
+        * glassY - where the top-left edge of the glass is to be drawn at the y-axis
+        * glassWidth - measured at the glass' widest point, i.e. from the top-left edge to the top-right edge
+        * glassHeight - measured from the top to the bottom of the glass
+        * edgeSlope - slope of the edge of the glass, i.e. how skew is it supposed to be
+        * */
         public DrinkingGlass(Context context, int viewWidth, int viewHeight, int glassHeight, int glassWidth, int glassX, int glassY, int dBottomTopglassWidth){
             super(context, viewWidth, viewHeight, glassHeight, glassWidth, glassX, glassY, dBottomTopglassWidth);
+            this.setOnTouchListener(this);
         }
 
         @Override
         public void onDraw(Canvas canvas){
             super.onDraw(canvas);
 
+            paint.setColor(Color.BLACK);
+            paint.setStyle(Paint.Style.STROKE);
+
             //left edge of the glass
             canvas.drawLine(getGlassX(), getGlassY(), getGlassX()+getGlassDBottomTopWidth(), getGlassY()+getGlassHeight(), getGlassPaint());
             //right edge of the glass
             canvas.drawLine(getGlassX()+getGlassWidth()+getGlassDBottomTopWidth()*2, getGlassY(), getGlassX()+getGlassDBottomTopWidth()+getGlassWidth(), getGlassY()+getGlassHeight(), getGlassPaint());
             //bottom edge of the glass
-            canvas.drawLine(getGlassX()+getGlassDBottomTopWidth(), getGlassY()+getGlassHeight(), getGlassX()+getGlassDBottomTopWidth()+getGlassWidth(), getGlassY()+getGlassHeight(), getGlassPaint());
+            canvas.drawLine(getGlassX() + getGlassDBottomTopWidth(), getGlassY() + getGlassHeight(), getGlassX() + getGlassDBottomTopWidth() + getGlassWidth(), getGlassY() + getGlassHeight(), getGlassPaint());
+
+            /*FILLING OUT THE GLASS*/
+            paint.setColor(Color.BLUE);
+            paint.setStyle(Paint.Style.FILL);
+
+            Path p = new Path();
+            p.moveTo(20,20);
+            p.lineTo(40,200);
+            p.lineTo(240, 200);
+            p.lineTo(260, 20);
+            canvas.drawPath(p, paint);
         }
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                System.out.println("X: " + motionEvent.getRawX());
+                System.out.println("Y: " + motionEvent.getRawY());
+                return true;
+            }
+            else if(motionEvent.getAction() == MotionEvent.ACTION_MOVE){
+                System.out.println("Y: " + motionEvent.getRawY());
+            }
+            System.out.println(MotionEvent.actionToString(motionEvent.getAction()));
             return false;
         }
     }
@@ -176,6 +208,7 @@ public class CustomDrink extends Fragment {
 
         public WineGlass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight, int glassX, int glassY){
             super(context, viewWidth, viewHeight, glassWidth, glassHeight, glassX, glassY, 0);
+            this.setOnTouchListener(this);
         }
 
         @Override
@@ -204,7 +237,7 @@ public class CustomDrink extends Fragment {
     * */
     public class Glass extends View{
         private int glassHeight, glassWidth, dBottomTopWidth, strokeWidth, x, y;
-        private Paint paint;
+        public Paint paint;
 
         public Glass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight, int x, int y, int dBottomTopWidth){
             super(context);
@@ -218,7 +251,7 @@ public class CustomDrink extends Fragment {
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(this.strokeWidth);
             paint.setColor(Color.BLACK);
-            
+
             this.setLayoutParams(new RelativeLayout.LayoutParams(viewWidth, viewHeight));
         }
 
