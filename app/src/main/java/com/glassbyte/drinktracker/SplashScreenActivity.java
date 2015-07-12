@@ -42,7 +42,7 @@ public class SplashScreenActivity extends Activity
             public void run() {
                 try {
                     int timer = 0;
-                    while (timer < 2000) {
+                    while (timer < 100) {
                         sleep(100);
                         timer = timer + 100;
                     }
