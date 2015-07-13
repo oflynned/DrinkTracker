@@ -2,10 +2,10 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:colorPrimaryDark">@color/orange900</item>
-        <item name="android:navigationBarColor">@color/orange900</item>
+        <item name="android:colorPrimaryDark">@color/orange700</item>
+        <item name="android:navigationBarColor">@color/orange700</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:colorEdgeEffect">@color/orange900</item>
+        <item name="android:colorEdgeEffect">@color/orange700</item>
         <item name="android:actionBarStyle">@style/ActionBarStyle</item>
         <item name="android:actionBarTabBarStyle">@style/TabStyle</item>
         <item name="colorPrimary">@color/orange500</item>
