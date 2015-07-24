@@ -139,6 +139,8 @@ public class CustomDrink extends Fragment {
     *   \___/
     * */
     public class DrinkingGlass extends Glass implements View.OnTouchListener{
+        private Line leftEdge;
+        private Line rightEdge;
 
         public DrinkingGlass(Context context, int viewWidth, int viewHeight, int glassHeight, int glassWidth, int glassX, int glassY){
             this(context, viewWidth, viewHeight, glassHeight, glassWidth, glassX, glassY,(glassHeight/2)-(glassHeight/3));
@@ -151,24 +153,39 @@ public class CustomDrink extends Fragment {
         * glassHeight - measured from the top to the bottom of the glass
         * edgeSlope - slope of the edge of the glass, i.e. how skew is it supposed to be
         * */
-        public DrinkingGlass(Context context, int viewWidth, int viewHeight, int glassHeight, int glassWidth, int glassX, int glassY, int dBottomTopglassWidth){
-            super(context, viewWidth, viewHeight, glassHeight, glassWidth, glassX, glassY, dBottomTopglassWidth);
+        public DrinkingGlass(Context context, int viewWidth, int viewHeight, int glassHeight, int glassWidth, int glassX, int glassY, float m){
+            super(context, viewWidth, viewHeight, glassHeight, glassWidth, glassX, glassY);
             this.setOnTouchListener(this);
+
+            leftEdge = new Line(super.getGlassX(), super.getGlassY(), 10f);
+            rightEdge = new Line(super.getGlassX()+super.getGlassWidth(), super.getGlassY(), -10f);
         }
 
         @Override
         public void onDraw(Canvas canvas){
             super.onDraw(canvas);
 
+            float leftTopEdgeX = super.getGlassX();
+            float leftTopEdgeY = super.getGlassY();
+
+            float rightTopEdgeX = leftTopEdgeX + super.getGlassWidth();
+            float rightTopEdgeY = leftTopEdgeY;
+
+            float leftBottomEdgeY = leftTopEdgeY + super.getGlassHeight();
+            float leftBottomEdgeX = leftEdge.calculateX(leftBottomEdgeY);
+
+            float rightBottomEdgeY = leftBottomEdgeY;
+            float rightBottomEdgeX = rightEdge.calculateX(rightBottomEdgeY);
+
             paint.setColor(Color.BLACK);
             paint.setStyle(Paint.Style.STROKE);
 
             //left edge of the glass
-            canvas.drawLine(getGlassX(), getGlassY(), getGlassX()+getGlassDBottomTopWidth(), getGlassY()+getGlassHeight(), getGlassPaint());
+            canvas.drawLine(leftTopEdgeX, leftTopEdgeY, leftBottomEdgeX, leftBottomEdgeY, super.getGlassPaint());
             //right edge of the glass
-            canvas.drawLine(getGlassX()+getGlassWidth()+getGlassDBottomTopWidth()*2, getGlassY(), getGlassX()+getGlassDBottomTopWidth()+getGlassWidth(), getGlassY()+getGlassHeight(), getGlassPaint());
+            canvas.drawLine(rightTopEdgeX, rightTopEdgeY, rightBottomEdgeX, rightBottomEdgeY, super.getGlassPaint());
             //bottom edge of the glass
-            canvas.drawLine(getGlassX() + getGlassDBottomTopWidth(), getGlassY() + getGlassHeight(), getGlassX() + getGlassDBottomTopWidth() + getGlassWidth(), getGlassY() + getGlassHeight(), getGlassPaint());
+            canvas.drawLine(leftBottomEdgeX, leftBottomEdgeY, rightBottomEdgeX, rightBottomEdgeY, super.getGlassPaint());
 
             /*FILLING OUT THE GLASS*/
             paint.setColor(Color.BLUE);
@@ -207,7 +224,7 @@ public class CustomDrink extends Fragment {
     public class WineGlass extends Glass implements View.OnTouchListener{
 
         public WineGlass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight, int glassX, int glassY){
-            super(context, viewWidth, viewHeight, glassWidth, glassHeight, glassX, glassY, 0);
+            super(context, viewWidth, viewHeight, glassWidth, glassHeight, glassX, glassY);
             this.setOnTouchListener(this);
         }
 
@@ -236,14 +253,14 @@ public class CustomDrink extends Fragment {
     * super class for all the other types of glasses. All of them will share those properties.
     * */
     public class Glass extends View{
-        private int glassHeight, glassWidth, dBottomTopWidth, strokeWidth, x, y;
+        private int glassHeight, glassWidth, strokeWidth;
+        private float x, y;
         public Paint paint;
 
-        public Glass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight, int x, int y, int dBottomTopWidth){
+        public Glass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight, float x, float y){
             super(context);
             this.glassWidth = glassWidth;
             this.glassHeight = glassHeight;
-            this.dBottomTopWidth = dBottomTopWidth;
             this.strokeWidth = 10;
             this.x = x;
             this.y = y;
@@ -258,16 +275,51 @@ public class CustomDrink extends Fragment {
 
         public void setGlassHeight(int glassHeight){this.glassHeight = glassHeight;}
         public void setGlassWidth(int glassWidth){this.glassWidth = glassWidth;}
-        public void setGlassDBottomTopWidth(int dBottomTopWidth){this.dBottomTopWidth = dBottomTopWidth;}
         public void setGlassPaint(Paint p){paint = p;}
         public void setGlassX(int x){this.x = x;}
         public void setGlassY(int y){this.y = y;}
-        public int getGlassHeight(){return glassHeight;}
-        public int getGlassWidth(){return glassWidth;}
-        public int getGlassX(){return x;}
-        public int getGlassY(){return y;}
-        public int getGlassDBottomTopWidth(){return dBottomTopWidth;}
+        public float getGlassHeight(){return glassHeight;}
+        public float getGlassWidth(){return glassWidth;}
+        public float getGlassX(){return x;}
+        public float getGlassY(){return y;}
         public Paint getGlassPaint(){return paint;}
         public int getStrokeWidth(){return strokeWidth;}
+    }
+
+    public class Line{
+        private boolean slopeUndefined;
+        private float m;
+        private float c;
+
+        public Line(float x1, float y1, float m){
+            this.m = m;
+            this.c = y1 - (this.m * x1);
+            slopeUndefined = false;
+        }
+        public Line(float m, float c){
+            this.m = m;
+            this.c = c;
+            slopeUndefined = false;
+        }
+        public Line(float x1, float y1, float x2, float y2){
+            this.m = (y2 - y1) / (x2 - x1);
+            this.c = y1 - (this.m * x1);
+        }
+        public Line(float c, boolean slopeUndefined) throws java.lang.Exception{
+            if(!slopeUndefined)
+                throw new java.lang.Exception("Line must either have an undefined slope or a valid slope value!");
+
+            this.slopeUndefined = slopeUndefined;
+            //NOTE: as of now the class will not work properly with an undefined slope! i.e.: vertical lines
+        }
+
+        float calculateX(float y){return ((y-this.c)/this.m);}
+        float calculateY(float x){return (this.m*x + this.c);}
+
+        float getC(){return this.c;}
+        void setC(float c){this.c = c;}
+
+        float getM(){return this.m;}
+        void setM(float m){this.m = m;}
     }
 }
