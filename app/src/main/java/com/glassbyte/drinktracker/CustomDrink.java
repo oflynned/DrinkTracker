@@ -222,24 +222,51 @@ public class CustomDrink extends Fragment {
     * ---
     * */
     public class WineGlass extends Glass implements View.OnTouchListener{
+        private Line leftEdge, rightEdge, middleEdge, leg, bottom;
 
         public WineGlass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight, int glassX, int glassY){
             super(context, viewWidth, viewHeight, glassWidth, glassHeight, glassX, glassY);
             this.setOnTouchListener(this);
+
+            leftEdge = new Line(super.getGlassX(), super.getGlassY(), 10);
+            rightEdge = new Line(super.getGlassX()+super.getGlassWidth(), super.getGlassY(), -10);
+
         }
 
         @Override
         public void onDraw(Canvas canvas){
             super.onDraw(canvas);
 
+            float leftTopEdgeX = super.getGlassX();
+            float leftTopEdgeY = super.getGlassY();
+
+            float rightTopEdgeX = leftTopEdgeX + super.getGlassWidth() ;
+            float rightTopEdgeY = leftTopEdgeY;
+
+            float leftMiddleEdgeY = leftTopEdgeY + (super.getGlassHeight()/2);
+            float leftMiddleEdgeX = leftEdge.calculateX(leftMiddleEdgeY);
+            float rightMiddleEdgeX = leftMiddleEdgeX + super.getGlassWidth() - 2*(leftMiddleEdgeX - leftTopEdgeX);
+            float rightMiddleEdgeY = leftMiddleEdgeY;
+            float centerMiddleEdgeX =(rightMiddleEdgeX - leftMiddleEdgeX)/2 + leftMiddleEdgeX;
+            float centerMiddleEdgeY = leftMiddleEdgeY;
+
+            float leftBottomEdgeX = leftMiddleEdgeX;
+            float leftBottomEdgeY = leftTopEdgeY + super.getGlassHeight();
+            float rightBottomEdgeX = rightMiddleEdgeX;
+            float rightBottomEdgeY = leftBottomEdgeY;
+            float centerBottomEdgeX = centerMiddleEdgeX;
+            float centerBottomEdgeY = leftBottomEdgeY;
+
             //Left edge of the glass
-            canvas.drawLine(getGlassX(), getGlassY(), getGlassX()+getGlassWidth()/2, getGlassY()+getGlassHeight()/2, getGlassPaint());
+            canvas.drawLine(leftTopEdgeX, leftTopEdgeY, leftMiddleEdgeX, leftMiddleEdgeY, super.getGlassPaint());
             //Right edge of the glass
-            canvas.drawLine(getGlassX()+getGlassWidth(), getGlassY(), getGlassX()+getGlassWidth()/2, getGlassY()+getGlassHeight()/2, getGlassPaint());
+            canvas.drawLine(rightTopEdgeX, rightTopEdgeY, rightMiddleEdgeX, rightMiddleEdgeY, super.getGlassPaint());
+            //Glass bottom
+            canvas.drawLine(leftMiddleEdgeX, leftMiddleEdgeY, rightMiddleEdgeX, rightMiddleEdgeY, super.getGlassPaint());
             //Leg of the glass
-            canvas.drawLine(getGlassX()+getGlassWidth()/2, getGlassY()+getGlassHeight()/2, getGlassX()+getGlassWidth()/2, getGlassY()+getGlassHeight(), getGlassPaint());
+            canvas.drawLine(centerMiddleEdgeX, centerMiddleEdgeY, centerBottomEdgeX, centerBottomEdgeY, super.getGlassPaint());
             //Foot of the glass
-            canvas.drawLine(getGlassX(), getGlassY()+getGlassHeight(), getGlassX()+getGlassWidth(), getGlassY()+getGlassHeight(), getGlassPaint());
+            canvas.drawLine(leftBottomEdgeX, leftBottomEdgeY, rightBottomEdgeX, rightBottomEdgeY, super.getGlassPaint());
         }
 
         @Override
