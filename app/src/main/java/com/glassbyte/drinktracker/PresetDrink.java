@@ -27,6 +27,10 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
     private Spinner percentageChoice;
     private TextView addPercentageText;
 
+    private double units;
+    private double percentage;
+    private double BAC;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -75,13 +79,13 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
                         break;
                     //cider bottle
                     case 4:
-                        glass.setImageResource(R.drawable.beer_can);
+                        glass.setImageResource(R.drawable.beer_bottle);
                         addPercentageText.setVisibility(View.VISIBLE);
                         percentageChoice.setVisibility(View.VISIBLE);
                         break;
                     //cider bottle
                     case 5:
-                        glass.setImageResource(R.drawable.beer_can);
+                        glass.setImageResource(R.drawable.beer_bottle);
                         addPercentageText.setVisibility(View.VISIBLE);
                         percentageChoice.setVisibility(View.VISIBLE);
                         break;
@@ -147,9 +151,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
                 // TODO Auto-generated method stub
 
             }
-
         });
-
 
         addDrink = (Button) V.findViewById(R.id.presetAddDrink);
         addDrink.setOnClickListener(this);
@@ -173,9 +175,9 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
                     DOU.putInfo(
                             DOU,
                             DOU.getDateTime(), //time
-                            addUnits(), //units of alcohol
-                            drinkPercentage(), //percentage
-                            BACformula() //bac
+                            getUnits(units), //units of alcohol
+                            getPercentage(percentage), //percentage
+                            getBAC(BAC) //bac
                     );
 
                     CR.moveToNext(); //increment table
@@ -185,33 +187,39 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
                     DOU.putInfo(
                             DOU,
                             DOU.getDateTime(), //time
-                            addUnits(), //units of alcohol
-                            drinkPercentage(), //percentage
-                            updateBAC() //bac
+                            getUnits(units), //units of alcohol
+                            getPercentage(percentage), //percentage
+                            getBAC(BAC) //bac
                     );
 
                     CR.moveToNext(); //increment table
                     CR.close();
                 }
                 break;
-
         }
     }
 
-    private double addUnits() {
-        return 20;
+    private double getUnits(double units) {
+        return units;
     }
 
-    private double drinkPercentage() {
-        return 0.4;
+    private void setUnits(double units){
+        this.units = units;
     }
 
-    private double BACformula() {
-        return 0;
+    private  double getPercentage(double percentage){
+        return percentage;
     }
 
-    private double updateBAC() {
-        return 10;
+    private void setPercentage(double percentage){
+        this.percentage= percentage;
     }
 
+    private double getBAC(double BAC){
+        return BAC;
+    }
+
+    private void setBAC(double BAC){
+        this.BAC = BAC;
+    }
 }
