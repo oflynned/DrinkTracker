@@ -13,11 +13,11 @@
 
         <TextView
             android:id="@+id/titlePresetDrink"
-            android:paddingTop="30dp"
             style="?android:textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
+            android:paddingTop="30dp"
             android:paddingLeft="15dp"
             android:text="Preset Drink" />
 
@@ -38,7 +38,7 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="81dp"
+                android:layout_height="150dp"
                 android:id="@+id/displayDrink">
 
                 <ImageView
@@ -48,16 +48,10 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/ic_launcher"
+                    android:layout_margin="10dp" />
 
             </RelativeLayout>
-            <Spinner
-                android:id="@+id/spinnerPresetDrink"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:entries="@array/drinks"
-                android:layout_below="@+id/presetDrink"/>
         </LinearLayout>
 
         <LinearLayout
@@ -70,32 +64,39 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/drinkPresetChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:gravity="center"
+                    android:text="Please choose a drink:" />
+
+                <Spinner
+                    android:layout_below="@id/drinkPresetChoice"
+                    android:id="@+id/spinnerPresetDrink"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:entries="@array/drinks" />
+
+                <TextView
+                    android:layout_below="@id/spinnerPresetDrink"
                     android:id="@+id/percentagePreset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
                     android:gravity="center"
                     android:text="Please add a percentage:" />
-
-                <EditText
-                    android:id="@+id/editText"
-                    android:layout_width="100dp"
+                <Spinner
+                    android:layout_below="@id/percentagePreset"
+                    android:id="@+id/spinnerPresetDrinkPercentage"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
-                    android:gravity="center" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/percentagePreset"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignRight="@+id/percentagePreset"
                     android:layout_gravity="center_horizontal"
-                    android:text="%"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:layout_centerHorizontal="true"
+                    android:entries="@array/beerPercentages" />
+
 
             </RelativeLayout>
         </LinearLayout>

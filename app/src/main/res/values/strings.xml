@@ -14,12 +14,103 @@
         <item>Imperial</item>
     </string-array>
 
+    <!-->types of drinks<-->
     <string-array name="drinks">
-        <item>Beer</item>
-        <item>Wine</item>
-        <item>Cocktails</item>
-        <item>Spirits</item>
-        <item>Alcopop</item>
-        <item>Death</item>
+        <item>""</item>
+        <item>250ml can of beer</item>
+        <item>330ml bottle of beer</item>
+        <item>500ml can of beer</item>
+        <item>330ml bottle of cider</item>
+        <item>500ml bottle of cider</item>
+        <item>500ml can of cider</item>
+        <item>150ml glass of wine</item>
+        <item>300ml glass of wine</item>
+        <item>30ml single shot</item>
+        <item>60ml double shot</item>
+        <item>90ml triple shot</item>
+        <item>330ml alcopop</item>
+        <item>500ml alcopop</item>
+        <item>1 standard cocktail</item>
+    </string-array>
+
+    <!-->beer percentages<-->
+    <string-array name="beerPercentages">
+        <item>0.4%</item>
+        <item>0.5%</item>
+        <item>2.9%</item>
+        <item>3.0%</item>
+        <item>3.1%</item>
+        <item>3.2%</item>
+        <item>3.3%</item>
+        <item>3.4%</item>
+        <item>3.5%</item>
+        <item>3.6%</item>
+        <item>3.7%</item>
+        <item>3.8%</item>
+        <item>3.9%</item>
+        <item>4.0%</item>
+        <item>4.1%</item>
+        <item>4.2%</item>
+        <item>4.3%</item>
+        <item>4.4%</item>
+        <item>4.5%</item>
+        <item>4.6%</item>
+        <item>4.7%</item>
+        <item>4.8%</item>
+        <item>4.9%</item>
+        <item>5.0%</item>
+        <item>5.1%</item>
+        <item>5.2%</item>
+        <item>5.3%</item>
+        <item>5.4%</item>
+        <item>5.5%</item>
+        <item>5.6%</item>
+        <item>5.7%</item>
+        <item>5.8%</item>
+        <item>5.9%</item>
+        <item>6.0%</item>
+        <item>6.1%</item>
+        <item>6.2%</item>
+        <item>6.3%</item>
+        <item>6.4%</item>
+        <item>6.5%</item>
+        <item>6.6%</item>
+        <item>6.7%</item>
+        <item>6.8%</item>
+        <item>6.9%</item>
+        <item>7.0%</item>
+        <item>8.0%</item>
+        <item>9.0%</item>
+        <item>9.9%</item>
+        <item>10.0%</item>
+        <item>10.2%</item>
+    </string-array>
+
+    <!-->wine percentages<-->
+    <string-array name="winePercentages">
+        <item>10%</item>
+        <item>11%</item>
+        <item>12%</item>
+        <item>13%</item>
+        <item>14%</item>
+        <item>15%</item>
+        <item>16%</item>
+        <item>17%</item>
+        <item>18%</item>
+        <item>19%</item>
+        <item>20%</item>
+    </string-array>
+
+    <!-->spirits percentages<-->
+    <string-array name="spiritPercentages">
+        <item>37.5%</item>
+        <item>40%</item>
+        <item>42%</item>
+        <item>50%</item>
+        <item>60%</item>
+        <item>70%</item>
+        <item>80%</item>
+        <item>90%</item>
+        <item>95%</item>
     </string-array>
 </resources>
