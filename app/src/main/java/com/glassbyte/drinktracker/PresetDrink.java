@@ -1,25 +1,17 @@
 package com.glassbyte.drinktracker;
 
-import android.app.DialogFragment;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Toast;
-
-import java.util.Random;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 /**
  * Created by root on 27/05/15.
@@ -30,12 +22,46 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
     Button addDrink;
     private DatabaseOperationsUnits DOU;
     private Cursor CR;
+    private ImageView glass;
+    private Spinner spinner;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View V = inflater.inflate(R.layout.activity_presetdrink, container, false);
 
+        glass = (ImageView) V.findViewById(R.id.presetDrink);
+
+        spinner = (Spinner) V.findViewById(R.id.spinnerPresetDrink);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+
+                int position = spinner.getSelectedItemPosition();
+                switch (position){
+                    //beer
+                    case 0:
+                        glass.setImageResource(R.drawable.beer_bottle);
+                        break;
+                    //wine
+                    case 1:
+                        glass.setImageResource(R.drawable.glass_wine);
+                        break;
+                    case 2:
+                        glass.setImageResource(R.drawable.shot);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
 
         addDrink = (Button) V.findViewById(R.id.presetAddDrink);
         addDrink.setOnClickListener(this);
@@ -43,6 +69,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
         return V;
     }
 
+    //add a preset row to the database
     @Override
     public void onClick(View view) {
 
@@ -98,4 +125,5 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
     private double updateBAC() {
         return 10;
     }
+
 }

@@ -65,7 +65,7 @@ public class Settings {
     public void save(SharedPreferences prefs) {
         SharedPreferences.Editor editor = prefs.edit();
         save(editor);
-        editor.commit();
+        editor.apply();
     }
 
     public void save(SharedPreferences.Editor editor) {
