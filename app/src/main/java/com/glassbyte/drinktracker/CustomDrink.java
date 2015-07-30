@@ -7,8 +7,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Typeface;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Button;
 
 /**
  * Created by Maciej on 27/05/15.
@@ -55,6 +60,7 @@ public class CustomDrink extends Fragment {
     private int chosenGlassViewId;
 
     private SeekBar alcBar;
+    private TextView alcVolDisplay;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,7 +74,7 @@ public class CustomDrink extends Fragment {
         int screenHeight = size.y;
 
         alcBarWidth = screenWidth;
-        alcBarHeight = screenHeight/10;
+        alcBarHeight = screenHeight/20;
 
         previewWidth = screenWidth/NUMBER_OF_GLASSES;
         previewHeight = screenHeight/4;
@@ -88,18 +94,67 @@ public class CustomDrink extends Fragment {
         waterGlassHeight = (int)(pintGlassHeight/2);
         waterGlassWidth = (int)(pintGlassWidth/1.2f);
 
-        alcBar = new SeekBar(thisActivity);
-        alcBar.setKeyProgressIncrement(1);
-        alcBar.setMax(100);
-        RelativeLayout.LayoutParams alcBarParam = new RelativeLayout.LayoutParams(alcBarWidth, alcBarHeight);
-        alcBarParam.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-        alcBar.setLayoutParams(alcBarParam);
-        alcBar.setId(View.generateViewId());
-
         rl = new RelativeLayout(this.getActivity());
         RelativeLayout.LayoutParams rlParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         rl.setPadding(PADDING, PADDING, PADDING, PADDING);
         rl.setLayoutParams(rlParams);
+
+
+
+        alcVolDisplay = new TextView(thisActivity);
+        RelativeLayout.LayoutParams alcVolDisplayParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        alcVolDisplayParam.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+        alcVolDisplayParam.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+        alcVolDisplay.setLayoutParams(alcVolDisplayParam);
+        alcVolDisplay.setId(View.generateViewId());
+        alcVolDisplay.setTextColor(Color.WHITE);
+        alcVolDisplay.setTypeface(null, Typeface.BOLD);
+
+        Button drinkButton = new Button(thisActivity);
+        drinkButton.setTypeface(null, Typeface.BOLD);
+        drinkButton.setTextColor(Color.WHITE);
+        drinkButton.setText("Drink!");
+        drinkButton.setBackgroundColor(Color.rgb(255, 120, 0));
+        drinkButton.setId(View.generateViewId());
+        RelativeLayout.LayoutParams drinkButtonParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        drinkButtonParam.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+        drinkButtonParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+        drinkButton.setLayoutParams(drinkButtonParam);
+
+        alcBar = new SeekBar(thisActivity);
+        alcBar.setKeyProgressIncrement(1);
+        alcBar.setMax(100);
+        alcBar.setProgress(6);
+        alcBar.setProgressDrawable(ContextCompat.getDrawable(thisActivity, R.drawable.alc_bar));
+        LayerDrawable thumb = (LayerDrawable)ContextCompat.getDrawable(thisActivity, R.drawable.alc_bar_thumb);
+        alcBar.setThumb(thumb);
+        alcBar.setThumbOffset(0);
+        alcBar.setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams alcBarParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT - alcVolDisplay.getWidth() - drinkButton.getWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
+        //alcBarParam.addRule(RelativeLayout., drinkButton.getId());
+        alcBarParam.addRule(RelativeLayout.RIGHT_OF, alcVolDisplay.getId());
+        alcBarParam.addRule(RelativeLayout.LEFT_OF, drinkButton.getId());
+        alcBar.setLayoutParams(alcBarParam);
+        alcBar.setId(View.generateViewId());
+
+        alcVolDisplay.setText(alcBar.getProgress() + "% Alc.");
+
+        alcBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                alcVolDisplay.setText(seekBar.getProgress() + "% Alc.");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         //Create shot glass instance
         shotGlass = new DrinkingGlass(this.getActivity(), previewWidth, previewHeight, shotGlassWidth, shotGlassHeight, (previewWidth-shotGlassWidth)/2, (previewHeight-shotGlassHeight)/2, SHOT_GLASS_ML);
@@ -150,12 +205,14 @@ public class CustomDrink extends Fragment {
         chosenGlassViewId = View.generateViewId();
         chosenGlass.setId(chosenGlassViewId);
 
+        rl.addView(alcVolDisplay);
+        rl.addView(drinkButton);
+        rl.addView(alcBar);
+        rl.addView(chosenGlass);
         rl.addView(shotGlass);
         rl.addView(waterGlass);
         rl.addView(pintGlass);
         rl.addView(wineGlass);
-        rl.addView(chosenGlass);
-        rl.addView(alcBar);
         return rl;
     }
 
