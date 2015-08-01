@@ -10,9 +10,10 @@
         android:id="@android:id/progress">
         <shape android:shape="oval" >
             <solid android:color="@color/red"/>
-            <size android:height="@dimen/abc_action_bar_content_inset_material"
-                android:width="@dimen/abc_action_bar_content_inset_material"/>
-
+            <!--<size android:height="@dimen/abc_action_bar_content_inset_material"
+                android:width="@dimen/abc_action_bar_content_inset_material"/> -->
+            <size android:height="50dip"
+                android:width="50dip" />
         </shape>
     </item>
 </layer-list>
