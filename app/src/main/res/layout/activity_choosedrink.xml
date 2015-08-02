@@ -27,7 +27,9 @@
             android:id="@+id/btnDatabase"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@color/orange700" />
+            android:background = "@drawable/roundedbutton"
+            android:backgroundTint="@color/orange700"
+             />
 
         <Button
             android:layout_width="match_parent"
@@ -36,7 +38,8 @@
             android:id="@+id/btnGraphs"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@color/orange700" />
+            android:background = "@drawable/roundedbutton"
+            android:backgroundTint="@color/orange700"/>
 
         <Button
             android:layout_width="match_parent"
@@ -45,7 +48,8 @@
             android:id="@+id/btnAddDBMember"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@color/orange700" />
+            android:background = "@drawable/roundedbutton"
+            android:backgroundTint="@color/orange700" />
 
         <Button
             android:layout_width="match_parent"
@@ -54,7 +58,8 @@
             android:id="@+id/btnVibrate"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@color/orange700" />
+            android:background = "@drawable/roundedbutton"
+            android:backgroundTint="@color/orange700" />
 
         <Button
             android:layout_width="match_parent"
@@ -63,7 +68,8 @@
             android:id="@+id/btnDialogue"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@color/orange700" />
+            android:background = "@drawable/roundedbutton"
+            android:backgroundTint="@color/orange700" />
 
         <Button
             android:layout_width="match_parent"
@@ -72,7 +78,8 @@
             android:id="@+id/btnPushNot"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@color/orange700" />
+            android:background = "@drawable/roundedbutton"
+            android:backgroundTint="@color/orange700" />
 
         <Button
             android:layout_width="match_parent"
@@ -81,7 +88,8 @@
             android:id="@+id/btnStats"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/abc_button_padding_horizontal_material"
-            android:background="@color/orange700" />
+            android:background = "@drawable/roundedbutton"
+            android:backgroundTint="@color/orange700" />
 
         <TextView
             android:padding="10dp"
