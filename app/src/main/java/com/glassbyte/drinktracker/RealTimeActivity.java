@@ -138,6 +138,7 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
     private double returnY(int i) {
         double y = 0;
 
+        /*
         try {
             if (!CR.isLast()) {
                 CR.moveToPosition(i);
@@ -178,7 +179,11 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
 
         CR.close();
         mHandler.postDelayed(mTimer2, 5000);
+        */
 
+        //the memory leak seems to be occurring here
+        //ie it's trying to retrieve rows that don't exist
+        //I'll refactor this when I'm not up the walls if you want
         return y;
     }
 

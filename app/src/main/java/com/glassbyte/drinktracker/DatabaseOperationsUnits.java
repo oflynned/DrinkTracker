@@ -21,50 +21,53 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
             "CREATE TABLE " +
                     TableDataUnits.TableInfoUnits.TABLE_NAME +
                     "(" +
+                    //col for time
                     TableDataUnits.TableInfoUnits.TIME +
                     " TEXT," +
+                    //col for units
                     TableDataUnits.TableInfoUnits.UNITS +
                     " TEXT," +
+                    //col for percentage abv of alcohol
                     TableDataUnits.TableInfoUnits.PERCENTAGE +
                     " TEXT," +
+                    //col for bac to generate from formula
                     TableDataUnits.TableInfoUnits.BAC +
                     " TEXT);";
     //; ends query field within query -> ()
 
     public DatabaseOperationsUnits(Context context) {
+        //constructor
+        //create database with respect to the version
         super(context, TableDataUnits.TableInfoUnits.DATABASE_NAME, null, database_version);
-
-        Log.d("Database operations", "Created database successfully");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_QUERY); //create table
-        Log.d("Database operations", "Table created");
+        db.execSQL(CREATE_QUERY); //create table query
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        //haven't done anything with this
     }
 
     //insert data into database
     public void putInfo(DatabaseOperationsUnits DOU, String time, double units, double percentage, double bac){
+        //method for putting info generated into the table
+        //variables instantiated are parametrised and cast into the cols
         SQLiteDatabase SQ = DOU.getWritableDatabase(); //writes data to database
         ContentValues CV = new ContentValues(); //create instance
         CV.put(TableDataUnits.TableInfoUnits.TIME, time); //coll 0
         CV.put(TableDataUnits.TableInfoUnits.UNITS, units); //coll 1
         CV.put(TableDataUnits.TableInfoUnits.PERCENTAGE, percentage); //coll 2
         CV.put(TableDataUnits.TableInfoUnits.BAC, bac); //coll 3
-        long k = SQ.insert(TableDataUnits.TableInfoUnits.TABLE_NAME, null, CV);
-        Log.d("Database operations", "1 row inserted into database");
     }
 
     //retrieve database
     public Cursor getInfo(DatabaseOperationsUnits DOU){
         //read database
         SQLiteDatabase SQ = DOU.getReadableDatabase();
-        //columns from database
+        //read columns from database into a 4 element array
         String[] col = {
                 TableDataUnits.TableInfoUnits.TIME,
                 TableDataUnits.TableInfoUnits.UNITS,
@@ -72,8 +75,7 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
                 TableDataUnits.TableInfoUnits.BAC
         };
         //get data
-        Cursor CR = SQ.query(TableDataUnits.TableInfoUnits.TABLE_NAME, col, null, null, null, null, null);
-        return CR;
+        return SQ.query(TableDataUnits.TableInfoUnits.TABLE_NAME, col, null, null, null, null, null);
     }
 
     public ArrayList<Cursor> getData(String Query){
@@ -82,35 +84,26 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
         String[] columns = new String[] { "message" };
         //an array list of cursor to save two cursors one has results from the query
         //other cursor stores error message if any errors are triggered
-        ArrayList<Cursor> alc = new ArrayList<Cursor>(2);
+        ArrayList<Cursor> alc = new ArrayList<>(2);
         MatrixCursor Cursor2= new MatrixCursor(columns);
         alc.add(null);
         alc.add(null);
-
 
         try{
             String maxQuery = Query ;
             //execute the query results will be save in Cursor c
             Cursor c = sqlDB.rawQuery(maxQuery, null);
-
-
             //add value to cursor2
             Cursor2.addRow(new Object[] { "Success" });
-
             alc.set(1,Cursor2);
+
             if (null != c && c.getCount() > 0) {
-
-
                 alc.set(0,c);
                 c.moveToFirst();
-
                 return alc ;
             }
             return alc;
         } catch(Exception ex){
-
-            Log.d("printing exception", ex.getMessage());
-
             //if any exceptions are triggered save the error message to cursor an return the arraylist
             Cursor2.addRow(new Object[] { ""+ex.getMessage() });
             alc.set(1,Cursor2);
@@ -124,6 +117,7 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
         return dateFormat.format(date);
     }
 
+    //unused and possible not needed
     public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
         long diffInMillies = date2.getTime() - date1.getTime();
         return timeUnit.convert(diffInMillies, TimeUnit.MINUTES);
