@@ -52,7 +52,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
                                        int arg2, long arg3) {
 
                 int position = drinksChoice.getSelectedItemPosition();
-                switch (position){
+                switch (position) {
                     //null
                     case 0:
                         glass.setImageResource(R.drawable.ic_launcher);
@@ -166,35 +166,31 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.presetAddDrink:
 
+                //instantiate the class's object dynamically and a cursor for choosing the row
                 DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getActivity());
                 Cursor CR = DOU.getInfo(DOU);
 
+                //move to the last row as to not override or cause a collision
                 CR.moveToLast();
 
-                if(CR.getString(3) == "0") {
-                    DOU.putInfo(
-                            DOU,
-                            DOU.getDateTime(), //time
-                            getUnits(units), //units of alcohol
-                            getPercentage(percentage), //percentage
-                            getBAC(BAC) //bac
-                    );
+                //insert a row
+                //we need:
+                //the database instantiated context
+                //time
+                //percentage
+                //bac via the formula
 
-                    CR.moveToNext(); //increment table
-                    CR.close();
-                }
-                else{
-                    DOU.putInfo(
-                            DOU,
-                            DOU.getDateTime(), //time
-                            getUnits(units), //units of alcohol
-                            getPercentage(percentage), //percentage
-                            getBAC(BAC) //bac
-                    );
+                DOU.putInfo(
+                        DOU,
+                        DOU.getDateTime(), //time
+                        getUnits(units), //units of alcohol
+                        getPercentage(percentage), //percentage
+                        getBAC(BAC) //bac
+                );
 
-                    CR.moveToNext(); //increment table
-                    CR.close();
-                }
+                //move to the next row and close the insertion as to not cause an exception
+                CR.moveToNext(); //increment table
+                CR.close();
                 break;
         }
     }
@@ -203,23 +199,23 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
         return units;
     }
 
-    private void setUnits(double units){
+    private void setUnits(double units) {
         this.units = units;
     }
 
-    private  double getPercentage(double percentage){
+    private double getPercentage(double percentage) {
         return percentage;
     }
 
-    private void setPercentage(double percentage){
-        this.percentage= percentage;
+    private void setPercentage(double percentage) {
+        this.percentage = percentage;
     }
 
-    private double getBAC(double BAC){
+    private double getBAC(double BAC) {
         return BAC;
     }
 
-    private void setBAC(double BAC){
+    private void setBAC(double BAC) {
         this.BAC = BAC;
     }
 }
