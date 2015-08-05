@@ -24,12 +24,17 @@ import android.widget.Button;
 
 import com.jjoe64.graphview.series.PointsGraphSeries;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by Maciej on 27/05/15.
  */
 public class CustomDrink extends Fragment {
     private final int NUMBER_OF_GLASSES = 4;
-    private final int PADDING = 16;
+    private final int PADDING = 5;
+    private final int VOLUME_TEXT_PADDING = 16;
+
+    private final int VOLUME_TEXT_SIZE = 100;
 
     private final int SHOT_GLASS_ML = 40;
     private final int WATER_GLASS_ML = 250;
@@ -65,6 +70,7 @@ public class CustomDrink extends Fragment {
     private SeekBar alcBar;
     private TextView alcVolDisplay;
     private Button drinkButton;
+    private Paint currentVolTextPaint;
 
     private Display display;
 
@@ -101,7 +107,7 @@ public class CustomDrink extends Fragment {
         RelativeLayout.LayoutParams rlParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         rl.setPadding(PADDING, PADDING, PADDING, PADDING);
         rl.setLayoutParams(rlParams);
-        rl.setBackgroundColor(Color.rgb(244, 245, 231));
+        //rl.setBackgroundColor(Color.rgb(244, 245, 231));
 
         alcVolDisplay = new TextView(thisActivity);
         RelativeLayout.LayoutParams alcVolDisplayParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -109,7 +115,7 @@ public class CustomDrink extends Fragment {
         alcVolDisplayParam.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
         alcVolDisplay.setLayoutParams(alcVolDisplayParam);
         alcVolDisplay.setId(View.generateViewId());
-        alcVolDisplay.setTextColor(DRINK_COLOUR);
+        alcVolDisplay.setTextColor(Color.WHITE);
         alcVolDisplay.setTypeface(null, Typeface.BOLD);
 
         drinkButton = new Button(thisActivity);
@@ -162,6 +168,11 @@ public class CustomDrink extends Fragment {
             }
         });
 
+        currentVolTextPaint = new Paint();
+        currentVolTextPaint.setColor(Color.WHITE);
+        currentVolTextPaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        currentVolTextPaint.setTextSize(100);
+
         //Create shot glass instance
         shotGlass = new DrinkingGlass(this.getActivity(), previewWidth, previewHeight, shotGlassWidth, shotGlassHeight, (previewWidth-shotGlassWidth)/2, (previewHeight-shotGlassHeight)/2, SHOT_GLASS_ML);
         RelativeLayout.LayoutParams shotGlassParams = new RelativeLayout.LayoutParams(shotGlass.getLayoutParams());
@@ -197,20 +208,7 @@ public class CustomDrink extends Fragment {
         wineGlass.setBackground(ContextCompat.getDrawable(thisActivity, R.drawable.preview_glass_bg));
         wineGlass.setId(View.generateViewId());
 
-
-        chosenGlassWidth = getChosenGlassWidth(pintGlassWidth);
-        chosenGlassHeight = getChosenGlassHeight(pintGlassHeight);
-        chosenGlass = new DrinkingGlass(this.getActivity(), chosenViewWidth, chosenViewHeight, chosenGlassWidth, chosenGlassHeight, (chosenViewWidth-chosenGlassWidth)/2, (chosenViewHeight-chosenGlassHeight)/2, false, true, PINT_GLASS_ML);
-        RelativeLayout.LayoutParams chosenGlassParams = new RelativeLayout.LayoutParams(chosenGlass.getLayoutParams());
-        chosenGlassParams.addRule(RelativeLayout.ABOVE, shotGlass.getId());
-        chosenGlassParams.addRule(RelativeLayout.ABOVE, waterGlass.getId());
-        chosenGlassParams.addRule(RelativeLayout.ABOVE, pintGlass.getId());
-        chosenGlassParams.addRule(RelativeLayout.ABOVE, wineGlass.getId());
-        chosenGlassParams.addRule(RelativeLayout.BELOW, alcBar.getId());
-        chosenGlass.setLayoutParams(chosenGlassParams);
-        //chosenGlass.setBackgroundColor(Color.rgb(255, 140, 0)); // DARK ORANGE
-        chosenGlassViewId = View.generateViewId();
-        chosenGlass.setId(chosenGlassViewId);
+        initChosenGlass(pintGlass, false);
 
         rl.addView(alcVolDisplay);
         rl.addView(drinkButton);
@@ -239,19 +237,12 @@ public class CustomDrink extends Fragment {
         return chosenViewHeight/previewHeight*previewGlassHeight;
     }
 
-    private void newChosenGlass(Glass glass, boolean isWineGlass){
-        //Make sure all other glasses are invalidated
-        shotGlass.setIsChosen(false);
-        waterGlass.setIsChosen(false);
-        pintGlass.setIsChosen(false);
-        wineGlass.setIsChosen(false);
-
-        rl.removeView(chosenGlass);
-
+    private void initChosenGlass(Glass glass, boolean isWineGlass){
         chosenGlassWidth = getChosenGlassWidth((int) glass.getGlassWidth());
         chosenGlassHeight = getChosenGlassHeight((int)glass.getGlassHeight());
         int chosenGlassMlSize = glass.getMlSize();
         if(!isWineGlass)
+            //chosenGlass = new DrinkingGlass(this.getActivity(), chosenViewWidth, chosenViewHeight, chosenGlassWidth, chosenGlassHeight, (chosenViewWidth-chosenGlassWidth)/2, (chosenViewHeight-chosenGlassHeight)/2, false, true, PINT_GLASS_ML);
             chosenGlass = new DrinkingGlass(thisActivity, chosenViewWidth, chosenViewHeight, chosenGlassWidth, chosenGlassHeight, (chosenViewWidth-chosenGlassWidth)/2, (chosenViewHeight-chosenGlassHeight)/2, false, true, chosenGlassMlSize);
         else
             chosenGlass = new WineGlass(thisActivity, chosenViewWidth, chosenViewHeight, chosenGlassWidth, chosenGlassHeight, (chosenViewWidth-chosenGlassWidth)/2, (chosenViewHeight-chosenGlassHeight)/2, false, true, chosenGlassMlSize);
@@ -263,6 +254,17 @@ public class CustomDrink extends Fragment {
         chosenGlassParams.addRule(RelativeLayout.ABOVE, wineGlass.getId());
         chosenGlass.setLayoutParams(chosenGlassParams);
         chosenGlass.setId(chosenGlassViewId);
+    }
+
+    private void newChosenGlass(Glass glass, boolean isWineGlass){
+        //Make sure all other glasses are invalidated
+        shotGlass.setIsChosen(false);
+        waterGlass.setIsChosen(false);
+        pintGlass.setIsChosen(false);
+        wineGlass.setIsChosen(false);
+        rl.removeView(chosenGlass);
+
+        initChosenGlass(glass, isWineGlass);
 
         rl.addView(chosenGlass);
         glass.setIsChosen(true);
@@ -356,7 +358,28 @@ public class CustomDrink extends Fragment {
                 p.lineTo(drinkRightBottomEdgeX, drinkBottomEdgeY);
                 p.lineTo(drinkRightTopEdgeX, drinkTopEdgeY);
                 canvas.drawPath(p, paint);
+
+                //Draw the current volume text into the canvas
+                String strDrinkVol = getCurrentDrinkVolume() + "ml";
+                float strDrinkVolWidth = currentVolTextPaint.measureText(strDrinkVol);
+                if (leftBottomEdgeY < super.getHeight() - 2*VOLUME_TEXT_PADDING - VOLUME_TEXT_SIZE){
+                    float textX = leftTopEdgeX + super.getGlassWidth()/2 - strDrinkVolWidth/2;
+                    float textY = leftBottomEdgeY + VOLUME_TEXT_PADDING + VOLUME_TEXT_SIZE;
+
+                    canvas.drawText(strDrinkVol, textX, textY, currentVolTextPaint);
+                }
+                else if (leftEdge.calculateX(leftBottomEdgeY - VOLUME_TEXT_SIZE) > 2*VOLUME_TEXT_PADDING + strDrinkVolWidth) {
+                    float textX = leftEdge.calculateX(leftBottomEdgeY - VOLUME_TEXT_SIZE)/2 - strDrinkVolWidth/2;
+                    float textY = leftBottomEdgeY;
+
+                    canvas.drawText(getCurrentDrinkVolume()+"ml", textX, textY, currentVolTextPaint);
+                }
             }
+        }
+
+        //REQUIRES TO BE FINISHED
+        public int getCurrentDrinkVolume(){
+            return (int)(((drinkBottomEdgeY - drinkTopEdgeY)/super.getMaxDrinkHeight())*(super.getMlSize()+1));
         }
 
         @Override
