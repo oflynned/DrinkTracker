@@ -3,6 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_listDrinks">List Drinks</string>
+    <string name="action_stats">Statistics</string>
 
     <string-array name="optgender">
         <item>Male</item>
@@ -113,4 +115,6 @@
         <item>90%</item>
         <item>95%</item>
     </string-array>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_list_drinks">ListDrinksActivity</string>
 </resources>

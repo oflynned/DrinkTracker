@@ -14,8 +14,10 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -29,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class RealTimeActivity extends android.support.v4.app.Fragment {
+public class RealTimeActivity extends AppCompatActivity {
     private final Handler mHandler = new Handler();
 
     private Runnable mTimer1;
@@ -47,9 +49,34 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
     private Cursor CR;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_realtime, container, false);
-        GraphView graph = (GraphView) rootView.findViewById(R.id.graphUnits);
+    public void onCreate( Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_realtime);
+        GraphView graph = (GraphView) findViewById(R.id.graphUnits);
+
+        //read in presets
+        SharedPreferences sp = this.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+
+        gender = (sp.getString("genderKey", ""));
+        units = (sp.getString("unitsKey", ""));
+        weight = Integer.parseInt(sp.getString("weightKey", ""));
+        height = Integer.parseInt(sp.getString("heightKey", ""));
+
+        DOU = new DatabaseOperationsUnits(this);
+        CR = DOU.getInfo(DOU);
+        CR.moveToFirst();
+
+        //run indefinitely with recursive updating
+        mTimer1 = new Runnable() {
+            @Override
+            public void run() {
+                mSeries1.resetData(generateData());
+                mHandler.postDelayed(this,300);
+            }
+        };
+
+        mHandler.postDelayed(mTimer1, 300);
+
         mSeries1=new LineGraphSeries<>(generateData());
         graph.addSeries(mSeries1);
 
@@ -75,37 +102,15 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
 
 
 
-        //read in presets
-        SharedPreferences sp = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-
-        gender = (sp.getString("genderKey", ""));
-        units = (sp.getString("unitsKey", ""));
-        weight = Integer.parseInt(sp.getString("weightKey", ""));
-        height = Integer.parseInt(sp.getString("heightKey", ""));
-
-        return rootView;
     }
-
+    
     @Override
-    public void onAttach(Activity activity)
-    {
-        super.onAttach( activity);
-        DOU = new DatabaseOperationsUnits(getActivity());
-        CR = DOU.getInfo(DOU);
-        CR.moveToFirst();
-
-        //run indefinitely with recursive updating
-        mTimer1 = new Runnable() {
-            @Override
-            public void run() {
-                mSeries1.resetData(generateData());
-                mHandler.postDelayed(this,300);
-            }
-        };
-
-        mHandler.postDelayed(mTimer1, 300);
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
+
     @Override
     public void onPause()
     {
@@ -114,9 +119,9 @@ public class RealTimeActivity extends android.support.v4.app.Fragment {
     }
 
     @Override
-    public void onDetach(){
+    public void onStop(){
         mHandler.removeCallbacks(mTimer1);
-        super.onDetach();
+        super.onStop();
     }
 
     private DataPoint[] generateData()

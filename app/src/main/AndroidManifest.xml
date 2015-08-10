@@ -1,64 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package="com.glassbyte.drinktracker" >
+    package="com.glassbyte.drinktracker" >
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
-<application
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".SplashScreenActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-    android:allowBackup="true"
-    android:icon="@mipmap/ic_launcher"
-    android:label="@string/app_name"
-    android:theme="@style/AppTheme" >
-    <activity
-        android:name=".SplashScreenActivity"
-        android:screenOrientation="portrait"
-        >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-    <activity
-        android:name=".MainActivity"
-        android:screenOrientation="portrait"
-        android:label="@string/app_name">
-        <intent-filter>
-            <action
-                android:name="com.glassbyte.drinktracker.ClearScreen" />
-            <category
-                android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.glassbyte.drinktracker.ClearScreen" />
 
-    <activity
-        android:name=".IntroActivity"
-        android:screenOrientation="portrait"
-        android:label="@string/app_name">
-        <intent-filter>
-            <action
-                android:name="com.glassbyte.drinktracker.IntroScreen" />
-            <category
-                android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".IntroActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.glassbyte.drinktracker.IntroScreen" />
 
-    <activity android:name="org.achartengine.GraphicalActivity" />
-    <activity android:name="com.glassbyte.drinktracker.AddDrinkActivity"/>
-    <activity android:name="com.glassbyte.drinktracker.AndroidDatabaseManager"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="org.achartengine.GraphicalActivity" />
+        <activity android:name=".AddDrinkActivity" />
+        <activity android:name=".AndroidDatabaseManager" />
+        <activity
+            android:name=".PreferencesActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.glassbyte.drinktracker.PreferencesActivity" />
 
-    <activity
-        android:name=".PreferencesActivity"
-        android:screenOrientation="portrait"
-        android:label="@string/app_name">
-        <intent-filter>
-            <action
-                android:name="com.glassbyte.drinktracker.PreferencesActivity" />
-            <category
-                android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
-    </activity>
-
-</application>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name=".ListDrinksActivity"
+            android:label="@string/title_activity_list_drinks" >
+        </activity>
+        <activity
+            android:name=".RealTimeActivity"
+            android:label="RealTimeActivity">
+        </activity>
+    </application>
 
 </manifest>

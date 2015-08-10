@@ -1,4 +1,5 @@
 package com.glassbyte.drinktracker;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,14 +7,16 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 /**
  * Created by ed on 25/05/15.
  */
-public class AddDrinkActivity extends ActionBarActivity{
-    private static final int NUM_PAGES = 4;
+public class AddDrinkActivity extends AppCompatActivity{
+    private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
     private int actionBarHeight;
@@ -43,7 +46,34 @@ public class AddDrinkActivity extends ActionBarActivity{
 
 
         mPager.setCurrentItem(1);
+
+
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        } else if (id == R.id.action_listDrinks) {
+            Intent listDrinksIntent = new Intent(this, ListDrinksActivity.class);
+            startActivity(listDrinksIntent);
+            return true;
+        } else if (id == R.id.action_stats) {
+            Intent statsIntent = new Intent(this, RealTimeActivity.class);
+            startActivity(statsIntent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public int getSActionBarHeight(){return actionBarHeight;}
@@ -68,14 +98,12 @@ public class AddDrinkActivity extends ActionBarActivity{
                 return new PresetDrink();
             } else if (position == 1) {
                 return new ChooseDrink();
-            } else if(position == 2){
+            } else{
                 CustomDrink cd = new CustomDrink();
                 Bundle bundle = new Bundle();
                 bundle.putInt(CustomDrink.ARG_ACTION_BAR_HEIGHT, actionBarHeight);
                 cd.setArguments(bundle);
                 return cd;
-            } else {
-                return new RealTimeActivity();
             }
         }
 

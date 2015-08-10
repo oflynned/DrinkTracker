@@ -12,8 +12,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBarActivity;
-import android.util.TypedValue;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -46,7 +45,7 @@ public class CustomDrink extends Fragment {
     //private final int DRINK_COLOUR = Color.argb(170, 0 , 100, 255);
     private final int DRINK_COLOUR = Color.argb(255, 109, 140, 160);
 
-    private ActionBarActivity thisActivity;
+    private AppCompatActivity thisActivity;
     private RelativeLayout rl;
 
     private int previewHeight;
@@ -63,8 +62,6 @@ public class CustomDrink extends Fragment {
     private int wineGlassHeight;
     private int chosenGlassWidth;
     private int chosenGlassHeight;
-    private int alcBarWidth;
-    private int alcBarHeight;
 
     private Glass shotGlass,waterGlass, pintGlass, wineGlass, chosenGlass;
     private int chosenGlassViewId;
@@ -85,16 +82,13 @@ public class CustomDrink extends Fragment {
         if (this.getArguments() != null) {
             actionBarHeight = this.getArguments().getInt(ARG_ACTION_BAR_HEIGHT);
         }
-        thisActivity = (ActionBarActivity)this.getActivity();
+        thisActivity = (AppCompatActivity)this.getActivity();
 
         display = this.getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         int screenWidth = size.x;
         int screenHeight = size.y;
-
-        alcBarWidth = screenWidth;
-        alcBarHeight = screenHeight/20;
 
         previewWidth = screenWidth/NUMBER_OF_GLASSES;
         previewHeight = screenHeight/4;
