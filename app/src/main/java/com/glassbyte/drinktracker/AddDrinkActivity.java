@@ -26,11 +26,13 @@ public class AddDrinkActivity extends ActionBarActivity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
+        super.onCreateOptionsMenu(menu);
+        /**Bad practice, the below code is ususally executed on create but I required the height of
+         * the action bar, for the custom drink fragment which would have been created before this stage,
+         * which is only calculated at this stage**/
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         actionBarHeight = this.getSupportActionBar().getHeight();
-        System.out.println("ONCREATEOPTIONSMENU: " + actionBarHeight);
-
 
         setContentView(R.layout.activity_adddrink);
 
@@ -70,7 +72,6 @@ public class AddDrinkActivity extends ActionBarActivity{
                 CustomDrink cd = new CustomDrink();
                 Bundle bundle = new Bundle();
                 bundle.putInt(CustomDrink.ARG_ACTION_BAR_HEIGHT, actionBarHeight);
-                System.out.println("GETITEM||||: " + actionBarHeight);
                 cd.setArguments(bundle);
                 return cd;
             } else {

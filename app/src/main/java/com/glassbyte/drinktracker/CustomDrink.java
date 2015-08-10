@@ -226,12 +226,13 @@ public class CustomDrink extends Fragment {
         rl.addView(pintGlass);
         rl.addView(wineGlass);
 
+        /*Setting up the listener for the layout to get the height of the button and to redraw the
+        * chosenGlass view with corrected height*/
         rl.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
                 if ((drinkButtonHeight == 0 && drinkButton.getHeight() != 0) || (drinkButtonHeight != drinkButton.getHeight() && drinkButton.getHeight() != 0)) {
                     drinkButtonHeight = drinkButton.getHeight();
-                    System.out.println("WAS HERE WAS HERE WAS HERE WAS HERE ");
                     if (shotGlass.isChosen)
                         newChosenGlass(shotGlass, false);
                     else if (waterGlass.isChosen)
@@ -243,7 +244,6 @@ public class CustomDrink extends Fragment {
                 }
             }
         });
-        System.out.println("WAS HERE WAS HERE WAS HEdsfafdasdfasdasRE WAS HERE ");
         return rl;
     }
 
@@ -259,7 +259,7 @@ public class CustomDrink extends Fragment {
         display.getSize(size);
         int screenHeight = size.y;
         chosenViewHeight = screenHeight - previewHeight - PADDING*2 - drinkButtonHeight - actionBarHeight;
-        System.out.println("1......... chosenViewHeight: " + chosenViewHeight + "; screenHeight: " + screenHeight + "; previewHeight: " + previewHeight + "; drinkButton: " + drinkButton.getHeight() + "; actionbar: " + actionBarHeight);
+
         return chosenViewHeight/previewHeight*previewGlassHeight;
     }
 
@@ -280,7 +280,6 @@ public class CustomDrink extends Fragment {
         chosenGlassHeight = getChosenGlassHeight((int)glass.getGlassHeight());
         int chosenGlassMlSize = glass.getMlSize();
         if(!isWineGlass)
-            //chosenGlass = new DrinkingGlass(this.getActivity(), chosenViewWidth, chosenViewHeight, chosenGlassWidth, chosenGlassHeight, (chosenViewWidth-chosenGlassWidth)/2, (chosenViewHeight-chosenGlassHeight)/2, false, true, PINT_GLASS_ML);
             chosenGlass = new DrinkingGlass(thisActivity, chosenViewWidth, chosenViewHeight, chosenGlassWidth, chosenGlassHeight, (chosenViewWidth-chosenGlassWidth)/2, (chosenViewHeight-chosenGlassHeight)/2, false, true, chosenGlassMlSize);
         else
             chosenGlass = new WineGlass(thisActivity, chosenViewWidth, chosenViewHeight, chosenGlassWidth, chosenGlassHeight, (chosenViewWidth-chosenGlassWidth)/2, (chosenViewHeight-chosenGlassHeight)/2, false, true, chosenGlassMlSize);
@@ -433,13 +432,11 @@ public class CustomDrink extends Fragment {
             }
             else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 if (!super.isChosen() && !super.isMainView()) {
-                    System.out.println(motionEvent.getRawY() +" < " + super.getHeight() + " && " + "0 < " + motionEvent.getRawY() + " && " + motionEvent.getRawX() + " < " + super.getWidth() + " && 0 < "+motionEvent.getRawX());
                     if (motionEvent.getY() < super.getHeight() && 0 < motionEvent.getY() && motionEvent.getX() < super.getWidth() && 0 < motionEvent.getX()) {
                         newChosenGlass(this, false);
                     }
                 }
             }
-            System.out.println(MotionEvent.actionToString(motionEvent.getAction()));
             return false;
         }
 
@@ -573,15 +570,12 @@ public class CustomDrink extends Fragment {
                 return true;
             }
             else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                System.out.println("isChosen: " + isChosen() + ";  isMainView: " + isMainView());
                 if (!super.isChosen() && !super.isMainView()) {
-                    System.out.println(motionEvent.getRawY() +" < " + super.getHeight() + " && " + "0 < " + motionEvent.getRawY() + " && " + motionEvent.getRawX() + " < " + super.getWidth() + " && 0 < "+motionEvent.getRawX());
                     if (motionEvent.getY() < super.getHeight() && 0 < motionEvent.getY() && motionEvent.getX() < super.getWidth() && 0 < motionEvent.getX()) {
                         newChosenGlass(this, true);
                     }
                 }
             }
-            System.out.println(MotionEvent.actionToString(motionEvent.getAction()));
             return false;
         }
 
