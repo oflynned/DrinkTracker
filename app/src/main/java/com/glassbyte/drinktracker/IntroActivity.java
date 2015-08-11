@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,18 +33,14 @@ public class IntroActivity extends Activity {
     private RadioGroup mRadioGroup;
     private RadioGroup mUnitsMeasurement;
     Button btnContinue;
-
-    public static final String Prefs = "Settings";
-    public static final String Run = "runKey";
-    public static final String Gender = "genderKey";
-    public static final String Height = "heightKey";
-    public static final String Weight = "weightKey";
-    public static final String Units = "unitsKey";
+    private Activity thisActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
+        thisActivity = this;
 
         mWeight = (EditText) findViewById(R.id.weightET);
         mHeight = (EditText) findViewById(R.id.heightET);
@@ -85,14 +82,14 @@ public class IntroActivity extends Activity {
                     Toast.makeText(getBaseContext(), um, Toast.LENGTH_SHORT).show();
 
                     //store in shared preferences
-                    SharedPreferences sp = getSharedPreferences(Prefs, Context.MODE_PRIVATE);
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(thisActivity);
                     SharedPreferences.Editor editor = sp.edit();
 
-                    editor.putString(Run, "true");
-                    editor.putString(Gender, gender);
-                    editor.putString(Height, height);
-                    editor.putString(Weight, weight);
-                    editor.putString(Units, um);
+                    editor.putString(getResources().getString(R.string.pref_key_run), "true");
+                    editor.putString(getResources().getString(R.string.pref_key_editGender), gender);
+                    editor.putString(getResources().getString(R.string.pref_key_editHeight), height);
+                    editor.putString(getResources().getString(R.string.pref_key_editWeight), weight);
+                    editor.putString(getResources().getString(R.string.pref_key_editUnits), um);
                     editor.apply();
 
                     DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getApplicationContext());

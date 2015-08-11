@@ -60,7 +60,7 @@ public class AddDrinkActivity extends AppCompatActivity{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            Intent settingsIntent = new Intent(this, PreferencesActivity.class);
             startActivity(settingsIntent);
             return true;
         } else if (id == R.id.action_listDrinks) {

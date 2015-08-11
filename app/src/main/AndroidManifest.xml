@@ -52,10 +52,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
-        <activity
             android:name=".ListDrinksActivity"
             android:label="@string/title_activity_list_drinks" >
         </activity>

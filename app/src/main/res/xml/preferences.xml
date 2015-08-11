@@ -32,21 +32,21 @@
     <ListPreference android:title="Edit Units"
         android:entries="@array/optunits"
         android:entryValues="@array/optunits"
-        android:key="pref_key_introUnits"
+        android:key="@string/pref_key_editUnits"
         android:summary="Modify units used from setup"   />
 
     <EditTextPreference android:title="Edit Height"
-        android:key="pref_key_introHeight"
+        android:key="@string/pref_key_editHeight"
         android:summary="Modify height from setup"   />
 
     <EditTextPreference android:title="Edit Weight"
-        android:key="pref_key_introWeight"
+        android:key="@string/pref_key_editWeight"
         android:summary="Modify weight from setup"   />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="Data Collection"
-        android:key="pref_key_dataCollection">
+        android:key="@string/pref_key_dataCollection">
 
         <CheckBoxPreference android:title="Allow Data Collection"
             android:defaultValue="true"

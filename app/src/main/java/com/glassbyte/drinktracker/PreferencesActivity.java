@@ -27,14 +27,13 @@ public class PreferencesActivity extends PreferenceActivity {
 
     public static class PreferenceFragment extends android.preference.PreferenceFragment{
 
-        private AppSettings settings;
 
         @Override
         public void onCreate(final Bundle savedInstanceBundle){
             super.onCreate(savedInstanceBundle);
             addPreferencesFromResource(R.xml.preferences);
 
-            Preference gender = findPreference("pref_key_editGender");
+            Preference gender = findPreference(getResources().getString(R.string.pref_key_editGender));
 
             Toast.makeText(getActivity(),gender.toString(),Toast.LENGTH_SHORT).show();
             Log.i("GENDER LOG:",gender.toString());
@@ -47,7 +46,7 @@ public class PreferencesActivity extends PreferenceActivity {
                 }
             });
 
-            Preference units = findPreference("pref_key_editUnits");
+            Preference units = findPreference(getResources().getString(R.string.pref_key_editUnits));
             units.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -56,7 +55,7 @@ public class PreferencesActivity extends PreferenceActivity {
                 }
             });
 
-            Preference height = findPreference("pref_key_editHeight");
+            Preference height = findPreference(getResources().getString(R.string.pref_key_editHeight));
             height.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -65,7 +64,7 @@ public class PreferencesActivity extends PreferenceActivity {
                 }
             });
 
-            Preference weight = findPreference("pref_key_editWeight");
+            Preference weight = findPreference(getResources().getString(R.string.pref_key_editWeight));
             weight.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -74,7 +73,7 @@ public class PreferencesActivity extends PreferenceActivity {
                 }
             });
 
-            Preference data = findPreference("pref_key_data");
+            Preference data = findPreference(getResources().getString(R.string.pref_key_dataCollection));
             data.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -87,22 +86,22 @@ public class PreferencesActivity extends PreferenceActivity {
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
-            settings = AppSettings.getSettings(getActivity());
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
 
-            Preference gender = findPreference("pref_key_editGender");
-            gender.setSummary(settings.getGender());
+            Preference gender = findPreference(getResources().getString(R.string.pref_key_editGender));
+            gender.setSummary(sharedPref.getString(gender.getKey(), ""));
 
-            Preference units = findPreference("pref_key_editUnits");
-            units.setSummary(settings.getUnits());
+            Preference units = findPreference(getResources().getString(R.string.pref_key_editUnits));
+            units.setSummary(sharedPref.getString(units.getKey(), ""));
 
-            Preference height = findPreference("pref_key_editHeight");
-            height.setSummary(settings.getHeight());
+            Preference height = findPreference(getResources().getString(R.string.pref_key_editHeight));
+            height.setSummary(sharedPref.getString(height.getKey(), ""));
 
-            Preference weight = findPreference("pref_key_editWeight");
-            weight.setSummary(settings.getWeight());
+            Preference weight = findPreference(getResources().getString(R.string.pref_key_editWeight));
+            weight.setSummary(sharedPref.getString(weight.getKey(), ""));
 
-            Preference data = findPreference("pref_key_data");
-            data.setSummary(settings.getWeight());
+            Preference data = findPreference(getResources().getString(R.string.pref_key_dataCollection));
+            data.setSummary(sharedPref.getString(data.getKey(), ""));
         }
     }
 }
