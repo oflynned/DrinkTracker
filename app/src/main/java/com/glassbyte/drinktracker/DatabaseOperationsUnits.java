@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,26 +18,26 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
     public static final int database_version = 2;
     public String CREATE_QUERY =
             "CREATE TABLE " +
-                    TableDataUnits.TableInfoUnits.TABLE_NAME +
+                    DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME +
                     "(" +
                     //col for time
-                    TableDataUnits.TableInfoUnits.TIME +
+                    DataUnitsDatabaseContractor.DataLoggingTable.TIME +
                     " TEXT," +
                     //col for units
-                    TableDataUnits.TableInfoUnits.UNITS +
+                    DataUnitsDatabaseContractor.DataLoggingTable.UNITS +
                     " TEXT," +
                     //col for percentage abv of alcohol
-                    TableDataUnits.TableInfoUnits.PERCENTAGE +
+                    DataUnitsDatabaseContractor.DataLoggingTable.PERCENTAGE +
                     " TEXT," +
                     //col for bac to generate from formula
-                    TableDataUnits.TableInfoUnits.BAC +
+                    DataUnitsDatabaseContractor.DataLoggingTable.BAC +
                     " TEXT);";
     //; ends query field within query -> ()
 
     public DatabaseOperationsUnits(Context context) {
         //constructor
         //create database with respect to the version
-        super(context, TableDataUnits.TableInfoUnits.DATABASE_NAME, null, database_version);
+        super(context, DataUnitsDatabaseContractor.DATABASE_NAME, null, database_version);
     }
 
     @Override
@@ -57,10 +56,10 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
         //variables instantiated are parametrised and cast into the cols
         SQLiteDatabase SQ = DOU.getWritableDatabase(); //writes data to database
         ContentValues CV = new ContentValues(); //create instance
-        CV.put(TableDataUnits.TableInfoUnits.TIME, time); //coll 0
-        CV.put(TableDataUnits.TableInfoUnits.UNITS, units); //coll 1
-        CV.put(TableDataUnits.TableInfoUnits.PERCENTAGE, percentage); //coll 2
-        CV.put(TableDataUnits.TableInfoUnits.BAC, bac); //coll 3
+        CV.put(DataUnitsDatabaseContractor.DataLoggingTable.TIME, time); //coll 0
+        CV.put(DataUnitsDatabaseContractor.DataLoggingTable.UNITS, units); //coll 1
+        CV.put(DataUnitsDatabaseContractor.DataLoggingTable.PERCENTAGE, percentage); //coll 2
+        CV.put(DataUnitsDatabaseContractor.DataLoggingTable.BAC, bac); //coll 3
     }
 
     //retrieve database
@@ -69,13 +68,13 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
         SQLiteDatabase SQ = DOU.getReadableDatabase();
         //read columns from database into a 4 element array
         String[] col = {
-                TableDataUnits.TableInfoUnits.TIME,
-                TableDataUnits.TableInfoUnits.UNITS,
-                TableDataUnits.TableInfoUnits.PERCENTAGE,
-                TableDataUnits.TableInfoUnits.BAC
+                DataUnitsDatabaseContractor.DataLoggingTable.TIME,
+                DataUnitsDatabaseContractor.DataLoggingTable.UNITS,
+                DataUnitsDatabaseContractor.DataLoggingTable.PERCENTAGE,
+                DataUnitsDatabaseContractor.DataLoggingTable.BAC
         };
         //get data
-        return SQ.query(TableDataUnits.TableInfoUnits.TABLE_NAME, col, null, null, null, null, null);
+        return SQ.query(DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME, col, null, null, null, null, null);
     }
 
     public ArrayList<Cursor> getData(String Query){
