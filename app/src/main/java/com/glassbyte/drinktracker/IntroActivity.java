@@ -1,23 +1,17 @@
 package com.glassbyte.drinktracker;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
-import java.util.Random;
 
 
 public class IntroActivity extends Activity {
@@ -96,7 +90,7 @@ public class IntroActivity extends Activity {
                     Cursor CR = DOU.getInfo(DOU);
 
                     CR.moveToLast();
-                    DOU.putInfo(
+                    DOU.insertNewDrink(
                             DOU,
                             DOU.getDateTime(), //time
                             0, //units of alcohol

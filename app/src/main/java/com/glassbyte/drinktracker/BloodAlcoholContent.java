@@ -15,8 +15,9 @@ public class BloodAlcoholContent {
     private final float BODY_WATER_WOMEN = 0.49f;
     private final float MEAN_METABOLISM_MEN = 0.015f;
     private final float MEAN_METABOLISM_WOMEN = 0.017f;
-    private boolean isMan;
     private float bodyWeight;
+
+    public static boolean isMan; //static to let it be altered by any of the activities and affect all other current objects
 
     public BloodAlcoholContent(boolean isMan, float bodyWeight){
         this.isMan = isMan;

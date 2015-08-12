@@ -161,7 +161,7 @@ public class RealTimeActivity extends AppCompatActivity {
                         double y = alcoholUnits(gender, units, 10, BAC, H);
 
                         if (y != 0) {
-                            DOU.putInfo(
+                            DOU.insertNewDrink(
                                     DOU,
                                     DOU.getDateTime(), //time
                                     20, //units of alcohol

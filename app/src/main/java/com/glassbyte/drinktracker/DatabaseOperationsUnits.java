@@ -20,19 +20,17 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
             "CREATE TABLE " +
                     DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME +
                     "(" +
+                    DataUnitsDatabaseContractor.DataLoggingTable._ID  + " INTEGER PRIMARY KEY," +
                     //col for time
-                    DataUnitsDatabaseContractor.DataLoggingTable.TIME +
-                    " TEXT," +
+                    DataUnitsDatabaseContractor.DataLoggingTable.TIME + " TEXT," +
                     //col for units
-                    DataUnitsDatabaseContractor.DataLoggingTable.UNITS +
-                    " TEXT," +
+                    DataUnitsDatabaseContractor.DataLoggingTable.UNITS + " REAL," +
                     //col for percentage abv of alcohol
-                    DataUnitsDatabaseContractor.DataLoggingTable.PERCENTAGE +
-                    " TEXT," +
+                    DataUnitsDatabaseContractor.DataLoggingTable.PERCENTAGE + " REAL," +
                     //col for bac to generate from formula
-                    DataUnitsDatabaseContractor.DataLoggingTable.BAC +
-                    " TEXT);";
+                    DataUnitsDatabaseContractor.DataLoggingTable.BAC + " REAL);";
     //; ends query field within query -> ()
+    private String DELETE_QUERY = "DROP TABLE IF EXISTS " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME;
 
     public DatabaseOperationsUnits(Context context) {
         //constructor
@@ -47,19 +45,27 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //haven't done anything with this
+        db.execSQL(DELETE_QUERY);
+        onCreate(db);
+        /*
+        * FOR RELEASE VERSION THIS IMPLEMENTATION SHOULD BE MODIFIED SO THAT ANY DATA FROM THE ALREADY
+        * EXISITING TABLE GETS MIGRATED TO THE NEW TABLE BEING CREATED
+        **/
     }
 
-    //insert data into database
-    public void putInfo(DatabaseOperationsUnits DOU, String time, double units, double percentage, double bac){
+    //insert new drink into the database
+    public long insertNewDrink(DatabaseOperationsUnits dou, String time, float units, float percentage, float bac){
         //method for putting info generated into the table
         //variables instantiated are parametrised and cast into the cols
-        SQLiteDatabase SQ = DOU.getWritableDatabase(); //writes data to database
-        ContentValues CV = new ContentValues(); //create instance
-        CV.put(DataUnitsDatabaseContractor.DataLoggingTable.TIME, time); //coll 0
-        CV.put(DataUnitsDatabaseContractor.DataLoggingTable.UNITS, units); //coll 1
-        CV.put(DataUnitsDatabaseContractor.DataLoggingTable.PERCENTAGE, percentage); //coll 2
-        CV.put(DataUnitsDatabaseContractor.DataLoggingTable.BAC, bac); //coll 3
+        SQLiteDatabase sq = dou.getWritableDatabase(); //writes data to database
+
+        ContentValues cv = new ContentValues(); //create instance
+        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.TIME, time); //coll 0
+        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.UNITS, units); //coll 1
+        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.PERCENTAGE, percentage); //coll 2
+        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.BAC, bac); //coll 3
+
+        return sq.insert(DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME, null, cv);
     }
 
     //retrieve database

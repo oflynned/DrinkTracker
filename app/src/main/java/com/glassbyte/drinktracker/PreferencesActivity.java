@@ -35,9 +35,6 @@ public class PreferencesActivity extends PreferenceActivity {
 
             Preference gender = findPreference(getResources().getString(R.string.pref_key_editGender));
 
-            Toast.makeText(getActivity(),gender.toString(),Toast.LENGTH_SHORT).show();
-            Log.i("GENDER LOG:",gender.toString());
-
             gender.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {

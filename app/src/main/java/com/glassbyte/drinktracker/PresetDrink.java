@@ -1,7 +1,9 @@
 package com.glassbyte.drinktracker;
 
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,9 +29,11 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
     private Spinner percentageChoice;
     private TextView addPercentageText;
 
-    private double units;
-    private double percentage;
-    private double BAC;
+    private BloodAlcoholContent bloodAlcoholContent;
+
+    private float units;
+    private float percentage;
+    private float BAC;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -156,6 +160,16 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
         addDrink = (Button) V.findViewById(R.id.presetAddDrink);
         addDrink.setOnClickListener(this);
 
+        /*Set up the bloodAlcoholLevel*/
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        String gender = sp.getString(getResources().getString(R.string.pref_key_editGender),"");
+        System.out.println("!@DFASASFASF@!!$@!@#$!@$@!$@!     -      " + gender);
+        float weight = Float.valueOf(sp.getString(getResources().getString(R.string.pref_key_editWeight), ""));
+        System.out.println("!@DFASASFASF@!!$@!@#$!@$@!$@!     -     weight: "+weight);
+        boolean isMan = (gender == "male");
+        bloodAlcoholContent = new BloodAlcoholContent(isMan, weight);
+        /**/
+
         return V;
     }
 
@@ -167,8 +181,8 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
             case R.id.presetAddDrink:
 
                 //instantiate the class's object dynamically and a cursor for choosing the row
-                DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getActivity());
-                Cursor CR = DOU.getInfo(DOU);
+                DatabaseOperationsUnits dou = new DatabaseOperationsUnits(getActivity());
+                Cursor CR = dou.getInfo(dou);
 
                 //move to the last row as to not override or cause a collision
                 CR.moveToLast();
@@ -179,13 +193,24 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
                 //time
                 //percentage
                 //bac via the formula
+                float[] unitsArray = new float[1];
+                unitsArray[0] = bloodAlcoholContent.getStandardDrinkFactor(units, percentage);
 
-                DOU.putInfo(
-                        DOU,
-                        DOU.getDateTime(), //time
-                        getUnits(units), //units of alcohol
-                        getPercentage(percentage), //percentage
-                        getBAC(BAC) //bac
+                float[] percentageArray = new float[1];
+                percentageArray[0] = percentage;
+
+                float ebac = 0f;
+                try{
+                    ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(unitsArray,percentageArray,1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                dou.insertNewDrink(
+                        dou,
+                        dou.getDateTime(), //time
+                        units, //units of alcohol
+                        percentage, //percentage
+                        ebac //bac
                 );
 
                 //move to the next row and close the insertion as to not cause an exception
@@ -193,29 +218,5 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
                 CR.close();
                 break;
         }
-    }
-
-    private double getUnits(double units) {
-        return units;
-    }
-
-    private void setUnits(double units) {
-        this.units = units;
-    }
-
-    private double getPercentage(double percentage) {
-        return percentage;
-    }
-
-    private void setPercentage(double percentage) {
-        this.percentage = percentage;
-    }
-
-    private double getBAC(double BAC) {
-        return BAC;
-    }
-
-    private void setBAC(double BAC) {
-        this.BAC = BAC;
     }
 }

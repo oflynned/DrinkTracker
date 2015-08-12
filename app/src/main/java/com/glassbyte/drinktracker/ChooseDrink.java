@@ -83,7 +83,7 @@ public class ChooseDrink extends Fragment implements View.OnClickListener{
                 Cursor CR = DOU.getInfo(DOU);
 
                 CR.moveToLast();
-                DOU.putInfo(
+                DOU.insertNewDrink(
                         DOU,
                         DOU.getDateTime(), //time
                         getRandom(10), //units of alcohol
