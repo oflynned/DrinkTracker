@@ -582,7 +582,7 @@ public class CustomDrink extends Fragment {
     /*
     * super class for all the other types of glasses. All of them will share those properties.
     * */
-    public class Glass extends View{
+    public class Glass extends View {
         private int glassHeight, glassWidth, strokeWidth;
         private float x, y;
         private float maxDrinkHeight;//Represents the maximum height of a fluid that can be stored in the glass.

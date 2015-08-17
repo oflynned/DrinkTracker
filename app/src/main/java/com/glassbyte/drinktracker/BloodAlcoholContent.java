@@ -3,13 +3,13 @@ package com.glassbyte.drinktracker;
 /**
  * Created by Maciej on 12/08/2015.
  */
-public class BloodAlcoholContent {
+//public class BloodAlcoholContent {
     /*Based on https://en.wikipedia.org/wiki/Blood_alcohol_content#Estimated_blood_alcohol_content_by_intake
     * weight in kg's
     * drinking period in hr's
     * 1 Standard Drink = 18ml of pure alcohol in a drink
     * */
-    private final float BODY_WATER_IN_BLOOD = 0.806f;
+    /*private final float BODY_WATER_IN_BLOOD = 0.806f;
     private final float CONVERT_FACTOR = 1.2f;
     private final float BODY_WATER_MEN = 0.58f;
     private final float BODY_WATER_WOMEN = 0.49f;
@@ -28,7 +28,7 @@ public class BloodAlcoholContent {
         return (mlSize*alcVolPercentage/100f)/18f;
     }
 
-    /*drinkingPeriod must be specified in hours*/
+    //drinkingPeriod must be specified in hours
     public float getEstimatedBloodAlcoholContent(float[] mlSize, float[] alcVolPercentage, float drinkingPeriod) throws Exception {
         if(mlSize.length != alcVolPercentage.length)
             throw new java.lang.Exception("The mlSize and alcVolPercentage arrays must be of the same length.");
@@ -48,4 +48,55 @@ public class BloodAlcoholContent {
 
     public void setIsMan(boolean isMan){this.isMan = isMan;}
     public void setBodyWeight(float bodyWeight){this.bodyWeight = bodyWeight;}
+}*/
+public class BloodAlcoholContent{
+    /*
+    * This class is based on: http://www.wikihow.com/Calculate-Blood-Alcohol-Content-%28Widmark-Formula%29
+    * */
+    private final double ELAPSED_HOUR_FACTOR = 0.015;
+    private final double DENSITY_OF_ETHANOL = 0.789; //density of ethanol is 0.789g/ml
+    private final double MALE_R = 0.68;
+    private final double FEMALE_R = 0.55;
+
+    private boolean isMan;
+    private double bodyWeight; // in grams
+
+    /*
+    * bodyWeight arg must be specified in kilograms
+    * */
+    public BloodAlcoholContent(boolean isMan, double bodyWeight){
+        this.isMan = isMan;
+        this.bodyWeight = bodyWeight * 1000; //convert kg's to g's
+    }
+
+    /*
+    * The alcVolPercentage arg is to be specified as a real number between 0 and 100
+    * */
+    public double getEstimatedBloodAlcoholContent(double mlSize, double alcVolPercentage){
+        double volumeOfEthanol = mlSize*alcVolPercentage/100;
+        double massOfAlcohol = volumeOfEthanol * DENSITY_OF_ETHANOL;//in grams
+        double r = isMan ? MALE_R : FEMALE_R;
+
+        return massOfAlcohol/(bodyWeight*r)*100;
+    }
+
+    public static class MetricSystemConverter{
+        static public final double IMPERIAL_OZ_IN_ML = 28.4131;
+        static private final double POUND_IN_KG = 0.453592;
+        static private final double STONE_IN_KG = 6.35029;
+
+        public MetricSystemConverter(){}
+
+        static public double convertOzToMillilitres(double oz){return oz*IMPERIAL_OZ_IN_ML;}
+
+        static public double convertMillilitresToOz(double ml){return ml/IMPERIAL_OZ_IN_ML;}
+
+        static public double convertPoundsToKilograms(double pounds){return pounds*POUND_IN_KG;}
+
+        static public double convertKilogramsToPounds(double kg){return kg/POUND_IN_KG;}
+
+        static public double convertStoneToKilograms(double stones){return stones*STONE_IN_KG;}
+
+        static public double convertKilogramsToStones(double kg){return kg/STONE_IN_KG;}
+    }
 }
