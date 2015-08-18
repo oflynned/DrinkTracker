@@ -15,7 +15,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class DatabaseOperationsUnits extends SQLiteOpenHelper {
-    public static final int database_version = 2;
+    public static final int database_version = 1;
     public String CREATE_QUERY =
             "CREATE TABLE " +
                     DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME +
@@ -23,6 +23,8 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
                     DataUnitsDatabaseContractor.DataLoggingTable._ID  + " INTEGER PRIMARY KEY," +
                     //col for time
                     DataUnitsDatabaseContractor.DataLoggingTable.TIME + " TEXT," +
+                    //col for title
+                    DataUnitsDatabaseContractor.DataLoggingTable.TITLE + " TEXT," +
                     //col for units
                     DataUnitsDatabaseContractor.DataLoggingTable.UNITS + " REAL," +
                     //col for percentage abv of alcohol
@@ -54,16 +56,17 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
     }
 
     //insert new drink into the database
-    public long insertNewDrink(DatabaseOperationsUnits dou, String time, float units, float percentage, float bac){
+    public long insertNewDrink(String time, String title, double mlVol, double percentage, double bac){
         //method for putting info generated into the table
         //variables instantiated are parametrised and cast into the cols
-        SQLiteDatabase sq = dou.getWritableDatabase(); //writes data to database
+        SQLiteDatabase sq = this.getWritableDatabase(); //writes data to database
 
         ContentValues cv = new ContentValues(); //create instance
         cv.put(DataUnitsDatabaseContractor.DataLoggingTable.TIME, time); //coll 0
-        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.UNITS, units); //coll 1
-        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.PERCENTAGE, percentage); //coll 2
-        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.BAC, bac); //coll 3
+        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.TITLE, title); //coll 1
+        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.UNITS, mlVol); //coll 2
+        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.PERCENTAGE, percentage); //coll 3
+        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.BAC, bac); //coll 4
 
         return sq.insert(DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME, null, cv);
     }

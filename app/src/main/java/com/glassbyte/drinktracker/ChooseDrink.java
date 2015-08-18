@@ -84,8 +84,8 @@ public class ChooseDrink extends Fragment implements View.OnClickListener{
 
                 CR.moveToLast();
                 DOU.insertNewDrink(
-                        DOU,
                         DOU.getDateTime(), //time
+                        "title",
                         getRandom(10), //units of alcohol
                         getRandom(10), //percentage
                         getRandom(10) //bac

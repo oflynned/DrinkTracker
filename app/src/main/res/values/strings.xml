@@ -18,6 +18,13 @@
         <string name="pref_key_dataCollectionPermission">pref_key_dataCollectionPermission</string>
     <!-- End of Preferences -->
 
+    <!--Custom Drinks Titles-->
+    <string name="shot_glass_title">Shot Glass</string>
+    <string name="water_glass_title">Glass</string>
+    <string name="pint_glass_title">Pint Glass</string>
+    <string name="wine_glass_title">Wine Glass</string>
+    <!-- End of Custom Drinks Titles -->
+
     <string-array name="optgender">
         <item>Male</item>
         <item>Female</item>

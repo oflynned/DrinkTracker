@@ -1,5 +1,9 @@
 package com.glassbyte.drinktracker;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 /**
  * Created by Maciej on 12/08/2015.
  */
@@ -61,6 +65,13 @@ public class BloodAlcoholContent{
     private boolean isMan;
     private double bodyWeight; // in grams
 
+    public BloodAlcoholContent(Activity activity){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
+        String gender = sp.getString(activity.getString(R.string.pref_key_editGender),"");
+
+        this.bodyWeight = Double.valueOf(sp.getString(activity.getString(R.string.pref_key_editWeight), ""));
+        this.isMan = (gender == "male");
+    }
     /*
     * bodyWeight arg must be specified in kilograms
     * */

@@ -48,17 +48,11 @@ public class IntroActivity extends Activity {
 
                 if (mHeight.getText().toString().trim().length() == 0) {
                     Toast.makeText(getBaseContext(), "Please fill in height", Toast.LENGTH_SHORT).show();
-                }
-
-                if (mWeight.getText().toString().trim().length() == 0) {
+                } else if (mWeight.getText().toString().trim().length() == 0) {
                     Toast.makeText(getBaseContext(), "Please fill in weight", Toast.LENGTH_SHORT).show();
-                }
-
-                if (mRadioGroup.getCheckedRadioButtonId() == -1) {
+                } else if (mRadioGroup.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(getBaseContext(), "Please fill in gender", Toast.LENGTH_SHORT).show();
-                }
-
-                if (mUnitsMeasurement.getCheckedRadioButtonId() == -1) {
+                } else if (mUnitsMeasurement.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(getBaseContext(), "Please fill in units", Toast.LENGTH_SHORT).show();
                 } else {
                     //height
@@ -85,21 +79,6 @@ public class IntroActivity extends Activity {
                     editor.putString(getResources().getString(R.string.pref_key_editWeight), weight);
                     editor.putString(getResources().getString(R.string.pref_key_editUnits), um);
                     editor.apply();
-
-                    DatabaseOperationsUnits DOU = new DatabaseOperationsUnits(getApplicationContext());
-                    Cursor CR = DOU.getInfo(DOU);
-
-                    CR.moveToLast();
-                    DOU.insertNewDrink(
-                            DOU,
-                            DOU.getDateTime(), //time
-                            0, //units of alcohol
-                            0, //percentage
-                            0 //bac
-                    );
-
-                    CR.moveToNext(); //increment table
-                    CR.close();
 
                     Intent intent = new Intent(v.getContext(), AddDrinkActivity.class);
                     startActivity(intent);
