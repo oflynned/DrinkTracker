@@ -24,10 +24,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/*
-* -implement functionality for the next and previous buttons
-* -implement disabling of the next button when reached the last page
-* */
 public class ListDrinksActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private DrinksListAdapter drinkListAdapter;
     private GridView gridView;
@@ -122,9 +118,12 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
         private SQLiteDatabase db;
         private int displayLimit, currentPage;
         private int numOfGridColumns;
+        private BaseAdapter thisBaseAdapter;
 
 
         public DrinksListAdapter(Context c, int displayLimit){
+            thisBaseAdapter = this;
+
             mContext = c;
             dou = new DatabaseOperationsUnits(mContext);
             drinkCheckboxes = new ArrayList<>();
@@ -132,15 +131,11 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
 
             this.displayLimit = displayLimit;
 
-            queryWithLimit = SELECT_ALL_SQL_QUERY + " LIMIT " + displayLimit+1 + " OFFSET " + currentPage*displayLimit;
+            queryWithLimit =generateQueryWithLimit();
             result = db.rawQuery(queryWithLimit, null);
             currentPage=0;
 
-            if(result.getCount() > displayLimit) {
-                numOfGridColumns = displayLimit * NUM_COLUMNS + NUM_COLUMNS * 2; //2 aditional rows one for headings and the other for next and previous page buttons
-            } else {
-                numOfGridColumns = (result.getCount()-1) * NUM_COLUMNS + NUM_COLUMNS;
-            }
+            setCount(result);
         }
 
         @Override
@@ -162,12 +157,10 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
         public View getView(int i, View view, ViewGroup viewGroup) {
             View cellView = null;
 
-            /*if (!result.isBeforeFirst())
-                result.moveToFirst();
-            */
             if (i < NUM_COLUMNS) {
+                //first row to contain headings for the table of drinks
                 cellView = new TextView(mContext);
-               switch (i) {
+                switch (i) {
                    case 0:
                        ((TextView)cellView).setText("Select");
                        break;
@@ -183,12 +176,13 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
                    case 4:
                        ((TextView)cellView).setText("AlcVol");
                        break;
-               }
+                }
 
                 ((TextView)cellView).setAllCaps(true);
                 ((TextView)cellView).setTypeface(null, Typeface.BOLD);
 
-            } else if (i < (NUM_COLUMNS + displayLimit*NUM_COLUMNS)) {
+            } else if (i < (NUM_COLUMNS + ((result.getCount()>displayLimit)?displayLimit:result.getCount())*NUM_COLUMNS)) {
+                /*HORRIBLE CODE, YES I KNOW, I'M SORRY BUT I WAS TIRED AND JUST DIDN'T WANT TO CHANGE EVERYTHING ELSE SO MADE IT WORK LIKE THAT YUUCK!*/
                 result.moveToPosition(i/NUM_COLUMNS-1);
                 if ((i % NUM_COLUMNS) == 0) {
                     cellView = new CheckBox(mContext);
@@ -210,13 +204,44 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
                 //else this is the last row that will contain button in the first and last cell
                 if(i%NUM_COLUMNS==0){
                     Button previous = new Button(mContext);
+                    previous.setText("Previous");
+                    previous.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(currentPage!=0) {
+                                currentPage--;
+                                queryWithLimit = generateQueryWithLimit();
+                                db.close();
+                                db = dou.getReadableDatabase();
+                                result = db.rawQuery(queryWithLimit, null);
+                                setCount(result);
+                                thisBaseAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+
                     if(currentPage==0)
                         previous.setEnabled(false);
-                    previous.setText("Previous");
+
                     cellView = previous;
                 } else if (i%NUM_COLUMNS==NUM_COLUMNS-1) {
                     Button next = new Button(mContext);
                     next.setText("Next");
+                    next.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            currentPage++;
+                            queryWithLimit = generateQueryWithLimit();
+                            db.close();
+                            db = dou.getReadableDatabase();
+                            result = db.rawQuery(queryWithLimit, null);
+                            setCount(result);
+                            thisBaseAdapter.notifyDataSetChanged();
+                        }
+                    });
+
+                    if (result.getCount() <= displayLimit)
+                        next.setEnabled(false);
                     cellView = next;
                 } else {
                     cellView = new View(mContext);
@@ -288,13 +313,21 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
             db.close();
             db = dou.getReadableDatabase();
             result = db.rawQuery(queryWithLimit, null);
-            if(result.getCount() > displayLimit) {
-                numOfGridColumns = displayLimit * NUM_COLUMNS + NUM_COLUMNS * 2; //2 aditional rows one for headings and the other for next and previous page buttons
+            setCount(result);
+        }
+
+        //Sets count for the gridview based on the results from a query where each row represents a drink
+        public void setCount(Cursor c){
+            if(c.getCount() > displayLimit || currentPage !=0) {
+                int numOfDrinksToDisplay = (c.getCount() > displayLimit) ? displayLimit : c.getCount();
+                numOfGridColumns = numOfDrinksToDisplay * NUM_COLUMNS + NUM_COLUMNS * 2; //2 aditional rows one for headings and the other for next and previous page buttons
             } else {
-                numOfGridColumns = (result.getCount()-1) * NUM_COLUMNS + NUM_COLUMNS;
+                numOfGridColumns = c.getCount() * NUM_COLUMNS + NUM_COLUMNS;
             }
+        }
 
-
+        public String generateQueryWithLimit(){
+            return SELECT_ALL_SQL_QUERY + " LIMIT " + displayLimit+1 + " OFFSET " + currentPage*displayLimit;
         }
     }
 }
