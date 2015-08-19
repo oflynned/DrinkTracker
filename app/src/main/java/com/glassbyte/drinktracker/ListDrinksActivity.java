@@ -2,6 +2,7 @@ package com.glassbyte.drinktracker;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,13 +22,14 @@ import java.util.Iterator;
 
 public class ListDrinksActivity extends AppCompatActivity {
     DrinksListAdapter drinkListAdapter;
+    GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_drinks);
 
-        GridView gridView = (GridView)findViewById(R.id.listDrinksGridView);
+        gridView = (GridView)findViewById(R.id.listDrinksGridView);
 
         drinkListAdapter = new DrinksListAdapter(this);
 
@@ -64,18 +66,14 @@ public class ListDrinksActivity extends AppCompatActivity {
     }
 
     public void selectAll(View view){
-        /*CheckBox[] checkboxes = drinkListAdapter.getCheckboxes();
-
-        for (CheckBox checkbox: checkboxes) {
-            checkbox.setEnabled(true);
-        }
-        */
-        System.out.println("was here");
         drinkListAdapter.selectAllCheckboxes();
     }
 
     public void removeSelected(View view){
-
+        if(drinkListAdapter.removeSelected()) {
+            gridView.invalidateViews();
+            Toast.makeText(this, "Selected rows were deleted successfully!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public class DrinksListAdapter extends BaseAdapter{
@@ -84,12 +82,13 @@ public class ListDrinksActivity extends AppCompatActivity {
         private Cursor result;
         private final int NUM_COLUMNS = 5;
         private ArrayList<CheckBox> drinkCheckboxes;
+        private final String SELECT_ALL_SQL_QUERY = "SELECT * FROM " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME;
 
         public DrinksListAdapter(Context c){
             mContext = c;
             dou = new DatabaseOperationsUnits(mContext);
             drinkCheckboxes = new ArrayList<>();
-            result = dou.getReadableDatabase().rawQuery("SELECT * FROM " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME, null);
+            result = dou.getReadableDatabase().rawQuery(SELECT_ALL_SQL_QUERY, null);
             result.moveToFirst();
         }
 
@@ -184,6 +183,36 @@ public class ListDrinksActivity extends AppCompatActivity {
                     itr.next().setChecked(false);
                 }
             }
+        }
+
+        //returns whether any checkboxes were selected hence whether anything got removed
+        public boolean removeSelected(){
+            System.out.println("Entered the removeSelected function");
+            Iterator<CheckBox> itr = drinkCheckboxes.iterator();
+            ArrayList<Integer> selectedCheckboxesIds = new ArrayList<>();
+            while(itr.hasNext()){
+                CheckBox cb = itr.next();
+                if(cb.isChecked()){
+                    selectedCheckboxesIds.add(cb.getId());
+                }
+            }
+            if (selectedCheckboxesIds.size()>0) {
+                String sqlQuery = "DELETE FROM " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME
+                        + " WHERE " + DataUnitsDatabaseContractor.DataLoggingTable._ID + "=";
+                Iterator<Integer> idsItr = selectedCheckboxesIds.iterator();
+                SQLiteDatabase db = dou.getWritableDatabase();
+                while (idsItr.hasNext()) {
+                    String tmpQuery = sqlQuery + idsItr.next();
+                    System.out.println("Executed DELETE query: " + tmpQuery);
+                    db.execSQL(tmpQuery);
+                }
+                db.close();
+
+                db = dou.getReadableDatabase();
+                result = db.rawQuery(SELECT_ALL_SQL_QUERY, null);
+                return true;
+            }
+            return false;
         }
     }
 }
