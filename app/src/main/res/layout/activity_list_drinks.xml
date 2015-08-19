@@ -17,8 +17,23 @@
         android:layout_height="wrap_content"
         android:text="Remove Selected"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/select_all_button"
         android:onClick="removeSelected"/>
+    <TextView
+        android:id="@+id/max_display_label"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Display drinks: "
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        />
+    <Spinner
+        android:id="@+id/max_display_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/max_display_label"/>
+
     <GridView
         android:id="@+id/listDrinksGridView"
         android:layout_width="match_parent"
@@ -28,6 +43,6 @@
         android:horizontalSpacing="10dp"
         android:stretchMode="columnWidth"
         android:gravity="center"
-        android:layout_below="@id/remove_selected_button"
+        android:layout_below="@id/max_display_spinner"
         />
 </RelativeLayout>

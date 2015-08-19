@@ -11,18 +11,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
-public class ListDrinksActivity extends AppCompatActivity {
-    DrinksListAdapter drinkListAdapter;
-    GridView gridView;
+public class ListDrinksActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private DrinksListAdapter drinkListAdapter;
+    private GridView gridView;
+    private Spinner spinner;
+    private final int[] MAX_DISPLAY_SPINNER_ITEMS = {5,10};
+    private int displayLimit = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +38,7 @@ public class ListDrinksActivity extends AppCompatActivity {
 
         gridView = (GridView)findViewById(R.id.listDrinksGridView);
 
-        drinkListAdapter = new DrinksListAdapter(this);
+        drinkListAdapter = new DrinksListAdapter(this, displayLimit);
 
         gridView.setAdapter(drinkListAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -41,6 +48,15 @@ public class ListDrinksActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+        List<String> list = new ArrayList<String>();
+        for (int num : MAX_DISPLAY_SPINNER_ITEMS) {
+            list.add(Integer.toString(num));
+        }
+        spinner = (Spinner)findViewById(R.id.max_display_spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -76,6 +92,21 @@ public class ListDrinksActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String selection = (String)spinner.getItemAtPosition(i);
+        displayLimit = Integer.valueOf(selection);
+        drinkListAdapter.setDisplayLimit(displayLimit);
+        gridView.invalidateViews();
+
+        System.out.println("Seleceted: " + selection);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
     public class DrinksListAdapter extends BaseAdapter{
         private Context mContext;
         private DatabaseOperationsUnits dou;
@@ -83,18 +114,34 @@ public class ListDrinksActivity extends AppCompatActivity {
         private final int NUM_COLUMNS = 5;
         private ArrayList<CheckBox> drinkCheckboxes;
         private final String SELECT_ALL_SQL_QUERY = "SELECT * FROM " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME;
+        private String queryWithLimit;
+        private SQLiteDatabase db;
+        private int displayLimit, currentPage;
+        private int numOfGridColumns;
 
-        public DrinksListAdapter(Context c){
+
+        public DrinksListAdapter(Context c, int displayLimit){
             mContext = c;
             dou = new DatabaseOperationsUnits(mContext);
             drinkCheckboxes = new ArrayList<>();
-            result = dou.getReadableDatabase().rawQuery(SELECT_ALL_SQL_QUERY, null);
-            result.moveToFirst();
+            db = dou.getReadableDatabase();
+
+            this.displayLimit = displayLimit;
+
+            queryWithLimit = SELECT_ALL_SQL_QUERY + " LIMIT " + displayLimit+1 + " OFFSET " + currentPage*displayLimit;
+            result = db.rawQuery(queryWithLimit, null);
+            currentPage=0;
+
+            if(result.getCount() > displayLimit) {
+                numOfGridColumns = displayLimit * NUM_COLUMNS + NUM_COLUMNS * 2; //2 aditional rows one for headings and the other for next and previous page buttons
+            } else {
+                numOfGridColumns = (result.getCount()-1) * NUM_COLUMNS + NUM_COLUMNS;
+            }
         }
 
         @Override
         public int getCount() {
-            return result.getCount() * 5 + NUM_COLUMNS; //5 columns to be displayed in the list for each row in the database + 5 for the top row
+            return numOfGridColumns;
         }
 
         @Override
@@ -137,7 +184,7 @@ public class ListDrinksActivity extends AppCompatActivity {
                 ((TextView)cellView).setAllCaps(true);
                 ((TextView)cellView).setTypeface(null, Typeface.BOLD);
 
-            } else {
+            } else if (i < (NUM_COLUMNS + displayLimit*NUM_COLUMNS)) {
                 result.moveToPosition(i/NUM_COLUMNS-1);
                 if ((i % NUM_COLUMNS) == 0) {
                     cellView = new CheckBox(mContext);
@@ -154,6 +201,21 @@ public class ListDrinksActivity extends AppCompatActivity {
 
                     if((i % NUM_COLUMNS) == (NUM_COLUMNS-1))
                         result.moveToNext();
+                }
+            } else {
+                //else this is the last row that will contain button in the first and last cell
+                if(i%NUM_COLUMNS==0){
+                    Button previous = new Button(mContext);
+                    if(currentPage==0)
+                        previous.setEnabled(false);
+                    previous.setText("Previous");
+                    cellView = previous;
+                } else if (i%NUM_COLUMNS==NUM_COLUMNS-1) {
+                    Button next = new Button(mContext);
+                    next.setText("Next");
+                    cellView = next;
+                } else {
+                    cellView = new View(mContext);
                 }
             }
             return cellView;
@@ -200,7 +262,7 @@ public class ListDrinksActivity extends AppCompatActivity {
                 String sqlQuery = "DELETE FROM " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME
                         + " WHERE " + DataUnitsDatabaseContractor.DataLoggingTable._ID + "=";
                 Iterator<Integer> idsItr = selectedCheckboxesIds.iterator();
-                SQLiteDatabase db = dou.getWritableDatabase();
+                db = dou.getWritableDatabase();
                 while (idsItr.hasNext()) {
                     String tmpQuery = sqlQuery + idsItr.next();
                     System.out.println("Executed DELETE query: " + tmpQuery);
@@ -209,10 +271,26 @@ public class ListDrinksActivity extends AppCompatActivity {
                 db.close();
 
                 db = dou.getReadableDatabase();
-                result = db.rawQuery(SELECT_ALL_SQL_QUERY, null);
+                result = db.rawQuery(queryWithLimit, null);
                 return true;
             }
             return false;
+        }
+        
+        public void setDisplayLimit(int limit){
+            displayLimit = limit;
+            currentPage = 0;
+            queryWithLimit = SELECT_ALL_SQL_QUERY + " LIMIT " + displayLimit+1 + " OFFSET " + currentPage*displayLimit;
+            db.close();
+            db = dou.getReadableDatabase();
+            result = db.rawQuery(queryWithLimit, null);
+            if(result.getCount() > displayLimit) {
+                numOfGridColumns = displayLimit * NUM_COLUMNS + NUM_COLUMNS * 2; //2 aditional rows one for headings and the other for next and previous page buttons
+            } else {
+                numOfGridColumns = (result.getCount()-1) * NUM_COLUMNS + NUM_COLUMNS;
+            }
+
+
         }
     }
 }
