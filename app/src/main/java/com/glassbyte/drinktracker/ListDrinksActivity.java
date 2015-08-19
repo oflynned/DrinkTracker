@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/*
+* -implement functionality for the next and previous buttons
+* -implement disabling of the next button when reached the last page
+* */
 public class ListDrinksActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private DrinksListAdapter drinkListAdapter;
     private GridView gridView;
