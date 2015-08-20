@@ -1,5 +1,8 @@
 package com.glassbyte.drinktracker;
-
+/*
+* To do:
+* -implement the functionality of the actionbar menu
+* */
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
