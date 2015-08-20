@@ -1,12 +1,15 @@
 package com.glassbyte.drinktracker;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
@@ -15,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.Random;
@@ -22,6 +26,7 @@ import java.util.Random;
 /**
  * Created by root on 27/05/15.
  */
+/*
 public class ChooseDrink extends Fragment implements View.OnClickListener{
 
     private DatabaseOperationsUnits DOU;
@@ -146,6 +151,53 @@ public class ChooseDrink extends Fragment implements View.OnClickListener{
                 notify.setLatestEventInfo(getActivity(), title, body, pending);
                 NM.notify(0, notify);
                 break;
+        }
+    }
+}*/
+
+public class ChooseDrink extends Fragment {
+    private SelectionSideBar leftSideBar, rightSideBar;
+    private final int SIDE_BAR_WIDTH = 90;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        RelativeLayout rl = new RelativeLayout(this.getActivity());
+        rl.setBackgroundColor(Color.WHITE);
+
+        leftSideBar = new SelectionSideBar(this.getActivity(), true);
+        rightSideBar = new SelectionSideBar(this.getActivity(), false);
+
+        RelativeLayout.LayoutParams leftSideBarParams = new RelativeLayout.LayoutParams(SIDE_BAR_WIDTH, RelativeLayout.LayoutParams.MATCH_PARENT);
+        leftSideBarParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        leftSideBar.setLayoutParams(leftSideBarParams);
+
+        RelativeLayout.LayoutParams rightSideBarParams = new RelativeLayout.LayoutParams(SIDE_BAR_WIDTH, RelativeLayout.LayoutParams.MATCH_PARENT);
+        rightSideBarParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        rightSideBar.setLayoutParams(rightSideBarParams);
+
+        rl.addView(leftSideBar);
+        rl.addView(rightSideBar);
+        return rl;
+    }
+
+    public class SelectionSideBar extends View{
+        private boolean isLeft;
+        private Context mContext;
+
+        public SelectionSideBar(Context c, boolean isLeft){
+            super(c);
+            mContext = c;
+            this.isLeft = isLeft;
+            if(isLeft)
+                this.setBackground(c.getDrawable(R.drawable.choose_drink_left_side_bg));
+            else
+                this.setBackground(c.getDrawable(R.drawable.choose_drink_right_side_bg));
+        }
+
+        @Override
+        protected void onDraw(Canvas c){
+            super.onDraw(c);
         }
     }
 }
