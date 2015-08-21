@@ -23,14 +23,22 @@ import android.widget.TextView;
  * Created by Maciej on 27/05/15.
  */
 
-public class ChooseDrink extends Fragment {
+public class ChooseDrink extends Fragment implements BloodAlcoholContent.OnBloodAlcoholContentChangeListener{
     private SelectionSideBar leftSideBar, rightSideBar;
+    private TextView bacDisplay;
+    private final int BAC_DECIMAL_PLACES = 2;
     private final int BAC_FONT_SIZE= 40;
     private final int SIDE_BAR_WIDTH = 200;
+    private BloodAlcoholContent bloodAlcoholContent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /*Set up the BloodAlcoholLevel object*/
+        bloodAlcoholContent = new BloodAlcoholContent(this.getActivity());
+        bloodAlcoholContent.setOnBloodAlcoholContentChangeListener(this);
+        /*End of Set up the BloodAlcoholLevel object*/
+
         RelativeLayout rl = new RelativeLayout(this.getActivity());
         rl.setBackgroundColor(Color.WHITE);
 
@@ -47,11 +55,11 @@ public class ChooseDrink extends Fragment {
         rightSideBar.setLayoutParams(rightSideBarParams);
         rightSideBar.setId(View.generateViewId());
 
-        TextView bacDisplay = new TextView(this.getActivity());
+        bacDisplay = new TextView(this.getActivity());
         bacDisplay.setTextSize(BAC_FONT_SIZE);
         bacDisplay.setTextColor(Color.BLACK);
         bacDisplay.setGravity(Gravity.CENTER);
-        bacDisplay.setText("Your\ncurrent\nBAC is:\nXX.XX");
+        bacDisplay.setText("Your\ncurrent\nBAC is:\n" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
         RelativeLayout.LayoutParams bacDisplayParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
         bacDisplayParams.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
         bacDisplayParams.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
@@ -71,6 +79,12 @@ public class ChooseDrink extends Fragment {
         rl.addView(bacDisplay);
         rl.addView(swipeArrowView);
         return rl;
+    }
+
+    @Override
+    public void onBloodAlcoholContentChange() {
+        bacDisplay.setText("Your\ncurrent\nBAC is:\n" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
+        bacDisplay.invalidate();
     }
 
     public class SelectionSideBar extends View{

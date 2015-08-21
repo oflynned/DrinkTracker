@@ -260,6 +260,7 @@ public class CustomDrink extends Fragment {
                 double alcPercentage = alcBar.getProgress();
                 double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(mlVol, alcPercentage);
                 dou.insertNewDrink(dou.getDateTime(), chosenGlass.getTitle(), mlVol, alcPercentage, ebac);
+                bloodAlcoholContent.setCurrentEbac(bloodAlcoholContent.getCurrentEbac()+ebac);
 
                 Toast.makeText(thisActivity, "Drink added successfully!", Toast.LENGTH_SHORT).show();
             }
