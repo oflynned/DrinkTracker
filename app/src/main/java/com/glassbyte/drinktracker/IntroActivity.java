@@ -76,7 +76,7 @@ public class IntroActivity extends Activity {
                     editor.putString(getResources().getString(R.string.pref_key_editHeight), height);
                     editor.putString(getResources().getString(R.string.pref_key_editWeight), weight);
                     editor.putString(getResources().getString(R.string.pref_key_editUnits), um);
-                    editor.putString(getResources().getString(R.string.pref_key_currentEbac), "0");
+                    editor.putFloat(getResources().getString(R.string.pref_key_currentEbac), 0);
                     editor.apply();
 
                     Intent intent = new Intent(v.getContext(), AddDrinkActivity.class);

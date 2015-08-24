@@ -59,6 +59,7 @@
             android:name=".RealTimeActivity"
             android:label="RealTimeActivity">
         </activity>
+        <service android:name=".UpdateCurrentBACService"/>
     </application>
 
 </manifest>
