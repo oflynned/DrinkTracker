@@ -98,7 +98,7 @@ public class AddDrinkActivity extends AppCompatActivity{
                 return new PresetDrink();
             } else if (position == 1) {
                 return new ChooseDrink();
-            } else{
+            } else {
                 CustomDrink cd = new CustomDrink();
                 Bundle bundle = new Bundle();
                 bundle.putInt(CustomDrink.ARG_ACTION_BAR_HEIGHT, actionBarHeight);

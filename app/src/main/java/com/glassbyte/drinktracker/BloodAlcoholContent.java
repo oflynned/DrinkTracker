@@ -62,27 +62,23 @@ public class BloodAlcoholContent {
     /*
     * This class is based on: http://www.wikihow.com/Calculate-Blood-Alcohol-Content-%28Widmark-Formula%29
     * */
-    private static double currentEbac =  0;
-    private static ArrayList<BloodAlcoholContent>  bacInstances= new ArrayList<>();//used to notify all the present instances that the currentEbac has changed
     private final double ELAPSED_HOUR_FACTOR = 0.015;
     private final double DENSITY_OF_ETHANOL = 0.789; //density of ethanol is 0.789g/ml
     private final double MALE_R = 0.68;
     private final double FEMALE_R = 0.55;
-
+    private SharedPreferences sp;
     private boolean isMan;
     private double bodyWeight; // in grams
-    private OnBloodAlcoholContentChangeListener OnBloodAlcoholContentChangeListener;
+    private Activity activity;
 
     public BloodAlcoholContent(Activity activity){
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
+        this.activity = activity;
+
+        sp = PreferenceManager.getDefaultSharedPreferences(activity);
         String gender = sp.getString(activity.getString(R.string.pref_key_editGender),"");
 
         this.bodyWeight = Double.valueOf(sp.getString(activity.getString(R.string.pref_key_editWeight), "")) * 1000;
         this.isMan = (gender == "male");
-
-        OnBloodAlcoholContentChangeListener = null;
-
-        bacInstances.add(this);
     }
     /*
     * bodyWeight arg must be specified in kilograms
@@ -90,22 +86,15 @@ public class BloodAlcoholContent {
     public BloodAlcoholContent(boolean isMan, double bodyWeight){
         this.isMan = isMan;
         this.bodyWeight = bodyWeight * 1000; //convert kg's to g's
-
-        OnBloodAlcoholContentChangeListener = null;
-
-        bacInstances.add(this);
     }
 
     /*WAY TO ACCESS THE SHARED STATIC VARIABLE OF CURRENTEBAC*/
-    public void setCurrentEbac(double ebac){
-        currentEbac = ebac;
-        Iterator<BloodAlcoholContent> itr= bacInstances.iterator();
-        while(itr.hasNext()){
-            BloodAlcoholContent bac = itr.next();
-            bac.bloodAlcoholContentChanged();
-        }
+    public void setCurrentEbac(float ebac){
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putFloat(activity.getString(R.string.pref_key_currentEbac),ebac);
+        editor.apply();
     }
-    public double getCurrentEbac(){return currentEbac;}
+    public float getCurrentEbac(){return sp.getFloat(activity.getString(R.string.pref_key_currentEbac),0);}
 
     /*
     * The alcVolPercentage arg is to be specified as a real number between 0 and 100
@@ -118,22 +107,6 @@ public class BloodAlcoholContent {
         return massOfAlcohol/(bodyWeight*r)*100;
     }
 
-    public void setOnBloodAlcoholContentChangeListener(OnBloodAlcoholContentChangeListener listener){
-        this.OnBloodAlcoholContentChangeListener = listener;
-    }
-
-    public boolean hasOnBloodAlcoholContentChangeListener(){
-        return ((this.OnBloodAlcoholContentChangeListener!=null)?true:false);
-    }
-
-    public void bloodAlcoholContentChanged(){
-        if(this.hasOnBloodAlcoholContentChangeListener())
-            OnBloodAlcoholContentChangeListener.onBloodAlcoholContentChange();
-    }
-
-    public interface OnBloodAlcoholContentChangeListener{
-        void onBloodAlcoholContentChange();
-    }
     /*Taken the below method from: http://stackoverflow.com/a/2808648 */
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();

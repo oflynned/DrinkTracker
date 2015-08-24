@@ -5,9 +5,11 @@ package com.glassbyte.drinktracker;
 * -display actual current EBAC
 * */
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -23,20 +25,25 @@ import android.widget.TextView;
  * Created by Maciej on 27/05/15.
  */
 
-public class ChooseDrink extends Fragment implements BloodAlcoholContent.OnBloodAlcoholContentChangeListener{
+public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
     private SelectionSideBar leftSideBar, rightSideBar;
     private TextView bacDisplay;
     private final int BAC_DECIMAL_PLACES = 2;
     private final int BAC_FONT_SIZE= 40;
     private final int SIDE_BAR_WIDTH = 200;
     private BloodAlcoholContent bloodAlcoholContent;
+    SharedPreferences sp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /*Register the sharepreferences listener so that it doesn't get garbage collected*/
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        sp.registerOnSharedPreferenceChangeListener(this);
+        /*End Register the sharepreferences listener*/
+        
         /*Set up the BloodAlcoholLevel object*/
         bloodAlcoholContent = new BloodAlcoholContent(this.getActivity());
-        bloodAlcoholContent.setOnBloodAlcoholContentChangeListener(this);
         /*End of Set up the BloodAlcoholLevel object*/
 
         RelativeLayout rl = new RelativeLayout(this.getActivity());
@@ -82,9 +89,11 @@ public class ChooseDrink extends Fragment implements BloodAlcoholContent.OnBlood
     }
 
     @Override
-    public void onBloodAlcoholContentChange() {
-        bacDisplay.setText("Your\ncurrent\nBAC is:\n" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
-        bacDisplay.invalidate();
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if (s == this.getString(R.string.pref_key_currentEbac)) {
+            bacDisplay.setText("Your\ncurrent\nBAC is:\n" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
+            bacDisplay.invalidate();
+        }
     }
 
     public class SelectionSideBar extends View{

@@ -64,10 +64,8 @@ public class IntroActivity extends Activity {
                     int fWeight = Integer.parseInt(weight);
 
                     String gender = mGender;
-                    Toast.makeText(getBaseContext(), gender, Toast.LENGTH_SHORT).show();
 
                     String um = mUM;
-                    Toast.makeText(getBaseContext(), um, Toast.LENGTH_SHORT).show();
 
                     //store in shared preferences
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(thisActivity);
@@ -78,6 +76,7 @@ public class IntroActivity extends Activity {
                     editor.putString(getResources().getString(R.string.pref_key_editHeight), height);
                     editor.putString(getResources().getString(R.string.pref_key_editWeight), weight);
                     editor.putString(getResources().getString(R.string.pref_key_editUnits), um);
+                    editor.putString(getResources().getString(R.string.pref_key_currentEbac), "0");
                     editor.apply();
 
                     Intent intent = new Intent(v.getContext(), AddDrinkActivity.class);
