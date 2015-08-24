@@ -41,7 +41,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         sp.registerOnSharedPreferenceChangeListener(this);
         /*End Register the sharepreferences listener*/
-        
+
         /*Set up the BloodAlcoholLevel object*/
         bloodAlcoholContent = new BloodAlcoholContent(this.getActivity());
         /*End of Set up the BloodAlcoholLevel object*/

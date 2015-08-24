@@ -1,7 +1,9 @@
 package com.glassbyte.drinktracker;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -260,7 +262,13 @@ public class CustomDrink extends Fragment {
                 double alcPercentage = alcBar.getProgress();
                 double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(mlVol, alcPercentage);
                 dou.insertNewDrink(dou.getDateTime(), chosenGlass.getTitle(), mlVol, alcPercentage, ebac);
-                bloodAlcoholContent.setCurrentEbac((float)(bloodAlcoholContent.getCurrentEbac()+ebac));
+                bloodAlcoholContent.setCurrentEbac((float) (bloodAlcoholContent.getCurrentEbac() + ebac));
+
+                if(!UpdateCurrentBACService.isMyServiceRunning(UpdateCurrentBACService.class, thisActivity)) {
+                    Intent updateCurrentBACService = new Intent(thisActivity, UpdateCurrentBACService.class);
+                    thisActivity.startService(updateCurrentBACService);
+                    System.out.println("Set up service.");
+                }
 
                 Toast.makeText(thisActivity, "Drink added successfully!", Toast.LENGTH_SHORT).show();
             }
@@ -326,6 +334,7 @@ public class CustomDrink extends Fragment {
 
         rl.addView(initChosenGlass(glass, isWineGlass));
     }
+
     /*
     * Creates a glass of the following shape:
     * \       /

@@ -62,7 +62,7 @@ public class BloodAlcoholContent {
     /*
     * This class is based on: http://www.wikihow.com/Calculate-Blood-Alcohol-Content-%28Widmark-Formula%29
     * */
-    private final double ELAPSED_HOUR_FACTOR = 0.015;
+    public static final double ELAPSED_HOUR_FACTOR = 0.015;
     private final double DENSITY_OF_ETHANOL = 0.789; //density of ethanol is 0.789g/ml
     private final double MALE_R = 0.68;
     private final double FEMALE_R = 0.55;
