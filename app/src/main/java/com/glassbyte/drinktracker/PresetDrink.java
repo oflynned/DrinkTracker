@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -31,129 +33,64 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
 
     private BloodAlcoholContent bloodAlcoholContent;
 
-    private double units;
+    //for setting input for database
+    private double mlSize;
     private double percentage;
-    private double BAC;
+    private String title;
+
+    NumberPicker ml1, ml2, ml3, p1, p2, p3;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View V = inflater.inflate(R.layout.activity_presetdrink, container, false);
 
+        ml1 = (NumberPicker) V.findViewById(R.id.ml1);
+        ml2 = (NumberPicker) V.findViewById(R.id.ml2);
+        ml3 = (NumberPicker) V.findViewById(R.id.ml3);
+
+        p1 = (NumberPicker) V.findViewById(R.id.p1);
+        p2 = (NumberPicker) V.findViewById(R.id.p2);
+        p3 = (NumberPicker) V.findViewById(R.id.p3);
+
+        ml1.setMaxValue(9);
+        ml1.setMinValue(0);
+        ml1.setValue(0);
+
+        ml2.setMaxValue(9);
+        ml2.setMinValue(0);
+        ml2.setValue(0);
+
+        ml3.setMaxValue(9);
+        ml3.setMinValue(0);
+        ml3.setValue(0);
+
+        p1.setMaxValue(9);
+        p1.setMinValue(0);
+        p1.setValue(0);
+
+        p2.setMaxValue(9);
+        p2.setMinValue(0);
+        p2.setValue(0);
+
+        p3.setMaxValue(9);
+        p3.setMinValue(0);
+        p3.setValue(0);
+
         glass = (ImageView) V.findViewById(R.id.presetDrink);
-
-        addPercentageText = (TextView) V.findViewById(R.id.percentagePreset);
-        addPercentageText.setVisibility(View.GONE);
-
-        percentageChoice = (Spinner) V.findViewById(R.id.spinnerPresetDrinkPercentage);
-        percentageChoice.setVisibility(View.GONE);
+        glass.setImageResource(R.drawable.ic_launcher);
 
         drinksChoice = (Spinner) V.findViewById(R.id.spinnerPresetDrink);
         drinksChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
 
-                int position = drinksChoice.getSelectedItemPosition();
-                switch (position) {
-                    //null
-                    case 0:
-                        glass.setImageResource(R.drawable.ic_launcher);
-                        addPercentageText.setVisibility(View.GONE);
-                        percentageChoice.setVisibility(View.GONE);
-                        break;
-                    //beer can
-                    case 1:
-                        glass.setImageResource(R.drawable.beer_can);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //beer bottle
-                    case 2:
-                        glass.setImageResource(R.drawable.beer_bottle);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //beer can
-                    case 3:
-                        glass.setImageResource(R.drawable.beer_can);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //cider bottle
-                    case 4:
-                        glass.setImageResource(R.drawable.beer_bottle);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //cider bottle
-                    case 5:
-                        glass.setImageResource(R.drawable.beer_bottle);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //cider can
-                    case 6:
-                        glass.setImageResource(R.drawable.beer_can);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //glass of wine 150ml
-                    case 7:
-                        glass.setImageResource(R.drawable.glass_wine);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //glass of wine 300ml
-                    case 8:
-                        glass.setImageResource(R.drawable.glass_wine);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //single shot
-                    case 9:
-                        glass.setImageResource(R.drawable.shot);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //double shot
-                    case 10:
-                        glass.setImageResource(R.drawable.shot);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //triple shot
-                    case 11:
-                        glass.setImageResource(R.drawable.shot);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //330ml alcopop
-                    case 12:
-                        glass.setImageResource(R.drawable.beer_bottle);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //330ml alcopop
-                    case 13:
-                        glass.setImageResource(R.drawable.beer_bottle);
-                        addPercentageText.setVisibility(View.VISIBLE);
-                        percentageChoice.setVisibility(View.VISIBLE);
-                        break;
-                    //cocktail
-                    case 14:
-                        glass.setImageResource(R.drawable.glass_water);
-                        addPercentageText.setVisibility(View.GONE);
-                        percentageChoice.setVisibility(View.GONE);
-                        break;
-                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
                 // TODO Auto-generated method stub
-
             }
         });
 
@@ -174,27 +111,38 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.presetAddDrink:
 
-                //instantiate a cursor for choosing the row
-                Cursor CR = dou.getInfo(dou);
+                //set title from spinner
+                setTitle(drinksChoice.getItemAtPosition(drinksChoice.getSelectedItemPosition()).toString());
 
-                //move to the last row as to not override or cause a collision
-                CR.moveToLast();
+                //get each number and concatenate + cast
+                String Ml1, Ml2, Ml3;
+                Ml1 = String.valueOf(ml1.getValue());
+                Ml2 = String.valueOf(ml2.getValue());
+                Ml3 = String.valueOf(ml3.getValue());
+                String volume = Ml1 + Ml2 + Ml3;
+                setMlSize(Double.parseDouble(volume));
 
-                //insert a row
-                //we need:
-                //the database instantiated context
-                //time
-                //percentage
-                //bac via the formula
-                double mlVol = units;
-                String title = "title";
-                double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(mlVol, percentage);
-                dou.insertNewDrink(dou.getDateTime(), title, units, percentage, ebac);
+                //set percentage
+                String P1, P2, P3;
+                P1 = String.valueOf(p1.getValue());
+                P2 = String.valueOf(p2.getValue());
+                P3 = String.valueOf(p3.getValue());
+                String Percentage = P1 + P2 + "." + P3;
+                setPercentage(Double.parseDouble(Percentage));
 
-                //move to the next row and close the insertion as to not cause an exception
-                CR.moveToNext(); //increment table
-                CR.close();
+                double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(mlSize, percentage);
+                dou.insertNewDrink(dou.getDateTime(), getTitle(), getMlSize(), getPercentage(), ebac);
+                bloodAlcoholContent.setCurrentEbac((float) (bloodAlcoholContent.getCurrentEbac() + ebac));
+
+                Toast.makeText(getActivity(), "Drink added successfully!", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
+
+    public void setTitle(String title){this.title = title;}
+    public String getTitle(){return title;}
+    public void setMlSize(double mlSize){this.mlSize = mlSize;}
+    public double getMlSize(){return mlSize;}
+    public void setPercentage(double percentage){this.percentage = percentage;}
+    public double getPercentage(){return percentage;}
 }

@@ -55,11 +55,14 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_margin="5dp"
+            android:background="@color/orange700"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
             <RelativeLayout
+                android:id="@+id/drinkChoice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -80,34 +83,115 @@
                     android:layout_centerHorizontal="true"
                     android:entries="@array/drinks" />
 
-                <TextView
-                    android:layout_below="@id/spinnerPresetDrink"
-                    android:id="@+id/percentagePreset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:gravity="center"
-                    android:text="Please add a percentage:" />
-                <Spinner
-                    android:layout_below="@id/percentagePreset"
-                    android:id="@+id/spinnerPresetDrinkPercentage"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_centerHorizontal="true"
-                    android:entries="@array/beerPercentages" />
-
 
             </RelativeLayout>
         </LinearLayout>
 
+        <RelativeLayout
+            android:background="@color/orange700"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ml1"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ml2"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_toEndOf="@id/ml1"
+                android:layout_toRightOf="@+id/ml1" />
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ml3"
+                android:layout_toEndOf="@id/ml2"
+                android:layout_toRightOf="@+id/ml2"/>
+
+            <TextView
+                android:textSize="20sp"
+                android:id="@+id/units"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ml"
+                android:layout_toEndOf="@id/ml3"
+                android:layout_toRightOf="@+id/ml3"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:background="@color/orange700"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/p1"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/p2"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_toEndOf="@id/p1"
+                android:layout_toRightOf="@+id/p1" />
+
+            <TextView
+                android:textSize="50sp"
+                android:id="@+id/dot"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="."
+                android:layout_toEndOf="@id/p2"
+                android:layout_toRightOf="@+id/p2"
+                android:layout_centerVertical="true"
+                android:layout_alignParentTop="false" />
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/p3"
+                android:layout_toEndOf="@id/dot"
+                android:layout_toRightOf="@+id/dot"/>
+
+            <TextView
+                android:textSize="20sp"
+                android:id="@+id/percentage"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="%"
+                android:layout_toEndOf="@id/p3"
+                android:layout_toRightOf="@+id/p3"/>
+        </RelativeLayout>
+
         <Button
+            android:layout_marginBottom="10dp"
             android:id="@+id/presetAddDrink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:text="Add Drink"
-            android:background="@null" />
+            android:background="@color/orange700" />
     </LinearLayout>
 </ScrollView>
