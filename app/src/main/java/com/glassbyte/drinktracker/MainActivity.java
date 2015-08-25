@@ -2,25 +2,16 @@ package com.glassbyte.drinktracker;
 
 import android.app.Activity;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
-    private UpdateBACAlarmReceiver currentBACAlarm = new UpdateBACAlarmReceiver();
+    private UpdateCurrentBACAlarmReceiver currentBACAlarm = new UpdateCurrentBACAlarmReceiver();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -30,7 +21,7 @@ public class MainActivity extends Activity {
 
 
         boolean alarmUp = (PendingIntent.getBroadcast(this, 0,
-                new Intent(this, UpdateBACAlarmReceiver.class),
+                new Intent(this, UpdateCurrentBACAlarmReceiver.class),
                 PendingIntent.FLAG_NO_CREATE) != null);
 
         if (alarmUp)

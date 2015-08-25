@@ -60,7 +60,15 @@
             android:name=".RealTimeActivity"
             android:label="RealTimeActivity">
         </activity>
-        <receiver android:name=".UpdateBACAlarmReceiver"></receiver>
+
+        <receiver android:name=".UpdateCurrentBACBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".UpdateCurrentBACAlarmReceiver"></receiver>
         <service android:name=".UpdateCurrentBACService"/>
     </application>
 
