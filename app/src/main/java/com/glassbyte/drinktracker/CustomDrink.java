@@ -2,7 +2,12 @@ package com.glassbyte.drinktracker;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -51,27 +56,19 @@ public class CustomDrink extends Fragment {
     private AppCompatActivity thisActivity;
     private RelativeLayout rl;
 
-    private int previewHeight;
-    private int previewWidth;
-    private int chosenViewWidth;
-    private int chosenViewHeight;
-    private int shotGlassWidth;
-    private int shotGlassHeight;
-    private int waterGlassWidth;
-    private int waterGlassHeight;
-    private int pintGlassWidth;
-    private int pintGlassHeight;
-    private int wineGlassWidth;
-    private int wineGlassHeight;
-    private int chosenGlassWidth;
-    private int chosenGlassHeight;
+    private int previewHeight,  previewWidth;
+    private int chosenViewWidth, chosenViewHeight;
+    private int shotGlassWidth, shotGlassHeight;
+    private int waterGlassWidth, waterGlassHeight;
+    private int pintGlassWidth, pintGlassHeight;
+    private int wineGlassWidth, wineGlassHeight;
+    private int chosenGlassWidth, chosenGlassHeight;
+    private float alcPercentage = 4;
 
     private Glass shotGlass,waterGlass, pintGlass, wineGlass, chosenGlass;
-    private int chosenGlassViewId;
 
-    private SeekBar alcBar;
     private TextView alcVolDisplay;
-    private Button drinkButton;
+    private Button drinkButton, setPercentageButton;
     private Paint currentVolTextPaint;
 
     private Display display;
@@ -130,6 +127,7 @@ public class CustomDrink extends Fragment {
         alcVolDisplay.setId(View.generateViewId());
         alcVolDisplay.setTextColor(Color.WHITE);
         alcVolDisplay.setTypeface(null, Typeface.BOLD);
+        alcVolDisplay.setText(alcPercentage + "% Alc.");
 
         drinkButton = new Button(thisActivity);
         drinkButton.setTypeface(null, Typeface.BOLD);
@@ -137,48 +135,22 @@ public class CustomDrink extends Fragment {
         drinkButton.setText("Drink!");
         drinkButton.setBackgroundColor(Color.rgb(255, 120, 0));
         drinkButton.setId(View.generateViewId());
-        RelativeLayout.LayoutParams drinkButtonParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams drinkButtonParam = new RelativeLayout.LayoutParams(screenWidth/2-rl.getPaddingLeft()*2, ViewGroup.LayoutParams.WRAP_CONTENT);
         drinkButtonParam.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
         drinkButtonParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
         drinkButton.setLayoutParams(drinkButtonParam);
 
+        setPercentageButton = new Button(this.getActivity());
+        setPercentageButton.setTypeface(null, Typeface.BOLD);
+        setPercentageButton.setTextColor(Color.WHITE);
+        setPercentageButton.setText("Set Percentage");
+        setPercentageButton.setBackgroundColor(Color.rgb(255, 120, 0));
+        setPercentageButton.setId(View.generateViewId());
+        RelativeLayout.LayoutParams setPercentageButtonParam = new RelativeLayout.LayoutParams(screenWidth/2-rl.getPaddingLeft()*2, ViewGroup.LayoutParams.WRAP_CONTENT);
+        setPercentageButtonParam.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+        setPercentageButtonParam.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+        setPercentageButton.setLayoutParams(setPercentageButtonParam);
         //System.out.println("0......... chosenViewHeight: " + chosenViewHeight + "; screenHeight: " + screenHeight + "; previewHeight: " + previewHeight + "; drinkButton: " + drinkButton.getHeight() + "; actionbar: " + actionBarHeight);
-
-        alcBar = new SeekBar(thisActivity);
-        alcBar.setKeyProgressIncrement(1);
-        alcBar.setMax(100);
-        alcBar.setProgress(6);
-        alcBar.setProgressDrawable(ContextCompat.getDrawable(thisActivity, R.drawable.alc_bar));
-        LayerDrawable thumb = (LayerDrawable)ContextCompat.getDrawable(thisActivity, R.drawable.alc_bar_thumb);
-        alcBar.setThumb(thumb);
-        alcBar.setThumbOffset(0);
-        alcBar.setVisibility(View.VISIBLE);
-        alcBar.setMinimumHeight(150);
-        RelativeLayout.LayoutParams alcBarParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT - alcVolDisplay.getWidth() - drinkButton.getWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
-        //alcBarParam.addRule(RelativeLayout., drinkButton.getId());
-        alcBarParam.addRule(RelativeLayout.RIGHT_OF, alcVolDisplay.getId());
-        alcBarParam.addRule(RelativeLayout.LEFT_OF, drinkButton.getId());
-        alcBar.setLayoutParams(alcBarParam);
-        alcBar.setId(View.generateViewId());
-
-        alcVolDisplay.setText(alcBar.getProgress() + "% Alc.");
-
-        alcBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                alcVolDisplay.setText(seekBar.getProgress() + "% Alc.");
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
 
         currentVolTextPaint = new Paint();
         currentVolTextPaint.setColor(Color.WHITE);
@@ -200,7 +172,6 @@ public class CustomDrink extends Fragment {
         waterGlassParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
         waterGlass.setLayoutParams(waterGlassParams);
         waterGlass.setBackground(ContextCompat.getDrawable(thisActivity, R.drawable.preview_glass_bg));
-        //waterGlass.setBackgroundColor(Color.rgb(255, 128, 0));
         waterGlass.setId(View.generateViewId());
 
         pintGlass = new DrinkingGlass(this.getActivity(), previewWidth, previewHeight, pintGlassWidth, pintGlassHeight, (previewWidth-pintGlassWidth)/2, (previewHeight-pintGlassHeight)/2, true, false, PINT_GLASS_ML, getString(R.string.pint_glass_title));
@@ -223,8 +194,8 @@ public class CustomDrink extends Fragment {
         initChosenGlass(pintGlass, false);
 
         rl.addView(drinkButton);
+        rl.addView(setPercentageButton);
         rl.addView(alcVolDisplay);
-        rl.addView(alcBar);
         rl.addView(chosenGlass);
         rl.addView(shotGlass);
         rl.addView(waterGlass);
@@ -250,23 +221,39 @@ public class CustomDrink extends Fragment {
             }
         });
 
+        /*SET UP THE LISTENERS FOR DRINK AND SETPERCENTAGE BUTTONS*/
         drinkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 double mlVol;
-                if(wineGlass.isChosen)
-                    mlVol = ((WineGlass)chosenGlass).getCurrentDrinkVolume();
+                if (wineGlass.isChosen)
+                    mlVol = ((WineGlass) chosenGlass).getCurrentDrinkVolume();
                 else
-                    mlVol = ((DrinkingGlass)chosenGlass).getCurrentDrinkVolume();
+                    mlVol = ((DrinkingGlass) chosenGlass).getCurrentDrinkVolume();
 
-                double alcPercentage = alcBar.getProgress();
                 double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(mlVol, alcPercentage);
                 dou.insertNewDrink(dou.getDateTime(), chosenGlass.getTitle(), mlVol, alcPercentage, ebac);
                 bloodAlcoholContent.setCurrentEbac((float) (bloodAlcoholContent.getCurrentEbac() + ebac));
 
-                Toast.makeText(thisActivity, "Drink added successfully!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(thisActivity, "Drink added successfully!\nVol:"+mlVol+"ml; Alc:"+alcPercentage+"%",
+                        Toast.LENGTH_SHORT).show();
             }
         });
+
+        setPercentageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SetPercentageDialog dialog = new SetPercentageDialog();
+                dialog.show(CustomDrink.this.getActivity().getFragmentManager(),"setPercentageDialog");
+                dialog.setSetPercentageDialogListener(new SetPercentageDialog.SetPercentageDialogListener() {
+                    @Override
+                    public void onDoneClick(DialogFragment dialog) {
+                        CustomDrink.this.alcPercentage = ((SetPercentageDialog)dialog).getPercentage();
+                    }
+                });
+            }
+        });
+        /*END OF SET UP THE LISTENERS FOR DRINK AND SETPERCENTAGE BUTTONS*/
         return rl;
     }
 
@@ -313,7 +300,6 @@ public class CustomDrink extends Fragment {
         chosenGlassParams.addRule(RelativeLayout.ABOVE, pintGlass.getId());
         chosenGlassParams.addRule(RelativeLayout.ABOVE, wineGlass.getId());
         chosenGlass.setLayoutParams(chosenGlassParams);
-        chosenGlass.setId(chosenGlassViewId);
         return chosenGlass;
     }
 
@@ -711,4 +697,6 @@ public class CustomDrink extends Fragment {
         float getM(){return this.m;}
         void setM(float m){this.m = m;}
     }
+
+
 }
