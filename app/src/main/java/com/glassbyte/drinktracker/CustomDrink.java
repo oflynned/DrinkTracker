@@ -264,12 +264,6 @@ public class CustomDrink extends Fragment {
                 dou.insertNewDrink(dou.getDateTime(), chosenGlass.getTitle(), mlVol, alcPercentage, ebac);
                 bloodAlcoholContent.setCurrentEbac((float) (bloodAlcoholContent.getCurrentEbac() + ebac));
 
-                if(!UpdateCurrentBACService.isMyServiceRunning(UpdateCurrentBACService.class, thisActivity)) {
-                    Intent updateCurrentBACService = new Intent(thisActivity, UpdateCurrentBACService.class);
-                    thisActivity.startService(updateCurrentBACService);
-                    System.out.println("Set up service.");
-                }
-
                 Toast.makeText(thisActivity, "Drink added successfully!", Toast.LENGTH_SHORT).show();
             }
         });

@@ -3,6 +3,7 @@
     package="com.glassbyte.drinktracker" >
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -59,6 +60,7 @@
             android:name=".RealTimeActivity"
             android:label="RealTimeActivity">
         </activity>
+        <receiver android:name=".UpdateBACAlarmReceiver"></receiver>
         <service android:name=".UpdateCurrentBACService"/>
     </application>
 

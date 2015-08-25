@@ -28,7 +28,7 @@ import android.widget.TextView;
 public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
     private SelectionSideBar leftSideBar, rightSideBar;
     private TextView bacDisplay;
-    private final int BAC_DECIMAL_PLACES = 2;
+    private final int BAC_DECIMAL_PLACES = 4;
     private final int BAC_FONT_SIZE= 40;
     private final int SIDE_BAR_WIDTH = 200;
     private BloodAlcoholContent bloodAlcoholContent;

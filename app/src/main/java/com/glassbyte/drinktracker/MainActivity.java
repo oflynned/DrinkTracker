@@ -1,6 +1,7 @@
 package com.glassbyte.drinktracker;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,12 +20,23 @@ import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
-
+    private UpdateBACAlarmReceiver currentBACAlarm = new UpdateBACAlarmReceiver();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        boolean alarmUp = (PendingIntent.getBroadcast(this, 0,
+                new Intent(this, UpdateBACAlarmReceiver.class),
+                PendingIntent.FLAG_NO_CREATE) != null);
+
+        if (alarmUp)
+            System.out.println("Alarm is already active");
+        else
+            currentBACAlarm.setAlarm(this);
 
         //retrieve data from sharedreferences for initial run setup
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
