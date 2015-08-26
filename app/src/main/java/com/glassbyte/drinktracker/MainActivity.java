@@ -23,13 +23,10 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
     private int actionBarHeight;
+    private String run = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         boolean alarmUp = (PendingIntent.getBroadcast(this, 0,
                 new Intent(this, UpdateCurrentBACAlarmReceiver.class),
                 PendingIntent.FLAG_NO_CREATE) != null);
@@ -41,12 +38,16 @@ public class MainActivity extends AppCompatActivity {
 
         //retrieve data from sharedreferences for initial run setup
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        String run = (sp.getString(getResources().getString(R.string.pref_key_run),""));
-
+        run = (sp.getString(getResources().getString(R.string.pref_key_run),""));
+        System.out.println("RUN: "+run);
         if (run == "" || run == null) {
+            System.out.println("was here");
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
     }
 
     @Override
@@ -54,20 +55,22 @@ public class MainActivity extends AppCompatActivity {
         /**Bad practice, the below code is ususally executed on create but I required the height of
          * the action bar, for the custom drink fragment which would have been created before this stage,
          * which is only calculated at this stage**/
+        System.out.println("In ONCREATEOPTIONSMENU");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        actionBarHeight = this.getSupportActionBar().getHeight();
+        if (!(run == "" || run == null)) {
+            actionBarHeight = this.getSupportActionBar().getHeight();
 
-        setContentView(R.layout.activity_adddrink);
+            setContentView(R.layout.activity_adddrink);
 
-        //Instantiate a ViewPager and a PagerAdapter
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
+            //Instantiate a ViewPager and a PagerAdapter
+            mPager = (ViewPager) findViewById(R.id.pager);
+            mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+            mPager.setAdapter(mPagerAdapter);
 
 
-        mPager.setCurrentItem(1);
-
+            mPager.setCurrentItem(1);
+        }
 
         return true;
     }
