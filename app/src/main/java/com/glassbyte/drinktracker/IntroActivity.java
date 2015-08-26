@@ -81,7 +81,7 @@ public class IntroActivity extends Activity {
                     editor.putFloat(getResources().getString(R.string.pref_key_currentEbac), 0);
                     editor.apply();
 
-                    Intent intent = new Intent(v.getContext(), AddDrinkActivity.class);
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
                     startActivity(intent);
                 }
             }

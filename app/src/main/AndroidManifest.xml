@@ -40,7 +40,6 @@
             </intent-filter>
         </activity>
         <activity android:name="org.achartengine.GraphicalActivity" />
-        <activity android:name=".AddDrinkActivity" />
         <activity android:name=".AndroidDatabaseManager" />
         <activity
             android:name=".PreferencesActivity"
