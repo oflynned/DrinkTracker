@@ -39,7 +39,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="org.achartengine.GraphicalActivity" />
+        <activity android:name=".Statistics" />
         <activity android:name=".AndroidDatabaseManager" />
         <activity
             android:name=".PreferencesActivity"
@@ -54,10 +54,6 @@
         <activity
             android:name=".ListDrinksActivity"
             android:label="@string/title_activity_list_drinks" >
-        </activity>
-        <activity
-            android:name=".RealTimeActivity"
-            android:label="RealTimeActivity">
         </activity>
 
         <receiver android:name=".UpdateCurrentBACBootReceiver"

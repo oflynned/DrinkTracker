@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(listDrinksIntent);
             return true;
         } else if (id == R.id.action_stats) {
-            Intent statsIntent = new Intent(this, RealTimeActivity.class);
+            Intent statsIntent = new Intent(this, Statistics.class);
             startActivity(statsIntent);
             return true;
         }
