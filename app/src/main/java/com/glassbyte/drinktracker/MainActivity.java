@@ -39,9 +39,7 @@ public class MainActivity extends AppCompatActivity {
         //retrieve data from sharedreferences for initial run setup
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         run = (sp.getString(getResources().getString(R.string.pref_key_run),""));
-        System.out.println("RUN: "+run);
         if (run == "" || run == null) {
-            System.out.println("was here");
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
@@ -55,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         /**Bad practice, the below code is ususally executed on create but I required the height of
          * the action bar, for the custom drink fragment which would have been created before this stage,
          * which is only calculated at this stage**/
-        System.out.println("In ONCREATEOPTIONSMENU");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         if (!(run == "" || run == null)) {

@@ -6,8 +6,6 @@ import android.preference.PreferenceManager;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by Maciej on 12/08/2015.
@@ -120,8 +118,23 @@ public class BloodAlcoholContent {
         static public final double IMPERIAL_OZ_IN_ML = 28.4131;
         static private final double POUND_IN_KG = 0.453592;
         static private final double STONE_IN_KG = 6.35029;
+        static private final double FOOT_IN_CM = 30.48;
+        static private final double INCH_IN_CM = 2.54;
 
         public MetricSystemConverter(){}
+
+        //returns an array of lenght 2 where the first element(index 0) is the feet factor
+        //and the second element is the inch factor
+        static public double[] converCmToFeetAndInches(double cm){
+            double[] feetInches = new double[2];
+            feetInches[0] = Math.floor(cm/FOOT_IN_CM);
+            feetInches[1] = (cm-feetInches[0]*FOOT_IN_CM)/INCH_IN_CM;
+            return feetInches;
+        }
+
+        static public double convertFeetAndInchesToCm(double[] feetInches){
+            return feetInches[0]*FOOT_IN_CM + feetInches[1]*INCH_IN_CM;
+        }
 
         static public double convertOzToMillilitres(double oz){return oz*IMPERIAL_OZ_IN_ML;}
 

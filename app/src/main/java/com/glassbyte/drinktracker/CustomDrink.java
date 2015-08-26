@@ -2,6 +2,7 @@ package com.glassbyte.drinktracker;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,6 +10,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -25,12 +27,11 @@ import android.widget.Toast;
 /**
  * Created by Maciej on 27/05/15.
  */
-public class CustomDrink extends Fragment {
+public class CustomDrink extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
     private final int NUMBER_OF_GLASSES = 4;
     private final int PADDING = 5;
     private final int VOLUME_TEXT_PADDING = 16;
     private final int VOLUME_TEXT_SIZE = 100;
-    private final int PERCENTAGE_TEXT_BOTTOM_PADDING = 20;
     private final int PERCENTAGE_TEXT_SIZE = 80;
 
     private final int SHOT_GLASS_ML = 40;
@@ -66,10 +67,14 @@ public class CustomDrink extends Fragment {
     private DatabaseOperationsUnits dou;
 
     private BloodAlcoholContent bloodAlcoholContent;
+    private SharedPreferences sp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        sp.registerOnSharedPreferenceChangeListener(this);
+
         if (this.getArguments() != null) {
             actionBarHeight = this.getArguments().getInt(ARG_ACTION_BAR_HEIGHT);
         }
@@ -300,6 +305,11 @@ public class CustomDrink extends Fragment {
         rl.addView(initChosenGlass(glass, isWineGlass));
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        chosenGlass.invalidate();
+    }
+
     /*
     * Creates a glass of the following shape:
     * \       /
@@ -399,7 +409,14 @@ public class CustomDrink extends Fragment {
                 /*End of Draw drink in the glass*/
 
                 /*Draw the current volume text into the canvas*/
-                String strDrinkVol = getCurrentDrinkVolume() + "ml";
+                String strDrinkVol;
+                if(sp.getString(getString(R.string.pref_key_editUnits),"").equalsIgnoreCase("metric"))
+                    strDrinkVol = getCurrentDrinkVolume() + "ml";
+                else
+                    strDrinkVol = BloodAlcoholContent.round(
+                            BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(getCurrentDrinkVolume()),
+                            2) + "oz";
+
                 float strDrinkVolWidth = currentVolTextPaint.measureText(strDrinkVol);
                 if (leftBottomEdgeY < super.getHeight() - 2*VOLUME_TEXT_PADDING - VOLUME_TEXT_SIZE){
                     float textX = leftTopEdgeX + super.getGlassWidth()/2 - strDrinkVolWidth/2;
@@ -537,7 +554,7 @@ public class CustomDrink extends Fragment {
             canvas.drawLine(leftBottomEdgeX, leftBottomEdgeY, rightBottomEdgeX, rightBottomEdgeY, super.getGlassPaint());
 
             if(super.isMainView()) {
-            /*FILLING OUT THE GLASS*/
+                /*Draw drink*/
                 paint.setColor(DRINK_COLOUR);
                 paint.setStyle(Paint.Style.FILL);
 
@@ -550,9 +567,17 @@ public class CustomDrink extends Fragment {
                 p.lineTo(drinkRightBottomEdgeX, drinkBottomEdgeY);
                 p.lineTo(drinkRightTopEdgeX, drinkTopEdgeY);
                 canvas.drawPath(p, paint);
+                /*End of Draw drink*/
 
-                //Draw the current volume text into the canvas
-                String strDrinkVol = getCurrentDrinkVolume() + "ml";
+                /*Draw the current volume text into the canvas*/
+                String strDrinkVol;
+                if(sp.getString(getString(R.string.pref_key_editUnits),"").equalsIgnoreCase("metric"))
+                    strDrinkVol = getCurrentDrinkVolume() + "ml";
+                else
+                    strDrinkVol = BloodAlcoholContent.round(
+                            BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(getCurrentDrinkVolume()),
+                            2) + "oz";
+
                 float strDrinkVolWidth = currentVolTextPaint.measureText(strDrinkVol);
                 if (leftBottomEdgeY < super.getHeight() - 2*VOLUME_TEXT_PADDING - VOLUME_TEXT_SIZE){
                     float textX = leftTopEdgeX + super.getGlassWidth()/2 - strDrinkVolWidth/2;
@@ -566,7 +591,7 @@ public class CustomDrink extends Fragment {
 
                     canvas.drawText(getCurrentDrinkVolume()+"ml", textX, textY, currentVolTextPaint);
                 }
-
+                /*End of Draw the current volume text into the canvas*/
 
                 /*Draw the current drink percentage onto the canvas*/
                 String strPercentage = alcPercentage + "%";
