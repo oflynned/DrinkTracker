@@ -9,12 +9,9 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.awt.font.NumericShaper;
 
 /**
  * Created by Maciej on 25/08/2015.

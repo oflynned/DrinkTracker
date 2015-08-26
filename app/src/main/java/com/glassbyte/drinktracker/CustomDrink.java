@@ -1,21 +1,13 @@
 package com.glassbyte.drinktracker;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -26,14 +18,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.jjoe64.graphview.series.PointsGraphSeries;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by Maciej on 27/05/15.
@@ -42,15 +29,15 @@ public class CustomDrink extends Fragment {
     private final int NUMBER_OF_GLASSES = 4;
     private final int PADDING = 5;
     private final int VOLUME_TEXT_PADDING = 16;
-
     private final int VOLUME_TEXT_SIZE = 100;
+    private final int PERCENTAGE_TEXT_BOTTOM_PADDING = 20;
+    private final int PERCENTAGE_TEXT_SIZE = 80;
 
     private final int SHOT_GLASS_ML = 40;
     private final int WATER_GLASS_ML = 250;
     private final int PINT_GLASS_ML = 500;
     private final int WINE_GLASS_ML = 300;
 
-    //private final int DRINK_COLOUR = Color.argb(170, 0 , 100, 255);
     private final int DRINK_COLOUR = Color.argb(255, 109, 140, 160);
 
     private AppCompatActivity thisActivity;
@@ -69,7 +56,7 @@ public class CustomDrink extends Fragment {
 
     private TextView alcVolDisplay;
     private Button drinkButton, setPercentageButton;
-    private Paint currentVolTextPaint;
+    private Paint currentVolTextPaint, currentPercentagePaint;
 
     private Display display;
     private int actionBarHeight = 0;
@@ -155,7 +142,12 @@ public class CustomDrink extends Fragment {
         currentVolTextPaint = new Paint();
         currentVolTextPaint.setColor(Color.WHITE);
         currentVolTextPaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        currentVolTextPaint.setTextSize(100);
+        currentVolTextPaint.setTextSize(VOLUME_TEXT_SIZE);
+
+        currentPercentagePaint = new Paint();
+        currentPercentagePaint.setColor(Color.WHITE);
+        currentPercentagePaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        currentPercentagePaint.setTextSize(PERCENTAGE_TEXT_SIZE);
 
         //Create shot glass instance
         shotGlass = new DrinkingGlass(this.getActivity(), previewWidth, previewHeight, shotGlassWidth, shotGlassHeight, (previewWidth-shotGlassWidth)/2, (previewHeight-shotGlassHeight)/2, SHOT_GLASS_ML, getString(R.string.shot_glass_title));
@@ -235,8 +227,7 @@ public class CustomDrink extends Fragment {
                 dou.insertNewDrink(dou.getDateTime(), chosenGlass.getTitle(), mlVol, alcPercentage, ebac);
                 bloodAlcoholContent.setCurrentEbac((float) (bloodAlcoholContent.getCurrentEbac() + ebac));
 
-                Toast.makeText(thisActivity, "Drink added successfully!\nVol:"+mlVol+"ml; Alc:"+alcPercentage+"%",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(thisActivity, "Drink added successfully!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -249,6 +240,7 @@ public class CustomDrink extends Fragment {
                     @Override
                     public void onDoneClick(DialogFragment dialog) {
                         CustomDrink.this.alcPercentage = ((SetPercentageDialog)dialog).getPercentage();
+                        chosenGlass.invalidate(); //redraw to show the changed percentage value
                     }
                 });
             }
@@ -264,6 +256,7 @@ public class CustomDrink extends Fragment {
         chosenViewWidth = screenWidth - PADDING*2;
         return chosenViewWidth/previewWidth*previewGlassWidth;
     }
+
     private int getChosenGlassHeight(int previewGlassHeight){
         Point size = new Point();
         display.getSize(size);
@@ -273,26 +266,18 @@ public class CustomDrink extends Fragment {
         return chosenViewHeight/previewHeight*previewGlassHeight;
     }
 
-    public void setActionBarHeight(int actionBarHeight){
-        this.actionBarHeight = actionBarHeight;
-        if(shotGlass.isMainView)
-            newChosenGlass(shotGlass, false);
-        else if(waterGlass.isMainView)
-            newChosenGlass(waterGlass, false);
-        else if(pintGlass.isMainView)
-            newChosenGlass(pintGlass, false);
-        else
-            newChosenGlass(wineGlass, true);
-    }
-
     private Glass initChosenGlass(Glass glass, boolean isWineGlass){
         chosenGlassWidth = getChosenGlassWidth((int) glass.getGlassWidth());
         chosenGlassHeight = getChosenGlassHeight((int)glass.getGlassHeight());
         int chosenGlassMlSize = glass.getMlSize();
         if(!isWineGlass)
-            chosenGlass = new DrinkingGlass(thisActivity, chosenViewWidth, chosenViewHeight, chosenGlassWidth, chosenGlassHeight, (chosenViewWidth-chosenGlassWidth)/2, (chosenViewHeight-chosenGlassHeight)/2, false, true, chosenGlassMlSize, glass.getTitle());
+            chosenGlass = new DrinkingGlass(thisActivity, chosenViewWidth, chosenViewHeight, chosenGlassWidth,
+                    chosenGlassHeight, (chosenViewWidth-chosenGlassWidth)/2, (chosenViewHeight-chosenGlassHeight)/2,
+                    false, true, chosenGlassMlSize, glass.getTitle());
         else
-            chosenGlass = new WineGlass(thisActivity, chosenViewWidth, chosenViewHeight, chosenGlassWidth, chosenGlassHeight, (chosenViewWidth-chosenGlassWidth)/2, (chosenViewHeight-chosenGlassHeight)/2, false, true, chosenGlassMlSize, glass.getTitle());
+            chosenGlass = new WineGlass(thisActivity, chosenViewWidth, chosenViewHeight, chosenGlassWidth,
+                    chosenGlassHeight, (chosenViewWidth-chosenGlassWidth)/2, (chosenViewHeight-chosenGlassHeight)/2,
+                    false, true, chosenGlassMlSize, glass.getTitle());
 
         RelativeLayout.LayoutParams chosenGlassParams = new RelativeLayout.LayoutParams(chosenGlass.getLayoutParams());
         chosenGlassParams.addRule(RelativeLayout.ABOVE, shotGlass.getId());
@@ -329,14 +314,20 @@ public class CustomDrink extends Fragment {
         private float drinkLeftBottomEdgeX, drinkRightBottomEdgeX, drinkBottomEdgeY, drinkTopEdgeY,
                 drinkLeftTopEdgeX, drinkRightTopEdgeX;
 
-        public DrinkingGlass(Context context, int viewWidth, int viewHeight, int glassHeight, int glassWidth, int glassX, int glassY, int mlSize, String title){
-            this(context, viewWidth, viewHeight, glassHeight, glassWidth, glassX, glassY,(glassHeight/2)-(glassHeight/3), false, false, mlSize, title);
+        public DrinkingGlass(Context context, int viewWidth, int viewHeight, int glassHeight,
+                             int glassWidth, int glassX, int glassY, int mlSize, String title) {
+            this(context, viewWidth, viewHeight, glassHeight, glassWidth, glassX, glassY,
+                    (glassHeight/2)-(glassHeight/3), false, false, mlSize, title);
         }
-        public DrinkingGlass(Context context, int viewWidth, int viewHeight, int glassHeight, int glassWidth, int glassX, int glassY, boolean isChosen, int mlSize, String title){
-            this(context, viewWidth, viewHeight, glassHeight, glassWidth, glassX, glassY,(glassHeight/2)-(glassHeight/3), isChosen, false, mlSize, title);
+        public DrinkingGlass(Context context, int viewWidth, int viewHeight, int glassHeight,
+                             int glassWidth, int glassX, int glassY, boolean isChosen, int mlSize, String title){
+            this(context, viewWidth, viewHeight, glassHeight, glassWidth, glassX, glassY,
+                    (glassHeight/2)-(glassHeight/3), isChosen, false, mlSize, title);
         }
-        public DrinkingGlass(Context context, int viewWidth, int viewHeight, int glassHeight, int glassWidth, int glassX, int glassY, boolean isChosen, boolean isMainView, int mlSize, String title){
-            this(context, viewWidth, viewHeight, glassHeight, glassWidth, glassX, glassY,(glassHeight/2)-(glassHeight/3), isChosen, isMainView, mlSize, title);
+        public DrinkingGlass(Context context, int viewWidth, int viewHeight, int glassHeight, int glassWidth,
+                             int glassX, int glassY, boolean isChosen, boolean isMainView, int mlSize, String title){
+            this(context, viewWidth, viewHeight, glassHeight, glassWidth, glassX, glassY,
+                    (glassHeight/2)-(glassHeight/3), isChosen, isMainView, mlSize, title);
         }
 
         /*
@@ -346,8 +337,10 @@ public class CustomDrink extends Fragment {
         * glassHeight - measured from the top to the bottom of the glass
         * edgeSlope - slope of the edge of the glass, i.e. how skew is it supposed to be
         * */
-        public DrinkingGlass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight, int glassX, int glassY, float m, boolean isChosen, boolean isMainView, int mlSize, String title){
-            super(context, viewWidth, viewHeight, glassWidth, glassHeight, glassX, glassY, glassHeight, isChosen, isMainView, mlSize, title);
+        public DrinkingGlass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight,
+                             int glassX, int glassY, float m, boolean isChosen, boolean isMainView, int mlSize, String title){
+            super(context, viewWidth, viewHeight, glassWidth, glassHeight, glassX, glassY,
+                    glassHeight, isChosen, isMainView, mlSize, title);
             this.setOnTouchListener(this);
 
             leftEdge = new Line(super.getGlassX(), super.getGlassY(), 10f);
@@ -390,7 +383,7 @@ public class CustomDrink extends Fragment {
             canvas.drawLine(leftBottomEdgeX, leftBottomEdgeY, rightBottomEdgeX, rightBottomEdgeY, super.getGlassPaint());
 
             if(super.isMainView()) {
-            /*FILLING OUT THE GLASS*/
+                /*Draw drink in the glass*/
                 paint.setColor(DRINK_COLOUR);
                 paint.setStyle(Paint.Style.FILL);
 
@@ -403,8 +396,9 @@ public class CustomDrink extends Fragment {
                 p.lineTo(drinkRightBottomEdgeX, drinkBottomEdgeY);
                 p.lineTo(drinkRightTopEdgeX, drinkTopEdgeY);
                 canvas.drawPath(p, paint);
+                /*End of Draw drink in the glass*/
 
-                //Draw the current volume text into the canvas
+                /*Draw the current volume text into the canvas*/
                 String strDrinkVol = getCurrentDrinkVolume() + "ml";
                 float strDrinkVolWidth = currentVolTextPaint.measureText(strDrinkVol);
                 if (leftBottomEdgeY < super.getHeight() - 2*VOLUME_TEXT_PADDING - VOLUME_TEXT_SIZE){
@@ -417,8 +411,17 @@ public class CustomDrink extends Fragment {
                     float textX = leftEdge.calculateX(leftBottomEdgeY - VOLUME_TEXT_SIZE)/2 - strDrinkVolWidth/2;
                     float textY = leftBottomEdgeY;
 
-                    canvas.drawText(getCurrentDrinkVolume()+"ml", textX, textY, currentVolTextPaint);
+                    canvas.drawText(strDrinkVol, textX, textY, currentVolTextPaint);
                 }
+                /*End of Draw the current volume text into the canvas*/
+
+                /*Draw the current drink percentage onto the canvas*/
+                String strPercentage = alcPercentage + "%";
+                float strPercentageWidth = currentPercentagePaint.measureText(strPercentage);
+                float textX = drinkLeftBottomEdgeX + (drinkRightBottomEdgeX - drinkLeftBottomEdgeX)/2 - strPercentageWidth/2;
+                float textY = drinkTopEdgeY + (drinkBottomEdgeY - drinkTopEdgeY)/2;
+                canvas.drawText(strPercentage, textX, textY, currentPercentagePaint);
+                /*End of Draw the current drink percentage onto the canvas*/
             }
         }
 
@@ -472,13 +475,18 @@ public class CustomDrink extends Fragment {
                 leftBottomEdgeY, rightBottomEdgeX, rightBottomEdgeY, centerBottomEdgeX,
                 centerBottomEdgeY;
 
-        private float drinkTopEdgeY, drinkLeftTopEdgeX, drinkRightTopEdgeX, drinkBottomEdgeY, drinkLeftBottomEdgeX, drinkRightBottomEdgeX;
+        private float drinkTopEdgeY, drinkLeftTopEdgeX, drinkRightTopEdgeX, drinkBottomEdgeY,
+                drinkLeftBottomEdgeX, drinkRightBottomEdgeX;
 
-        public WineGlass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight, int glassX, int glassY, int mlSize, String title){
-            this(context, viewWidth, viewHeight, glassWidth, glassHeight, glassX, glassY, false, false, mlSize, title);
+        public WineGlass(Context context, int viewWidth, int viewHeight, int glassWidth,
+                         int glassHeight, int glassX, int glassY, int mlSize, String title){
+            this(context, viewWidth, viewHeight, glassWidth, glassHeight, glassX, glassY,
+                    false, false, mlSize, title);
         }
-        public WineGlass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight, int glassX, int glassY, boolean isChosen, boolean isMainView, int mlSize, String title) {
-            super(context, viewWidth, viewHeight, glassWidth, glassHeight, glassX, glassY, glassHeight / 2, isChosen, isMainView, mlSize, title);
+        public WineGlass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight,
+                         int glassX, int glassY, boolean isChosen, boolean isMainView, int mlSize, String title) {
+            super(context, viewWidth, viewHeight, glassWidth, glassHeight, glassX, glassY,
+                    glassHeight / 2, isChosen, isMainView, mlSize, title);
             this.setOnTouchListener(this);
 
             leftEdge = new Line(super.getGlassX(), super.getGlassY(), 10);
@@ -558,6 +566,15 @@ public class CustomDrink extends Fragment {
 
                     canvas.drawText(getCurrentDrinkVolume()+"ml", textX, textY, currentVolTextPaint);
                 }
+
+
+                /*Draw the current drink percentage onto the canvas*/
+                String strPercentage = alcPercentage + "%";
+                float strPercentageWidth = currentPercentagePaint.measureText(strPercentage);
+                float textX = drinkLeftBottomEdgeX + (drinkRightBottomEdgeX - drinkLeftBottomEdgeX)/2 - strPercentageWidth/2;
+                float textY = drinkTopEdgeY + (drinkBottomEdgeY - drinkTopEdgeY)/2;
+                canvas.drawText(strPercentage, textX, textY, currentPercentagePaint);
+                /*End of Draw the current drink percentage onto the canvas*/
             }
         }
 
@@ -608,13 +625,17 @@ public class CustomDrink extends Fragment {
         public Paint paint;
         public int mlSize;
 
-        public Glass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight, float x, float y, float maxDrinkHeight, int mlSize, String title){
-            this(context, viewWidth, viewHeight, glassWidth, glassHeight, x, y, maxDrinkHeight, false, false, mlSize, title);
+        public Glass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight,
+                     float x, float y, float maxDrinkHeight, int mlSize, String title){
+            this(context, viewWidth, viewHeight, glassWidth, glassHeight, x, y,
+                    maxDrinkHeight, false, false, mlSize, title);
         }
-        public Glass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight, float x, float y, float maxDrinkHeight, boolean isChosen, int mlSize, String title){
+        public Glass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight,
+                     float x, float y, float maxDrinkHeight, boolean isChosen, int mlSize, String title){
             this(context, viewWidth, viewHeight, glassWidth, glassHeight, x, y, maxDrinkHeight, isChosen, false, mlSize, title);
         }
-        public Glass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight, float x, float y, float maxDrinkHeight, boolean isChosen, boolean isMainView, int mlSize, String title){
+        public Glass(Context context, int viewWidth, int viewHeight, int glassWidth, int glassHeight,
+                     float x, float y, float maxDrinkHeight, boolean isChosen, boolean isMainView, int mlSize, String title){
             super(context);
             this.glassWidth = glassWidth;
             this.glassHeight = glassHeight;

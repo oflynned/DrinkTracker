@@ -2,7 +2,6 @@ package com.glassbyte.drinktracker;
 /*
 * To do:
 * -change all the fonts and dimensions to be expressed in dp or dpi
-* -display actual current EBAC
 * */
 import android.content.Context;
 import android.content.SharedPreferences;
