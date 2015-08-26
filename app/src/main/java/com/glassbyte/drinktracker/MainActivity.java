@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         boolean alarmUp = (PendingIntent.getBroadcast(this, 0,
                 new Intent(this, UpdateCurrentBACAlarmReceiver.class),
                 PendingIntent.FLAG_NO_CREATE) != null);

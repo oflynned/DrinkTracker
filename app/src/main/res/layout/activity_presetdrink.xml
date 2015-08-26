@@ -55,8 +55,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_margin="5dp"
-            android:background="@color/orange700"
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
@@ -86,112 +85,50 @@
 
             </RelativeLayout>
         </LinearLayout>
-
         <RelativeLayout
-            android:background="@color/orange700"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <NumberPicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ml1"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <NumberPicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ml2"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_toEndOf="@id/ml1"
-                android:layout_toRightOf="@+id/ml1" />
-
-            <NumberPicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ml3"
-                android:layout_toEndOf="@id/ml2"
-                android:layout_toRightOf="@+id/ml2"/>
-
-            <TextView
-                android:textSize="20sp"
-                android:id="@+id/units"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ml"
-                android:layout_toEndOf="@id/ml3"
-                android:layout_toRightOf="@+id/ml3"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:background="@color/orange700"
-            android:layout_margin="5dp"
-            android:padding="5dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+        <Button
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/presetSetPercentage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <NumberPicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/p1"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <NumberPicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/p2"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_toEndOf="@id/p1"
-                android:layout_toRightOf="@+id/p1" />
-
-            <TextView
-                android:textSize="50sp"
-                android:id="@+id/dot"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="."
-                android:layout_toEndOf="@id/p2"
-                android:layout_toRightOf="@+id/p2"
-                android:layout_centerVertical="true"
-                android:layout_alignParentTop="false" />
-
-            <NumberPicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/p3"
-                android:layout_toEndOf="@id/dot"
-                android:layout_toRightOf="@+id/dot"/>
-
-            <TextView
-                android:textSize="20sp"
-                android:id="@+id/percentage"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="%"
-                android:layout_toEndOf="@id/p3"
-                android:layout_toRightOf="@+id/p3"/>
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="Set Percentage"
+            android:background="@color/orange700" />
 
         <Button
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/presetSetVolume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="Set Volume"
+            android:background="@color/orange700"
+            android:layout_toRightOf="@+id/presetSetPercentage"
+            android:layout_toEndOf="@+id/presetSetPercentage" />
+
+        <Button
+            android:layout_margin="10dp"
+            android:padding="5dp"
             android:layout_marginBottom="10dp"
             android:id="@+id/presetAddDrink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="Add Drink"
-            android:background="@color/orange700" />
+            android:text="Drink!"
+            android:background="@color/orange700"
+            android:layout_toRightOf="@+id/presetSetVolume"
+            android:layout_toEndOf="@+id/presetSetVolume" />
+        </RelativeLayout>
     </LinearLayout>
 </ScrollView>

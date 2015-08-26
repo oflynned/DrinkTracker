@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent">
+
+        <lecho.lib.hellocharts.view.LineChartView
+            android:padding="10dp"
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent">
+
+        <Spinner
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:entries="@array/period" />
+
+        <com.glassbyte.drinktracker.FloatingActionButton
+            android:layout_margin="10dp"
+            android:id="@+id/infoButton"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:elevation="@dimen/fab_elevation"
+            android:background="@drawable/fab_background"
+            android:stateListAnimator="@anim/fab_anim"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="@dimen/fab_icon_size"
+                android:layout_height="@dimen/fab_icon_size"
+                android:src="@drawable/fab_icons"
+                android:layout_gravity="center"
+                android:duplicateParentState="true" />
+        </com.glassbyte.drinktracker.FloatingActionButton>
+    </RelativeLayout>
+</LinearLayout>

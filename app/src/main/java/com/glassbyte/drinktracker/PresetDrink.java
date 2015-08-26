@@ -1,5 +1,6 @@
 package com.glassbyte.drinktracker;
 
+import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -38,47 +39,27 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
     private double percentage;
     private String title;
 
-    NumberPicker ml1, ml2, ml3, p1, p2, p3;
+    private float alcPercentage = 0;
+    private float alcVolume = 0;
+
+    Button setPercentage, setVolume, drink;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View V = inflater.inflate(R.layout.activity_presetdrink, container, false);
 
-        ml1 = (NumberPicker) V.findViewById(R.id.ml1);
-        ml2 = (NumberPicker) V.findViewById(R.id.ml2);
-        ml3 = (NumberPicker) V.findViewById(R.id.ml3);
-
-        p1 = (NumberPicker) V.findViewById(R.id.p1);
-        p2 = (NumberPicker) V.findViewById(R.id.p2);
-        p3 = (NumberPicker) V.findViewById(R.id.p3);
-
-        ml1.setMaxValue(9);
-        ml1.setMinValue(0);
-        ml1.setValue(0);
-
-        ml2.setMaxValue(9);
-        ml2.setMinValue(0);
-        ml2.setValue(0);
-
-        ml3.setMaxValue(9);
-        ml3.setMinValue(0);
-        ml3.setValue(0);
-
-        p1.setMaxValue(9);
-        p1.setMinValue(0);
-        p1.setValue(0);
-
-        p2.setMaxValue(9);
-        p2.setMinValue(0);
-        p2.setValue(0);
-
-        p3.setMaxValue(9);
-        p3.setMinValue(0);
-        p3.setValue(0);
-
         glass = (ImageView) V.findViewById(R.id.presetDrink);
         glass.setImageResource(R.drawable.ic_launcher);
+
+        setPercentage = (Button) V.findViewById(R.id.presetSetPercentage);
+        setPercentage.setOnClickListener(this);
+
+        setVolume = (Button) V.findViewById(R.id.presetSetVolume);
+        setVolume.setOnClickListener(this);
+
+        drink = (Button) V.findViewById(R.id.presetAddDrink);
+        drink.setOnClickListener(this);
 
         drinksChoice = (Spinner) V.findViewById(R.id.spinnerPresetDrink);
         drinksChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -94,8 +75,47 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
             }
         });
 
-        addDrink = (Button) V.findViewById(R.id.presetAddDrink);
-        addDrink.setOnClickListener(this);
+        setVolume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SetVolumeDialog dialog = new SetVolumeDialog();
+                dialog.show(PresetDrink.this.getActivity().getFragmentManager(), "setVolumeDialog");
+                dialog.setSetVolumeDialogListener(new SetVolumeDialog.SetVolumeDialogListener() {
+                    @Override
+                    public void onDoneClick(DialogFragment dialog) {
+                        PresetDrink.this.alcVolume = ((SetVolumeDialog) dialog).getVolume();
+                        setVolume(alcVolume);
+                    }
+                });
+            }
+        });
+
+        setPercentage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SetPercentageDialog dialog = new SetPercentageDialog();
+                dialog.show(PresetDrink.this.getActivity().getFragmentManager(), "setPercentageDialog");
+                dialog.setSetPercentageDialogListener(new SetPercentageDialog.SetPercentageDialogListener() {
+                    @Override
+                    public void onDoneClick(DialogFragment dialog) {
+                        PresetDrink.this.alcPercentage = ((SetPercentageDialog) dialog).getPercentage();
+                        setPercentage(alcPercentage);
+                    }
+                });
+            }
+        });
+
+        drink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(getVolume(), getPercentage());
+                dou.insertNewDrink(dou.getDateTime(), getTitle(), getVolume(), getPercentage(), ebac);
+                bloodAlcoholContent.setCurrentEbac((float) (bloodAlcoholContent.getCurrentEbac() + ebac));
+
+                Toast.makeText(getActivity(), "Drink added successfully!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         bloodAlcoholContent = new BloodAlcoholContent(this.getActivity());
 
@@ -104,45 +124,15 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
         return V;
     }
 
-    //add a preset row to the database
+    public void setTitle(String title){this.title = title;}
+    public String getTitle(){return title;}
+    public void setVolume(double mlSize){this.mlSize = mlSize;}
+    public double getVolume(){return mlSize;}
+    public void setPercentage(double percentage){this.percentage = percentage;}
+    public double getPercentage(){return percentage;}
+
     @Override
     public void onClick(View view) {
 
-        switch (view.getId()) {
-            case R.id.presetAddDrink:
-
-                //set title from spinner
-                setTitle(drinksChoice.getItemAtPosition(drinksChoice.getSelectedItemPosition()).toString());
-
-                //get each number and concatenate + cast
-                String Ml1, Ml2, Ml3;
-                Ml1 = String.valueOf(ml1.getValue());
-                Ml2 = String.valueOf(ml2.getValue());
-                Ml3 = String.valueOf(ml3.getValue());
-                String volume = Ml1 + Ml2 + Ml3;
-                setMlSize(Double.parseDouble(volume));
-
-                //set percentage
-                String P1, P2, P3;
-                P1 = String.valueOf(p1.getValue());
-                P2 = String.valueOf(p2.getValue());
-                P3 = String.valueOf(p3.getValue());
-                String Percentage = P1 + P2 + "." + P3;
-                setPercentage(Double.parseDouble(Percentage));
-
-                double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(mlSize, percentage);
-                dou.insertNewDrink(dou.getDateTime(), getTitle(), getMlSize(), getPercentage(), ebac);
-                bloodAlcoholContent.setCurrentEbac((float) (bloodAlcoholContent.getCurrentEbac() + ebac));
-
-                Toast.makeText(getActivity(), "Drink added successfully!", Toast.LENGTH_SHORT).show();
-                break;
-        }
     }
-
-    public void setTitle(String title){this.title = title;}
-    public String getTitle(){return title;}
-    public void setMlSize(double mlSize){this.mlSize = mlSize;}
-    public double getMlSize(){return mlSize;}
-    public void setPercentage(double percentage){this.percentage = percentage;}
-    public double getPercentage(){return percentage;}
 }
