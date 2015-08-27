@@ -56,7 +56,6 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
         //set units
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits),""));
-        Toast.makeText(getActivity(),spUnits,Toast.LENGTH_SHORT).show();
         if (spUnits.equals("metric")) {
             setUnits("ml");
         }
