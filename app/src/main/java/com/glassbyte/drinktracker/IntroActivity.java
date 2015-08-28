@@ -26,68 +26,97 @@ public class IntroActivity extends Activity {
     String mGender;
     String mUM;
 
-    private EditText mWeight, mHeight;
+    private EditText mWeight, cmHeight, feetHeight, inchesHeight;
     private RadioGroup mRadioGroup, mUnitsMeasurement;
     private Button btnContinue;
     private Activity thisActivity;
-    private ViewGroup unitSystemAffectedViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
-
-        //unitSystemAffectedViews = (ViewGroup)findViewById(R.id.unit_system_based_views);
-
-
         thisActivity = this;
 
-        mWeight = (EditText) findViewById(R.id.weightET);
-        mHeight = (EditText) findViewById(R.id.heightET);
-        mRadioGroup = (RadioGroup) findViewById(R.id.genderGroup);
-        mUnitsMeasurement = (RadioGroup) findViewById(R.id.unitsMeasurement);
+        cmHeight = (EditText)findViewById(R.id.heightET);
+        feetHeight = (EditText)findViewById(R.id.feetHeightET);
+        inchesHeight = (EditText)findViewById(R.id.inchesHeightET);
+        mWeight = (EditText)findViewById(R.id.weightET);
+        mRadioGroup = (RadioGroup)findViewById(R.id.genderGroup);
+        mUnitsMeasurement = (RadioGroup)findViewById(R.id.unitsMeasurement);
 
         btnContinue = (Button) findViewById(R.id.buttonContinue);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                String weight = mWeight.getText().toString().trim();
 
-                if (mHeight.getText().toString().trim().length() == 0) {
-                    Toast.makeText(getBaseContext(), "Please fill in height", Toast.LENGTH_SHORT).show();
-                } else if (mWeight.getText().toString().trim().length() == 0) {
+                if (weight.length() == 0) {
                     Toast.makeText(getBaseContext(), "Please fill in weight", Toast.LENGTH_SHORT).show();
                 } else if (mRadioGroup.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(getBaseContext(), "Please fill in gender", Toast.LENGTH_SHORT).show();
                 } else if (mUnitsMeasurement.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(getBaseContext(), "Please fill in units", Toast.LENGTH_SHORT).show();
                 } else {
-                    //height
-                    String height = mHeight.getText().toString();
-                    int fHeight = Integer.parseInt(height);
-
-                    //weight
-                    String weight = mWeight.getText().toString();
-                    int fWeight = Integer.parseInt(weight);
-
-                    String gender = mGender;
-
-                    String um = mUM;
-
-                    //store in shared preferences
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(thisActivity);
                     SharedPreferences.Editor editor = sp.edit();
 
-                    editor.putString(getResources().getString(R.string.pref_key_run), "true");
-                    editor.putString(getResources().getString(R.string.pref_key_editGender), gender);
-                    editor.putString(getResources().getString(R.string.pref_key_editHeight), height);
-                    editor.putString(getResources().getString(R.string.pref_key_editWeight), weight);
-                    editor.putString(getResources().getString(R.string.pref_key_editUnits), um);
-                    editor.putFloat(getResources().getString(R.string.pref_key_currentEbac), 0);
-                    editor.apply();
+                    String gender = mGender;
+                    String um = mUM;
 
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    startActivity(intent);
+                    //store in shared preferences based on set unit system
+                    if (um.equalsIgnoreCase("metric")) {
+                        String height = cmHeight.getText().toString().trim();
+                        if (height.length() > 0) {
+                            /**/
+                            editor.putString(getResources().getString(R.string.pref_key_run), "true");
+                            editor.putString(getResources().getString(R.string.pref_key_editGender), gender);
+                            editor.putString(getResources().getString(R.string.pref_key_editHeight), height);
+                            editor.putString(getResources().getString(R.string.pref_key_editWeight), weight);
+                            editor.putString(getResources().getString(R.string.pref_key_editUnits), um);
+                            editor.putFloat(getResources().getString(R.string.pref_key_currentEbac), 0);
+                            editor.apply();
+
+                            Intent intent = new Intent(v.getContext(), MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getBaseContext(), "Please fill in height", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        //imperial system
+                        String fHeight = feetHeight.getText().toString().trim();
+                        String iHeight = inchesHeight.getText().toString().trim();
+
+                        if (fHeight.length() == 0) {
+                            Toast.makeText(getBaseContext(), "Please fill in height (feet)", Toast.LENGTH_SHORT).show();
+                        } else if (iHeight.length() == 0) {
+                            Toast.makeText(getBaseContext(), "Please fill in height (inches)", Toast.LENGTH_SHORT).show();
+                        } else {
+                            int kgWeight = (int)BloodAlcoholContent.round(
+                                    BloodAlcoholContent.MetricSystemConverter.convertPoundsToKilograms(
+                                            Integer.parseInt(weight)
+                                    ),0);
+
+                            double[] feetAndInches = new double[2];
+                            feetAndInches[0] = Double.parseDouble(fHeight);
+                            feetAndInches[1] = Double.parseDouble(iHeight);
+
+                            int cmHeight = (int)BloodAlcoholContent.round(
+                                    BloodAlcoholContent.MetricSystemConverter.convertFeetAndInchesToCm(
+                                            feetAndInches),0);
+
+                            editor.putString(getResources().getString(R.string.pref_key_run), "true");
+                            editor.putString(getResources().getString(R.string.pref_key_editGender), gender);
+                            editor.putString(getResources().getString(R.string.pref_key_editHeight), String.valueOf(cmHeight));
+                            editor.putString(getResources().getString(R.string.pref_key_editWeight), String.valueOf(kgWeight));
+                            editor.putString(getResources().getString(R.string.pref_key_editUnits), um);
+                            editor.putFloat(getResources().getString(R.string.pref_key_currentEbac), 0);
+                            editor.apply();
+
+                            Intent intent = new Intent(v.getContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }
                 }
             }
         });
