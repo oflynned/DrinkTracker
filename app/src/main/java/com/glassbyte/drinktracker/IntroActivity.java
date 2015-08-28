@@ -9,10 +9,12 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -24,17 +26,20 @@ public class IntroActivity extends Activity {
     String mGender;
     String mUM;
 
-    EditText mWeight;
-    EditText mHeight;
-    private RadioGroup mRadioGroup;
-    private RadioGroup mUnitsMeasurement;
-    Button btnContinue;
+    private EditText mWeight, mHeight;
+    private RadioGroup mRadioGroup, mUnitsMeasurement;
+    private Button btnContinue;
     private Activity thisActivity;
+    private ViewGroup unitSystemAffectedViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
+
+        //unitSystemAffectedViews = (ViewGroup)findViewById(R.id.unit_system_based_views);
+
 
         thisActivity = this;
 
@@ -108,15 +113,65 @@ public class IntroActivity extends Activity {
 
         checkedUM = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
-        switch (view.getId()) {
-            case R.id.metric:
-                if (checkedUM)
+        if(checkedUM) {
+
+            TextView weightUnitT = (TextView)thisActivity.findViewById(R.id.weightUnitT);
+            TextView cmT = (TextView)thisActivity.findViewById(R.id.cmT);
+            TextView feetT = (TextView)thisActivity.findViewById(R.id.feetHeightT);
+            TextView inchesT = (TextView)thisActivity.findViewById(R.id.inchesHeightT);
+            EditText heightET = (EditText)thisActivity.findViewById(R.id.heightET);
+            EditText feetET = (EditText)thisActivity.findViewById(R.id.feetHeightET);
+            EditText inchesET = (EditText)thisActivity.findViewById(R.id.inchesHeightET);
+
+            switch (view.getId()) {
+                case R.id.metric:
                     mUM = "metric";
-                break;
-            case R.id.imperial:
-                if (checkedUM)
+
+                    weightUnitT.setText("kg");
+                    weightUnitT.invalidate();
+
+                    feetT.setVisibility(View.INVISIBLE);
+                    feetT.invalidate();
+
+                    feetET.setVisibility(View.INVISIBLE);
+                    feetET.invalidate();
+
+                    inchesT.setVisibility(View.INVISIBLE);
+                    inchesT.invalidate();
+
+                    inchesET.setVisibility(View.INVISIBLE);
+                    inchesET.invalidate();
+
+                    heightET.setVisibility(View.VISIBLE);
+                    heightET.invalidate();
+
+                    cmT.setVisibility(View.VISIBLE);
+                    cmT.invalidate();
+                    break;
+                case R.id.imperial:
                     mUM = "imperial";
-                break;
+                    weightUnitT.setText("pounds");
+                    weightUnitT.invalidate();
+
+                    feetT.setVisibility(View.VISIBLE);
+                    feetT.invalidate();
+
+                    feetET.setVisibility(View.VISIBLE);
+                    feetET.invalidate();
+
+                    inchesT.setVisibility(View.VISIBLE);
+                    inchesT.invalidate();
+
+                    inchesET.setVisibility(View.VISIBLE);
+                    inchesET.invalidate();
+
+                    heightET.setVisibility(View.INVISIBLE);
+                    heightET.invalidate();
+
+                    cmT.setVisibility(View.INVISIBLE);
+                    cmT.invalidate();
+                    break;
+            }
         }
     }
 }

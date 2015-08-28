@@ -130,7 +130,16 @@
         android:layout_toStartOf="@+id/unitsMeasurement" />
 
     <TextView
-        android:layout_below="@+id/weightET"
+        android:text="kg"
+        android:id="@+id/weightUnitT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weight"
+        android:layout_toRightOf="@id/weightET"
+        android:layout_alignBaseline="@id/weightET"/>
+
+    <TextView
+        android:layout_below="@id/weightET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -141,7 +150,7 @@
         android:layout_centerVertical="true"
         android:layout_alignRight="@+id/weight"
         android:layout_alignEnd="@+id/weight" />
-
+    <!--Metric height editText fields-->
     <EditText
         android:layout_below="@+id/height"
         android:layout_width="104dp"
@@ -151,9 +160,62 @@
         android:id="@+id/heightET"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
-        android:layout_toLeftOf="@+id/unitsMeasurement"
-        android:layout_alignLeft="@+id/weightET"
-        android:layout_alignStart="@+id/weightET" />
+        android:layout_toLeftOf="@id/unitsMeasurement"
+        android:layout_alignLeft="@id/weightET"
+        android:layout_alignStart="@id/weightET"
+        android:visibility="visible"/>
+    <TextView
+        android:text="cm"
+        android:id="@+id/cmT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/heightET"
+        android:layout_alignBaseline="@id/heightET"
+        android:visibility="visible"/>
+    <!--End of Metric height editText field-->
+
+    <!--Imperial height editText fields-->
+    <TextView
+        android:text="Feet:"
+        android:id="@+id/feetHeightT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/height"
+        android:layout_toLeftOf="@id/height"
+        android:layout_alignBaseline="@+id/feetHeightET"
+        android:visibility="invisible"/>
+    <EditText
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@id/feetHeightET"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/height"
+        android:layout_toRightOf="@id/feetHeightT"
+        android:visibility="invisible"/>
+    <TextView
+        android:text="Inches:"
+        android:id="@+id/inchesHeightT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/height"
+        android:layout_toRightOf="@id/feetHeightET"
+        android:layout_alignBaseline="@+id/inchesHeightET"
+        android:visibility="invisible"/>
+    <EditText
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@id/inchesHeightET"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/height"
+        android:layout_toRightOf="@id/inchesHeightT"
+        android:visibility="invisible"/>
+    <!--End of Imperial height editText fields-->
 
     <Button
         android:layout_width="wrap_content"
