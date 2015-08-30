@@ -30,6 +30,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".AboutUs"
+            android:screenOrientation="portrait"
+            android:theme="@style/GlassByte" />
+        <activity
             android:name=".IntroActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >

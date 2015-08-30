@@ -1,0 +1,48 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/gradient">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="221dp"
+            android:background="@drawable/glassbyte"
+            android:scaleType="fitXY"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="GlassByte is a software development start-up company headquartered in Dublin, Ireland. Our small, ambitious team strives to create innovative and useful software for computing platforms."
+            android:textColor="@android:color/black"
+            android:id="@+id/desc"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black"
+            android:text="For more apps or business enquiries, visit our website!\nhttp://www.glassbyte.com/"
+            android:textColorLink="@color/red900"
+            android:id="@+id/link_lol"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="30dp"
+            android:autoLink="web"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+</ScrollView>

@@ -2,10 +2,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.glassbyte.drinktracker.SettingsActivity">
-    <item android:id="@+id/action_stats" android:title="@string/action_stats"
-        android:orderInCategory="100" app:showAsAction="never" />
+
     <item android:id="@+id/action_listDrinks" android:title="@string/action_listDrinks"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_stats" android:title="@string/action_stats"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_aboutus" android:title="@string/action_aboutus"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+        android:orderInCategory="100" app:showAsAction="never" />
+
     <group>
         <!--dummy item to get a nice separator-->
         <item
@@ -13,6 +19,6 @@
             app:showAsAction="always"
             android:enabled="false" />
     </group>
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+
+
 </menu>

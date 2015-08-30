@@ -3,6 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_aboutus">About Us</string>
     <string name="action_listDrinks">List Drinks</string>
     <string name="action_stats">Statistics</string>
 

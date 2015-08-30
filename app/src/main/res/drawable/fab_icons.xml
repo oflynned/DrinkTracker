@@ -4,7 +4,7 @@
         android:enterFadeDuration="@android:integer/config_shortAnimTime">
 
     <item>
-        <bitmap android:src="@drawable/i" android:tint="@android:color/white" />
+        <bitmap android:src="@drawable/i_nimbus" android:tint="@android:color/white" />
     </item>
 
 </selector>

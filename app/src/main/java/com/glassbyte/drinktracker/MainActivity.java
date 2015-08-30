@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
             Intent statsIntent = new Intent(this, Statistics.class);
             startActivity(statsIntent);
             return true;
+        } else if (id == R.id.action_aboutus){
+            Intent aboutUsIntent = new Intent(this, AboutUs.class);
+            startActivity(aboutUsIntent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -105,7 +105,6 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
                     public void onDoneClick(DialogFragment dialog) {
                         PresetDrink.this.alcVolume = ((SetVolumeDialog) dialog).getVolume();
                         setVolume(alcVolume);
-
                         volChosen.setText(getVolume() + getUnits());
                     }
                 });

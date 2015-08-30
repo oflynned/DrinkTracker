@@ -67,4 +67,20 @@
     <color name="cyan700">#0097A7</color>
     <color name="cyan800">#00838F</color>
     <color name="cyan900">#006064</color>
+
+
+    <color name="red100">#FFCDD2</color>
+    <color name="red300">#E57373</color>
+    <color name="red500">#f44336</color>
+    <color name="red700">#D32F2F</color>
+    <color name="red900">#B71C1C</color>
+
+    <color name="blue100">#C5CAE9</color>
+    <color name="blue300">#7986CB</color>
+    <color name="blue500">#3F51B5</color>
+    <color name="blue700">#303F9F</color>
+    <color name="blue900">#1A237E</color>
+
+    <color name="lightblue300">#4FC3F7</color>
+    <color name="lightblue700">#0288D1</color>
 </resources>

@@ -1,35 +1,79 @@
 package com.glassbyte.drinktracker;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import lecho.lib.hellocharts.view.LineChartView;
+import org.w3c.dom.Text;
+
+import lecho.lib.hellocharts.view.Chart;
 
 /**
  * Created by ed on 25/08/15.
  */
-public class Statistics extends Activity implements FloatingActionButton.OnCheckedChangeListener {
+public class Statistics extends FragmentActivity implements FloatingActionButton.OnCheckedChangeListener {
 
     private FloatingActionButton infoButton;
+    PresetDrink presetDrink;
+
+    double avgUnits;
+    double totUnits;
+    double maxUnits;
+    double avgTime;
+    double BACAchieved;
+    int daysDrinking;
+
+    String spGender;
+    Chart chart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
+        presetDrink = new PresetDrink();
 
         infoButton = (FloatingActionButton) findViewById(R.id.infoButton);
         infoButton.setOnCheckedChangeListener(this);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender),""));
+
+        //need to replace with proper methods
+        setAvgUnits(0);
+        setTotalUnits(0);
+
+        //21 for men, 14 for women per week
+        setMaxUnits();
+
+        setAvgTime(0);
+        setBACAchieved(0);
+        setDaysDrinking(0);
+
+        TextView briefInfo = (TextView) findViewById(R.id.briefInfo);
+        briefInfo.setText("Total units drunk this week:\n" + getTotalUnits() + "/" + getMaxUnits() + " units");
+        TextView rating = (TextView) findViewById(R.id.rating);
+
+        if (getTotalUnits() <= getMaxUnits()) {
+            rating.setTextColor(Color.GREEN);
+            rating.setText("Below recommended weekly limit");
+        }
+        else if(getTotalUnits() > getMaxUnits()) {
+            rating.setTextColor(Color.RED);
+            rating.setText("Excessive drinking!");
+        }
+
+        //graph instantiation
+        chart = (Chart) findViewById(R.id.chart);
+
+        chart.getChartData();
     }
 
     @Override
@@ -55,13 +99,80 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
     }
 
     @Override
-    public void onCheckedChanged(FloatingActionButton fabView, boolean isChecked) {
+    public void onCheckedChanged(FloatingActionButton fabView, final boolean isChecked) {
         switch (fabView.getId()) {
             case R.id.infoButton:
-                Toast.makeText(getBaseContext(),"FAB checked",Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(this)
+                        .setTitle("Detailed Statistics")
+                        .setMessage(
+                                "Total units drunk this week:\n" + getTotalUnits() + "/" + getMaxUnits() + " units" + "\n\n" +
+                                        "Average units drunk per week:\n" + getAvgUnits() + "/" + getMaxUnits() + " units" + "\n\n" +
+                                        "Average time spent drinking:\n" + getAvgTime() + " hours" + "\n\n" +
+                                        "# of days drinking this week:\n" + getDaysDrinking() + " days" + "\n\n" +
+                                        "Maximum BAC achieved this week:\n" + getBACAchieved() + "\n\n"
+                        )
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .show();
                 break;
             default:
                 break;
         }
+    }
+
+    private void setAvgUnits(double avgUnits) {
+        this.avgUnits = avgUnits;
+    }
+
+    private double getAvgUnits() {
+        return avgUnits;
+    }
+
+    private void setBACAchieved(double BACAchieved) {
+        this.BACAchieved = BACAchieved;
+    }
+
+    private double getBACAchieved() {
+        return BACAchieved;
+    }
+
+    private void setDaysDrinking(int daysDrinking) {
+        this.daysDrinking = daysDrinking;
+    }
+
+    private int getDaysDrinking() {
+        return daysDrinking;
+    }
+
+    private void setAvgTime(double avgTime) {
+        this.avgTime = avgTime;
+    }
+
+    private double getAvgTime() {
+        return avgTime;
+    }
+
+    private void setMaxUnits() {
+        if (spGender.equals("male") || spGender.equals("Male")) {
+            this.maxUnits = 21;
+        }
+        else{
+            this.maxUnits = 14;
+        }
+    }
+
+    private double getMaxUnits() {
+        return maxUnits;
+    }
+
+    private void setTotalUnits(double totUnits) {
+        this.totUnits = totUnits;
+    }
+
+    private double getTotalUnits() {
+        return totUnits;
     }
 }

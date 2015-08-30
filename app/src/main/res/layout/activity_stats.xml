@@ -17,6 +17,7 @@
             android:id="@+id/chart"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </LinearLayout>
 
     <RelativeLayout
@@ -51,5 +52,36 @@
                 android:layout_gravity="center"
                 android:duplicateParentState="true" />
         </com.glassbyte.drinktracker.FloatingActionButton>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="10dp"
+            android:background="@color/hint_grey"
+            android:layout_above="@+id/briefInfo"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Placeholder"
+            android:id="@+id/briefInfo"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rating"
+            android:layout_below="@+id/briefInfo"
+            android:text="Rating placeholder"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+        <View
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/hint_grey"
+            android:layout_below="@+id/rating"/>
     </RelativeLayout>
 </LinearLayout>

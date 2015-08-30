@@ -20,7 +20,7 @@
         <ripple android:color="@color/orange500">
             <item>
                 <shape>
-                    <solid android:color="@color/orange900" />
+                    <solid android:color="@color/orange700" />
                 </shape>
             </item>
         </ripple>
@@ -30,7 +30,7 @@
         <ripple android:color="@color/orange500">
             <item>
                 <shape>
-                    <solid android:color="@color/orange900" />
+                    <solid android:color="@color/orange700" />
                 </shape>
             </item>
         </ripple>
