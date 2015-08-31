@@ -1,34 +1,32 @@
 package com.glassbyte.drinktracker;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.view.Chart;
+import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
 /**
  * Created by ed on 25/08/15.
  */
-public class Statistics extends FragmentActivity implements FloatingActionButton.OnCheckedChangeListener {
+public class Statistics extends Activity implements FloatingActionButton.OnCheckedChangeListener {
 
     private FloatingActionButton infoButton;
-    PresetDrink presetDrink;
 
     double avgUnits;
     double totUnits;
@@ -38,21 +36,37 @@ public class Statistics extends FragmentActivity implements FloatingActionButton
     int daysDrinking;
 
     String spGender;
-    Chart chart;
+    LineChartView chart;
+
+    TextView briefInfo;
+    TextView rating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
-        presetDrink = new PresetDrink();
 
         infoButton = (FloatingActionButton) findViewById(R.id.infoButton);
         infoButton.setOnCheckedChangeListener(this);
 
+        briefInfo = (TextView) findViewById(R.id.briefInfo);
+        rating = (TextView) findViewById(R.id.rating);
+
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender),""));
 
+        setMethods();
+
+        //graph instantiation
+        chart = (LineChartView) findViewById(R.id.chart);
+        generateData();
+        chart.setViewportCalculationEnabled(false);
+        setViewport();
+        chart.startDataAnimation();
+    }
+
+    private void setMethods(){
         //need to replace with proper methods
         setAvgUnits(0);
         setTotalUnits(0);
@@ -64,9 +78,7 @@ public class Statistics extends FragmentActivity implements FloatingActionButton
         setBACAchieved(0);
         setDaysDrinking(0);
 
-        TextView briefInfo = (TextView) findViewById(R.id.briefInfo);
         briefInfo.setText("Total units drunk this week:\n" + getTotalUnits() + "/" + getMaxUnits() + " units");
-        TextView rating = (TextView) findViewById(R.id.rating);
 
         if (getTotalUnits() <= getMaxUnits()) {
             rating.setTextColor(Color.GREEN);
@@ -76,15 +88,14 @@ public class Statistics extends FragmentActivity implements FloatingActionButton
             rating.setTextColor(Color.RED);
             rating.setText("Excessive drinking!");
         }
+    }
 
-        //graph instantiation
-        chart = (Chart) findViewById(R.id.chart);
-
+    private void generateData(){
         List<PointValue> values = new ArrayList<>();
-        values.add(new PointValue(0, 2));
-        values.add(new PointValue(1, 4));
-        values.add(new PointValue(2, 3));
-        values.add(new PointValue(3, 4));
+        values.add(new PointValue(0, 0));
+        values.add(new PointValue(1, 0.1f));
+        values.add(new PointValue(2, 0.2f));
+        values.add(new PointValue(3, 0.3f));
 
         Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
         List<Line> lines = new ArrayList<>();
@@ -92,9 +103,28 @@ public class Statistics extends FragmentActivity implements FloatingActionButton
 
         LineChartData data = new LineChartData();
         data.setLines(lines);
-
-        LineChartView chart = new LineChartView(this);
+        setAxes(data);
         chart.setLineChartData(data);
+    }
+
+    private void setAxes(LineChartData data){
+        Axis axisX = new Axis();
+        Axis axisY = new Axis().setHasLines(true);
+        axisX.setName("Time");
+        axisY.setName("BAC");
+        data.setAxisXBottom(axisX);
+        data.setAxisYLeft(axisY);
+    }
+
+    private void setViewport() {
+        // Reset viewport height range to (0,0.5)
+        final Viewport v = new Viewport(chart.getMaximumViewport());
+        v.bottom = 0;
+        v.top = 0.5f;
+        v.left = 0;
+        v.right = 12 - 1; //assuming a random value of 12
+        chart.setMaximumViewport(v);
+        chart.setCurrentViewport(v);
     }
 
     @Override

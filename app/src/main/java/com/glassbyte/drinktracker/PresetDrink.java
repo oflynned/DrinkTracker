@@ -55,7 +55,6 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
         //set units
         sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         sp.registerOnSharedPreferenceChangeListener(this);
-
         spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits),""));
         if (spUnits.equals("metric") || spUnits.equals("Metric")) {
             setUnits("ml");
