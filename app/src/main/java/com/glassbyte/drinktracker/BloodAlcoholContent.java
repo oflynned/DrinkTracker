@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,7 +11,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by Maciej on 12/08/2015.
@@ -51,7 +49,7 @@ public class BloodAlcoholContent {
     public void setCurrentEbac(float ebac){
         SharedPreferences.Editor editor = sp.edit();
         editor.putFloat(activity.getString(R.string.pref_key_currentEbac),ebac);
-        editor.putString(activity.getString(R.string.pref_key_last_updated_currentEbac), DatabaseOperationsUnits.getDateTime());
+        editor.putString(activity.getString(R.string.pref_key_last_elapsed_currentEbac), DatabaseOperationsUnits.getDateTime());
         editor.apply();
     }
     public float getCurrentEbac(){return sp.getFloat(activity.getString(R.string.pref_key_currentEbac),0);}
@@ -71,7 +69,7 @@ public class BloodAlcoholContent {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         float currentEbac = sp.getFloat(context.getString(R.string.pref_key_currentEbac),0);
         if (currentEbac > 0) {
-            String strLastUpdatedBAC = sp.getString(context.getString(R.string.pref_key_last_updated_currentEbac), "");
+            String strLastUpdatedBAC = sp.getString(context.getString(R.string.pref_key_last_elapsed_currentEbac), "");
             String strCurrentDateTime = DatabaseOperationsUnits.getDateTime();
 
             DateFormat lastUpdatedBAC = new SimpleDateFormat(DatabaseOperationsUnits.STR_DATE_FORMAT,
@@ -94,7 +92,7 @@ public class BloodAlcoholContent {
 
             SharedPreferences.Editor e = sp.edit();
             e.putFloat(context.getString(R.string.pref_key_currentEbac), newCurrentBAC);
-            e.putString(context.getString(R.string.pref_key_last_updated_currentEbac), strCurrentDateTime);
+            e.putString(context.getString(R.string.pref_key_last_elapsed_currentEbac), strCurrentDateTime);
             e.apply();
         }
     }

@@ -2,15 +2,18 @@ package com.glassbyte.drinktracker;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -73,52 +76,74 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
         return sq.insert(DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME, null, cv);
     }
 
-    //retrieve database
-    public Cursor getInfo(DatabaseOperationsUnits DOU){
-        //read database
-        SQLiteDatabase SQ = DOU.getReadableDatabase();
-        //read columns from database into a 4 element array
-        String[] col = {
-                DataUnitsDatabaseContractor.DataLoggingTable.TIME,
-                DataUnitsDatabaseContractor.DataLoggingTable.UNITS,
-                DataUnitsDatabaseContractor.DataLoggingTable.PERCENTAGE,
-                DataUnitsDatabaseContractor.DataLoggingTable.BAC
-        };
-        //get data
-        return SQ.query(DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME, col, null, null, null, null, null);
-    }
+    public void removeDrinks(Context context, Integer[] drinksIds){
+        SQLiteDatabase readDB = this.getReadableDatabase();
+        Cursor c = readDB.rawQuery("SELECT * FROM " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME,
+                null);
+        c.moveToFirst();
 
-    public ArrayList<Cursor> getData(String Query){
-        //get writable database
-        SQLiteDatabase sqlDB = this.getWritableDatabase();
-        String[] columns = new String[] { "message" };
-        //an array list of cursor to save two cursors one has results from the query
-        //other cursor stores error message if any errors are triggered
-        ArrayList<Cursor> alc = new ArrayList<>(2);
-        MatrixCursor Cursor2= new MatrixCursor(columns);
-        alc.add(null);
-        alc.add(null);
+        int idColIndex = 0;
+        int bacColIndex = 5;
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        float currentEbac =  sp.getFloat(context.getString(R.string.pref_key_currentEbac), 0);
+        float tmpCurrentEbac = currentEbac;
 
-        try{
-            String maxQuery = Query ;
-            //execute the query results will be save in Cursor c
-            Cursor c = sqlDB.rawQuery(maxQuery, null);
-            //add value to cursor2
-            Cursor2.addRow(new Object[] { "Success" });
-            alc.set(1,Cursor2);
+        //Make a list of indexes of drinks that affect the currentBAC
+        ArrayList<Float[]> indexesAffectingCurrentEbac = new ArrayList<>();
 
-            if (null != c && c.getCount() > 0) {
-                alc.set(0,c);
-                c.moveToFirst();
-                return alc ;
-            }
-            return alc;
-        } catch(Exception ex){
-            //if any exceptions are triggered save the error message to cursor an return the arraylist
-            Cursor2.addRow(new Object[] { ""+ex.getMessage() });
-            alc.set(1,Cursor2);
-            return alc;
+        Float[] tuplet = new Float[2];
+        tuplet[0] = (float)c.getInt(idColIndex);
+        tuplet[1] = c.getFloat(bacColIndex);
+        indexesAffectingCurrentEbac.add(tuplet);
+
+        while ( tmpCurrentEbac > 0 && c.moveToNext()) {
+            tuplet = new Float[2];
+            tuplet[0] = (float)c.getInt(idColIndex);
+            float tmpBAC = c.getFloat(bacColIndex);
+            if (tmpCurrentEbac - tmpBAC >= 0)
+                tuplet[1] = tmpBAC;
+            else
+                tuplet[1] = tmpCurrentEbac;
+            indexesAffectingCurrentEbac.add(tuplet);
+
+            tmpCurrentEbac -= tmpBAC;
+            System.out.println("Affects currentBAC: "+tuplet[0]);
         }
+        //End of Make a list of indexes of drinks that affect the currentBAC
+
+        //Run delete queries for each drink
+        String sqlQuery = "DELETE FROM " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME
+                + " WHERE " + DataUnitsDatabaseContractor.DataLoggingTable._ID + "=";
+        SQLiteDatabase writeDB = this.getWritableDatabase();
+        int test = 0; System.out.println("Size of drinksIds: "+drinksIds.length);
+        for (int id : drinksIds) {
+            test++;
+            System.out.println("Iteration: " + test);
+            //Check if the drink selected to remove affects the currentBAC
+            Iterator<Float[]> itr = indexesAffectingCurrentEbac.iterator();
+
+            while (itr.hasNext()) {
+                Float[] drink = itr.next();
+                System.out.println("Id: " + id  + " == drink[0]: " + drink[0]);
+                if (id == drink[0]) {
+                    //drink with the id affects the current bac
+                    currentEbac -= drink[1];
+                    indexesAffectingCurrentEbac.remove((Float[])drink);
+                    System.out.println("Id: " + id + " --------- BAC: " + drink[1]);
+                    break;
+                }
+            }
+
+            String removeDrinkQuery = sqlQuery + id;
+            writeDB.execSQL(removeDrinkQuery);
+        }
+        //End of Run delete queries for each drink
+
+        SharedPreferences.Editor e = sp.edit();
+        e.putFloat(context.getString(R.string.pref_key_currentEbac), currentEbac);
+        e.apply();
+        writeDB.close();
+        readDB.close();
     }
 
     public static String getDateTime() {

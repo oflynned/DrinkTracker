@@ -1,7 +1,9 @@
 package com.glassbyte.drinktracker;
 /*
 * To do:
-* -implement the functionality of the actionbar menu
+* - there is a bug in that when remove selected is selected the arraylist of checkboxes contains double
+* copy for each checkbox however everything is made to work fine around that bug but be warned that
+* such bug exists
 * */
 import android.content.Context;
 import android.database.Cursor;
@@ -90,6 +92,7 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
 
     public void removeSelected(View view){
         if(drinkListAdapter.removeSelected()) {
+            drinkListAdapter.clearDrinkCheckboxes();
             gridView.invalidateViews();
             Toast.makeText(this, "Selected rows were deleted successfully!", Toast.LENGTH_SHORT).show();
         }
@@ -100,9 +103,8 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
         String selection = (String)spinner.getItemAtPosition(i);
         displayLimit = Integer.valueOf(selection);
         drinkListAdapter.setDisplayLimit(displayLimit);
+        drinkListAdapter.clearDrinkCheckboxes();
         gridView.invalidateViews();
-
-        System.out.println("Seleceted: " + selection);
     }
 
     @Override
@@ -159,6 +161,7 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             View cellView = null;
+            //drinkCheckboxes = new ArrayList<>();
 
             if (i < NUM_COLUMNS) {
                 //first row to contain headings for the table of drinks
@@ -286,22 +289,15 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
             ArrayList<Integer> selectedCheckboxesIds = new ArrayList<>();
             while(itr.hasNext()){
                 CheckBox cb = itr.next();
-                if(cb.isChecked()){
+                System.out.println("CheckBox Id: "+cb.getId());
+                if(cb.isChecked()) {
                     selectedCheckboxesIds.add(cb.getId());
                 }
             }
             if (selectedCheckboxesIds.size()>0) {
-                String sqlQuery = "DELETE FROM " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME
-                        + " WHERE " + DataUnitsDatabaseContractor.DataLoggingTable._ID + "=";
-                Iterator<Integer> idsItr = selectedCheckboxesIds.iterator();
-                db = dou.getWritableDatabase();
-                while (idsItr.hasNext()) {
-                    String tmpQuery = sqlQuery + idsItr.next();
-                    System.out.println("Executed DELETE query: " + tmpQuery);
-                    db.execSQL(tmpQuery);
-                }
-                db.close();
+                dou.removeDrinks(mContext, selectedCheckboxesIds.toArray(new Integer[selectedCheckboxesIds.size()]));
 
+                //the below 2 lines are necessary to update the data set of the gridview
                 db = dou.getReadableDatabase();
                 result = db.rawQuery(queryWithLimit, null);
                 return true;
@@ -332,5 +328,7 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
         public String generateQueryWithLimit(){
             return SELECT_ALL_SQL_QUERY + " LIMIT " + displayLimit+1 + " OFFSET " + currentPage*displayLimit;
         }
+
+        public void clearDrinkCheckboxes(){drinkCheckboxes.clear();}
     }
 }
