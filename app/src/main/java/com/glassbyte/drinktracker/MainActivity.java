@@ -1,11 +1,11 @@
 package com.glassbyte.drinktracker;
 
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -95,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.action_aboutus){
             Intent aboutUsIntent = new Intent(this, AboutUs.class);
             startActivity(aboutUsIntent);
+            return true;
+        } else if (id == R.id.action_removeads){
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.glassbyte.com/")));
             return true;
         }
 

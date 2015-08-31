@@ -29,7 +29,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
             android:textSize="30sp"
-            android:text="GlassByte Software"
+            android:text="GlassByte"
             android:layout_marginTop="30dp"
             android:id="@+id/logotext"
             android:textColor="@color/black"

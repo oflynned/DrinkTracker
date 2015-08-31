@@ -25,17 +25,14 @@ import org.w3c.dom.Text;
  * Created by root on 27/05/15.
  */
 
-public class PresetDrink extends Fragment implements View.OnClickListener {
+public class PresetDrink extends Fragment implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    Button addDrink;
     private DatabaseOperationsUnits dou;
-    private Cursor CR;
     private ImageView glass;
     private Spinner drinksChoice;
-    private Spinner percentageChoice;
-    private TextView addPercentageText;
 
     private BloodAlcoholContent bloodAlcoholContent;
+    SharedPreferences sp;
 
     //for setting input for database
     private String spUnits;
@@ -48,15 +45,19 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
     Button setPercentage, setVolume, drink;
     TextView percentageChosen, volChosen;
 
+    View V;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View V = inflater.inflate(R.layout.activity_presetdrink, container, false);
+        V = inflater.inflate(R.layout.activity_presetdrink, container, false);
 
         //set units
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sp.registerOnSharedPreferenceChangeListener(this);
+
         spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits),""));
-        if (spUnits.equals("metric")) {
+        if (spUnits.equals("metric") || spUnits.equals("Metric")) {
             setUnits("ml");
         }
         else{
@@ -105,6 +106,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
                     public void onDoneClick(DialogFragment dialog) {
                         PresetDrink.this.alcVolume = ((SetVolumeDialog) dialog).getVolume();
                         setVolume(alcVolume);
+                        V.invalidate();
                         volChosen.setText(getVolume() + getUnits());
                     }
                 });
@@ -121,7 +123,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
                     public void onDoneClick(DialogFragment dialog) {
                         PresetDrink.this.alcPercentage = ((SetPercentageDialog) dialog).getPercentage();
                         setPercentage(alcPercentage);
-
+                        V.invalidate();
                         String currPercentage = String.format("%.2f", alcPercentage);
                         percentageChosen.setText(currPercentage + "%");
                     }
@@ -136,7 +138,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
                 double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(getVolume(), getPercentage());
                 dou.insertNewDrink(dou.getDateTime(), getTitle(), getVolume(), getPercentage(), ebac);
                 bloodAlcoholContent.setCurrentEbac((float) (bloodAlcoholContent.getCurrentEbac() + ebac));
-
+                V.invalidate();
                 Toast.makeText(getActivity(), "Drink added successfully!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -160,5 +162,10 @@ public class PresetDrink extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        V.invalidate();
     }
 }
