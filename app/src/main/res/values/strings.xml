@@ -23,6 +23,8 @@
     <string name="pref_key_storage_settings">pref_key_storage_settings</string>
     <string name="pref_key_editFeet">pref_key_editFeet</string>
     <string name="pref_key_editInches">pref_key_editInches</string>
+    <string name="pref_key_last_updated_currentEbac">pref_key_last_updated_currentEbac</string>
+
     <!-- End of Preferences -->
 
     <!--Custom Drinks Titles-->

@@ -1,61 +1,22 @@
 package com.glassbyte.drinktracker;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Maciej on 12/08/2015.
  */
-//public class BloodAlcoholContent {
-    /*Based on https://en.wikipedia.org/wiki/Blood_alcohol_content#Estimated_blood_alcohol_content_by_intake
-    * weight in kg's
-    * drinking period in hr's
-    * 1 Standard Drink = 18ml of pure alcohol in a drink
-    * */
-    /*private final float BODY_WATER_IN_BLOOD = 0.806f;
-    private final float CONVERT_FACTOR = 1.2f;
-    private final float BODY_WATER_MEN = 0.58f;
-    private final float BODY_WATER_WOMEN = 0.49f;
-    private final float MEAN_METABOLISM_MEN = 0.015f;
-    private final float MEAN_METABOLISM_WOMEN = 0.017f;
-    private float bodyWeight;
-
-    public static boolean isMan; //static to let it be altered by any of the activities and affect all other current objects
-
-    public BloodAlcoholContent(boolean isMan, float bodyWeight){
-        this.isMan = isMan;
-        this.bodyWeight = bodyWeight;
-    }
-
-    public float getStandardDrinkFactor(float mlSize, float alcVolPercentage){
-        return (mlSize*alcVolPercentage/100f)/18f;
-    }
-
-    //drinkingPeriod must be specified in hours
-    public float getEstimatedBloodAlcoholContent(float[] mlSize, float[] alcVolPercentage, float drinkingPeriod) throws Exception {
-        if(mlSize.length != alcVolPercentage.length)
-            throw new java.lang.Exception("The mlSize and alcVolPercentage arrays must be of the same length.");
-
-        float standardDrinkFactor = 0f;
-
-        for(int i = 0; i < mlSize.length; i++){
-            standardDrinkFactor += getStandardDrinkFactor(mlSize[i], alcVolPercentage[i]);
-        }
-
-        float bodyWater = isMan ? BODY_WATER_MEN : BODY_WATER_WOMEN;
-        float metabolismMean = isMan ? MEAN_METABOLISM_MEN : MEAN_METABOLISM_WOMEN;
-
-        return (BODY_WATER_IN_BLOOD * standardDrinkFactor * CONVERT_FACTOR) / (bodyWater * bodyWeight)
-                - (metabolismMean * drinkingPeriod);
-    }
-
-    public void setIsMan(boolean isMan){this.isMan = isMan;}
-    public void setBodyWeight(float bodyWeight){this.bodyWeight = bodyWeight;}
-}*/
 public class BloodAlcoholContent {
     /*
     * This class is based on: http://www.wikihow.com/Calculate-Blood-Alcohol-Content-%28Widmark-Formula%29
@@ -90,6 +51,7 @@ public class BloodAlcoholContent {
     public void setCurrentEbac(float ebac){
         SharedPreferences.Editor editor = sp.edit();
         editor.putFloat(activity.getString(R.string.pref_key_currentEbac),ebac);
+        editor.putString(activity.getString(R.string.pref_key_last_updated_currentEbac), DatabaseOperationsUnits.getDateTime());
         editor.apply();
     }
     public float getCurrentEbac(){return sp.getFloat(activity.getString(R.string.pref_key_currentEbac),0);}
@@ -103,6 +65,38 @@ public class BloodAlcoholContent {
         double r = isMan ? MALE_R : FEMALE_R;
 
         return massOfAlcohol/(bodyWeight*r)*100;
+    }
+
+    public static void updateElapsedBAC(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        float currentEbac = sp.getFloat(context.getString(R.string.pref_key_currentEbac),0);
+        if (currentEbac > 0) {
+            String strLastUpdatedBAC = sp.getString(context.getString(R.string.pref_key_last_updated_currentEbac), "");
+            String strCurrentDateTime = DatabaseOperationsUnits.getDateTime();
+
+            DateFormat lastUpdatedBAC = new SimpleDateFormat(DatabaseOperationsUnits.STR_DATE_FORMAT,
+                    DatabaseOperationsUnits.DATE_LOCALE);
+            DateFormat currentDateTime = new SimpleDateFormat(DatabaseOperationsUnits.STR_DATE_FORMAT,
+                    DatabaseOperationsUnits.DATE_LOCALE);
+
+            Date lastUpdatedBACDate = null;
+            Date currentDate = null;
+            try {
+                lastUpdatedBACDate = lastUpdatedBAC.parse(strLastUpdatedBAC);
+                currentDate = currentDateTime.parse(strCurrentDateTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            long minutesDifference = DatabaseOperationsUnits.getDateDiff(currentDate, lastUpdatedBACDate);
+            double ebacSubtrahend = (minutesDifference / 60) * ELAPSED_HOUR_FACTOR;
+            float newCurrentBAC = (currentEbac >= (float)ebacSubtrahend) ? currentEbac-(float)ebacSubtrahend : 0.0f;
+
+            SharedPreferences.Editor e = sp.edit();
+            e.putFloat(context.getString(R.string.pref_key_currentEbac), newCurrentBAC);
+            e.putString(context.getString(R.string.pref_key_last_updated_currentEbac), strCurrentDateTime);
+            e.apply();
+        }
     }
 
     /*Taken the below method from: http://stackoverflow.com/a/2808648 */

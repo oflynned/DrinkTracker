@@ -15,6 +15,8 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class DatabaseOperationsUnits extends SQLiteOpenHelper {
+    public static final String STR_DATE_FORMAT = "HH:mm:ss dd/MM/yyyy";
+    public static final Locale DATE_LOCALE = Locale.UK;
     public static final int database_version = 1;
     public String CREATE_QUERY =
             "CREATE TABLE " +
@@ -119,15 +121,15 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
         }
     }
 
-    public String getDateTime() {
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy", Locale.UK);
+    public static String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat(STR_DATE_FORMAT, DATE_LOCALE);
         Date date = new Date();
         return dateFormat.format(date);
     }
 
-    //unused and possible not needed
-    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+    //returns difference in minutes
+    public static long getDateDiff(Date date1, Date date2) {
         long diffInMillies = date2.getTime() - date1.getTime();
-        return timeUnit.convert(diffInMillies, TimeUnit.MINUTES);
+        return TimeUnit.MILLISECONDS.toMinutes(diffInMillies);
     }
 }

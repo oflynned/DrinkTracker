@@ -1,5 +1,7 @@
 package com.glassbyte.drinktracker;
 
+//DRINK VOLUME NOT AUDIO VOLUME - LOL
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;

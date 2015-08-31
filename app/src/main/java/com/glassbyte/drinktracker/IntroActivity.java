@@ -20,11 +20,9 @@ import android.widget.Toast;
 
 public class IntroActivity extends Activity {
 
-    private boolean checkedG;
-    private boolean checkedUM;
+    private boolean checkedG, checkedUM;
 
-    String mGender;
-    String mUM;
+    String mGender, mUM;
 
     private EditText mWeight, cmHeight, feetHeight, inchesHeight;
     private RadioGroup mRadioGroup, mUnitsMeasurement;

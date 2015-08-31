@@ -20,23 +20,7 @@ public class UpdateCurrentBACService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Context ctx = getApplicationContext();
-        sp = PreferenceManager.getDefaultSharedPreferences(ctx);
-        float currentBAC = sp.getFloat(this.getString(R.string.pref_key_currentEbac), 0);
-        float subtrahend = (float)(BloodAlcoholContent.ELAPSED_HOUR_FACTOR/4); //get 15 minutes
-
-        if (currentBAC != 0) {
-
-            if (currentBAC-subtrahend > 0)
-                currentBAC -= subtrahend;
-            else
-                currentBAC = 0;
-
-            SharedPreferences.Editor e = sp.edit();
-            e.putFloat(this.getString(R.string.pref_key_currentEbac), currentBAC);
-            e.apply();
-
-        }
+        BloodAlcoholContent.updateElapsedBAC(getApplicationContext());
     }
 
     public static boolean isMyServiceRunning(Class<?> serviceClass, Activity activity) {
