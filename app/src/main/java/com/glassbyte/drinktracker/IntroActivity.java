@@ -73,6 +73,7 @@ public class IntroActivity extends Activity {
                             editor.putString(getResources().getString(R.string.pref_key_editWeight), weight);
                             editor.putString(getResources().getString(R.string.pref_key_editUnits), um);
                             editor.putFloat(getResources().getString(R.string.pref_key_currentEbac), 0);
+                            editor.putString(getString(R.string.pref_key_last_elapsed_currentEbac), DatabaseOperationsUnits.getDateTime());
                             editor.apply();
 
                             Intent intent = new Intent(v.getContext(), MainActivity.class);

@@ -188,12 +188,11 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
         wineGlass.setBackground(ContextCompat.getDrawable(thisActivity, R.drawable.preview_glass_bg));
         wineGlass.setId(View.generateViewId());
 
-        initChosenGlass(pintGlass, false);
+        newChosenGlass(pintGlass, false);
 
         rl.addView(drinkButton);
         rl.addView(setPercentageButton);
         rl.addView(alcVolDisplay);
-        rl.addView(chosenGlass);
         rl.addView(shotGlass);
         rl.addView(waterGlass);
         rl.addView(pintGlass);

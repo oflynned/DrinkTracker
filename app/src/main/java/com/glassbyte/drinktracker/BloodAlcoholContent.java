@@ -82,18 +82,18 @@ public class BloodAlcoholContent {
             try {
                 lastUpdatedBACDate = lastUpdatedBAC.parse(strLastUpdatedBAC);
                 currentDate = currentDateTime.parse(strCurrentDateTime);
+
+                long minutesDifference = DatabaseOperationsUnits.getDateDiff(currentDate, lastUpdatedBACDate);
+                double ebacSubtrahend = (minutesDifference / 60) * ELAPSED_HOUR_FACTOR;
+                float newCurrentBAC = (currentEbac >= (float)ebacSubtrahend) ? currentEbac-(float)ebacSubtrahend : 0.0f;
+
+                SharedPreferences.Editor e = sp.edit();
+                e.putFloat(context.getString(R.string.pref_key_currentEbac), newCurrentBAC);
+                e.putString(context.getString(R.string.pref_key_last_elapsed_currentEbac), strCurrentDateTime);
+                e.apply();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-            long minutesDifference = DatabaseOperationsUnits.getDateDiff(currentDate, lastUpdatedBACDate);
-            double ebacSubtrahend = (minutesDifference / 60) * ELAPSED_HOUR_FACTOR;
-            float newCurrentBAC = (currentEbac >= (float)ebacSubtrahend) ? currentEbac-(float)ebacSubtrahend : 0.0f;
-
-            SharedPreferences.Editor e = sp.edit();
-            e.putFloat(context.getString(R.string.pref_key_currentEbac), newCurrentBAC);
-            e.putString(context.getString(R.string.pref_key_last_elapsed_currentEbac), strCurrentDateTime);
-            e.apply();
         }
     }
 
