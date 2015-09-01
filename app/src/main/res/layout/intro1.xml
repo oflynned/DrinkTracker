@@ -19,7 +19,7 @@
         android:textSize="28sp"
         android:text="Track Your Drinking"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -32,8 +32,21 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/glassbyte"/>
-    </LinearLayout>
+            android:src="@drawable/ic_launcher"
+            android:layout_centerInParent="true" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:src="@drawable/ic_swap_vert_white_48dp"
+            android:id="@+id/arrows"
+            android:layout_alignParentTop="false"
+            android:layout_centerHorizontal="true"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_margin="70dp" />
+    </RelativeLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -44,7 +57,7 @@
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
         android:textSize="16sp"
-        android:text="Know exactly how much is too much and educate yourself on limits"/>
+        android:text="Know exactly how much is too much and educate yourself on alcohol limits"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="64dp" />

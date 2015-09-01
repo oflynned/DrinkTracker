@@ -32,7 +32,7 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/ic_launcher"/>
+            android:src="@drawable/glassbyte"/>
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
         android:textSize="16sp"
-        android:text="Give DrinkTracker a go today and make lifestyle changes in realtime to last a lifetime"/>
+        android:text="Give DrinkTracker a go today and make lifestyle changes in realtime that last a lifetime"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="64dp" />

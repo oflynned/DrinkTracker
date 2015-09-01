@@ -76,7 +76,7 @@ public class IntroActivity extends Activity {
                             editor.putString(getString(R.string.pref_key_last_elapsed_currentEbac), DatabaseOperationsUnits.getDateTime());
                             editor.apply();
 
-                            Intent intent = new Intent(v.getContext(), MainActivity.class);
+                            Intent intent = new Intent(v.getContext(), SwipeIntro.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(getBaseContext(), "Please fill in height", Toast.LENGTH_SHORT).show();
@@ -112,7 +112,7 @@ public class IntroActivity extends Activity {
                             editor.putFloat(getResources().getString(R.string.pref_key_currentEbac), 0);
                             editor.apply();
 
-                            Intent intent = new Intent(v.getContext(), MainActivity.class);
+                            Intent intent = new Intent(v.getContext(), SwipeIntro.class);
                             startActivity(intent);
                         }
                     }
