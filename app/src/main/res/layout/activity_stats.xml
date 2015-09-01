@@ -53,35 +53,76 @@
                 android:duplicateParentState="true" />
         </com.glassbyte.drinktracker.FloatingActionButton>
 
-        <View
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="10dp"
-            android:background="@color/hint_grey"
-            android:layout_above="@+id/briefInfo"/>
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Placeholder"
-            android:id="@+id/briefInfo"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rating"
-            android:layout_below="@+id/briefInfo"
-            android:text="Rating placeholder"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-        <View
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/hint_grey"
-            android:layout_below="@+id/rating"/>
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="@color/hint_grey"
+                android:layout_above="@+id/briefInfoBAC" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Placeholder"
+                android:id="@+id/briefInfoBAC"
+                android:gravity="center"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBAC"
+                android:layout_below="@+id/briefInfoBAC"
+                android:text="Rating placeholder"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="@color/hint_grey"
+                android:layout_below="@+id/ratingBAC"
+                android:id="@+id/line2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Placeholder"
+                android:id="@+id/briefInfo"
+                android:layout_below="@+id/line2"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rating"
+                android:layout_below="@+id/briefInfo"
+                android:text="Rating placeholder"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+            <View
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/hint_grey"
+                android:layout_below="@+id/rating" />
+
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

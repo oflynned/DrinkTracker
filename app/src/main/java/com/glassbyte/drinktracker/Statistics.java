@@ -35,11 +35,14 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
     double BACAchieved;
     int daysDrinking;
 
+    int orange;
+
     String spGender;
     LineChartView chart;
 
-    TextView briefInfo;
-    TextView rating;
+    TextView briefInfo, rating, BACinfo, BACrating;
+
+    BloodAlcoholContent bloodAlcoholContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +50,20 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
+        orange = getResources().getColor(R.color.orange500);
+
         infoButton = (FloatingActionButton) findViewById(R.id.infoButton);
         infoButton.setOnCheckedChangeListener(this);
 
         briefInfo = (TextView) findViewById(R.id.briefInfo);
         rating = (TextView) findViewById(R.id.rating);
+        BACinfo = (TextView) findViewById(R.id.briefInfoBAC);
+        BACrating = (TextView) findViewById(R.id.ratingBAC);
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender),""));
+        spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender), ""));
+
+        bloodAlcoholContent = new BloodAlcoholContent(this);
 
         setMethods();
 
@@ -66,7 +75,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         chart.startDataAnimation();
     }
 
-    private void setMethods(){
+    private void setMethods() {
         //need to replace with proper methods
         setAvgUnits(0);
         setTotalUnits(0);
@@ -78,19 +87,73 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         setBACAchieved(0);
         setDaysDrinking(0);
 
+        //set current
+        double BAC = BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), 3);
+        BACinfo.setText("Current BAC level: " + BAC);
+
+        if (BAC >= 0 && BAC < 0.01) {
+            //at 0-0.01
+            BACrating.setText("Sober");
+            BACrating.setTextColor(Color.GREEN);
+        } else if (BAC >= 0.02 && BAC < 0.04) {
+            //0.02-0.03
+            BACrating.setText("Mildly relaxed and no loss of coordination");
+            BACrating.setTextColor(Color.GREEN);
+        } else if (BAC >= 0.04 && BAC < 0.07) {
+            //0.04-0.06
+            BACrating.setText("Mild impairment, lowered inhibitions, lowered caution, exaggeration of behaviour");
+            BACrating.setTextColor(Color.GREEN);
+        } else if (BAC >= 0.07 && BAC < 0.1) {
+            //0.07-0.09
+            BACrating.setText("Unable to drive safely; slight impairment of balance, speech, vision and reaction time.");
+            BACrating.setTextColor(Color.YELLOW);
+        } else if (BAC >= 0.1 && BAC < 0.13) {
+            //0.1-0.129
+            BACrating.setText("Significant impairment of coordination and loss of judgement. Feeling of euphoria.");
+            BACrating.setTextColor(Color.YELLOW);
+        } else if (BAC >= 0.13 && BAC < 0.16) {
+            //0.13-0.15
+            BACrating.setText("Lack of physical control, loss of balance, and blurring of vision. Reduced euphoria and increased dysphoria. Severe impairment of perception and judgement.");
+            BACrating.setTextColor(orange);
+        } else if (BAC >= 0.16 && BAC < 0.2) {
+            //0.16-0.19
+            BACrating.setText("Intensifying of dysphoria, increase in nausea, appears 'more sloppy'");
+            BACrating.setTextColor(orange);
+        } else if (BAC >= 0.2 && BAC < 0.25) {
+            //0.2-0.24
+            BACrating.setText("Dazed, confusion, disorientation. May not feel pain if injured. Nausea and vomiting experienced around this level. Gag reflex may be impaired. Blackouts are more likely from this point.");
+            BACrating.setTextColor(Color.RED);
+        } else if (BAC >= 0.25 && BAC < 0.3) {
+            //0.25-0.29
+            BACrating.setText("Severe impairment of all sensory, physical and mental functions. Increased risk of asphyxiation by vomiting and injury.");
+            BACrating.setTextColor(Color.RED);
+        } else if (BAC >= 0.3 && BAC < 0.35) {
+            //0.3-0.34
+            BACrating.setText("Drunken stupor - you have little comprehension of where you are. Passing out and difficulty to be awoken is very likely.");
+            BACrating.setTextColor(Color.RED);
+        } else if (BAC >= 0.35 && BAC < 0.4) {
+            //0.35-0.39
+            BACrating.setText("Equivalent to surgical level anaesthesia");
+            BACrating.setTextColor(Color.RED);
+        } else {
+            //0.4+
+            BACrating.setText("Onset of coma and possible death due to respiratory arrest");
+            BACrating.setTextColor(Color.RED);
+        }
+
+            //set weekly
         briefInfo.setText("Total units drunk this week:\n" + getTotalUnits() + "/" + getMaxUnits() + " units");
 
         if (getTotalUnits() <= getMaxUnits()) {
             rating.setTextColor(Color.GREEN);
             rating.setText("Below recommended weekly limit");
-        }
-        else if(getTotalUnits() > getMaxUnits()) {
+        } else if (getTotalUnits() > getMaxUnits()) {
             rating.setTextColor(Color.RED);
             rating.setText("Excessive drinking!");
         }
     }
 
-    private void generateData(){
+    private void generateData() {
         List<PointValue> values = new ArrayList<>();
         values.add(new PointValue(0, 0));
         values.add(new PointValue(1, 0.1f));
@@ -107,7 +170,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         chart.setLineChartData(data);
     }
 
-    private void setAxes(LineChartData data){
+    private void setAxes(LineChartData data) {
         Axis axisX = new Axis();
         Axis axisY = new Axis().setHasLines(true);
         axisX.setName("Time");
@@ -209,8 +272,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
     private void setMaxUnits() {
         if (spGender.equals("male") || spGender.equals("Male")) {
             this.maxUnits = 21;
-        }
-        else{
+        } else {
             this.maxUnits = 14;
         }
     }
