@@ -17,7 +17,7 @@
         android:textColor="#ffffff"
         android:paddingRight="32dp"
         android:textSize="28sp"
-        android:text="Track Your Drinking"/>
+        android:text="What are you waiting for?"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -32,7 +32,7 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/glassbyte"/>
+            android:src="@drawable/ic_launcher"/>
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
         android:textSize="16sp"
-        android:text="Know exactly how much is too much and educate yourself on limits"/>
+        android:text="Give DrinkTracker a go today and make lifestyle changes in realtime to last a lifetime"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="64dp" />

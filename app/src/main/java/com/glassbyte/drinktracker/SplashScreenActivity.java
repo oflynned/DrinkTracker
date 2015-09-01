@@ -3,6 +3,7 @@ package com.glassbyte.drinktracker;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,9 @@ import android.widget.LinearLayout;
 import android.graphics.PixelFormat;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 
 public class SplashScreenActivity extends Activity
@@ -35,6 +39,11 @@ public class SplashScreenActivity extends Activity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/good-times.regular.ttf");
+        TextView GlassByte = (TextView) findViewById(R.id.logotext);
+        GlassByte.setTypeface(tf);
+
         StartAnimations();
 
 
