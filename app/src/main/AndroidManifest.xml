@@ -59,6 +59,8 @@
             android:label="@string/title_activity_list_drinks" >
         </activity>
 
+        <activity android:name=".SwipeIntro"/>
+
         <receiver android:name=".UpdateCurrentBACBootReceiver"
             android:enabled="false">
             <intent-filter>

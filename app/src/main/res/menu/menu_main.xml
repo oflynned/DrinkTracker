@@ -13,6 +13,8 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_intro" android:title="Intro"
+        android:orderInCategory="100" app:showAsAction="never" />
 
     <group>
         <!--dummy item to get a nice separator-->

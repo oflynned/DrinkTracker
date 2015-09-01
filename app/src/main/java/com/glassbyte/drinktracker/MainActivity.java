@@ -99,6 +99,10 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.action_removeads){
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.glassbyte.com/")));
             return true;
+        } else if (id == R.id.action_intro){
+            Intent introIntent = new Intent(this, SwipeIntro.class);
+            startActivity(introIntent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

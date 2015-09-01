@@ -36,8 +36,8 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
 
     private final int SHOT_GLASS_ML = 40;
     private final int WATER_GLASS_ML = 250;
-    private final int PINT_GLASS_ML = 500;
-    private final int WINE_GLASS_ML = 300;
+    private final int PINT_GLASS_ML = 568;
+    private final int WINE_GLASS_ML = 215;
 
     private final int DRINK_COLOUR = Color.argb(255, 109, 140, 160);
 
