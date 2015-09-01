@@ -57,6 +57,8 @@
     <color name="orange800">#EF6C00</color>
     <color name="orange900">#E65100</color>
 
+    <color name="backgroundgrey">#eeeeee</color>
+
     <color name="cyan50">#E0F7FA</color>
     <color name="cyan100">#B2EBF2</color>
     <color name="cyan200">#80DEEA</color>
