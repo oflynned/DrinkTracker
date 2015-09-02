@@ -64,7 +64,7 @@ public class BloodAlcoholContent {
         SQLiteDatabase writeDb = dbHelper.getWritableDatabase();
 
         //Get the correct value of current BAC
-        int prefLastUpdateDate = sp.getInt(context.getString(R.string.pref_key_last_update_currentEbac), 0);
+        long prefLastUpdateDate = sp.getLong(context.getString(R.string.pref_key_last_update_currentEbac), 0);
 
         String selectMOstRecentQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME
                 + " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + " = (SELECT max("
@@ -76,7 +76,7 @@ public class BloodAlcoholContent {
         if (c.getCount()>0) {
             System.out.println("BacTable had some entry. getCount()>0");
             c.moveToFirst();
-            float dbLastUpdateDate = c.getFloat(1);
+            long dbLastUpdateDate = c.getLong(1);
             //check if the currentBac matches the most frequent bac stored in the database
             if (dbLastUpdateDate > prefLastUpdateDate) {
                 //the currentBac stored in the sp doesn't match the most frequent bac from the db
@@ -92,7 +92,7 @@ public class BloodAlcoholContent {
         System.out.println("currentBac="+currentBac+";");
 
         float newCurrentBac = 0;
-        int newLastUpdateDate = (int)System.currentTimeMillis();
+        long newLastUpdateDate = System.currentTimeMillis();
 
         if (updateType == DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE) {
             System.out.println("updateType == INSERT_NEW_DRINK");
@@ -115,9 +115,8 @@ public class BloodAlcoholContent {
 
                 if (cur.getCount()>0) {
                     System.out.println("BacTable included some DECAY_UPDATE entry");
-                    int lastUpdateDate = cur.getInt(1);
-                    newLastUpdateDate = (int) System.currentTimeMillis();
-                    int timeDiffInMin = (int) TimeUnit.MILLISECONDS.convert((newLastUpdateDate - lastUpdateDate), TimeUnit.MINUTES);
+                    long lastUpdateDate = cur.getLong(1);
+                    long timeDiffInMin = TimeUnit.MILLISECONDS.convert((newLastUpdateDate - lastUpdateDate), TimeUnit.MINUTES);
 
                     dCurrentBAC = timeDiffInMin / 60 * (float) ELAPSED_HOUR_FACTOR;
                 } else {
@@ -135,7 +134,7 @@ public class BloodAlcoholContent {
         //Store the newly calculated bac in the SP
         SharedPreferences.Editor e = sp.edit();
         e.putFloat(context.getString(R.string.pref_key_currentEbac), newCurrentBac);
-        e.putInt(context.getString(R.string.pref_key_last_update_currentEbac), newLastUpdateDate);
+        e.putLong(context.getString(R.string.pref_key_last_update_currentEbac), newLastUpdateDate);
         e.apply();
         //End of Store the newly calculated bac in the SP
         //Store the newly calculated bac in the DB

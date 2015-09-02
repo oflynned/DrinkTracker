@@ -69,7 +69,7 @@ public class IntroActivity extends Activity {
                             editor.putString(getResources().getString(R.string.pref_key_editWeight), weight);
                             editor.putString(getResources().getString(R.string.pref_key_editUnits), um);
                             editor.putFloat(getResources().getString(R.string.pref_key_currentEbac), 0);
-                            editor.putInt(getString(R.string.pref_key_last_update_currentEbac), (int)System.currentTimeMillis());
+                            editor.putLong(getString(R.string.pref_key_last_update_currentEbac), System.currentTimeMillis());
                             editor.apply();
 
                             Intent intent = new Intent(v.getContext(), SwipeIntro.class);
@@ -106,7 +106,7 @@ public class IntroActivity extends Activity {
                             editor.putString(getResources().getString(R.string.pref_key_editWeight), String.valueOf(kgWeight));
                             editor.putString(getResources().getString(R.string.pref_key_editUnits), um);
                             editor.putFloat(getResources().getString(R.string.pref_key_currentEbac), 0);
-                            editor.putInt(getString(R.string.pref_key_last_update_currentEbac), (int) System.currentTimeMillis());
+                            editor.putLong(getString(R.string.pref_key_last_update_currentEbac), System.currentTimeMillis());
                             editor.apply();
 
                             Intent intent = new Intent(v.getContext(), SwipeIntro.class);
