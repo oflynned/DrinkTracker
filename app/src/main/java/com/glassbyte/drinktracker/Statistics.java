@@ -4,15 +4,27 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.Interval;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Line;
@@ -28,14 +40,12 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
     private FloatingActionButton infoButton;
 
-    double avgUnits;
-    double totUnits;
-    double maxUnits;
-    double avgTime;
-    double BACAchieved;
-    int daysDrinking;
+    double avgUnits, totUnits, maxUnits, avgTime, BACAchieved;
+    int daysDrinking, orange;
 
-    int orange;
+    Calendar c;
+    DateFormat df;
+    String startDate = "", endDate = "";
 
     String spGender;
     LineChartView chart;
@@ -43,12 +53,15 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
     TextView briefInfo, rating, BACinfo, BACrating;
 
     BloodAlcoholContent bloodAlcoholContent;
+    DrinkTrackerDbHelper drinkTrackerDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
+
+        drinkTrackerDbHelper = new DrinkTrackerDbHelper(this);
 
         orange = getResources().getColor(R.color.orange500);
 
@@ -65,7 +78,9 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
         bloodAlcoholContent = new BloodAlcoholContent(this);
 
+        //setUpCalender();
         setMethods();
+        calculateWeeklyUnits();
 
         //graph instantiation
         chart = (LineChartView) findViewById(R.id.chart);
@@ -73,6 +88,60 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         chart.setViewportCalculationEnabled(false);
         setViewport();
         chart.startDataAnimation();
+    }
+
+    private void calculateWeeklyUnits() {
+        //get current week
+        //get start time of current week
+        //summate units in row 6 of table that are greater than this until current time
+        //store in set function for global scope
+        //call with get and cast to textview
+
+
+        //if()
+    }
+
+    private void setUpCalender() {
+        // Get calendar set to current date and time
+        Calendar c = Calendar.getInstance();
+
+        // Set the calendar to monday of the current week
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+        // Print start and end of the current week starting on Monday
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        String start = df.format(c.getTime());
+        c.add(Calendar.DATE, 6);
+        String end = df.format(c.getTime());
+        c.add(Calendar.DATE, 1);
+        String whileNot = df.format(c.getTime());
+
+        //select first row by date fo start of week and sum until it reaches whileNot
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DATABASE_NAME;
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        String totUnits, currUnits = "";
+        cursor.moveToFirst();
+
+        /*while (){
+            if(){
+                //if date lies within period
+                currUnits = cursor.getString(6);
+                totUnits = totUnits + currUnits;
+            } else {
+                //go to next row
+            }
+        }
+
+        setTotalUnits(Integer.parseInt(totUnits));*/
+
+        //close operations and sum
+        db.close();
+        cursor.close();
+
+        System.out.println("start: " + start);
+        System.out.println("end: " + end);
     }
 
     private void setMethods() {
@@ -141,7 +210,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
             BACrating.setTextColor(Color.RED);
         }
 
-            //set weekly
+        //set weekly
         briefInfo.setText("Total units drunk this week:\n" + getTotalUnits() + "/" + getMaxUnits() + " units");
 
         if (getTotalUnits() <= getMaxUnits()) {

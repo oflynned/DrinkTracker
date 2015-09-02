@@ -102,7 +102,7 @@ public class BloodAlcoholContent {
                         + DrinkTrackerDatabase.BacTable.TABLE_NAME + ") AND "
                         + DrinkTrackerDatabase.BacTable.UPDATE_TYPE + "=" + DrinkTrackerDatabase.BacTable.DECAY_UPDATE;
                 Cursor cur = readDb.rawQuery(query, null);
-                if (cur != null) {
+                if (cur.getCount()>0) {
                     int lastUpdateDate = cur.getInt(1);
                     newLastUpdateDate = (int) System.currentTimeMillis();
                     int timeDiffInMin = (int) TimeUnit.MILLISECONDS.convert((newLastUpdateDate - lastUpdateDate), TimeUnit.MINUTES);
