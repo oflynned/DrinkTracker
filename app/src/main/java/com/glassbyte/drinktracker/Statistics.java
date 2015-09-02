@@ -17,7 +17,10 @@ import android.widget.Toast;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Interval;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -78,9 +81,8 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
         bloodAlcoholContent = new BloodAlcoholContent(this);
 
-        //setUpCalender();
+        setUpCalender();
         setMethods();
-        calculateWeeklyUnits();
 
         //graph instantiation
         chart = (LineChartView) findViewById(R.id.chart);
@@ -88,17 +90,6 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         chart.setViewportCalculationEnabled(false);
         setViewport();
         chart.startDataAnimation();
-    }
-
-    private void calculateWeeklyUnits() {
-        //get current week
-        //get start time of current week
-        //summate units in row 6 of table that are greater than this until current time
-        //store in set function for global scope
-        //call with get and cast to textview
-
-
-        //if()
     }
 
     private void setUpCalender() {
@@ -109,45 +100,62 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
         // Print start and end of the current week starting on Monday
-        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-        String start = df.format(c.getTime());
-        c.add(Calendar.DATE, 6);
-        String end = df.format(c.getTime());
-        c.add(Calendar.DATE, 1);
-        String whileNot = df.format(c.getTime());
+        DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        //1 day before week start at 23:59:59
+        c.add(Calendar.DATE, -1);
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        c.set(Calendar.MINUTE, 59);
+        c.set(Calendar.SECOND, 59);
+        String whileAfter = df.format(c.getTime());
+        //1 day after week end at 00:00:00
+        c.add(Calendar.DATE, 8);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        String whileBefore = df.format(c.getTime());
 
         //select first row by date fo start of week and sum until it reaches whileNot
-        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DATABASE_NAME;
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
         SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
 
-        String totUnits, currUnits = "";
+        double totUnits = 0;
+        String currUnits;
+
+        DateTimeFormatter dateStringFormat = DateTimeFormat.forPattern("HH:mm:ss dd/MM/yyyy");
+        DateTime startDate = dateStringFormat.parseDateTime(whileAfter);
+        DateTime endDate = dateStringFormat.parseDateTime(whileBefore);
+
         cursor.moveToFirst();
 
-        /*while (){
-            if(){
+        //col 1 for time
+        //col 6 for units
+        //sum row of col 6 if its date lies between start and end
+
+        do{
+            if (dateStringFormat.parseDateTime(cursor.getString(1)).isAfter(startDate) &&
+                    dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate)){
                 //if date lies within period
                 currUnits = cursor.getString(6);
-                totUnits = totUnits + currUnits;
+                System.out.println(currUnits);
+                totUnits = totUnits + Double.parseDouble(currUnits);
             } else {
                 //go to next row
+                cursor.moveToNext();
             }
-        }
+        } while (cursor.moveToNext() && dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate));
 
-        setTotalUnits(Integer.parseInt(totUnits));*/
+        System.out.println(totUnits);
+        setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
 
         //close operations and sum
         db.close();
         cursor.close();
-
-        System.out.println("start: " + start);
-        System.out.println("end: " + end);
     }
 
     private void setMethods() {
         //need to replace with proper methods
         setAvgUnits(0);
-        setTotalUnits(0);
 
         //21 for men, 14 for women per week
         setMaxUnits();
