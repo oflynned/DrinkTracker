@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
@@ -17,42 +16,47 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class DatabaseOperationsUnits extends SQLiteOpenHelper {
+public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
     public static final String STR_DATE_FORMAT = "HH:mm:ss dd/MM/yyyy";
     public static final Locale DATE_LOCALE = Locale.UK;
     public static final int database_version = 1;
-    public String CREATE_QUERY =
+    public String CREATE_DRINKS_TABLE_QUERY =
             "CREATE TABLE " +
-                    DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME +
-                    "(" +
-                    DataUnitsDatabaseContractor.DataLoggingTable._ID  + " INTEGER PRIMARY KEY," +
-                    //col for time
-                    DataUnitsDatabaseContractor.DataLoggingTable.TIME + " TEXT," +
-                    //col for title
-                    DataUnitsDatabaseContractor.DataLoggingTable.TITLE + " TEXT," +
-                    //col for units
-                    DataUnitsDatabaseContractor.DataLoggingTable.UNITS + " REAL," +
-                    //col for percentage abv of alcohol
-                    DataUnitsDatabaseContractor.DataLoggingTable.PERCENTAGE + " REAL," +
-                    //col for bac to generate from formula
-                    DataUnitsDatabaseContractor.DataLoggingTable.BAC + " REAL);";
-    //; ends query field within query -> ()
-    private String DELETE_QUERY = "DROP TABLE IF EXISTS " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME;
+                    DrinkTrackerDatabase.DrinksTable.TABLE_NAME + "(" +
+                    DrinkTrackerDatabase.DrinksTable._ID  + " INTEGER PRIMARY KEY," +
+                    DrinkTrackerDatabase.DrinksTable.DATE_TIME + " INTEGER," +
+                    DrinkTrackerDatabase.DrinksTable.TITLE + " TEXT," +
+                    DrinkTrackerDatabase.DrinksTable.VOLUME + " INTEGER," +
+                    DrinkTrackerDatabase.DrinksTable.PERCENTAGE + " REAL," +
+                    DrinkTrackerDatabase.DrinksTable.BAC + " REAL," +
+                    DrinkTrackerDatabase.DrinksTable.UNITS + " REAL);";
+    public String CREATE_BAC_TABLE_QUERY =
+            "CREATE TABLE " +
+                    DrinkTrackerDatabase.BacTable.TABLE_NAME + "(" +
+                    DrinkTrackerDatabase.BacTable._ID  + " INTEGER PRIMARY KEY," +
+                    DrinkTrackerDatabase.BacTable.DATE_TIME + " INTEGER," +
+                    DrinkTrackerDatabase.BacTable.BAC + " TEXT," +
+                    DrinkTrackerDatabase.BacTable.UPDATE_TYPE+ " INTEGER);";
 
-    public DatabaseOperationsUnits(Context context) {
+    private String DELETE_DRINKS_TABLE_QUERY = "DROP TABLE IF EXISTS " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
+    private String DELETE_BAC_TABLE_QUERY = "DROP TABLE IF EXISTS " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+
+    public DrinkTrackerDbHelper(Context context) {
         //constructor
         //create database with respect to the version
-        super(context, DataUnitsDatabaseContractor.DATABASE_NAME, null, database_version);
+        super(context, DrinkTrackerDatabase.DATABASE_NAME, null, database_version);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_QUERY); //create table query
+        db.execSQL(CREATE_DRINKS_TABLE_QUERY); //create table query
+        db.execSQL(CREATE_BAC_TABLE_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DELETE_QUERY);
+        db.execSQL(DELETE_DRINKS_TABLE_QUERY);
+        db.execSQL(DELETE_BAC_TABLE_QUERY);
         onCreate(db);
         /*
         * FOR RELEASE VERSION THIS IMPLEMENTATION SHOULD BE MODIFIED SO THAT ANY DATA FROM THE ALREADY
@@ -61,24 +65,27 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
     }
 
     //insert new drink into the database
-    public long insertNewDrink(String time, String title, double mlVol, double percentage, double bac){
+    public long insertNewDrink(String time, String title, int mlVol, double percentage, double bac){
         //method for putting info generated into the table
         //variables instantiated are parametrised and cast into the cols
         SQLiteDatabase sq = this.getWritableDatabase(); //writes data to database
+        double units = percentage * mlVol/1000;
 
-        ContentValues cv = new ContentValues(); //create instance
-        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.TIME, time); //coll 0
-        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.TITLE, title); //coll 1
-        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.UNITS, mlVol); //coll 2
-        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.PERCENTAGE, percentage); //coll 3
-        cv.put(DataUnitsDatabaseContractor.DataLoggingTable.BAC, bac); //coll 4
+        ContentValues cv = new ContentValues(); //create instance; id_col = col 0
+        cv.put(DrinkTrackerDatabase.DrinksTable.DATE_TIME, time); //coll 1
+        cv.put(DrinkTrackerDatabase.DrinksTable.TITLE, title); //coll 2
+        cv.put(DrinkTrackerDatabase.DrinksTable.VOLUME, mlVol); //coll 3
+        cv.put(DrinkTrackerDatabase.DrinksTable.PERCENTAGE, percentage); //coll 4
+        cv.put(DrinkTrackerDatabase.DrinksTable.BAC, bac); //coll 5
+        cv.put(DrinkTrackerDatabase.DrinksTable.UNITS, units); //col 6
 
-        return sq.insert(DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME, null, cv);
+        return sq.insert(DrinkTrackerDatabase.DrinksTable.TABLE_NAME, null, cv);
     }
+
 
     public void removeDrinks(Context context, Integer[] drinksIds){
         SQLiteDatabase readDB = this.getReadableDatabase();
-        Cursor c = readDB.rawQuery("SELECT * FROM " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME,
+        Cursor c = readDB.rawQuery("SELECT * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME,
                 null);
         c.moveToFirst();
 
@@ -112,8 +119,8 @@ public class DatabaseOperationsUnits extends SQLiteOpenHelper {
         //End of Make a list of indexes of drinks that affect the currentBAC
 
         //Run delete queries for each drink
-        String sqlQuery = "DELETE FROM " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME
-                + " WHERE " + DataUnitsDatabaseContractor.DataLoggingTable._ID + "=";
+        String sqlQuery = "DELETE FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME
+                + " WHERE " + DrinkTrackerDatabase.DrinksTable._ID + "=";
         SQLiteDatabase writeDB = this.getWritableDatabase();
         int test = 0; System.out.println("Size of drinksIds: "+drinksIds.length);
         for (int id : drinksIds) {

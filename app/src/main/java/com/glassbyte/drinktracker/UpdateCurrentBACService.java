@@ -20,7 +20,7 @@ public class UpdateCurrentBACService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        BloodAlcoholContent.updateElapsedBAC(getApplicationContext());
+        BloodAlcoholContent.updateCurrentBac(getApplicationContext(), DrinkTrackerDatabase.BacTable.DECAY_UPDATE);
     }
 
     public static boolean isMyServiceRunning(Class<?> serviceClass, Activity activity) {

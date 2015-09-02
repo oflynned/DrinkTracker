@@ -1,15 +1,11 @@
 package com.glassbyte.drinktracker;
 
 import android.app.Activity;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -73,7 +69,7 @@ public class IntroActivity extends Activity {
                             editor.putString(getResources().getString(R.string.pref_key_editWeight), weight);
                             editor.putString(getResources().getString(R.string.pref_key_editUnits), um);
                             editor.putFloat(getResources().getString(R.string.pref_key_currentEbac), 0);
-                            editor.putString(getString(R.string.pref_key_last_elapsed_currentEbac), DatabaseOperationsUnits.getDateTime());
+                            editor.putInt(getString(R.string.pref_key_last_update_currentEbac), (int)System.currentTimeMillis());
                             editor.apply();
 
                             Intent intent = new Intent(v.getContext(), SwipeIntro.class);
@@ -110,6 +106,7 @@ public class IntroActivity extends Activity {
                             editor.putString(getResources().getString(R.string.pref_key_editWeight), String.valueOf(kgWeight));
                             editor.putString(getResources().getString(R.string.pref_key_editUnits), um);
                             editor.putFloat(getResources().getString(R.string.pref_key_currentEbac), 0);
+                            editor.putInt(getString(R.string.pref_key_last_update_currentEbac), (int) System.currentTimeMillis());
                             editor.apply();
 
                             Intent intent = new Intent(v.getContext(), SwipeIntro.class);

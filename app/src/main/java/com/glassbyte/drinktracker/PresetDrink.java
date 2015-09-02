@@ -1,9 +1,7 @@
 package com.glassbyte.drinktracker;
 
 import android.app.DialogFragment;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -13,12 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 
 /**
@@ -27,7 +22,7 @@ import org.w3c.dom.Text;
 
 public class PresetDrink extends Fragment implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private DatabaseOperationsUnits dou;
+    private DrinkTrackerDbHelper dou;
     private ImageView glass;
     private Spinner drinksChoice;
 
@@ -135,8 +130,8 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
             public void onClick(View view) {
 
                 double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(getVolume(), getPercentage());
-                dou.insertNewDrink(dou.getDateTime(), getTitle(), getVolume(), getPercentage(), ebac);
-                bloodAlcoholContent.setCurrentEbac((float) (bloodAlcoholContent.getCurrentEbac() + ebac));
+                dou.insertNewDrink(dou.getDateTime(), getTitle(), (int) getVolume(), getPercentage(), ebac);
+                bloodAlcoholContent.updateCurrentBac(PresetDrink.this.getActivity(), (float)ebac, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
                 V.invalidate();
                 Toast.makeText(getActivity(), "Drink added successfully!", Toast.LENGTH_SHORT).show();
             }
@@ -144,7 +139,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
 
         bloodAlcoholContent = new BloodAlcoholContent(this.getActivity());
 
-        dou = new DatabaseOperationsUnits(getActivity());
+        dou = new DrinkTrackerDbHelper(getActivity());
 
         return V;
     }

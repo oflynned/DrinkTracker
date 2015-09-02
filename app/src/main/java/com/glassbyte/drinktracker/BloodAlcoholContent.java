@@ -1,16 +1,16 @@
 package com.glassbyte.drinktracker;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Maciej on 12/08/2015.
@@ -37,26 +37,16 @@ public class BloodAlcoholContent {
         this.bodyWeight = Double.valueOf(sp.getString(activity.getString(R.string.pref_key_editWeight), "")) * 1000;
         this.isMan = (gender == "male");
     }
-    /*
-    * bodyWeight arg must be specified in kilograms
-    * */
+
+    // bodyWeight arg must be specified in kilograms
     public BloodAlcoholContent(boolean isMan, double bodyWeight){
         this.isMan = isMan;
         this.bodyWeight = bodyWeight * 1000; //convert kg's to g's
     }
 
-    /*WAY TO ACCESS THE SHARED STATIC VARIABLE OF CURRENTEBAC*/
-    public void setCurrentEbac(float ebac){
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putFloat(activity.getString(R.string.pref_key_currentEbac),ebac);
-        editor.putString(activity.getString(R.string.pref_key_last_elapsed_currentEbac), DatabaseOperationsUnits.getDateTime());
-        editor.apply();
-    }
     public float getCurrentEbac(){return sp.getFloat(activity.getString(R.string.pref_key_currentEbac),0);}
 
-    /*
-    * The alcVolPercentage arg is to be specified as a real number between 0 and 100
-    * */
+    //The alcVolPercentage arg is to be specified as a real number between 0 and 100
     public double getEstimatedBloodAlcoholContent(double mlSize, double alcVolPercentage){
         double volumeOfEthanol = mlSize*alcVolPercentage/100;
         double massOfAlcohol = volumeOfEthanol * DENSITY_OF_ETHANOL;//in grams
@@ -65,36 +55,84 @@ public class BloodAlcoholContent {
         return massOfAlcohol/(bodyWeight*r)*100;
     }
 
-    public static void updateElapsedBAC(Context context){
+    public static boolean updateCurrentBac(Context context, int updateType){return updateCurrentBac(context, 0, updateType);}
+    public static boolean updateCurrentBac(Context context, float dCurrentBAC, int updateType){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        float currentEbac = sp.getFloat(context.getString(R.string.pref_key_currentEbac),0);
-        if (currentEbac > 0) {
-            String strLastUpdatedBAC = sp.getString(context.getString(R.string.pref_key_last_elapsed_currentEbac), "");
-            String strCurrentDateTime = DatabaseOperationsUnits.getDateTime();
+        DrinkTrackerDbHelper dbHelper = new DrinkTrackerDbHelper(context);
+        SQLiteDatabase readDb = dbHelper.getReadableDatabase();
+        SQLiteDatabase writeDb = dbHelper.getWritableDatabase();
 
-            DateFormat lastUpdatedBAC = new SimpleDateFormat(DatabaseOperationsUnits.STR_DATE_FORMAT,
-                    DatabaseOperationsUnits.DATE_LOCALE);
-            DateFormat currentDateTime = new SimpleDateFormat(DatabaseOperationsUnits.STR_DATE_FORMAT,
-                    DatabaseOperationsUnits.DATE_LOCALE);
+        //Get the correct value of current BAC
+        int prefLastUpdateDate = sp.getInt(context.getString(R.string.pref_key_last_update_currentEbac), 0);
 
-            Date lastUpdatedBACDate = null;
-            Date currentDate = null;
-            try {
-                lastUpdatedBACDate = lastUpdatedBAC.parse(strLastUpdatedBAC);
-                currentDate = currentDateTime.parse(strCurrentDateTime);
+        String selectMOstRecentQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME
+                + " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + " = (SELECT max("
+                + DrinkTrackerDatabase.BacTable.DATE_TIME + ") FROM "
+                + DrinkTrackerDatabase.BacTable.TABLE_NAME +")";
+        Cursor c = readDb.rawQuery(selectMOstRecentQuery, null);
 
-                long minutesDifference = DatabaseOperationsUnits.getDateDiff(currentDate, lastUpdatedBACDate);
-                double ebacSubtrahend = (minutesDifference / 60) * ELAPSED_HOUR_FACTOR;
-                float newCurrentBAC = (currentEbac >= (float)ebacSubtrahend) ? currentEbac-(float)ebacSubtrahend : 0.0f;
+        float currentBac = 0;
+        if (c.getCount()>0) {
+            c.moveToFirst();
+            float dbLastUpdateDate = c.getFloat(1);
+            //check if the currentBac matches the most frequent bac stored in the database
+            if (dbLastUpdateDate > prefLastUpdateDate)
+                //the currentBac stored in the sp doesn't match the most frequent bac from the db
+                currentBac = c.getFloat(2);
+            else
+                currentBac = sp.getFloat(context.getString(R.string.pref_key_currentEbac), 0);
 
-                SharedPreferences.Editor e = sp.edit();
-                e.putFloat(context.getString(R.string.pref_key_currentEbac), newCurrentBAC);
-                e.putString(context.getString(R.string.pref_key_last_elapsed_currentEbac), strCurrentDateTime);
-                e.apply();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+        } else currentBac = sp.getFloat(context.getString(R.string.pref_key_currentEbac), 0);
+        //End of Get the correct value of current BAC
+
+        float newCurrentBac = 0;
+        int newLastUpdateDate = (int)System.currentTimeMillis();
+
+        if (updateType == DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE) {
+
+            //Calculate new current bac
+            newCurrentBac = currentBac + dCurrentBAC;
+
+        } else if (updateType == DrinkTrackerDatabase.BacTable.DECAY_UPDATE) {
+
+            if (currentBac > 0) {
+                String query = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME
+                        + " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + " = (SELECT max("
+                        + DrinkTrackerDatabase.BacTable.DATE_TIME + ") FROM "
+                        + DrinkTrackerDatabase.BacTable.TABLE_NAME + ") AND "
+                        + DrinkTrackerDatabase.BacTable.UPDATE_TYPE + "=" + DrinkTrackerDatabase.BacTable.DECAY_UPDATE;
+                Cursor cur = readDb.rawQuery(query, null);
+                if (cur != null) {
+                    int lastUpdateDate = cur.getInt(1);
+                    newLastUpdateDate = (int) System.currentTimeMillis();
+                    int timeDiffInMin = (int) TimeUnit.MILLISECONDS.convert((newLastUpdateDate - lastUpdateDate), TimeUnit.MINUTES);
+
+                    dCurrentBAC = timeDiffInMin / 60 * (float) ELAPSED_HOUR_FACTOR;
+                    if (dCurrentBAC <= currentBac)
+                        newCurrentBac = currentBac - dCurrentBAC;
+                }
+            } else return false;
         }
+
+        //Store the newly calculated bac in the SP
+        SharedPreferences.Editor e = sp.edit();
+        e.putFloat(context.getString(R.string.pref_key_currentEbac), newCurrentBac);
+        e.putInt(context.getString(R.string.pref_key_last_update_currentEbac), newLastUpdateDate);
+        e.apply();
+        //End of Store the newly calculated bac in the SP
+        //Store the newly calculated bac in the DB
+        ContentValues cv = new ContentValues();
+        cv.put(DrinkTrackerDatabase.BacTable.DATE_TIME, newLastUpdateDate);
+        cv.put(DrinkTrackerDatabase.BacTable.BAC, newCurrentBac);
+        cv.put(DrinkTrackerDatabase.BacTable.UPDATE_TYPE, updateType);
+        writeDb.insert(DrinkTrackerDatabase.BacTable.TABLE_NAME, null, cv);
+        //End of Store the newly calculated bac in the DB
+
+        //Clean up
+        readDb.close();
+        writeDb.close();
+
+        return true;
     }
 
     /*Taken the below method from: http://stackoverflow.com/a/2808648 */

@@ -23,7 +23,7 @@
     <string name="pref_key_storage_settings">pref_key_storage_settings</string>
     <string name="pref_key_editFeet">pref_key_editFeet</string>
     <string name="pref_key_editInches">pref_key_editInches</string>
-    <string name="pref_key_last_elapsed_currentEbac">pref_key_last_elapsed_currentEbac</string>
+    <string name="pref_key_last_update_currentEbac">pref_key_last_update_currentEbac</string>
 
     <!-- End of Preferences -->
 

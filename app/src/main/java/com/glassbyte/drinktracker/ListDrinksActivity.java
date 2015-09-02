@@ -114,11 +114,11 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
 
     public class DrinksListAdapter extends BaseAdapter{
         private Context mContext;
-        private DatabaseOperationsUnits dou;
+        private DrinkTrackerDbHelper dou;
         private Cursor result;
         private final int NUM_COLUMNS = 5;
         private ArrayList<CheckBox> drinkCheckboxes;
-        private final String SELECT_ALL_SQL_QUERY = "SELECT * FROM " + DataUnitsDatabaseContractor.DataLoggingTable.TABLE_NAME;
+        private final String SELECT_ALL_SQL_QUERY = "SELECT * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
         private String queryWithLimit;
         private SQLiteDatabase db;
         private int displayLimit, currentPage;
@@ -130,7 +130,7 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
             thisBaseAdapter = this;
 
             mContext = c;
-            dou = new DatabaseOperationsUnits(mContext);
+            dou = new DrinkTrackerDbHelper(mContext);
             drinkCheckboxes = new ArrayList<>();
             db = dou.getReadableDatabase();
 
@@ -254,12 +254,6 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
                 }
             }
             return cellView;
-        }
-
-        public CheckBox[] getCheckboxes(){
-            CheckBox[] drinkCheckboxesArray = new CheckBox[drinkCheckboxes.size()];
-            drinkCheckboxesArray = drinkCheckboxes.toArray(drinkCheckboxesArray);
-            return drinkCheckboxesArray;
         }
 
         public void selectAllCheckboxes(){

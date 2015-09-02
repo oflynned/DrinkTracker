@@ -64,7 +64,7 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
     private int drinkButtonHeight = 0;
     final static String ARG_ACTION_BAR_HEIGHT = "actionBarHeight";
 
-    private DatabaseOperationsUnits dou;
+    private DrinkTrackerDbHelper dou;
 
     private BloodAlcoholContent bloodAlcoholContent;
     private SharedPreferences sp;
@@ -80,7 +80,7 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
         }
         thisActivity = (AppCompatActivity)this.getActivity();
 
-        dou = new DatabaseOperationsUnits(thisActivity);
+        dou = new DrinkTrackerDbHelper(thisActivity);
 
         bloodAlcoholContent = new BloodAlcoholContent(thisActivity);
 
@@ -228,8 +228,8 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
                     mlVol = ((DrinkingGlass) chosenGlass).getCurrentDrinkVolume();
 
                 double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(mlVol, alcPercentage);
-                dou.insertNewDrink(dou.getDateTime(), chosenGlass.getTitle(), mlVol, alcPercentage, ebac);
-                bloodAlcoholContent.setCurrentEbac((float) (bloodAlcoholContent.getCurrentEbac() + ebac));
+                dou.insertNewDrink(dou.getDateTime(), chosenGlass.getTitle(), (int)mlVol, alcPercentage, ebac);
+                bloodAlcoholContent.updateCurrentBac(thisActivity, (float)ebac, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
 
                 Toast.makeText(thisActivity, "Drink added successfully!", Toast.LENGTH_SHORT).show();
             }
