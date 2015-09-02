@@ -57,6 +57,7 @@ public class BloodAlcoholContent {
 
     public static boolean updateCurrentBac(Context context, int updateType){return updateCurrentBac(context, 0, updateType);}
     public static boolean updateCurrentBac(Context context, float dCurrentBAC, int updateType){
+        System.out.println("Entered updateCurrentBac with: dCurrentBAC="+dCurrentBAC+"; updateType="+updateType+";");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         DrinkTrackerDbHelper dbHelper = new DrinkTrackerDbHelper(context);
         SQLiteDatabase readDb = dbHelper.getReadableDatabase();
@@ -73,45 +74,62 @@ public class BloodAlcoholContent {
 
         float currentBac = 0;
         if (c.getCount()>0) {
+            System.out.println("BacTable had some entry. getCount()>0");
             c.moveToFirst();
             float dbLastUpdateDate = c.getFloat(1);
             //check if the currentBac matches the most frequent bac stored in the database
-            if (dbLastUpdateDate > prefLastUpdateDate)
+            if (dbLastUpdateDate > prefLastUpdateDate) {
                 //the currentBac stored in the sp doesn't match the most frequent bac from the db
                 currentBac = c.getFloat(2);
-            else
+                System.out.println("The currentBac stored in the sp DOESN'T match the most frequent bac from the db");
+            } else {
+                System.out.println("The currentBac stored in the sp MATCH the most frequent bac from the db");
                 currentBac = sp.getFloat(context.getString(R.string.pref_key_currentEbac), 0);
+            }
 
-        } else currentBac = sp.getFloat(context.getString(R.string.pref_key_currentEbac), 0);
+        } else {currentBac = sp.getFloat(context.getString(R.string.pref_key_currentEbac), 0);System.out.println("BacTable had no entries.");}
         //End of Get the correct value of current BAC
+        System.out.println("currentBac="+currentBac+";");
 
         float newCurrentBac = 0;
         int newLastUpdateDate = (int)System.currentTimeMillis();
 
         if (updateType == DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE) {
-
+            System.out.println("updateType == INSERT_NEW_DRINK");
             //Calculate new current bac
             newCurrentBac = currentBac + dCurrentBAC;
+            System.out.println("newCurrentBac="+newCurrentBac+";");
 
         } else if (updateType == DrinkTrackerDatabase.BacTable.DECAY_UPDATE) {
+            System.out.println("updateType == DECAY_UPDATE");
 
             if (currentBac > 0) {
+                System.out.println("currentBac > 0");
                 String query = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME
                         + " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + " = (SELECT max("
                         + DrinkTrackerDatabase.BacTable.DATE_TIME + ") FROM "
                         + DrinkTrackerDatabase.BacTable.TABLE_NAME + ") AND "
                         + DrinkTrackerDatabase.BacTable.UPDATE_TYPE + "=" + DrinkTrackerDatabase.BacTable.DECAY_UPDATE;
                 Cursor cur = readDb.rawQuery(query, null);
+                cur.moveToFirst();
+
                 if (cur.getCount()>0) {
+                    System.out.println("BacTable included some DECAY_UPDATE entry");
                     int lastUpdateDate = cur.getInt(1);
                     newLastUpdateDate = (int) System.currentTimeMillis();
                     int timeDiffInMin = (int) TimeUnit.MILLISECONDS.convert((newLastUpdateDate - lastUpdateDate), TimeUnit.MINUTES);
 
                     dCurrentBAC = timeDiffInMin / 60 * (float) ELAPSED_HOUR_FACTOR;
-                    if (dCurrentBAC <= currentBac)
-                        newCurrentBac = currentBac - dCurrentBAC;
+                } else {
+                    System.out.println("No DECAY_UPDATE entry in the bacTable yet.");
+                    //This will be the first DECAY_UPDATE entry in the database so assume this has happened after 15 minutes
+                    dCurrentBAC = 0.25f * (float)ELAPSED_HOUR_FACTOR;
                 }
-            } else return false;
+
+                if (dCurrentBAC < currentBac)
+                    newCurrentBac = currentBac - dCurrentBAC;
+                System.out.println("newCurrentBac="+newCurrentBac+";");
+            } else {System.out.println("return false;");return false;}
         }
 
         //Store the newly calculated bac in the SP
@@ -132,6 +150,7 @@ public class BloodAlcoholContent {
         readDb.close();
         writeDb.close();
 
+        System.out.println("return true;");
         return true;
     }
 
