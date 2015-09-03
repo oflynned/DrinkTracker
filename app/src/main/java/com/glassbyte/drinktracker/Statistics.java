@@ -37,10 +37,10 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
     private FloatingActionButton infoButton;
 
-    double totUnits, maxUnits, BACAchieved, maxBAC;
+    double totUnits, maxUnits, BACAchieved, maxBAC, avgABV, avgVol;
     int orange, calories;
 
-    String spGender;
+    String spGender, spUnits, units;
     LineChartView chart;
 
     TextView briefInfo, rating, BACinfo, BACrating;
@@ -68,6 +68,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender), ""));
+        spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits), ""));
 
         bloodAlcoholContent = new BloodAlcoholContent(this);
 
@@ -140,6 +141,67 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         data.setAxisYLeft(axisY);
     }
 
+    private void setMaxBAC() {
+        // Get calendar set to current date and time
+        Calendar c = Calendar.getInstance();
+
+        // Set the calendar to monday of the current week
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+        // Print start and end of the current week starting on Monday
+        DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        //1 day before week start at 23:59:59
+        c.add(Calendar.DATE, -1);
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        c.set(Calendar.MINUTE, 59);
+        c.set(Calendar.SECOND, 59);
+        String whileAfter = df.format(c.getTime());
+        //1 day after week end at 00:00:00
+        c.add(Calendar.DATE, 8);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        String whileBefore = df.format(c.getTime());
+
+        //select first row by date fo start of week and sum until it reaches whileNot
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        String currUnits;
+
+        DateTimeFormatter dateStringFormat = DateTimeFormat.forPattern("HH:mm:ss dd/MM/yyyy");
+        DateTime startDate = dateStringFormat.parseDateTime(whileAfter);
+        DateTime endDate = dateStringFormat.parseDateTime(whileBefore);
+
+        //col 1 for time
+        //col 6 for units
+        //sum row of col 6 if its date lies between start and end
+
+        if(cursor.getCount()!=0){
+            cursor.moveToFirst();
+            do{
+                if (dateStringFormat.parseDateTime(cursor.getString(1)).isAfter(startDate) &&
+                        dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate)){
+                    //if date lies within period for BAC
+                    currUnits = cursor.getString(5);
+                    if(Double.parseDouble(currUnits) > maxBAC){
+                        maxBAC = Double.parseDouble(currUnits);
+                    }
+                } else {
+                    //go to next row
+                    cursor.moveToNext();
+                }
+            } while (cursor.moveToNext() && dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate));
+
+            setTotalUnits(BloodAlcoholContent.round(maxBAC, 3));
+
+            //close operations and sum
+            db.close();
+            cursor.close();
+        }
+    }
+
     private void setUpCalender() {
         // Get calendar set to current date and time
         Calendar c = Calendar.getInstance();
@@ -202,11 +264,13 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
     }
 
     private void setMethods() {
-        //21 for men, 14 for women per week
+        setUnits();
         setMaxUnits();
+        setMaxBAC();
         //calories are units*7*8 as 1 unit = 8g where 1g = 7 calories therefore
         setCalories((int) (totUnits * 56));
-        setMaxBAC(getMaxBAC());
+        setAvgABV();
+        setAvgVol();
 
         //set current
         double BAC = BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), 3);
@@ -222,11 +286,11 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
             BACrating.setTextColor(Color.GREEN);
         } else if (BAC >= 0.04 && BAC < 0.07) {
             //0.04-0.06
-            BACrating.setText("Mild impairment, lowered inhibitions, lowered caution, exaggeration of behaviour");
+            BACrating.setText("Slight impairment, lowered inhibitions, lowered caution, exaggeration of behaviour");
             BACrating.setTextColor(Color.GREEN);
         } else if (BAC >= 0.07 && BAC < 0.1) {
             //0.07-0.09
-            BACrating.setText("Unable to drive safely; slight impairment of balance, speech, vision and reaction time.");
+            BACrating.setText("Mild impairment of balance, speech, vision and reaction time.");
             BACrating.setTextColor(Color.YELLOW);
         } else if (BAC >= 0.1 && BAC < 0.13) {
             //0.1-0.129
@@ -303,9 +367,10 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
                 new AlertDialog.Builder(this)
                         .setTitle("Detailed Statistics")
                         .setMessage(
-                                "Total units drunk this week:\n" + getTotalUnits() + "/" + getMaxUnits() + " units" + "\n\n" +
+                                "Average strength of drinks:\n" + getAvgABV() + "%" + "\n\n" +
+                                        "Average volume of drinks:\n" + getAvgVol() + getUnits() + "\n\n" +
                                         "Alcohol calories this week:\n" + getCalories() + " calories" + "\n\n" +
-                                        "Maximum BAC achieved this week:\n" + getBACAchieved()
+                                        "Maximum BAC achieved this week:\n" + getMaxBAC()
                         )
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -319,18 +384,85 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         }
     }
 
-    private void setMaxBAC(double maxBAC) {
-        this.maxBAC = maxBAC;
+    private void setAvgABV() {
+        //select first row by date fo start of week and sum until it reaches whileNot
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        int count = 0;
+        int totABV = 0;
+        String ABV;
+        float currABV;
+
+        if(cursor.getCount()!=0) {
+            cursor.moveToFirst();
+            do {
+                if (!cursor.isNull(4)) {
+                    //if date lies within period
+                    ABV = cursor.getString(4);
+                    currABV = Float.parseFloat(ABV);
+                    totABV = (int) (totABV + currABV);
+                    count++;
+                } else {
+                    //go to next row
+                    cursor.moveToNext();
+                }
+            } while (cursor.moveToNext());
+
+            avgABV = totABV / count;
+            System.out.println("avgABV: " + avgABV);
+
+            //close operations and sum
+            db.close();
+            cursor.close();
+        }
+    }
+
+    private void setAvgVol() {
+        //select first row by date fo start of week and sum until it reaches whileNot
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        int count = 0;
+        int totVol = 0;
+        String ABV;
+        float currVol;
+
+        if(cursor.getCount()!=0) {
+            cursor.moveToFirst();
+            do {
+                if (!cursor.isNull(3)) {
+                    //if date lies within period
+                    ABV = cursor.getString(3);
+                    currVol = Float.parseFloat(ABV);
+                    totVol = (int) (totVol + currVol);
+                    count++;
+                } else {
+                    //go to next row
+                    cursor.moveToNext();
+                }
+            } while (cursor.moveToNext());
+
+            avgVol = totVol / count;
+
+            //close operations and sum
+            db.close();
+            cursor.close();
+        }
+    }
+
+    private double getAvgVol(){
+        return avgVol;
+    }
+
+    private double getAvgABV() {
+        return avgABV;
     }
 
     private double getMaxBAC() {
-
-
         return maxBAC;
-    }
-
-    private double getBACAchieved() {
-        return BACAchieved;
     }
 
     private void setMaxUnits() {
@@ -343,6 +475,18 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
     private double getMaxUnits() {
         return maxUnits;
+    }
+
+    private void setUnits() {
+        if (spUnits.equals("metric") || spUnits.equals("Metric")) {
+            this.units = "ml";
+        } else {
+            this.units = "oz";
+        }
+    }
+
+    private String getUnits() {
+        return units;
     }
 
     private void setTotalUnits(double totUnits) {
