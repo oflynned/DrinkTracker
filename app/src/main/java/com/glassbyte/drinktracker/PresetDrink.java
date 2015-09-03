@@ -1,8 +1,10 @@
 package com.glassbyte.drinktracker;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -102,6 +104,8 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
                         setVolume(alcVolume);
                         V.invalidate();
                         volChosen.setText(getVolume() + getUnits());
+                        Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                        vb.vibrate(100);
                     }
                 });
             }
@@ -120,6 +124,8 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
                         V.invalidate();
                         String currPercentage = String.format("%.2f", alcPercentage);
                         percentageChosen.setText(currPercentage + "%");
+                        Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                        vb.vibrate(100);
                     }
                 });
             }
@@ -131,8 +137,10 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
 
                 double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(getVolume(), getPercentage());
                 dou.insertNewDrink(dou.getDateTime(), getTitle(), (int) getVolume(), getPercentage(), ebac);
-                bloodAlcoholContent.updateCurrentBac(PresetDrink.this.getActivity(), (float)ebac, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
+                bloodAlcoholContent.updateCurrentBac(PresetDrink.this.getActivity(), (float) ebac, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
                 V.invalidate();
+                Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                vb.vibrate(100);
                 Toast.makeText(getActivity(), "Drink added successfully!", Toast.LENGTH_SHORT).show();
             }
         });

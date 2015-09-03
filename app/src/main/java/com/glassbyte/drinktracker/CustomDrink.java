@@ -10,6 +10,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -229,8 +230,10 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
 
                 double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(mlVol, alcPercentage);
                 dou.insertNewDrink(dou.getDateTime(), chosenGlass.getTitle(), (int)mlVol, alcPercentage, ebac);
-                bloodAlcoholContent.updateCurrentBac(thisActivity, (float)ebac, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
+                bloodAlcoholContent.updateCurrentBac(thisActivity, (float) ebac, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
 
+                Vibrator vb = (Vibrator) thisActivity.getSystemService(Context.VIBRATOR_SERVICE);
+                vb.vibrate(100);
                 Toast.makeText(thisActivity, "Drink added successfully!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -245,6 +248,8 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
                     public void onDoneClick(DialogFragment dialog) {
                         CustomDrink.this.alcPercentage = ((SetPercentageDialog)dialog).getPercentage();
                         chosenGlass.invalidate(); //redraw to show the changed percentage value
+                        Vibrator vb = (Vibrator) thisActivity.getSystemService(Context.VIBRATOR_SERVICE);
+                        vb.vibrate(100);
                     }
                 });
             }
@@ -446,6 +451,8 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                 if(super.isChosen())
                     setPreviousTouchY(motionEvent.getRawY());
+                Vibrator vb = (Vibrator) thisActivity.getSystemService(Context.VIBRATOR_SERVICE);
+                vb.vibrate(100);
                 return true;
             }
             else if(motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
@@ -607,6 +614,8 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                 if(super.isMainView())
                     setPreviousTouchY(motionEvent.getRawY());
+                Vibrator vb = (Vibrator) thisActivity.getSystemService(Context.VIBRATOR_SERVICE);
+                vb.vibrate(100);
                 return true;
             }
             else if(motionEvent.getAction() == MotionEvent.ACTION_MOVE) {

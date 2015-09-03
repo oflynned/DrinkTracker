@@ -12,22 +12,16 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.Interval;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Line;
@@ -43,12 +37,8 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
     private FloatingActionButton infoButton;
 
-    double avgUnits, totUnits, maxUnits, avgTime, BACAchieved;
-    int daysDrinking, orange;
-
-    Calendar c;
-    DateFormat df;
-    String startDate = "", endDate = "";
+    double totUnits, maxUnits, BACAchieved, maxBAC;
+    int orange, calories;
 
     String spGender;
     LineChartView chart;
@@ -86,10 +76,68 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
         //graph instantiation
         chart = (LineChartView) findViewById(R.id.chart);
-        generateData();
+        graphValues();
         chart.setViewportCalculationEnabled(false);
-        setViewport();
         chart.startDataAnimation();
+    }
+
+    private void graphValues(){
+        //select first row by date fo start of week and sum until it reaches whileNot
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        String bac;
+        float bacPoint;
+        int count=0;
+        List<PointValue> values = new ArrayList<>();
+
+        if(cursor.getCount()!=0){
+            cursor.moveToFirst();
+            do{
+                if (!cursor.isNull(2)){
+                    //if date lies within period
+                    bac = cursor.getString(2);
+                    bacPoint = Float.parseFloat(bac);
+                    values.add(new PointValue(count, bacPoint));
+                    count++;
+                } else {
+                    //go to next row
+                    cursor.moveToNext();
+                }
+            } while (cursor.moveToNext());
+
+        Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
+        List<Line> lines = new ArrayList<>();
+        lines.add(line);
+
+        LineChartData data = new LineChartData();
+        data.setLines(lines);
+        setAxes(data);
+        chart.setLineChartData(data);
+
+        final Viewport v = new Viewport(chart.getMaximumViewport());
+        v.bottom = 0;
+        v.top = 0.6f;
+        v.left = 0;
+        v.right = cursor.getCount();
+        chart.setMaximumViewport(v);
+        chart.setCurrentViewport(v);
+        chart.setScrollX(1);
+
+            //close operations and sum
+            db.close();
+            cursor.close();
+        }
+    }
+
+    private void setAxes(LineChartData data) {
+        Axis axisX = new Axis();
+        Axis axisY = new Axis().setHasLines(true);
+        axisX.setName("Time");
+        axisY.setName("BAC");
+        data.setAxisXBottom(axisX);
+        data.setAxisYLeft(axisY);
     }
 
     private void setUpCalender() {
@@ -119,50 +167,46 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
 
-        double totUnits = 0;
         String currUnits;
 
         DateTimeFormatter dateStringFormat = DateTimeFormat.forPattern("HH:mm:ss dd/MM/yyyy");
         DateTime startDate = dateStringFormat.parseDateTime(whileAfter);
         DateTime endDate = dateStringFormat.parseDateTime(whileBefore);
 
-        cursor.moveToFirst();
-
         //col 1 for time
         //col 6 for units
         //sum row of col 6 if its date lies between start and end
 
-        do{
-            if (dateStringFormat.parseDateTime(cursor.getString(1)).isAfter(startDate) &&
-                    dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate)){
-                //if date lies within period
-                currUnits = cursor.getString(6);
-                System.out.println(currUnits);
-                totUnits = totUnits + Double.parseDouble(currUnits);
-            } else {
-                //go to next row
-                cursor.moveToNext();
-            }
-        } while (cursor.moveToNext() && dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate));
+        if(cursor.getCount()!=0){
+            cursor.moveToFirst();
+            do{
+                if (dateStringFormat.parseDateTime(cursor.getString(1)).isAfter(startDate) &&
+                        dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate)){
+                    //if date lies within period
+                    currUnits = cursor.getString(6);
+                    System.out.println(currUnits);
+                    totUnits = totUnits + Double.parseDouble(currUnits);
+                } else {
+                    //go to next row
+                    cursor.moveToNext();
+                }
+            } while (cursor.moveToNext() && dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate));
 
-        System.out.println(totUnits);
-        setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
+            System.out.println(totUnits);
+            setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
 
-        //close operations and sum
-        db.close();
-        cursor.close();
+            //close operations and sum
+            db.close();
+            cursor.close();
+        }
     }
 
     private void setMethods() {
-        //need to replace with proper methods
-        setAvgUnits(0);
-
         //21 for men, 14 for women per week
         setMaxUnits();
-
-        setAvgTime(0);
-        setBACAchieved(0);
-        setDaysDrinking(0);
+        //calories are units*7*8 as 1 unit = 8g where 1g = 7 calories therefore
+        setCalories((int) (totUnits * 56));
+        setMaxBAC(getMaxBAC());
 
         //set current
         double BAC = BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), 3);
@@ -230,43 +274,6 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         }
     }
 
-    private void generateData() {
-        List<PointValue> values = new ArrayList<>();
-        values.add(new PointValue(0, 0));
-        values.add(new PointValue(1, 0.1f));
-        values.add(new PointValue(2, 0.2f));
-        values.add(new PointValue(3, 0.3f));
-
-        Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
-        List<Line> lines = new ArrayList<>();
-        lines.add(line);
-
-        LineChartData data = new LineChartData();
-        data.setLines(lines);
-        setAxes(data);
-        chart.setLineChartData(data);
-    }
-
-    private void setAxes(LineChartData data) {
-        Axis axisX = new Axis();
-        Axis axisY = new Axis().setHasLines(true);
-        axisX.setName("Time");
-        axisY.setName("BAC");
-        data.setAxisXBottom(axisX);
-        data.setAxisYLeft(axisY);
-    }
-
-    private void setViewport() {
-        // Reset viewport height range to (0,0.5)
-        final Viewport v = new Viewport(chart.getMaximumViewport());
-        v.bottom = 0;
-        v.top = 0.5f;
-        v.left = 0;
-        v.right = 12 - 1; //assuming a random value of 12
-        chart.setMaximumViewport(v);
-        chart.setCurrentViewport(v);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -297,9 +304,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
                         .setTitle("Detailed Statistics")
                         .setMessage(
                                 "Total units drunk this week:\n" + getTotalUnits() + "/" + getMaxUnits() + " units" + "\n\n" +
-                                        "Average units drunk per week:\n" + getAvgUnits() + "/" + getMaxUnits() + " units" + "\n\n" +
-                                        "Average time spent drinking:\n" + getAvgTime() + " hours" + "\n\n" +
-                                        "# of days drinking this week:\n" + getDaysDrinking() + " days" + "\n\n" +
+                                        "Alcohol calories this week:\n" + getCalories() + " calories" + "\n\n" +
                                         "Maximum BAC achieved this week:\n" + getBACAchieved()
                         )
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -314,36 +319,18 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         }
     }
 
-    private void setAvgUnits(double avgUnits) {
-        this.avgUnits = avgUnits;
+    private void setMaxBAC(double maxBAC) {
+        this.maxBAC = maxBAC;
     }
 
-    private double getAvgUnits() {
-        return avgUnits;
-    }
+    private double getMaxBAC() {
 
-    private void setBACAchieved(double BACAchieved) {
-        this.BACAchieved = BACAchieved;
+
+        return maxBAC;
     }
 
     private double getBACAchieved() {
         return BACAchieved;
-    }
-
-    private void setDaysDrinking(int daysDrinking) {
-        this.daysDrinking = daysDrinking;
-    }
-
-    private int getDaysDrinking() {
-        return daysDrinking;
-    }
-
-    private void setAvgTime(double avgTime) {
-        this.avgTime = avgTime;
-    }
-
-    private double getAvgTime() {
-        return avgTime;
     }
 
     private void setMaxUnits() {
@@ -364,5 +351,13 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
     private double getTotalUnits() {
         return totUnits;
+    }
+
+    private void setCalories(int calories) {
+        this.calories = calories;
+    }
+
+    private double getCalories() {
+        return calories;
     }
 }
