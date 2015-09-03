@@ -37,7 +37,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
     private FloatingActionButton infoButton;
 
-    double totUnits, maxUnits, BACAchieved, maxBAC, avgABV, avgVol;
+    double totUnits, maxUnits, maxBAC, avgABV, avgVol;
     int orange, calories;
 
     String spGender, spUnits, units;
@@ -445,7 +445,14 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
                 }
             } while (cursor.moveToNext());
 
+            //ml
             avgVol = totVol / count;
+
+            //convert to oz if imperial as they are stored in ml regardless of preference
+            if(getUnits().equals("oz")) {
+                avgVol = BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(avgVol);
+                avgVol = BloodAlcoholContent.round(avgVol,2);
+            }
 
             //close operations and sum
             db.close();
