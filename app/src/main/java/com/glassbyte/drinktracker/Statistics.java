@@ -194,7 +194,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
                 }
             } while (cursor.moveToNext() && dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate));
 
-            setTotalUnits(BloodAlcoholContent.round(maxBAC, 3));
+            maxBAC = BloodAlcoholContent.round(maxBAC, 3);
 
             //close operations and sum
             db.close();
