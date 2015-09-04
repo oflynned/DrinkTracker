@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    >
-    <Button
-        android:id="@+id/select_all_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select All"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:onClick="selectAll"/>
+    android:layout_width="match_parent">
     <Button
         android:id="@+id/remove_selected_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Remove Selected"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/select_all_button"
+        android:layout_alignParentLeft="true"
         android:onClick="removeSelected"/>
     <TextView
         android:id="@+id/max_display_label"
@@ -45,4 +36,44 @@
         android:gravity="center"
         android:layout_below="@id/max_display_spinner"
         />
+    <TableLayout
+        android:id="@+id/drinks_list_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:layout_below="@id/max_display_spinner">
+        <TableRow
+            android:id="@+id/drinks_list_headings_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <CheckBox
+                android:background="@drawable/table_cell"
+                android:gravity="center"/>
+            <TextView
+                android:text="DATE"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@drawable/table_cell"
+                android:gravity="center"/>
+            <TextView
+                android:text="TITLE"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@drawable/table_cell"
+                android:gravity="center"/>
+            <TextView
+                android:text="VOL"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@drawable/table_cell"
+                android:gravity="center"/>
+
+            <TextView
+                android:text="ALC"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@drawable/table_cell"
+                android:gravity="center"/>
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>
