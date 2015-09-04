@@ -229,7 +229,7 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
                     mlVol = ((DrinkingGlass) chosenGlass).getCurrentDrinkVolume();
 
                 double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(mlVol, alcPercentage);
-                dou.insertNewDrink(dou.getDateTime(), chosenGlass.getTitle(), (int)mlVol, alcPercentage, ebac);
+                dou.insertNewDrink(chosenGlass.getTitle(), (int)mlVol, alcPercentage, ebac);
                 bloodAlcoholContent.updateCurrentBac(thisActivity, (float) ebac, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
 
                 Vibrator vb = (Vibrator) thisActivity.getSystemService(Context.VIBRATOR_SERVICE);

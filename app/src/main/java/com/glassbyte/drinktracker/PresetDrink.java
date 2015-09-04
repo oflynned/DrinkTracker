@@ -136,7 +136,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
             public void onClick(View view) {
 
                 double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(getVolume(), getPercentage());
-                dou.insertNewDrink(dou.getDateTime(), getTitle(), (int) getVolume(), getPercentage(), ebac);
+                dou.insertNewDrink(getTitle(), (int) getVolume(), getPercentage(), ebac);
                 bloodAlcoholContent.updateCurrentBac(PresetDrink.this.getActivity(), (float) ebac, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
                 V.invalidate();
                 Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
