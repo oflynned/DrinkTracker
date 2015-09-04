@@ -36,6 +36,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     private final int BAC_FONT_SIZE= 40;
     private final int BAC_FONT_SIZE_SMALL= 30;
     private final int SIDE_BAR_WIDTH = 200;
+    private final int PROGESS_BAR_RATIO = 300;
     private BloodAlcoholContent bloodAlcoholContent;
     SharedPreferences sp;
 
@@ -111,9 +112,15 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         rl.addView(customProgressBar);
         rl.addView(pbBAC);
 
-        progress = (int) (bloodAlcoholContent.getCurrentEbac() * 200);
-        customProgressBar.setProgress(progress);
-        startAnimation(progress);
+        progress = (int) (bloodAlcoholContent.getCurrentEbac() * PROGESS_BAR_RATIO);
+        if(progress < 75){
+            customProgressBar.setProgress(progress);
+            startAnimation(progress);
+        } else {
+            progress = 75;
+            customProgressBar.setProgress(progress);
+            startAnimation(progress);
+        }
 
         return rl;
     }
@@ -129,9 +136,15 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (s == this.getString(R.string.pref_key_currentEbac)) {
             pbBAC.setText("" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
-            progress = (int) (bloodAlcoholContent.getCurrentEbac() * 200);
-            customProgressBar.setProgress(progress);
-            startAnimation(progress);
+            progress = (int) (bloodAlcoholContent.getCurrentEbac() * PROGESS_BAR_RATIO);
+            if(progress < 75){
+                customProgressBar.setProgress(progress);
+                startAnimation(progress);
+            } else {
+                progress = 75;
+                customProgressBar.setProgress(progress);
+                startAnimation(progress);
+            }
             pbBAC.invalidate();
         }
     }
