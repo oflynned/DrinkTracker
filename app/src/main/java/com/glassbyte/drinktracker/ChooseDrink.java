@@ -39,6 +39,8 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     private BloodAlcoholContent bloodAlcoholContent;
     SharedPreferences sp;
 
+    int progress;
+
     CustomProgressBar customProgressBar;
 
     @Override
@@ -109,15 +111,17 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         rl.addView(customProgressBar);
         rl.addView(pbBAC);
 
-        startAnimation();
+        progress = (int) (bloodAlcoholContent.getCurrentEbac() * 200);
+        customProgressBar.setProgress(progress);
+        startAnimation(progress);
 
         return rl;
     }
 
-    private void startAnimation() {
-        ProgressBarAnimation localProgressBarAnimation = new ProgressBarAnimation(0.0F, 75.0F);
+    private void startAnimation(float BAC) {
+        ProgressBarAnimation localProgressBarAnimation = new ProgressBarAnimation(0.0F, BAC);
         localProgressBarAnimation.setInterpolator(new OvershootInterpolator(0.5F));
-        localProgressBarAnimation.setDuration(4000L);
+        localProgressBarAnimation.setDuration(2000L);
         customProgressBar.startAnimation(localProgressBarAnimation);
     }
 
@@ -125,10 +129,10 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (s == this.getString(R.string.pref_key_currentEbac)) {
             pbBAC.setText("" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
-            int progress = (int) (bloodAlcoholContent.getCurrentEbac() * 200);
+            progress = (int) (bloodAlcoholContent.getCurrentEbac() * 200);
             customProgressBar.setProgress(progress);
+            startAnimation(progress);
             pbBAC.invalidate();
-            startAnimation();
         }
     }
 
