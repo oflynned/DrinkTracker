@@ -1,6 +1,8 @@
 package com.glassbyte.drinktracker;
 
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -46,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.disclaimertitle)
+                .setMessage(R.string.disclaimerbody)
+                .setPositiveButton(R.string.agree, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
     }
 
     @Override

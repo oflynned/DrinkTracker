@@ -3,11 +3,13 @@ package com.glassbyte.drinktracker;
 * To do:
 * -change all the fonts and dimensions to be expressed in dp or dpi
 * */
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -19,7 +21,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.Transformation;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,7 +30,8 @@ import android.widget.TextView;
  * Created by Maciej on 27/05/15.
  */
 
-public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+
     private SelectionSideBar leftSideBar, rightSideBar;
     private TextView bacDisplay, pbBAC;
     private final int BAC_DECIMAL_PLACES = 4;
@@ -43,6 +45,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     int progress;
 
     CustomProgressBar customProgressBar;
+    FloatingActionButton stats, detailed_stats;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,7 +78,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         customProgressBar = new CustomProgressBar(this.getActivity(), null, android.R.style.Widget_DeviceDefault_ProgressBar);
         RelativeLayout.LayoutParams customProgressBarParam = new RelativeLayout.LayoutParams(500,500);
         customProgressBarParam.addRule(RelativeLayout.CENTER_IN_PARENT);
-        customProgressBar.setIndeterminate(false);
         int progress = (int) (bloodAlcoholContent.getCurrentEbac() * 200);
         customProgressBar.setProgress(progress);
         customProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.progress_circle));
@@ -87,7 +89,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         bacDisplay.setTextSize(BAC_FONT_SIZE);
         bacDisplay.setTextColor(Color.BLACK);
         bacDisplay.setGravity(Gravity.CENTER);
-        bacDisplay.setText("Current\nBAC:\n");
+        bacDisplay.setText(getResources().getString(R.string.current_BAC));
         RelativeLayout.LayoutParams bacDisplayParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
         bacDisplayParams.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
         bacDisplayParams.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
@@ -161,10 +163,21 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             super(c);
             mContext = c;
             this.isLeft = isLeft;
-            if(isLeft)
-                this.setBackground(c.getDrawable(R.drawable.choose_drink_left_side_bg));
-            else
-                this.setBackground(c.getDrawable(R.drawable.choose_drink_right_side_bg));
+
+            //lollipop method of calling
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                if(isLeft)
+                    this.setBackground(c.getDrawable(R.drawable.choose_drink_left_side_bg));
+                else
+                    this.setBackground(c.getDrawable(R.drawable.choose_drink_right_side_bg));
+            }
+            //for under lollipop using deprecation
+            else{
+                if(isLeft)
+                    this.setBackground(c.getResources().getDrawable(R.drawable.choose_drink_left_side_bg));
+                else
+                    this.setBackground(c.getResources().getDrawable(R.drawable.choose_drink_right_side_bg));
+            }
 
             textPaint = new Paint();
             textPaint.setColor(Color.WHITE);

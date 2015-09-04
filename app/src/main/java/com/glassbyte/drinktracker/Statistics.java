@@ -34,7 +34,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 /**
  * Created by ed on 25/08/15.
  */
-public class Statistics extends Activity implements FloatingActionButton.OnCheckedChangeListener {
+public class Statistics extends Activity implements FloatingActionButton.OnCheckedChangeListener{
 
     private FloatingActionButton infoButton;
 
@@ -207,7 +207,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         //col 6 for units
         //sum row of col 6 if its date lies between start and end
 
-        if (cursor.getCount() != 0) {
+        /*if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
                 if (dateStringFormat.parseDateTime(cursor.getString(1)).isAfter(startDate) &&
@@ -229,7 +229,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
             //close operations and sum
             db.close();
             cursor.close();
-        }
+        }*/
     }
 
     private void setMethods() {
@@ -247,63 +247,65 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
         if (BAC >= 0 && BAC < 0.01) {
             //at 0-0.01
-            BACrating.setText("Sober");
+            BACrating.setText(R.string.tier0);
             BACrating.setTextColor(Color.GREEN);
         } else if (BAC >= 0.02 && BAC < 0.04) {
             //0.02-0.03
-            BACrating.setText("Mildly relaxed and no loss of coordination");
+            BACrating.setText(R.string.tier1);
             BACrating.setTextColor(Color.GREEN);
         } else if (BAC >= 0.04 && BAC < 0.07) {
             //0.04-0.06
-            BACrating.setText("Slight impairment, lowered inhibitions, lowered caution, exaggeration of behaviour");
+            BACrating.setText(R.string.tier2);
             BACrating.setTextColor(Color.GREEN);
         } else if (BAC >= 0.07 && BAC < 0.1) {
             //0.07-0.09
-            BACrating.setText("Mild impairment of balance, speech, vision and reaction time.");
+            BACrating.setText(R.string.tier3);
             BACrating.setTextColor(Color.YELLOW);
         } else if (BAC >= 0.1 && BAC < 0.13) {
             //0.1-0.129
-            BACrating.setText("Significant impairment of coordination and loss of judgement. Feeling of euphoria.");
+            BACrating.setText(R.string.tier4);
             BACrating.setTextColor(Color.YELLOW);
         } else if (BAC >= 0.13 && BAC < 0.16) {
             //0.13-0.15
-            BACrating.setText("Lack of physical control, loss of balance, and blurring of vision. Reduced euphoria and increased dysphoria. Severe impairment of perception and judgement.");
+            BACrating.setText(R.string.tier5);
             BACrating.setTextColor(orange);
         } else if (BAC >= 0.16 && BAC < 0.2) {
             //0.16-0.19
-            BACrating.setText("Intensifying of dysphoria, increase in nausea, appears 'more sloppy'");
+            BACrating.setText(R.string.tier6);
             BACrating.setTextColor(orange);
         } else if (BAC >= 0.2 && BAC < 0.25) {
             //0.2-0.24
-            BACrating.setText("Dazed, confusion, disorientation. May not feel pain if injured. Nausea and vomiting experienced around this level. Gag reflex may be impaired. Blackouts are more likely from this point.");
+            BACrating.setText(R.string.tier7);
             BACrating.setTextColor(Color.RED);
         } else if (BAC >= 0.25 && BAC < 0.3) {
             //0.25-0.29
-            BACrating.setText("Severe impairment of all sensory, physical and mental functions. Increased risk of asphyxiation by vomiting and injury.");
+            BACrating.setText(R.string.tier8);
             BACrating.setTextColor(Color.RED);
         } else if (BAC >= 0.3 && BAC < 0.35) {
             //0.3-0.34
-            BACrating.setText("Drunken stupor - you have little comprehension of where you are. Passing out and difficulty to be awoken is very likely.");
+            BACrating.setText(R.string.tier9);
             BACrating.setTextColor(Color.RED);
         } else if (BAC >= 0.35 && BAC < 0.4) {
             //0.35-0.39
-            BACrating.setText("Equivalent to surgical level anaesthesia");
+            BACrating.setText(R.string.tier10);
             BACrating.setTextColor(Color.RED);
         } else {
             //0.4+
-            BACrating.setText("Onset of coma and possible death due to respiratory arrest");
+            BACrating.setText(R.string.tier11);
             BACrating.setTextColor(Color.RED);
         }
 
         //set weekly
-        briefInfo.setText("Total units drunk this week:\n" + getTotalUnits() + "/" + getMaxUnits() + " units");
+        briefInfo.setText(getResources().getString(R.string.pollunits) +
+                "\n" + getTotalUnits() + "/" + getMaxUnits() + " " +
+                getResources().getString(R.string.units));
 
         if (getTotalUnits() <= getMaxUnits()) {
             rating.setTextColor(Color.GREEN);
-            rating.setText("Below recommended weekly limit");
+            rating.setText(R.string.belowlimit);
         } else if (getTotalUnits() > getMaxUnits()) {
             rating.setTextColor(Color.RED);
-            rating.setText("Excessive drinking!");
+            rating.setText(R.string.abovelimit);
         }
     }
 
@@ -334,12 +336,12 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         switch (fabView.getId()) {
             case R.id.infoButton:
                 new AlertDialog.Builder(this)
-                        .setTitle("Detailed Statistics")
+                        .setTitle(R.string.detailed_stats_title)
                         .setMessage(
-                                "Average strength of drinks:\n" + getAvgABV() + "%" + "\n\n" +
-                                        "Average volume of drinks:\n" + getAvgVol() + getUnits() + "\n\n" +
-                                        "Alcohol calories this week:\n" + getCalories() + " calories" + "\n\n" +
-                                        "Maximum BAC achieved:\n" + getMaxBAC()
+                                getResources().getString(R.string.avg_drink_strength) + "\n" + getAvgABV() + "%" + "\n\n" +
+                                        getResources().getString(R.string.avg_drink_volume) + "\n" + getAvgVol() + getUnits() + "\n\n" +
+                                        getResources().getString(R.string.avg_calories) + "\n" + getCalories() + " " + getResources().getString(R.string.calories) + "\n\n" +
+                                        getResources().getString(R.string.max_bac) + "\n" + getMaxBAC()
                         )
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

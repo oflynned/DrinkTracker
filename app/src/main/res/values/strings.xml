@@ -75,4 +75,41 @@
 
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_list_drinks">ListDrinksActivity</string>
+
+    <!--> disclaimer <-->
+    <string name="disclaimertitle">Disclaimer</string>
+    <string name="disclaimerbody">Please remember that DrinkTracker is only an approximation of your blood alcohol content (BAC), and not a substitute for a breathalyser examination. GlassByte is in no way responsible for any actions carried out under intoxication. Please drive responsibly and stay safe under the influence of alcohol.</string>
+    <string name="agree">I agree</string>
+
+    <!--> dialog warnings <-->
+    <string name="tier0">Sober.</string>
+    <string name="tier1">Mildly relaxed and no loss of coordination.</string>
+    <string name="tier2">Slight impairment, lowered inhibitions, lowered caution, exaggeration of behaviour.</string>
+    <string name="tier3">Mild impairment of balance, speech, vision and reaction time.</string>
+    <string name="tier4">Significant impairment of coordination, loss of judgement, and feeling of euphoria.</string>
+    <string name="tier5">Lack of physical control, loss of balance, and blurring of vision. Reduced euphoria and increased dysphoria. Severe impairment of perception and judgement.</string>
+    <string name="tier6">Intensifying of dysphoria, increase in nausea, appears &quot;more sloppy&quot;.</string>
+    <string name="tier7">Dazed, confusion, disorientation. May not feel pain if injured. Nausea and vomiting experienced around this level. Gag reflex may be impaired. Blackouts are more likely from this point.</string>
+    <string name="tier8">Severe impairment of all sensory, physical and mental functions. Increased risk of asphyxiation by vomiting and injury.</string>
+    <string name="tier9">Drunken stupor - you have little comprehension of where you are. Passing out and difficulty to be awoken is very likely.</string>
+    <string name="tier10">Equivalent to surgical level anaesthesia.</string>
+    <string name="tier11">Onset of coma and possible death due to respiratory arrest.</string>
+
+    <!--> unit warnings <-->
+    <string name="pollunits">Total units drunk this week:</string>
+    <string name="units">units</string>
+    <string name="belowlimit">Below recommended weekly limit.</string>
+    <string name="abovelimit">Excessive drinking!</string>
+
+    <!--> detailed stats <-->
+    <string name="detailed_stats_title">Detailed Statistics</string>
+    <string name="avg_drink_strength">Average strength of drinks:</string>
+    <string name="avg_drink_volume">Average volume of drinks:</string>
+    <string name="avg_calories">Alcohol calories this week:</string>
+    <string name="max_bac">Maximum BAC achieved:</string>
+    <string name="calories">calories</string>
+
+    <!--> miscellaneous <-->
+    <string name="current_BAC">Current\nBAC:\n</string>
+
 </resources>

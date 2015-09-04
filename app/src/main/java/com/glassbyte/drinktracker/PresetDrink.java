@@ -44,19 +44,23 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
 
     View V;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sp.registerOnSharedPreferenceChangeListener(this);
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         V = inflater.inflate(R.layout.activity_presetdrink, container, false);
 
-        //set units
-        sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        sp.registerOnSharedPreferenceChangeListener(this);
-        spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits),""));
+        spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits), ""));
+
         if (spUnits.equals("metric") || spUnits.equals("Metric")) {
             setUnits("ml");
-        }
-        else{
+        } else {
             setUnits("oz");
         }
 
@@ -102,7 +106,6 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
                     public void onDoneClick(DialogFragment dialog) {
                         PresetDrink.this.alcVolume = ((SetVolumeDialog) dialog).getVolume();
                         setVolume(alcVolume);
-                        V.invalidate();
                         volChosen.setText(getVolume() + getUnits());
                         Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                         vb.vibrate(100);
@@ -121,7 +124,6 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
                     public void onDoneClick(DialogFragment dialog) {
                         PresetDrink.this.alcPercentage = ((SetPercentageDialog) dialog).getPercentage();
                         setPercentage(alcPercentage);
-                        V.invalidate();
                         String currPercentage = String.format("%.2f", alcPercentage);
                         percentageChosen.setText(currPercentage + "%");
                         Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
@@ -138,7 +140,6 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
                 double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(getVolume(), getPercentage());
                 dou.insertNewDrink(getTitle(), (int) getVolume(), getPercentage(), ebac);
                 bloodAlcoholContent.updateCurrentBac(PresetDrink.this.getActivity(), (float) ebac, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
-                V.invalidate();
                 Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                 vb.vibrate(100);
                 Toast.makeText(getActivity(), "Drink added successfully!", Toast.LENGTH_SHORT).show();
@@ -152,14 +153,37 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
         return V;
     }
 
-    public void setTitle(String title){this.title = title;}
-    public String getTitle(){return title;}
-    public void setVolume(double alcVolume){this.alcVolume = alcVolume;}
-    public double getVolume(){return alcVolume;}
-    public void setPercentage(double alcPercentage){this.alcPercentage = alcPercentage;}
-    public double getPercentage(){return alcPercentage;}
-    public void setUnits(String units){this.units = units;}
-    public String getUnits(){return units;}
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setVolume(double alcVolume) {
+        this.alcVolume = alcVolume;
+    }
+
+    public double getVolume() {
+        return alcVolume;
+    }
+
+    public void setPercentage(double alcPercentage) {
+        this.alcPercentage = alcPercentage;
+    }
+
+    public double getPercentage() {
+        return alcPercentage;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
+    }
+
+    public String getUnits() {
+        return units;
+    }
 
     @Override
     public void onClick(View view) {
@@ -168,6 +192,11 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (spUnits.equals("metric") || spUnits.equals("Metric")) {
+            setUnits("ml");
+        } else {
+            setUnits("oz");
+        }
         V.invalidate();
     }
 }
