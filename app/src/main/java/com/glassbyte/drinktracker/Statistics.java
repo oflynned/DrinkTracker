@@ -21,6 +21,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import lecho.lib.hellocharts.model.Axis;
@@ -37,7 +38,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
     private FloatingActionButton infoButton;
 
-    double totUnits, maxUnits, maxBAC, avgABV, avgVol;
+    double totUnits, maxUnits, maxBAC, avgABV, avgVol, currBAC;
     int orange, calories;
 
     String spGender, spUnits, units;
@@ -82,7 +83,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         chart.startDataAnimation();
     }
 
-    private void graphValues(){
+    private void graphValues() {
         //select first row by date fo start of week and sum until it reaches whileNot
         String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
         SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
@@ -90,13 +91,13 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
         String bac;
         float bacPoint;
-        int count=0;
+        int count = 0;
         List<PointValue> values = new ArrayList<>();
 
-        if(cursor.getCount()!=0){
+        if (cursor.getCount() != 0) {
             cursor.moveToFirst();
-            do{
-                if (!cursor.isNull(2)){
+            do {
+                if (!cursor.isNull(2)) {
                     //if date lies within period
                     bac = cursor.getString(2);
                     bacPoint = Float.parseFloat(bac);
@@ -108,23 +109,23 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
                 }
             } while (cursor.moveToNext());
 
-        Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
-        List<Line> lines = new ArrayList<>();
-        lines.add(line);
+            Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
+            List<Line> lines = new ArrayList<>();
+            lines.add(line);
 
-        LineChartData data = new LineChartData();
-        data.setLines(lines);
-        setAxes(data);
-        chart.setLineChartData(data);
+            LineChartData data = new LineChartData();
+            data.setLines(lines);
+            setAxes(data);
+            chart.setLineChartData(data);
 
-        final Viewport v = new Viewport(chart.getMaximumViewport());
-        v.bottom = 0;
-        v.top = 0.6f;
-        v.left = 0;
-        v.right = cursor.getCount();
-        chart.setMaximumViewport(v);
-        chart.setCurrentViewport(v);
-        chart.setScrollX(1);
+            final Viewport v = new Viewport(chart.getMaximumViewport());
+            v.bottom = 0;
+            v.top = 0.6f;
+            v.left = 0;
+            v.right = cursor.getCount();
+            chart.setMaximumViewport(v);
+            chart.setCurrentViewport(v);
+            chart.setScrollX(1);
 
             //close operations and sum
             db.close();
@@ -142,65 +143,32 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
     }
 
     private void setMaxBAC() {
-        // Get calendar set to current date and time
-        Calendar c = Calendar.getInstance();
 
-        // Set the calendar to monday of the current week
-        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-
-        // Print start and end of the current week starting on Monday
-        DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-        //1 day before week start at 23:59:59
-        c.add(Calendar.DATE, -1);
-        c.set(Calendar.HOUR_OF_DAY, 23);
-        c.set(Calendar.MINUTE, 59);
-        c.set(Calendar.SECOND, 59);
-        String whileAfter = df.format(c.getTime());
-        //1 day after week end at 00:00:00
-        c.add(Calendar.DATE, 8);
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        String whileBefore = df.format(c.getTime());
-
-        //select first row by date fo start of week and sum until it reaches whileNot
-        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
         SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
 
-        String currUnits;
-
-        DateTimeFormatter dateStringFormat = DateTimeFormat.forPattern("HH:mm:ss dd/MM/yyyy");
-        DateTime startDate = dateStringFormat.parseDateTime(whileAfter);
-        DateTime endDate = dateStringFormat.parseDateTime(whileBefore);
-
-        //col 1 for time
-        //col 6 for units
-        //sum row of col 6 if its date lies between start and end
-
-        if(cursor.getCount()!=0){
+        if (cursor.getCount() != 0) {
             cursor.moveToFirst();
-            do{
-                if (dateStringFormat.parseDateTime(cursor.getString(1)).isAfter(startDate) &&
-                        dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate)){
-                    //if date lies within period for BAC
-                    currUnits = cursor.getString(5);
-                    if(Double.parseDouble(currUnits) > maxBAC){
-                        maxBAC = Double.parseDouble(currUnits);
-                    }
+            maxBAC = 0;
+            do {
+                currBAC = Double.parseDouble(cursor.getString(2));
+                if (currBAC > maxBAC) {
+                    maxBAC = currBAC;
                 } else {
                     //go to next row
                     cursor.moveToNext();
-                }
-            } while (cursor.moveToNext() && dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate));
+            }
+        } while (cursor.moveToNext());
 
-            maxBAC = BloodAlcoholContent.round(maxBAC, 3);
+        maxBAC = BloodAlcoholContent.round(maxBAC, 3);
 
-            //close operations and sum
-            db.close();
-            cursor.close();
-        }
+        //close operations and sum
+        db.close();
+        cursor.close();
     }
+
+}
 
     private void setUpCalender() {
         // Get calendar set to current date and time
@@ -239,11 +207,11 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         //col 6 for units
         //sum row of col 6 if its date lies between start and end
 
-        if(cursor.getCount()!=0){
+        if (cursor.getCount() != 0) {
             cursor.moveToFirst();
-            do{
+            do {
                 if (dateStringFormat.parseDateTime(cursor.getString(1)).isAfter(startDate) &&
-                        dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate)){
+                        dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate)) {
                     //if date lies within period
                     currUnits = cursor.getString(6);
                     System.out.println(currUnits);
@@ -252,7 +220,8 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
                     //go to next row
                     cursor.moveToNext();
                 }
-            } while (cursor.moveToNext() && dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate));
+            }
+            while (cursor.moveToNext() && dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate));
 
             System.out.println(totUnits);
             setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
@@ -395,7 +364,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         String ABV;
         float currABV;
 
-        if(cursor.getCount()!=0) {
+        if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
                 if (!cursor.isNull(4)) {
@@ -430,7 +399,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         String ABV;
         float currVol;
 
-        if(cursor.getCount()!=0) {
+        if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
                 if (!cursor.isNull(3)) {
@@ -449,9 +418,9 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
             avgVol = totVol / count;
 
             //convert to oz if imperial as they are stored in ml regardless of preference
-            if(getUnits().equals("oz")) {
+            if (getUnits().equals("oz")) {
                 avgVol = BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(avgVol);
-                avgVol = BloodAlcoholContent.round(avgVol,2);
+                avgVol = BloodAlcoholContent.round(avgVol, 2);
             }
 
             //close operations and sum
@@ -460,7 +429,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         }
     }
 
-    private double getAvgVol(){
+    private double getAvgVol() {
         return avgVol;
     }
 
