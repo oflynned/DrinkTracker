@@ -19,7 +19,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ListDrinksActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -108,7 +110,9 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
             checkBoxes.add(cb);
 
             TextView dateTV = new TextView(this);
-            dateTV.setText(String.valueOf(c.getLong(1)));
+            Date date = new Date(c.getLong(1));
+            SimpleDateFormat sdf = new SimpleDateFormat("d/M/yy HH:mm");
+            dateTV.setText(sdf.format(date));
             dateTV.setGravity(Gravity.CENTER);
 
             TextView titleTV = new TextView(this);
@@ -119,15 +123,15 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
             volumeTV.setText(String.valueOf(c.getInt(3)));
             volumeTV.setGravity(Gravity.CENTER);
 
-            TextView percetageTV = new TextView(this);
-            percetageTV.setText(Float.toString(c.getFloat(4)));
-            percetageTV.setGravity(Gravity.CENTER);
+            TextView percentageTV = new TextView(this);
+            percentageTV.setText(Float.toString(c.getFloat(4)));
+            percentageTV.setGravity(Gravity.CENTER);
 
             tr.addView(cb);
             tr.addView(dateTV);
             tr.addView(titleTV);
             tr.addView(volumeTV);
-            tr.addView(percetageTV);
+            tr.addView(percentageTV);
 
             tl.addView(tr);
 

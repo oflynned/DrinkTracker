@@ -65,14 +65,14 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
     }
 
     //insert new drink into the database
-    public long insertNewDrink(String time, String title, int mlVol, double percentage, double bac){
+    public long insertNewDrink(String title, int mlVol, double percentage, double bac){
         //method for putting info generated into the table
         //variables instantiated are parametrised and cast into the cols
         SQLiteDatabase sq = this.getWritableDatabase(); //writes data to database
         double units = percentage * mlVol/1000;
 
         ContentValues cv = new ContentValues(); //create instance; id_col = col 0
-        cv.put(DrinkTrackerDatabase.DrinksTable.DATE_TIME, time); //coll 1
+        cv.put(DrinkTrackerDatabase.DrinksTable.DATE_TIME, System.currentTimeMillis()); //coll 1
         cv.put(DrinkTrackerDatabase.DrinksTable.TITLE, title); //coll 2
         cv.put(DrinkTrackerDatabase.DrinksTable.VOLUME, mlVol); //coll 3
         cv.put(DrinkTrackerDatabase.DrinksTable.PERCENTAGE, percentage); //coll 4
