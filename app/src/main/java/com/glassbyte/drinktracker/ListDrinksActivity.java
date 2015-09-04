@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -50,13 +51,49 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        TableLayout tl = (TableLayout)findViewById(R.id.drinks_list_table);
 
         dtDb = new DrinkTrackerDbHelper(this);
         readDB = dtDb.getReadableDatabase();
-        String queryWLimit = query + " LIMIT " + displayLimit + " OFFSET " + currentPage;
+
+        populateTable();
+    }
+
+    //returns true if the table was populate with one or more entries
+    public boolean populateTable(){
+        Button prevB = (Button)findViewById(R.id.drinks_list_prev_button);
+        if (currentPage == 0)
+            prevB.setEnabled(false);
+        else
+            prevB.setEnabled(true);
+        prevB.invalidate();
+
+        TableLayout tl = (TableLayout)findViewById(R.id.drinks_list_table);
+
+        int currentRowsNum = tl.getChildCount();
+        if (currentRowsNum > 1) {
+            tl.removeViewsInLayout(1,currentRowsNum-1);
+        }
+
+        String queryWLimit = query + " LIMIT " + Integer.toString(displayLimit+1)//to check if the next page exists; whether the next button should be enabled
+                + " OFFSET " + currentPage*displayLimit;
+        System.out.println(queryWLimit);
         Cursor c = readDB.rawQuery(queryWLimit, null);
+
         int rowCount = c.getCount();
+        System.out.println("Row Count: "+rowCount);
+        Button nextB = (Button)findViewById(R.id.drinks_list_next_button);
+        if(rowCount == 0)
+            return false;
+        else if (rowCount == displayLimit+1) {
+            nextB.setEnabled(true);
+            nextB.invalidate();
+
+            rowCount = displayLimit;
+        } else {
+            nextB.setEnabled(false);
+            nextB.invalidate();
+        }
+
         c.moveToFirst();
 
         for (int i=0; i < rowCount; i++){
@@ -96,6 +133,7 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
 
             c.moveToNext();
         }
+        return true;
     }
 
     @Override
@@ -120,6 +158,22 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
         return super.onOptionsItemSelected(item);
     }
 
+    public void prevPage(View v){
+        currentPage--;
+        if (populateTable()) {
+            TableLayout tl = (TableLayout) findViewById(R.id.drinks_list_table);
+            tl.invalidate();
+        }
+    }
+
+    public void nextPage(View v){
+        currentPage++;
+        if (populateTable()) {
+            TableLayout tl = (TableLayout) findViewById(R.id.drinks_list_table);
+            tl.invalidate();
+        }
+    }
+
     public void removeSelected(View view){
 
     }
@@ -128,6 +182,11 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String selection = (String)spinner.getItemAtPosition(i);
         displayLimit = Integer.valueOf(selection);
+        currentPage = 0;
+        if (populateTable()) {
+            TableLayout tl = (TableLayout) findViewById(R.id.drinks_list_table);
+            tl.invalidate();
+        }
     }
 
     @Override

@@ -76,4 +76,24 @@
                 android:gravity="center"/>
         </TableRow>
     </TableLayout>
+    <Button
+        android:id="@+id/drinks_list_prev_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Previous"
+        android:layout_below="@id/drinks_list_table"
+        android:layout_alignParentLeft="true"
+        android:onClick="prevPage"
+        android:enabled="false"
+        />
+    <Button
+        android:id="@+id/drinks_list_next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:layout_below="@id/drinks_list_table"
+        android:layout_alignParentRight="true"
+        android:onClick="nextPage"
+        android:enabled="false"
+        />
 </RelativeLayout>
