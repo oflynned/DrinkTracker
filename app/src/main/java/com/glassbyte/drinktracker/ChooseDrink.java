@@ -11,11 +11,16 @@ import android.graphics.Paint;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.Transformation;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,12 +31,15 @@ import android.widget.TextView;
 
 public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
     private SelectionSideBar leftSideBar, rightSideBar;
-    private TextView bacDisplay;
+    private TextView bacDisplay, pbBAC;
     private final int BAC_DECIMAL_PLACES = 4;
     private final int BAC_FONT_SIZE= 40;
+    private final int BAC_FONT_SIZE_SMALL= 30;
     private final int SIDE_BAR_WIDTH = 200;
     private BloodAlcoholContent bloodAlcoholContent;
     SharedPreferences sp;
+
+    CustomProgressBar customProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,37 +69,66 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         rightSideBar.setLayoutParams(rightSideBarParams);
         rightSideBar.setId(View.generateViewId());
 
+        customProgressBar = new CustomProgressBar(this.getActivity(), null, android.R.style.Widget_DeviceDefault_ProgressBar);
+        RelativeLayout.LayoutParams customProgressBarParam = new RelativeLayout.LayoutParams(500,500);
+        customProgressBarParam.addRule(RelativeLayout.CENTER_IN_PARENT);
+        customProgressBar.setIndeterminate(false);
+        int progress = (int) (bloodAlcoholContent.getCurrentEbac() * 200);
+        customProgressBar.setProgress(progress);
+        customProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.progress_circle));
+        customProgressBar.setVisibility(View.VISIBLE);
+        customProgressBar.setLayoutParams(customProgressBarParam);
+        customProgressBar.setId(View.generateViewId());
+
         bacDisplay = new TextView(this.getActivity());
         bacDisplay.setTextSize(BAC_FONT_SIZE);
         bacDisplay.setTextColor(Color.BLACK);
         bacDisplay.setGravity(Gravity.CENTER);
-        bacDisplay.setText("Your\ncurrent\nBAC is:\n" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
+        bacDisplay.setText("Current\nBAC:\n");
         RelativeLayout.LayoutParams bacDisplayParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
         bacDisplayParams.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
         bacDisplayParams.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
-        bacDisplayParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        bacDisplayParams.addRule(RelativeLayout.ABOVE, customProgressBar.getId());
         bacDisplayParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         bacDisplay.setLayoutParams(bacDisplayParams);
 
-        ImageView swipeArrowView = new ImageView(this.getActivity());
-        swipeArrowView.setImageDrawable(this.getActivity().getDrawable(R.drawable.swipe_arrow));
-        RelativeLayout.LayoutParams swipeArrowViewParam = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        swipeArrowViewParam.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        swipeArrowViewParam.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        swipeArrowView.setLayoutParams(swipeArrowViewParam);
+        pbBAC = new TextView(this.getActivity());
+        pbBAC.setTextSize(BAC_FONT_SIZE_SMALL);
+        pbBAC.setTextColor(Color.BLACK);
+        pbBAC.setGravity(Gravity.CENTER);
+        pbBAC.setText("" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
+        RelativeLayout.LayoutParams pbBACParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        pbBACParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        pbBAC.setLayoutParams(pbBACParams);
+
+        bacDisplay.invalidate();
 
         rl.addView(leftSideBar);
         rl.addView(rightSideBar);
         rl.addView(bacDisplay);
-        rl.addView(swipeArrowView);
+        rl.addView(customProgressBar);
+        rl.addView(pbBAC);
+
+        startAnimation();
+
         return rl;
+    }
+
+    private void startAnimation() {
+        ProgressBarAnimation localProgressBarAnimation = new ProgressBarAnimation(0.0F, 75.0F);
+        localProgressBarAnimation.setInterpolator(new OvershootInterpolator(0.5F));
+        localProgressBarAnimation.setDuration(4000L);
+        customProgressBar.startAnimation(localProgressBarAnimation);
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (s == this.getString(R.string.pref_key_currentEbac)) {
-            bacDisplay.setText("Your\ncurrent\nBAC is:\n" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
-            bacDisplay.invalidate();
+            pbBAC.setText("" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
+            int progress = (int) (bloodAlcoholContent.getCurrentEbac() * 200);
+            customProgressBar.setProgress(progress);
+            pbBAC.invalidate();
+            startAnimation();
         }
     }
 
@@ -134,6 +171,46 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 c.drawText(RIGHT_SIDE_BAR_TEXT,0,0, textPaint);
             }
             c.restore();
+        }
+    }
+    public class CustomProgressBar extends ProgressBar {
+        public CustomProgressBar(Context paramContext) {
+            super(paramContext);
+        }
+
+        public CustomProgressBar(Context paramContext,
+                                 AttributeSet paramAttributeSet) {
+            super(paramContext, paramAttributeSet);
+        }
+
+        public CustomProgressBar(Context paramContext,
+                                 AttributeSet paramAttributeSet, int paramInt) {
+            super(paramContext, paramAttributeSet, paramInt);
+        }
+
+        public void draw(Canvas paramCanvas) {
+            int i = getMeasuredWidth();
+            int j = getMeasuredHeight();
+            paramCanvas.save();
+            paramCanvas.rotate(135.0F, i / 2, j / 2);
+            super.draw(paramCanvas);
+            paramCanvas.restore();
+        }
+    }
+
+    private class ProgressBarAnimation extends Animation {
+        private float from;
+        private float to;
+
+        public ProgressBarAnimation(float from, float to) {
+            this.from = from;
+            this.to = to;
+        }
+
+        protected void applyTransformation(float paramFloat, Transformation paramTransformation) {
+            super.applyTransformation(paramFloat, paramTransformation);
+            float f = this.from + paramFloat * (this.to - this.from);
+            customProgressBar.setProgress((int) f);
         }
     }
 }

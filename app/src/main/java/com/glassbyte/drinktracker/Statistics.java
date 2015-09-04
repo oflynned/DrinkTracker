@@ -339,7 +339,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
                                 "Average strength of drinks:\n" + getAvgABV() + "%" + "\n\n" +
                                         "Average volume of drinks:\n" + getAvgVol() + getUnits() + "\n\n" +
                                         "Alcohol calories this week:\n" + getCalories() + " calories" + "\n\n" +
-                                        "Maximum BAC achieved this week:\n" + getMaxBAC()
+                                        "Maximum BAC achieved:\n" + getMaxBAC()
                         )
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
