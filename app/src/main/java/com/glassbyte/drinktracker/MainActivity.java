@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new AlertDialog.Builder(this)
+        //uncomment before release
+        /*new AlertDialog.Builder(this)
                 .setTitle(R.string.disclaimertitle)
                 .setMessage(R.string.disclaimerbody)
                 .setPositiveButton(R.string.agree, new DialogInterface.OnClickListener() {
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 })
-                .show();
+                .show();*/
     }
 
     @Override

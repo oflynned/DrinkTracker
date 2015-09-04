@@ -2,24 +2,17 @@ package com.glassbyte.drinktracker;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.graphics.PixelFormat;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 
 public class SplashScreenActivity extends Activity
@@ -46,7 +39,6 @@ public class SplashScreenActivity extends Activity
 
         StartAnimations();
 
-
         Thread splash = new Thread() {
             public void run() {
                 try {
@@ -66,7 +58,6 @@ public class SplashScreenActivity extends Activity
         splash.start();
     }
 
-
     private void StartAnimations() {
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
         anim.reset();
@@ -79,9 +70,5 @@ public class SplashScreenActivity extends Activity
         ImageView iv = (ImageView) findViewById(R.id.image_view);
         iv.clearAnimation();
         iv.startAnimation(anim);
-
-
     }
-
-
 }

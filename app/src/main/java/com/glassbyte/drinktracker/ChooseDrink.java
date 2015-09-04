@@ -155,8 +155,8 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         private boolean isLeft;
         private Context mContext;
         private Paint textPaint;
-        private final String LEFT_SIDE_BAR_TEXT = "PRESET DRINKS";
-        private final String RIGHT_SIDE_BAR_TEXT = "CUSTOM DRINKS";
+        private final String LEFT_SIDE_BAR_TEXT = getResources().getString(R.string.preset_drinks);
+        private final String RIGHT_SIDE_BAR_TEXT = getResources().getString(R.string.custom_drinks);
         private final int FONT_SIZE = 60;
 
         public SelectionSideBar(Context c, boolean isLeft){

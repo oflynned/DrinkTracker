@@ -111,5 +111,11 @@
 
     <!--> miscellaneous <-->
     <string name="current_BAC">Current\nBAC:\n</string>
+    <string name="current_BAC_level">Current BAC level:</string>
+    <string name="preset_drinks">PRESET DRINKS</string>
+    <string name="custom_drinks">CUSTOM DRINKS</string>
+    <string name="time">Time</string>
+    <string name="BAC">BAC</string>
+
 
 </resources>

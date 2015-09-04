@@ -46,6 +46,4 @@
     <style name="TranslucentActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@android:color/transparent</item>
     </style>
-
-    <item name="bar" type="id">bar</item>
 </resources>

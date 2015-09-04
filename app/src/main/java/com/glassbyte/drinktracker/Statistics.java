@@ -1,14 +1,13 @@
 package com.glassbyte.drinktracker;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -21,7 +20,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import lecho.lib.hellocharts.model.Axis;
@@ -34,9 +32,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 /**
  * Created by ed on 25/08/15.
  */
-public class Statistics extends Activity implements FloatingActionButton.OnCheckedChangeListener{
-
-    private FloatingActionButton infoButton;
+public class Statistics extends Activity {
 
     double totUnits, maxUnits, maxBAC, avgABV, avgVol, currBAC;
     int orange, calories;
@@ -50,17 +46,14 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
     DrinkTrackerDbHelper drinkTrackerDbHelper;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
         drinkTrackerDbHelper = new DrinkTrackerDbHelper(this);
 
-        orange = getResources().getColor(R.color.orange500);
-
-        infoButton = (FloatingActionButton) findViewById(R.id.infoButton);
-        infoButton.setOnCheckedChangeListener(this);
+        orange = ContextCompat.getColor(this,R.color.orange500);
 
         briefInfo = (TextView) findViewById(R.id.briefInfo);
         rating = (TextView) findViewById(R.id.rating);
@@ -136,8 +129,8 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
     private void setAxes(LineChartData data) {
         Axis axisX = new Axis();
         Axis axisY = new Axis().setHasLines(true);
-        axisX.setName("Time");
-        axisY.setName("BAC");
+        axisX.setName(getResources().getString(R.string.time));
+        axisY.setName(getResources().getString(R.string.BAC));
         data.setAxisXBottom(axisX);
         data.setAxisYLeft(axisY);
     }
@@ -243,7 +236,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
 
         //set current
         double BAC = BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), 3);
-        BACinfo.setText("Current BAC level: " + BAC);
+        BACinfo.setText(getResources().getString(R.string.current_BAC_level) + BAC);
 
         if (BAC >= 0 && BAC < 0.01) {
             //at 0-0.01
@@ -331,7 +324,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    /*@Override
     public void onCheckedChanged(FloatingActionButton fabView, final boolean isChecked) {
         switch (fabView.getId()) {
             case R.id.infoButton:
@@ -353,7 +346,7 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
             default:
                 break;
         }
-    }
+    }*/
 
     private void setAvgABV() {
         //select first row by date fo start of week and sum until it reaches whileNot
@@ -382,7 +375,6 @@ public class Statistics extends Activity implements FloatingActionButton.OnCheck
             } while (cursor.moveToNext());
 
             avgABV = totABV / count;
-            System.out.println("avgABV: " + avgABV);
 
             //close operations and sum
             db.close();
