@@ -56,7 +56,8 @@ public class BloodAlcoholContent {
     }
 
     public static boolean updateCurrentBac(Context context, int updateType){return updateCurrentBac(context, 0, updateType);}
-    public static boolean updateCurrentBac(Context context, float dCurrentBAC, int updateType){
+    public static boolean updateCurrentBac(Context context, float dCurrentBAC, int updateType){return updateCurrentBac(context, dCurrentBAC, updateType, -1);}
+    public static boolean updateCurrentBac(Context context, float dCurrentBAC, int updateType, long drinksId){
         System.out.println("Entered updateCurrentBac with: dCurrentBAC="+dCurrentBAC+"; updateType="+updateType+";");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         DrinkTrackerDbHelper dbHelper = new DrinkTrackerDbHelper(context);
@@ -118,11 +119,11 @@ public class BloodAlcoholContent {
                     long lastUpdateDate = cur.getLong(1);
                     long timeDiffInMin = TimeUnit.MILLISECONDS.convert((newLastUpdateDate - lastUpdateDate), TimeUnit.MINUTES);
 
-                    dCurrentBAC = timeDiffInMin / 60 * (float) ELAPSED_HOUR_FACTOR;
+                    dCurrentBAC = timeDiffInMin / 60 * ELAPSED_HOUR_FACTOR;
                 } else {
                     System.out.println("No DECAY_UPDATE entry in the bacTable yet.");
                     //This will be the first DECAY_UPDATE entry in the database so assume this has happened after 15 minutes
-                    dCurrentBAC = 0.25f * (float)ELAPSED_HOUR_FACTOR;
+                    dCurrentBAC = 0.25f * ELAPSED_HOUR_FACTOR;
                 }
 
                 if (dCurrentBAC < currentBac)
@@ -142,8 +143,15 @@ public class BloodAlcoholContent {
         cv.put(DrinkTrackerDatabase.BacTable.DATE_TIME, newLastUpdateDate);
         cv.put(DrinkTrackerDatabase.BacTable.BAC, newCurrentBac);
         cv.put(DrinkTrackerDatabase.BacTable.UPDATE_TYPE, updateType);
-        writeDb.insert(DrinkTrackerDatabase.BacTable.TABLE_NAME, null, cv);
+        long bacId = writeDb.insert(DrinkTrackerDatabase.BacTable.TABLE_NAME, null, cv);
         //End of Store the newly calculated bac in the DB
+
+        //Enter drink bac relation in the drink_bac_database
+        if (updateType == DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE) {
+            dbHelper.insertDrinkBacRelation(drinksId,bacId);
+        }
+        //End of Enter drink bac relation in the drink_bac_database
+
 
         //Clean up
         readDb.close();

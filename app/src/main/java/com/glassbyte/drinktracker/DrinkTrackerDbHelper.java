@@ -88,12 +88,22 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
         cv.put(DrinkTrackerDatabase.DrinksTable.PERCENTAGE, percentage); //coll 4
         cv.put(DrinkTrackerDatabase.DrinksTable.BAC, bacValue); //coll 5
         cv.put(DrinkTrackerDatabase.DrinksTable.UNITS, units); //col 6
+        long drinkId = sq.insert(DrinkTrackerDatabase.DrinksTable.TABLE_NAME, null, cv);
 
-        BloodAlcoholContent.updateCurrentBac(mContext, bacValue, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
+        BloodAlcoholContent.updateCurrentBac(mContext, bacValue, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE, drinkId);
 
-        return sq.insert(DrinkTrackerDatabase.DrinksTable.TABLE_NAME, null, cv);
+        sq.close();
+
+        return drinkId;
     }
 
+    public void insertDrinkBacRelation(long drinkId, long bacId){
+        SQLiteDatabase writeDb = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID, bacId);
+        cv.put(DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID, drinkId);
+        writeDb.insert(DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME, null, cv);
+    }
 
     public void removeDrinks(Integer[] drinksIds){
         SQLiteDatabase readDB = this.getReadableDatabase();
