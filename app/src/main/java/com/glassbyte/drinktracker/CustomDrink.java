@@ -222,15 +222,13 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
         drinkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double mlVol;
+                int mlVol;
                 if (wineGlass.isChosen)
                     mlVol = ((WineGlass) chosenGlass).getCurrentDrinkVolume();
                 else
                     mlVol = ((DrinkingGlass) chosenGlass).getCurrentDrinkVolume();
 
-                double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(mlVol, alcPercentage);
-                dou.insertNewDrink(chosenGlass.getTitle(), (int)mlVol, alcPercentage, ebac);
-                bloodAlcoholContent.updateCurrentBac(thisActivity, (float) ebac, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
+                dou.insertNewDrink(chosenGlass.getTitle(), mlVol, alcPercentage);
 
                 Vibrator vb = (Vibrator) thisActivity.getSystemService(Context.VIBRATOR_SERVICE);
                 vb.vibrate(100);
@@ -639,7 +637,7 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
             return false;
         }
 
-        public int getCurrentDrinkVolume(){
+        public int getCurrentDrinkVolume() {
             return (int)(((drinkBottomEdgeY - drinkTopEdgeY)/super.getMaxDrinkHeight())*(super.getMlSize()+1));
         }
 

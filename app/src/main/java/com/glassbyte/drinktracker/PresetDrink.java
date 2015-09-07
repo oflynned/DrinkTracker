@@ -32,12 +32,10 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
     SharedPreferences sp;
 
     //for setting input for database
-    private String spUnits;
-    private String units;
-    private String title;
+    private String spUnits, units, title;
 
-    private double alcPercentage = 0;
-    private double alcVolume = 0;
+    private float alcPercentage = 0f;
+    private int alcVolume = 0;
 
     Button setPercentage, setVolume, drink;
     TextView percentageChosen, volChosen;
@@ -104,7 +102,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
                 dialog.setSetVolumeDialogListener(new SetVolumeDialog.SetVolumeDialogListener() {
                     @Override
                     public void onDoneClick(DialogFragment dialog) {
-                        PresetDrink.this.alcVolume = ((SetVolumeDialog) dialog).getVolume();
+                        PresetDrink.this.alcVolume = (int)((SetVolumeDialog) dialog).getVolume();
                         setVolume(alcVolume);
                         volChosen.setText(getVolume() + getUnits());
                         Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
@@ -136,10 +134,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
         drink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                double ebac = bloodAlcoholContent.getEstimatedBloodAlcoholContent(getVolume(), getPercentage());
-                dou.insertNewDrink(getTitle(), (int) getVolume(), getPercentage(), ebac);
-                bloodAlcoholContent.updateCurrentBac(PresetDrink.this.getActivity(), (float) ebac, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
+                dou.insertNewDrink(getTitle(), getVolume(), getPercentage());
                 Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                 vb.vibrate(100);
                 Toast.makeText(getActivity(), "Drink added successfully!", Toast.LENGTH_SHORT).show();
@@ -161,19 +156,19 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
         return title;
     }
 
-    public void setVolume(double alcVolume) {
+    public void setVolume(int alcVolume) {
         this.alcVolume = alcVolume;
     }
 
-    public double getVolume() {
+    public int getVolume() {
         return alcVolume;
     }
 
-    public void setPercentage(double alcPercentage) {
+    public void setPercentage(float alcPercentage) {
         this.alcPercentage = alcPercentage;
     }
 
-    public double getPercentage() {
+    public float getPercentage() {
         return alcPercentage;
     }
 

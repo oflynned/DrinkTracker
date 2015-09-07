@@ -19,38 +19,38 @@ public class BloodAlcoholContent {
     /*
     * This class is based on: http://www.wikihow.com/Calculate-Blood-Alcohol-Content-%28Widmark-Formula%29
     * */
-    public static final double ELAPSED_HOUR_FACTOR = 0.015;
-    private final double DENSITY_OF_ETHANOL = 0.789; //density of ethanol is 0.789g/ml
-    private final double MALE_R = 0.68;
-    private final double FEMALE_R = 0.55;
+    public static final float ELAPSED_HOUR_FACTOR = 0.015f;
+    private final float DENSITY_OF_ETHANOL = 0.789f; //density of ethanol is 0.789g/ml
+    private final float MALE_R = 0.68f;
+    private final float FEMALE_R = 0.55f;
     private SharedPreferences sp;
     private boolean isMan;
-    private double bodyWeight; // in grams
-    private Activity activity;
+    private float bodyWeight; // in grams
+    private Context mContext;
 
-    public BloodAlcoholContent(Activity activity){
-        this.activity = activity;
+    public BloodAlcoholContent(Context context){
+        mContext = context;
 
-        sp = PreferenceManager.getDefaultSharedPreferences(activity);
-        String gender = sp.getString(activity.getString(R.string.pref_key_editGender),"");
+        sp = PreferenceManager.getDefaultSharedPreferences(context);
+        String gender = sp.getString(context.getString(R.string.pref_key_editGender),"");
 
-        this.bodyWeight = Double.valueOf(sp.getString(activity.getString(R.string.pref_key_editWeight), "")) * 1000;
+        this.bodyWeight = Float.valueOf(sp.getString(context.getString(R.string.pref_key_editWeight), "")) * 1000;
         this.isMan = (gender == "male");
     }
 
     // bodyWeight arg must be specified in kilograms
-    public BloodAlcoholContent(boolean isMan, double bodyWeight){
+    public BloodAlcoholContent(boolean isMan, float bodyWeight){
         this.isMan = isMan;
         this.bodyWeight = bodyWeight * 1000; //convert kg's to g's
     }
 
-    public float getCurrentEbac(){return sp.getFloat(activity.getString(R.string.pref_key_currentEbac),0);}
+    public float getCurrentEbac(){return sp.getFloat(mContext.getString(R.string.pref_key_currentEbac),0);}
 
     //The alcVolPercentage arg is to be specified as a real number between 0 and 100
-    public double getEstimatedBloodAlcoholContent(double mlSize, double alcVolPercentage){
-        double volumeOfEthanol = mlSize*alcVolPercentage/100;
-        double massOfAlcohol = volumeOfEthanol * DENSITY_OF_ETHANOL;//in grams
-        double r = isMan ? MALE_R : FEMALE_R;
+    public float getEstimatedBloodAlcoholContent(int mlSize, float alcVolPercentage){
+        float volumeOfEthanol = mlSize*alcVolPercentage/100;
+        float massOfAlcohol = volumeOfEthanol * DENSITY_OF_ETHANOL;//in grams
+        float r = isMan ? MALE_R : FEMALE_R;
 
         return massOfAlcohol/(bodyWeight*r)*100;
     }
