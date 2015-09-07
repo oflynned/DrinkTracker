@@ -89,6 +89,8 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
         cv.put(DrinkTrackerDatabase.DrinksTable.BAC, bacValue); //coll 5
         cv.put(DrinkTrackerDatabase.DrinksTable.UNITS, units); //col 6
 
+        BloodAlcoholContent.updateCurrentBac(mContext, bacValue, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE);
+
         return sq.insert(DrinkTrackerDatabase.DrinksTable.TABLE_NAME, null, cv);
     }
 
