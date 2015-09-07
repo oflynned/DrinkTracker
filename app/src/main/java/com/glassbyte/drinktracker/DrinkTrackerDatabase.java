@@ -32,4 +32,10 @@ public class DrinkTrackerDatabase {
         public static final int INSERT_NEW_UPDATE = 0;
         public static final int DECAY_UPDATE = 1;
     }
+
+    public static abstract class DrinksBacRelationTable implements BaseColumns {
+        public static final String TABLE_NAME = "dirnk_bac_relations";
+        public static final String BAC_ID = "bac_id"; //int
+        public static final String DRINK_ID = "drink_id"; //int
+    }
 }

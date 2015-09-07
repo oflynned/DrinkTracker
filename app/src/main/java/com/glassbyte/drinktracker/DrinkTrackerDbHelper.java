@@ -37,9 +37,23 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                     DrinkTrackerDatabase.BacTable.DATE_TIME + " INTEGER," +
                     DrinkTrackerDatabase.BacTable.BAC + " TEXT," +
                     DrinkTrackerDatabase.BacTable.UPDATE_TYPE+ " INTEGER);";
+    private String CREATE_DRINKS_BAC_RELATIONS_QUERY =
+            "CREATE TABLE " +
+                    DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME + "(" +
+                    DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID + " INTEGER NOT NULL," +
+                    DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID + " INTEGER NOT NULL," +
+                    "PRIMARY KEY(" + DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID + "," +
+                    DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID+ "), " +
+                    "FOREIGN KEY (" + DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID + ") REFERENCES " +
+                    DrinkTrackerDatabase.BacTable.TABLE_NAME + "(" +
+                    DrinkTrackerDatabase.BacTable._ID + ")," +
+                    "FOREIGN KEY (" + DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID + ") REFERENCES " +
+                    DrinkTrackerDatabase.DrinksTable.TABLE_NAME + " (" + DrinkTrackerDatabase.DrinksTable._ID +"));";
+
 
     private String DELETE_DRINKS_TABLE_QUERY = "DROP TABLE IF EXISTS " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
     private String DELETE_BAC_TABLE_QUERY = "DROP TABLE IF EXISTS " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+    private String DELETE_DRINKS_BAC_RELATIONS_QUERY = "DROP TABLE IF EXISTS " + DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME;
 
     public DrinkTrackerDbHelper(Context context) {
         //constructor
@@ -51,12 +65,14 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_DRINKS_TABLE_QUERY); //create table query
         db.execSQL(CREATE_BAC_TABLE_QUERY);
+        db.execSQL(CREATE_DRINKS_BAC_RELATIONS_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DELETE_DRINKS_TABLE_QUERY);
         db.execSQL(DELETE_BAC_TABLE_QUERY);
+        db.execSQL(DELETE_DRINKS_BAC_RELATIONS_QUERY);
         onCreate(db);
         /*
         * FOR RELEASE VERSION THIS IMPLEMENTATION SHOULD BE MODIFIED SO THAT ANY DATA FROM THE ALREADY
@@ -151,17 +167,5 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
         e.apply();
         writeDB.close();
         readDB.close();
-    }
-
-    public static String getDateTime() {
-        DateFormat dateFormat = new SimpleDateFormat(STR_DATE_FORMAT, DATE_LOCALE);
-        Date date = new Date();
-        return dateFormat.format(date);
-    }
-
-    //returns difference in minutes
-    public static long getDateDiff(Date date1, Date date2) {
-        long diffInMillies = date2.getTime() - date1.getTime();
-        return TimeUnit.MILLISECONDS.toMinutes(diffInMillies);
     }
 }
