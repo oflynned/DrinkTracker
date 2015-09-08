@@ -10,16 +10,19 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.Transformation;
@@ -124,6 +127,43 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         final FloatingActionButton fab1 = new FloatingActionButton(getContext());
         final FloatingActionButton fab2 = new FloatingActionButton(getContext());
 
+        //get phone's width and height programmatically
+        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+
+        //menu.setBackgroundColor(getResources().getColor(R.color.cyan500));
+        RelativeLayout.LayoutParams fabParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        //RelativeLayout.LayoutParams fabParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        fabParams.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
+        fabParams.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
+        fabParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        fabParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        fabParams.setMargins(0, 0, (width * 10) / 45, 16);
+        menu.setId(View.generateViewId());
+
+        RelativeLayout.LayoutParams paramsFAB1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsFAB1.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
+        paramsFAB1.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
+        paramsFAB1.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        paramsFAB1.addRule(RelativeLayout.ABOVE, menu.getId());
+        paramsFAB1.setMargins(0, 0, 0, 16);
+        fab1.setLayoutParams(paramsFAB1);
+        fab1.setId(View.generateViewId());
+
+        RelativeLayout.LayoutParams paramsFAB2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsFAB2.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
+        paramsFAB1.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
+        paramsFAB1.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        paramsFAB1.addRule(RelativeLayout.ABOVE, fab1.getId());
+        paramsFAB2.setMargins(0, 0, 0, 16);
+        fab2.setLayoutParams(paramsFAB2);
+        fab2.setId(View.generateViewId());
+
         menu.setMenuButtonColorRipple(getResources().getColor(R.color.orange300));
         menu.setMenuButtonColorNormal(getResources().getColor(R.color.orange500));
         menu.setMenuButtonColorPressed(getResources().getColor(R.color.orange700));
@@ -131,26 +171,23 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         menu.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                menu.toggle(true);
+                menu.toggle(false);
             }
         });
 
         fab1.setButtonSize(FloatingActionButton.SIZE_NORMAL);
         fab1.setLabelText("Graphs & Effects");
         fab1.setImageResource(R.drawable.ic_action_clock);
-        menu.addMenuButton(fab1);
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //open graph
-                Toast.makeText(getContext(), fab1.getLabelText(), Toast.LENGTH_SHORT).show();
+
             }
         });
 
         fab2.setButtonSize(FloatingActionButton.SIZE_NORMAL);
         fab2.setLabelText("Detailed Stats");
         fab2.setImageResource(R.drawable.ic_action_info);
-        menu.addMenuButton(fab2);
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,13 +210,13 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             }
         });
 
-        menu.invalidate();
-        RelativeLayout.LayoutParams fabParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-        fabParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        fabParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        fabParams.setMargins(0, 0, 0, 16);
         menu.setLayoutParams(fabParams);
+        menu.addMenuButton(fab1);
+        menu.addMenuButton(fab2);
+
         menu.setClosedOnTouchOutside(true);
+        menu.hideMenuButton(false);
+
         menus.add(menu);
 
         int delay = 400;
