@@ -47,8 +47,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <CheckBox
+                android:id="@+id/drinks_list_select_all_cb"
                 android:background="@drawable/table_cell"
-                android:gravity="center"/>
+                android:gravity="center" />
             <TextView
                 android:text="DATE"
                 android:layout_height="match_parent"

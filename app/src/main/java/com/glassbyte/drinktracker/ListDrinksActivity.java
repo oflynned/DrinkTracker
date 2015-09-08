@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class ListDrinksActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -58,6 +60,24 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
         readDB = dtDb.getReadableDatabase();
 
         populateTable();
+
+        CheckBox selectAllCb = (CheckBox)findViewById(R.id.drinks_list_select_all_cb);
+        selectAllCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    boolean allAlreadyChecked = true;
+                    Iterator<CheckBox> itr = checkBoxes.iterator();
+                    while (itr.hasNext())
+                        itr.next().setChecked(true);
+
+                } else {
+                    Iterator<CheckBox> itr = checkBoxes.iterator();
+                    while (itr.hasNext())
+                        itr.next().setChecked(false);
+                }
+            }
+        });
     }
 
     //returns true if the table was populate with one or more entries
