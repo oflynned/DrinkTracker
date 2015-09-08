@@ -37,5 +37,6 @@ public class DrinkTrackerDatabase {
         public static final String TABLE_NAME = "dirnk_bac_relations";
         public static final String BAC_ID = "bac_id"; //int
         public static final String DRINK_ID = "drink_id"; //int
+        public static final String BAC_AMT = "bac_amt"; //float
     }
 }

@@ -33,6 +33,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                     DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME + "(" +
                     DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID + " INTEGER NOT NULL," +
                     DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID + " INTEGER NOT NULL," +
+                    DrinkTrackerDatabase.DrinksBacRelationTable.BAC_AMT + " REAL NOT NULL," +
                     "PRIMARY KEY(" + DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID + "," +
                     DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID+ "), " +
                     "FOREIGN KEY (" + DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID + ") REFERENCES " +

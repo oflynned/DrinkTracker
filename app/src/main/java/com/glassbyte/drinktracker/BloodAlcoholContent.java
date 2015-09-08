@@ -10,6 +10,8 @@ import android.preference.PreferenceManager;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -149,6 +151,43 @@ public class BloodAlcoholContent {
         //Enter drink bac relation in the drink_bac_database
         if (updateType == DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE) {
             dbHelper.insertDrinkBacRelation(drinksId,bacId);
+        } else if (updateType == DrinkTrackerDatabase.BacTable.DECAY_UPDATE) {
+            ArrayList<Long> affectedDrinksId = new ArrayList<>();
+            ArrayList<Float> affectedDrinksBac = new ArrayList<>();
+
+            String q = "SELECT * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME + " ORDER BY("
+                    + DrinkTrackerDatabase.DrinksTable.DATE_TIME + ") DESC;";
+            Cursor cur = readDb.rawQuery(q, null);
+            if (cur.getCount() <= 0)
+                return false;
+            cur.moveToFirst();
+
+            //Start of store all the ids of the drinks which are being affected by the bac update and bac amt of how affected they are
+            float drinkBac = cur.getFloat(5);
+            while (dCurrentBAC-drinkBac <= 0){
+                newCurrentBac-=drinkBac;
+
+                affectedDrinksId.add(cur.getLong(0));
+                affectedDrinksBac.add(drinkBac);
+
+                cur.moveToNext();
+                drinkBac = cur.getFloat(5);
+            }
+            if (dCurrentBAC > 0) {
+                affectedDrinksBac.add(dCurrentBAC);
+                affectedDrinksId.add(cur.getLong(0));
+            }
+            //End of store all the ids of the drinks which are being affected by the bac update and bac amt of how affected they are
+
+            //Insert all of the relations between the drinks and the bac update into the relation table
+            for(int i = 0; i < affectedDrinksBac.size(); i++){
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID, affectedDrinksId.get(i));
+                contentValues.put(DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID, bacId);
+                contentValues.put(DrinkTrackerDatabase.DrinksBacRelationTable.BAC_AMT, affectedDrinksBac.get(i));
+                writeDb.insert(DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME, null, contentValues);
+            }
+            //End of Insert all of the relations between the drinks and the bac update into the relation table
         }
         //End of Enter drink bac relation in the drink_bac_database
 
