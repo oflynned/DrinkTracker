@@ -238,6 +238,23 @@ public class Statistics extends Activity {
         double BAC = BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), 3);
         BACinfo.setText(getResources().getString(R.string.current_BAC_level) + BAC);
 
+        setWarning(BAC);
+
+        //set weekly
+        briefInfo.setText(getResources().getString(R.string.pollunits) +
+                "\n" + getTotalUnits() + "/" + getMaxUnits() + " " +
+                getResources().getString(R.string.units));
+
+        if (getTotalUnits() <= getMaxUnits()) {
+            rating.setTextColor(Color.GREEN);
+            rating.setText(R.string.belowlimit);
+        } else if (getTotalUnits() > getMaxUnits()) {
+            rating.setTextColor(Color.RED);
+            rating.setText(R.string.abovelimit);
+        }
+    }
+
+    public void setWarning(double BAC){
         if (BAC >= 0 && BAC < 0.01) {
             //at 0-0.01
             BACrating.setText(R.string.tier0);
@@ -287,19 +304,6 @@ public class Statistics extends Activity {
             BACrating.setText(R.string.tier11);
             BACrating.setTextColor(Color.RED);
         }
-
-        //set weekly
-        briefInfo.setText(getResources().getString(R.string.pollunits) +
-                "\n" + getTotalUnits() + "/" + getMaxUnits() + " " +
-                getResources().getString(R.string.units));
-
-        if (getTotalUnits() <= getMaxUnits()) {
-            rating.setTextColor(Color.GREEN);
-            rating.setText(R.string.belowlimit);
-        } else if (getTotalUnits() > getMaxUnits()) {
-            rating.setTextColor(Color.RED);
-            rating.setText(R.string.abovelimit);
-        }
     }
 
     @Override
@@ -323,30 +327,6 @@ public class Statistics extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    /*@Override
-    public void onCheckedChanged(FloatingActionButton fabView, final boolean isChecked) {
-        switch (fabView.getId()) {
-            case R.id.infoButton:
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.detailed_stats_title)
-                        .setMessage(
-                                getResources().getString(R.string.avg_drink_strength) + "\n" + getAvgABV() + "%" + "\n\n" +
-                                        getResources().getString(R.string.avg_drink_volume) + "\n" + getAvgVol() + getUnits() + "\n\n" +
-                                        getResources().getString(R.string.avg_calories) + "\n" + getCalories() + " " + getResources().getString(R.string.calories) + "\n\n" +
-                                        getResources().getString(R.string.max_bac) + "\n" + getMaxBAC()
-                        )
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        })
-                        .show();
-                break;
-            default:
-                break;
-        }
-    }*/
 
     private void setAvgABV() {
         //select first row by date fo start of week and sum until it reaches whileNot
@@ -423,15 +403,15 @@ public class Statistics extends Activity {
         }
     }
 
-    private double getAvgVol() {
+    protected double getAvgVol() {
         return avgVol;
     }
 
-    private double getAvgABV() {
+    protected double getAvgABV() {
         return avgABV;
     }
 
-    private double getMaxBAC() {
+    protected double getMaxBAC() {
         return maxBAC;
     }
 
@@ -455,7 +435,7 @@ public class Statistics extends Activity {
         }
     }
 
-    private String getUnits() {
+    protected String getUnits() {
         return units;
     }
 
@@ -471,7 +451,7 @@ public class Statistics extends Activity {
         this.calories = calories;
     }
 
-    private double getCalories() {
+    protected double getCalories() {
         return calories;
     }
 }

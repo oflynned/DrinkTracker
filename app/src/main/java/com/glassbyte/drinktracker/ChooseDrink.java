@@ -3,16 +3,18 @@ package com.glassbyte.drinktracker;
 * To do:
 * -change all the fonts and dimensions to be expressed in dp or dpi
 * */
-import android.annotation.TargetApi;
+
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,6 +26,13 @@ import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -33,10 +42,10 @@ import android.widget.TextView;
 public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private SelectionSideBar leftSideBar, rightSideBar;
-    private TextView bacDisplay, pbBAC;
+    private TextView bacDisplay, pbBAC, warningText;
     private final int BAC_DECIMAL_PLACES = 4;
-    private final int BAC_FONT_SIZE= 40;
-    private final int BAC_FONT_SIZE_SMALL= 30;
+    private final int BAC_FONT_SIZE = 40;
+    private final int BAC_FONT_SIZE_SMALL = 30;
     private final int SIDE_BAR_WIDTH = 200;
     private final int PROGESS_BAR_RATIO = 300;
     private BloodAlcoholContent bloodAlcoholContent;
@@ -45,7 +54,9 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     int progress;
 
     CustomProgressBar customProgressBar;
-    FloatingActionButton stats, detailed_stats;
+
+    private List<FloatingActionMenu> menus = new ArrayList<>();
+    private Handler mUiHandler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +71,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         /*End of Set up the BloodAlcoholLevel object*/
 
         RelativeLayout rl = new RelativeLayout(this.getActivity());
-        rl.setBackgroundColor(Color.WHITE);
+        rl.setBackgroundColor(getResources().getColor(R.color.orange100));
 
         leftSideBar = new SelectionSideBar(this.getActivity(), true);
         rightSideBar = new SelectionSideBar(this.getActivity(), false);
@@ -76,7 +87,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         rightSideBar.setId(View.generateViewId());
 
         customProgressBar = new CustomProgressBar(this.getActivity(), null, android.R.style.Widget_DeviceDefault_ProgressBar);
-        RelativeLayout.LayoutParams customProgressBarParam = new RelativeLayout.LayoutParams(500,500);
+        RelativeLayout.LayoutParams customProgressBarParam = new RelativeLayout.LayoutParams(500, 500);
         customProgressBarParam.addRule(RelativeLayout.CENTER_IN_PARENT);
         int progress = (int) (bloodAlcoholContent.getCurrentEbac() * 200);
         customProgressBar.setProgress(progress);
@@ -90,32 +101,109 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         bacDisplay.setTextColor(Color.BLACK);
         bacDisplay.setGravity(Gravity.CENTER);
         bacDisplay.setText(getResources().getString(R.string.current_BAC));
-        RelativeLayout.LayoutParams bacDisplayParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams bacDisplayParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         bacDisplayParams.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
         bacDisplayParams.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
         bacDisplayParams.addRule(RelativeLayout.ABOVE, customProgressBar.getId());
         bacDisplayParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         bacDisplay.setLayoutParams(bacDisplayParams);
+        bacDisplay.setId(View.generateViewId());
 
         pbBAC = new TextView(this.getActivity());
         pbBAC.setTextSize(BAC_FONT_SIZE_SMALL);
         pbBAC.setTextColor(Color.BLACK);
         pbBAC.setGravity(Gravity.CENTER);
         pbBAC.setText("" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
-        RelativeLayout.LayoutParams pbBACParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams pbBACParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         pbBACParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         pbBAC.setLayoutParams(pbBACParams);
+        pbBAC.setId(View.generateViewId());
 
-        bacDisplay.invalidate();
+        //fab layout
+        final FloatingActionMenu menu = new FloatingActionMenu(getContext());
+        final FloatingActionButton fab1 = new FloatingActionButton(getContext());
+        final FloatingActionButton fab2 = new FloatingActionButton(getContext());
+
+        menu.setMenuButtonColorRipple(getResources().getColor(R.color.orange300));
+        menu.setMenuButtonColorNormal(getResources().getColor(R.color.orange500));
+        menu.setMenuButtonColorPressed(getResources().getColor(R.color.orange700));
+
+        menu.setOnMenuButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menu.toggle(true);
+            }
+        });
+
+        fab1.setButtonSize(FloatingActionButton.SIZE_NORMAL);
+        fab1.setLabelText("Graphs & Effects");
+        fab1.setImageResource(R.drawable.ic_action_clock);
+        menu.addMenuButton(fab1);
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //open graph
+                Toast.makeText(getContext(), fab1.getLabelText(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        fab2.setButtonSize(FloatingActionButton.SIZE_NORMAL);
+        fab2.setLabelText("Detailed Stats");
+        fab2.setImageResource(R.drawable.ic_action_info);
+        menu.addMenuButton(fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //open dialog of stats
+                Statistics statistics = new Statistics();
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(R.string.detailed_stats_title)
+                        .setMessage(
+                                getResources().getString(R.string.avg_drink_strength) + "\n" + statistics.getAvgABV() + "%" + "\n\n" +
+                                        getResources().getString(R.string.avg_drink_volume) + "\n" + statistics.getAvgVol() + statistics.getUnits() + "\n\n" +
+                                        getResources().getString(R.string.avg_calories) + "\n" + statistics.getCalories() + " " + getResources().getString(R.string.calories) + "\n\n" +
+                                        getResources().getString(R.string.max_bac) + "\n" + statistics.getMaxBAC()
+                        )
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .show();
+            }
+        });
+
+        menu.invalidate();
+        RelativeLayout.LayoutParams fabParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        fabParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        fabParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        fabParams.setMargins(0, 0, 0, 16);
+        menu.setLayoutParams(fabParams);
+        menu.setClosedOnTouchOutside(true);
+        menus.add(menu);
+
+        int delay = 400;
+        for (final FloatingActionMenu menu0 : menus) {
+            mUiHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    menu0.showMenuButton(true);
+                }
+            }, delay);
+            delay += 150;
+        }
 
         rl.addView(leftSideBar);
         rl.addView(rightSideBar);
         rl.addView(bacDisplay);
         rl.addView(customProgressBar);
         rl.addView(pbBAC);
+        rl.addView(menu);
+
+        bacDisplay.invalidate();
 
         progress = (int) (bloodAlcoholContent.getCurrentEbac() * PROGESS_BAR_RATIO);
-        if(progress < 75){
+        if (progress < 75) {
             customProgressBar.setProgress(progress);
             startAnimation(progress);
         } else {
@@ -139,7 +227,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         if (s == this.getString(R.string.pref_key_currentEbac)) {
             pbBAC.setText("" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
             progress = (int) (bloodAlcoholContent.getCurrentEbac() * PROGESS_BAR_RATIO);
-            if(progress < 75){
+            if (progress < 75) {
                 customProgressBar.setProgress(progress);
                 startAnimation(progress);
             } else {
@@ -151,7 +239,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         }
     }
 
-    public class SelectionSideBar extends View{
+    public class SelectionSideBar extends View {
         private boolean isLeft;
         private Context mContext;
         private Paint textPaint;
@@ -159,21 +247,22 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         private final String RIGHT_SIDE_BAR_TEXT = getResources().getString(R.string.custom_drinks);
         private final int FONT_SIZE = 60;
 
-        public SelectionSideBar(Context c, boolean isLeft){
+        public SelectionSideBar(Context c, boolean isLeft) {
             super(c);
             mContext = c;
             this.isLeft = isLeft;
 
             //lollipop method of calling
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                if(isLeft)
+                if (isLeft) {
                     this.setBackground(c.getDrawable(R.drawable.choose_drink_left_side_bg));
-                else
+                } else {
                     this.setBackground(c.getDrawable(R.drawable.choose_drink_right_side_bg));
+                }
             }
             //for under lollipop using deprecation
-            else{
-                if(isLeft)
+            else {
+                if (isLeft)
                     this.setBackground(c.getResources().getDrawable(R.drawable.choose_drink_left_side_bg));
                 else
                     this.setBackground(c.getResources().getDrawable(R.drawable.choose_drink_right_side_bg));
@@ -186,23 +275,24 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         }
 
         @Override
-        protected void onDraw(Canvas c){
+        protected void onDraw(Canvas c) {
             super.onDraw(c);
 
-            if(isLeft) {
+            if (isLeft) {
                 float textWidth = textPaint.measureText(LEFT_SIDE_BAR_TEXT);
-                c.translate(SIDE_BAR_WIDTH/2-FONT_SIZE/2, this.getHeight()/2-textWidth/2);
+                c.translate(SIDE_BAR_WIDTH / 2 - FONT_SIZE / 2, this.getHeight() / 2 - textWidth / 2);
                 c.rotate(90);
                 c.drawText(LEFT_SIDE_BAR_TEXT, 0, 0, textPaint);
             } else {
                 float textWidth = textPaint.measureText(RIGHT_SIDE_BAR_TEXT);
-                c.translate(SIDE_BAR_WIDTH/2+FONT_SIZE/2, this.getHeight()/2+textWidth/2);
+                c.translate(SIDE_BAR_WIDTH / 2 + FONT_SIZE / 2, this.getHeight() / 2 + textWidth / 2);
                 c.rotate(-90);
-                c.drawText(RIGHT_SIDE_BAR_TEXT,0,0, textPaint);
+                c.drawText(RIGHT_SIDE_BAR_TEXT, 0, 0, textPaint);
             }
             c.restore();
         }
     }
+
     public class CustomProgressBar extends ProgressBar {
         public CustomProgressBar(Context paramContext) {
             super(paramContext);

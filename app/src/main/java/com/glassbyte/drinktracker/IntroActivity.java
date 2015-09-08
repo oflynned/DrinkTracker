@@ -1,10 +1,12 @@
 package com.glassbyte.drinktracker;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,8 +31,24 @@ public class IntroActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
-
         thisActivity = this;
+
+        //so we don't get our asses sued
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.disclaimertitle)
+                .setMessage(R.string.disclaimerbody)
+                .setPositiveButton(R.string.agree, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setNegativeButton(R.string.disagree, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        thisActivity.finish();
+                        finishAffinity();
+                    }
+                })
+                .show();
 
         cmHeight = (EditText)findViewById(R.id.heightET);
         feetHeight = (EditText)findViewById(R.id.feetHeightET);
@@ -87,18 +105,18 @@ public class IntroActivity extends Activity {
                         } else if (iHeight.length() == 0) {
                             Toast.makeText(getBaseContext(), "Please fill in height (inches)", Toast.LENGTH_SHORT).show();
                         } else {
-                            int kgWeight = (int)BloodAlcoholContent.round(
+                            int kgWeight = (int) BloodAlcoholContent.round(
                                     BloodAlcoholContent.MetricSystemConverter.convertPoundsToKilograms(
                                             Integer.parseInt(weight)
-                                    ),0);
+                                    ), 0);
 
                             double[] feetAndInches = new double[2];
                             feetAndInches[0] = Double.parseDouble(fHeight);
                             feetAndInches[1] = Double.parseDouble(iHeight);
 
-                            int cmHeight = (int)BloodAlcoholContent.round(
+                            int cmHeight = (int) BloodAlcoholContent.round(
                                     BloodAlcoholContent.MetricSystemConverter.convertFeetAndInchesToCm(
-                                            feetAndInches),0);
+                                            feetAndInches), 0);
 
                             editor.putString(getResources().getString(R.string.pref_key_run), "true");
                             editor.putString(getResources().getString(R.string.pref_key_editGender), gender);
@@ -116,6 +134,11 @@ public class IntroActivity extends Activity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
     }
 
     public void onRadioButtonClickedGender(View view) {
