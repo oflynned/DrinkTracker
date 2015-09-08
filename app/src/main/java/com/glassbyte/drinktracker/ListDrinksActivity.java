@@ -82,6 +82,7 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
 
     //returns true if the table was populate with one or more entries
     public boolean populateTable(){
+        checkBoxes.clear();
         Button prevB = (Button)findViewById(R.id.drinks_list_prev_button);
         if (currentPage == 0)
             prevB.setEnabled(false);
@@ -199,7 +200,15 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
     }
 
     public void removeSelected(View view){
-
+        ArrayList<Integer> drinksIds = new ArrayList<>();
+        Iterator<CheckBox> itr = checkBoxes.iterator();
+        while (itr.hasNext()) {
+            CheckBox cb = itr.next();
+            if (cb.isChecked()) {
+                drinksIds.add(cb.getId());
+            }
+        }
+        dtDb.removeDrinks(drinksIds.toArray(new Integer[drinksIds.size()]));
     }
 
     @Override
