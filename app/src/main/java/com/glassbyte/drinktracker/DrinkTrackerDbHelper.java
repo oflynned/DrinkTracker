@@ -2,6 +2,7 @@ package com.glassbyte.drinktracker;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.util.Locale;
@@ -41,9 +42,12 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                     DrinkTrackerDatabase.DrinksTable.TABLE_NAME + " (" + DrinkTrackerDatabase.DrinksTable._ID +"));";
 
 
-    private String DELETE_DRINKS_TABLE_QUERY = "DROP TABLE IF EXISTS " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
-    private String DELETE_BAC_TABLE_QUERY = "DROP TABLE IF EXISTS " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
-    private String DELETE_DRINKS_BAC_RELATIONS_QUERY = "DROP TABLE IF EXISTS " + DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME;
+    private String DELETE_DRINKS_TABLE_QUERY = "DROP TABLE IF EXISTS "
+            + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
+    private String DELETE_BAC_TABLE_QUERY = "DROP TABLE IF EXISTS "
+            + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+    private String DELETE_DRINKS_BAC_RELATIONS_QUERY = "DROP TABLE IF EXISTS "
+            + DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME;
 
     public DrinkTrackerDbHelper(Context context) {
         //constructor
@@ -89,7 +93,8 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
         cv.put(DrinkTrackerDatabase.DrinksTable.UNITS, units); //col 6
         long drinkId = sq.insert(DrinkTrackerDatabase.DrinksTable.TABLE_NAME, null, cv);
 
-        BloodAlcoholContent.updateCurrentBac(mContext, bacValue, DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE, drinkId);
+        BloodAlcoholContent.updateCurrentBac(mContext, bacValue,
+                DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE, drinkId);
 
         sq.close();
 
@@ -104,9 +109,46 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
         writeDb.insert(DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME, null, cv);
     }
 
-    public void removeDrinks(Integer[] drinksIds){
+    public void removeDrinks(Long[] drinksIds){
         SQLiteDatabase readDB = this.getReadableDatabase();
         SQLiteDatabase writeDB = this.getWritableDatabase();
+
+        String deleteFromDrinksTableQuery = "DELETE * FROM "
+                + DrinkTrackerDatabase.DrinksTable.TABLE_NAME + " WHERE "
+                + DrinkTrackerDatabase.DrinksTable._ID + "=";
+        String deleteFromDrinkBacRelationTableQuery = "DELETE * FROM " +
+                DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME + " WHERE " +
+                DrinkTrackerDatabase.DrinksTable._ID + "=";
+        String oldestDrinkIdQuery = "SELECT * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME
+                + " WHERE " + DrinkTrackerDatabase.DrinksTable.DATE_TIME + "=(SELECT max("
+                + DrinkTrackerDatabase.DrinksTable.DATE_TIME + ") FROM TABLE WHERE ("; // close off with 2 brackets
+        for (long drinkId:
+             drinksIds) {
+            oldestDrinkIdQuery += DrinkTrackerDatabase.DrinksTable._ID + "=" + drinkId + " OR ";
+        }
+        oldestDrinkIdQuery += "1=0))"; //1=0 to ignore the last dot that is added after the last OR id=x
+
+        //Remove all the entries from the bac table that are younger then the oldest drink being removed
+        Cursor c =readDB.rawQuery(oldestDrinkIdQuery, null);
+        c.moveToFirst();
+        long date = c.getLong(1);
+        String deleteAllOlder = "DELETE * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME + " WHERE "
+                + DrinkTrackerDatabase.BacTable.DATE_TIME + ">" + Long.toString(date);
+        writeDB.execSQL(deleteAllOlder);
+        //End of Remove all the entries from the bac table that are younger then the oldest drink being removed
+
+        //Remove all the appriopiate entries from the drinks table and the relation table
+        for (long drinkId:
+             drinksIds) {
+            String query = deleteFromDrinksTableQuery + drinkId;
+            writeDB.execSQL(query);
+
+            query = deleteFromDrinkBacRelationTableQuery + drinkId;
+            writeDB.execSQL(query);
+        }
+        //End of Remove all the appriopiate entries from the drinks table and the relation table
+
+
         writeDB.close();
         readDB.close();
     }
