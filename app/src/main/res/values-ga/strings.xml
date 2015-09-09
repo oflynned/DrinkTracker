@@ -1,0 +1,120 @@
+<resources>
+    <string name="app_name">RianúAlcóil</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Socruithe</string>
+    <string name="action_aboutus">Fúinn</string>
+    <string name="action_listDrinks">Liostáil Deochanna</string>
+    <string name="action_stats">Staitisticí</string>
+    <string name="action_removeads">Bain Fógraí De</string>
+
+    <!-- Intro Screen -->
+        <string name="pref_key_run">pref_key_run</string>
+
+    <!-- Preferences -->
+    <string name="pref_key_contact">pref_key_contact</string>
+    <string name="pref_key_editGender">pref_key_editGender</string>
+    <string name="pref_key_editWeight">pref_key_editWeight</string>
+    <string name="pref_key_editUnits">pref_key_editUnits</string>
+    <string name="pref_key_editHeight">pref_key_editHeight</string>
+    <string name="pref_key_dataCollection">pref_key_dataCollection</string>
+    <string name="pref_key_dataCollectionPermission">pref_key_dataCollectionPermission</string>
+    <string name="pref_key_currentEbac">pref_key_currentEbac</string>
+    <string name="pref_key_storage_settings">pref_key_storage_settings</string>
+    <string name="pref_key_editFeet">pref_key_editFeet</string>
+    <string name="pref_key_editInches">pref_key_editInches</string>
+    <string name="pref_key_last_update_currentEbac">pref_key_last_update_currentEbac</string>
+    <string name="pref_key_maxBAC">pref_key_maxBAC</string>
+
+    <!-- End of Preferences -->
+
+    <!--Custom Drinks Titles-->
+    <string name="shot_glass_title">Gloinne Dhiúrnán</string>
+    <string name="water_glass_title">Gloinne</string>
+    <string name="pint_glass_title">Gloinne Phionta</string>
+    <string name="wine_glass_title">Gloinne Fhíona</string>
+    <!-- End of Custom Drinks Titles -->
+
+    <!--Custom Drinks SetPercentage Dialog-->
+    <string name="setPercentage_dialog_title">Suigh an Céatadán</string>
+    <string name="setVolume_dialog_title">Suigh an Toirt</string>
+    <string name="cancel">Ceallaigh</string>
+    <string name="done">Críochnaithe</string>
+    <!--End of Custom Drinks SetPercentage Dialog-->
+
+    <string-array name="optgender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="optunits">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+
+    <!-->types of drinks<-->
+    <string-array name="drinks">
+        <item>""</item>
+        <item>Beoir</item>
+        <item>Lágar</item>
+        <item>Leann Dubh</item>
+        <item>Leann</item>
+        <item>Leann Úll</item>
+        <item>Mianra Meisciúil</item>
+        <item>Manglam</item>
+    </string-array>
+
+    <!-->types of drinks<-->
+    <string-array name="period">
+        <item>Anois díreach</item>
+        <item>Aréir</item>
+        <item>An tseachtain seo caite</item>
+        <item>An mhí seo caite</item>
+        <item>An t-am ar fad</item>
+    </string-array>
+
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_list_drinks">ListDrinksActivity</string>
+
+    <!--> disclaimer <-->
+    <string name="disclaimertitle">Séanadh</string>
+    <string name="disclaimerbody">Cuimhnigh led thoil nach ach neastachán den chéatadán an alcóil san fhuil (CAF) í an aip RianúAlcóil, agus ní í a chur in úsáid in ionad scrúdú anáileadáin. Níl an chomhlacht GlassByte freagrach d\'aon ghníomh a tharlaíonn fad is atá an úsáideoir faoi mheisce. Tiomáin go freagrach led thoil, agus fan sabháilte faoi thionchar an alcóil. De bheith ag úsáid na h-aipe seo, aontaíonn tú cloí leis an réamhrabhadh seo.</string>
+    <string name="agree">Aontaím leis</string>
+    <string name="disagree">Ní aontaím leis</string>
+
+    <!--> dialog warnings <-->
+    <string name="tier0">Sóbráilte.</string>
+    <string name="tier1">Mildly relaxed and no loss of coordination.</string>
+    <string name="tier2">Slight impairment, lowered inhibitions, lowered caution, exaggeration of behaviour.</string>
+    <string name="tier3">Mild impairment of balance, speech, vision and reaction time.</string>
+    <string name="tier4">Significant impairment of coordination, loss of judgement, and feeling of euphoria.</string>
+    <string name="tier5">Lack of physical control, loss of balance, and blurring of vision. Reduced euphoria and increased dysphoria. Severe impairment of perception and judgement.</string>
+    <string name="tier6">Intensifying of dysphoria, increase in nausea, appears &quot;more sloppy&quot;.</string>
+    <string name="tier7">Dazed, confusion, disorientation. May not feel pain if injured. Nausea and vomiting experienced around this level. Gag reflex may be impaired. Blackouts are more likely from this point.</string>
+    <string name="tier8">Severe impairment of all sensory, physical and mental functions. Increased risk of asphyxiation by vomiting and injury.</string>
+    <string name="tier9">Drunken stupor - you have little comprehension of where you are. Passing out and difficulty to be awoken is very likely.</string>
+    <string name="tier10">Equivalent to surgical level anaesthesia.</string>
+    <string name="tier11">Onset of coma and possible death due to respiratory arrest.</string>
+
+    <!--> unit warnings <-->
+    <string name="pollunits">Aonaid ólta go h-iomlán an tseachtain seo:</string>
+    <string name="units">aonad</string>
+    <string name="belowlimit">Faoin teoireann molta na seachtaine.</string>
+    <string name="abovelimit">Ag ól an-iomarca!</string>
+
+    <!--> detailed stats <-->
+    <string name="detailed_stats_title">Mionstaitisticí</string>
+    <string name="avg_drink_strength">Treise mheánach na ndeochanna:</string>
+    <string name="avg_drink_volume">Toirt mheánach na ndeochanna:</string>
+    <string name="avg_calories">Luach calrach d\'alcól an tseachtain seo:</string>
+    <string name="max_bac">CAF is mó curtha i gcrích:</string>
+    <string name="calories">calraí</string>
+
+    <!--> miscellaneous <-->
+    <string name="current_BAC">CAF\nReatha:\n</string>
+    <string name="current_BAC_level">Céim ChAF Reatha:</string>
+    <string name="preset_drinks">DEOCHANNA RÉAMHSHOCRAITHE</string>
+    <string name="custom_drinks">DEOCHANNA SAINCHEAPTHA</string>
+    <string name="time">Am</string>
+    <string name="BAC">CAF</string>
+</resources>

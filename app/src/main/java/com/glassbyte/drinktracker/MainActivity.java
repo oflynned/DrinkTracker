@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,9 +16,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private PagerAdapter mPagerAdapter;
     private int actionBarHeight;
     private String run = "";
+
+    Locale locale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         else
             currentBACAlarm.setAlarm(this);
 
+        setLocale("en");
+
         //retrieve data from sharedreferences for initial run setup
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         run = (sp.getString(getResources().getString(R.string.pref_key_run),""));
@@ -48,6 +57,17 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+    }
+
+    public void setLocale(String lang){
+        locale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = locale;
+        res.updateConfiguration(conf, dm);
     }
 
     @Override

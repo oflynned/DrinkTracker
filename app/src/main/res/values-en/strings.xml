@@ -1,0 +1,120 @@
+<resources>
+    <string name="app_name">DrinkTracker</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_aboutus">About Us</string>
+    <string name="action_listDrinks">List Drinks</string>
+    <string name="action_stats">Statistics</string>
+    <string name="action_removeads">Remove Ads</string>
+
+    <!-- Intro Screen -->
+        <string name="pref_key_run">pref_key_run</string>
+
+    <!-- Preferences -->
+    <string name="pref_key_contact">pref_key_contact</string>
+    <string name="pref_key_editGender">pref_key_editGender</string>
+    <string name="pref_key_editWeight">pref_key_editWeight</string>
+    <string name="pref_key_editUnits">pref_key_editUnits</string>
+    <string name="pref_key_editHeight">pref_key_editHeight</string>
+    <string name="pref_key_dataCollection">pref_key_dataCollection</string>
+    <string name="pref_key_dataCollectionPermission">pref_key_dataCollectionPermission</string>
+    <string name="pref_key_currentEbac">pref_key_currentEbac</string>
+    <string name="pref_key_storage_settings">pref_key_storage_settings</string>
+    <string name="pref_key_editFeet">pref_key_editFeet</string>
+    <string name="pref_key_editInches">pref_key_editInches</string>
+    <string name="pref_key_last_update_currentEbac">pref_key_last_update_currentEbac</string>
+    <string name="pref_key_maxBAC">pref_key_maxBAC</string>
+
+    <!-- End of Preferences -->
+
+    <!--Custom Drinks Titles-->
+    <string name="shot_glass_title">Shot Glass</string>
+    <string name="water_glass_title">Glass</string>
+    <string name="pint_glass_title">Pint Glass</string>
+    <string name="wine_glass_title">Wine Glass</string>
+    <!-- End of Custom Drinks Titles -->
+
+    <!--Custom Drinks SetPercentage Dialog-->
+    <string name="setPercentage_dialog_title">Set Percentage</string>
+    <string name="setVolume_dialog_title">Set Volume</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <!--End of Custom Drinks SetPercentage Dialog-->
+
+    <string-array name="optgender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="optunits">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+
+    <!-->types of drinks<-->
+    <string-array name="drinks">
+        <item>""</item>
+        <item>Beer</item>
+        <item>Lager</item>
+        <item>Stout</item>
+        <item>Ale</item>
+        <item>Cider</item>
+        <item>Alcopop</item>
+        <item>Cocktail</item>
+    </string-array>
+
+    <!-->types of drinks<-->
+    <string-array name="period">
+        <item>Current session</item>
+        <item>Last night</item>
+        <item>Last week</item>
+        <item>Last month</item>
+        <item>All time</item>
+    </string-array>
+
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_list_drinks">ListDrinksActivity</string>
+
+    <!--> disclaimer <-->
+    <string name="disclaimertitle">Disclaimer</string>
+    <string name="disclaimerbody">Please remember that DrinkTracker is only an approximation of your blood alcohol content (BAC), and not a substitute for a breathalyser examination. GlassByte is in no way responsible for any actions carried out under intoxication. Please drive responsibly and stay safe under the influence of alcohol. By using this app, you agree to abide by this forewarning.</string>
+    <string name="agree">I agree</string>
+    <string name="disagree">I disagree</string>
+
+    <!--> dialog warnings <-->
+    <string name="tier0">Sober.</string>
+    <string name="tier1">Mildly relaxed and no loss of coordination.</string>
+    <string name="tier2">Slight impairment, lowered inhibitions, lowered caution, exaggeration of behaviour.</string>
+    <string name="tier3">Mild impairment of balance, speech, vision and reaction time.</string>
+    <string name="tier4">Significant impairment of coordination, loss of judgement, and feeling of euphoria.</string>
+    <string name="tier5">Lack of physical control, loss of balance, and blurring of vision. Reduced euphoria and increased dysphoria. Severe impairment of perception and judgement.</string>
+    <string name="tier6">Intensifying of dysphoria, increase in nausea, appears &quot;more sloppy&quot;.</string>
+    <string name="tier7">Dazed, confusion, disorientation. May not feel pain if injured. Nausea and vomiting experienced around this level. Gag reflex may be impaired. Blackouts are more likely from this point.</string>
+    <string name="tier8">Severe impairment of all sensory, physical and mental functions. Increased risk of asphyxiation by vomiting and injury.</string>
+    <string name="tier9">Drunken stupor - you have little comprehension of where you are. Passing out and difficulty to be awoken is very likely.</string>
+    <string name="tier10">Equivalent to surgical level anaesthesia.</string>
+    <string name="tier11">Onset of coma and possible death due to respiratory arrest.</string>
+
+    <!--> unit warnings <-->
+    <string name="pollunits">Total units drunk this week:</string>
+    <string name="units">units</string>
+    <string name="belowlimit">Below recommended weekly limit.</string>
+    <string name="abovelimit">Excessive drinking!</string>
+
+    <!--> detailed stats <-->
+    <string name="detailed_stats_title">Detailed Statistics</string>
+    <string name="avg_drink_strength">Average strength of drinks:</string>
+    <string name="avg_drink_volume">Average volume of drinks:</string>
+    <string name="avg_calories">Alcohol calories this week:</string>
+    <string name="max_bac">Maximum BAC achieved:</string>
+    <string name="calories">calories</string>
+
+    <!--> miscellaneous <-->
+    <string name="current_BAC">Current\nBAC:\n</string>
+    <string name="current_BAC_level">Current BAC level:</string>
+    <string name="preset_drinks">PRESET DRINKS</string>
+    <string name="custom_drinks">CUSTOM DRINKS</string>
+    <string name="time">Time</string>
+    <string name="BAC">BAC</string>
+</resources>

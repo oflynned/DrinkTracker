@@ -119,7 +119,7 @@ public class BloodAlcoholContent {
                 if (cur.getCount()>0) {
                     System.out.println("BacTable included some DECAY_UPDATE entry");
                     long lastUpdateDate = cur.getLong(1);
-                    long timeDiffInMin = TimeUnit.MILLISECONDS.convert((newLastUpdateDate - lastUpdateDate), TimeUnit.MINUTES);
+                    long timeDiffInMin = TimeUnit.MINUTES.convert((newLastUpdateDate - lastUpdateDate), TimeUnit.MILLISECONDS);
 
                     dCurrentBAC = timeDiffInMin / 60 * ELAPSED_HOUR_FACTOR;
                 } else {
