@@ -59,40 +59,39 @@ public class PreferencesActivity extends PreferenceActivity {
             preferenceScreen = getPreferenceManager().createPreferenceScreen(this.getActivity());
 
             PreferenceCategory moreCategory = new PreferenceCategory(this.getActivity());
-            moreCategory.setTitle("More from Glassbyte");
+            moreCategory.setTitle(R.string.more_from_glassbyte);
             moreCategory.setKey(getString(R.string.pref_key_contact));
             preferenceScreen.addPreference(moreCategory);
 
             Preference glassbyteWebsite = new Preference(this.getActivity());
-            glassbyteWebsite.setTitle("Visit us at our website!");
-            glassbyteWebsite.setSummary("Click here to view our website for more products and news " +
-                    "from GlassByte");
+            glassbyteWebsite.setTitle(R.string.visit_website);
+            glassbyteWebsite.setSummary(R.string.summer_glassbyte);
             Intent visitGlassbyteWebsiteIntent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://www.glassbyte.com"));
             glassbyteWebsite.setIntent(visitGlassbyteWebsiteIntent);
 
             Preference removeAds = new Preference(this.getActivity());
-            removeAds.setTitle("Remove ads and help support us");
-            removeAds.setSummary("Click here to purchase the ad-free version from Google Play");
+            removeAds.setTitle(R.string.remove_ads);
+            removeAds.setSummary(R.string.summary_ads);
             removeAds.setIntent(visitGlassbyteWebsiteIntent);
 
             moreCategory.addPreference(glassbyteWebsite);
             moreCategory.addPreference(removeAds);
             
             final PreferenceCategory profileDetailsCategory = new PreferenceCategory(this.getActivity());
-            profileDetailsCategory.setTitle("Modify Details");
+            profileDetailsCategory.setTitle(R.string.modify_details);
             profileDetailsCategory.setKey(getString(R.string.pref_key_storage_settings));
             preferenceScreen.addPreference(profileDetailsCategory);
 
             editGenderPref = new ListPreference(this.getActivity());
-            editGenderPref.setTitle("Edit Gender");
+            editGenderPref.setTitle(R.string.modify_gender);
             editGenderPref.setSummary(sp.getString(getString(R.string.pref_key_editGender), ""));
             editGenderPref.setKey(getString(R.string.pref_key_editGender));
             ((ListPreference)editGenderPref).setEntries(R.array.optgender);
             ((ListPreference)editGenderPref).setEntryValues(R.array.optgender);
 
             editUnitsPref = new ListPreference(this.getActivity());
-            editUnitsPref.setTitle("Edit Units");
+            editUnitsPref.setTitle(R.string.modify_units);
             editUnitsPref.setSummary(sp.getString(getString(R.string.pref_key_editUnits), ""));
             editUnitsPref.setKey(getString(R.string.pref_key_editUnits));
             ((ListPreference)editUnitsPref).setEntries(R.array.optunits);
@@ -108,15 +107,15 @@ public class PreferencesActivity extends PreferenceActivity {
                 int height = Integer.valueOf(sp.getString(getString(R.string.pref_key_editHeight),""));
                 double[] feetAndInchesHeight =
                         BloodAlcoholContent.MetricSystemConverter.converCmToFeetAndInches(height);
-                editHeightPref.setSummary(String.valueOf((int)feetAndInchesHeight[0]) + " foot and "
+                editHeightPref.setSummary(String.valueOf((int)feetAndInchesHeight[0]) + " " + getString(R.string.foot_and) + " "
                         + (int)BloodAlcoholContent.round(Double.valueOf(feetAndInchesHeight[1]), 0)
-                        + " inches");
+                        + " " + getString(R.string.inches));
             }
-            editHeightPref.setTitle("Edit Height");
+            editHeightPref.setTitle(R.string.modify_height);
             editHeightPref.setKey(getString(R.string.pref_key_editHeight));
 
             editWeightPref = new EditTextPreference(this.getActivity());
-            editWeightPref.setTitle("Edit Weight");
+            editWeightPref.setTitle(R.string.modify_weight);
             int weight = Integer.parseInt(sp.getString(getString(R.string.pref_key_editWeight), ""));
             if (strUnits.equalsIgnoreCase("metric")) {
                 editWeightPref.setSummary(weight+" kg");
@@ -124,7 +123,7 @@ public class PreferencesActivity extends PreferenceActivity {
                 editWeightPref.setSummary(
                         (int)BloodAlcoholContent.round(
                                 BloodAlcoholContent.MetricSystemConverter.convertKilogramsToPounds(weight)
-                                ,0) + " pounds"
+                                ,0) + " " + getString(R.string.pounds)
                 );
             }
             editWeightPref.setKey(getString(R.string.pref_key_editWeight));
@@ -136,18 +135,18 @@ public class PreferencesActivity extends PreferenceActivity {
             profileDetailsCategory.addPreference(editHeightPref);
 
 
-            PreferenceCategory dataCollectionCategory = new PreferenceCategory(this.getActivity());
-            dataCollectionCategory.setTitle("Data Collection");
-            dataCollectionCategory.setKey(getString(R.string.pref_key_dataCollection));
-            preferenceScreen.addPreference(dataCollectionCategory);
+            PreferenceCategory languageCategory = new PreferenceCategory(this.getActivity());
+            languageCategory.setTitle(R.string.language_options);
+            languageCategory.setKey(getString(R.string.pref_key_irish));
+            preferenceScreen.addPreference(languageCategory);
 
-            CheckBoxPreference dataCollectionCheckBox = new CheckBoxPreference(this.getActivity());
-            dataCollectionCheckBox.setTitle("Allow Data Collection");
-            dataCollectionCheckBox.setDefaultValue(true);
-            dataCollectionCheckBox.setSummary("Select this option if you wish to help support us by providing feedback of data anonymously");
-            dataCollectionCheckBox.setKey(getString(R.string.pref_key_dataCollectionPermission));
+            CheckBoxPreference irishLanguage = new CheckBoxPreference(this.getActivity());
+            irishLanguage.setTitle(R.string.irish_language_option);
+            irishLanguage.setDefaultValue(false);
+            irishLanguage.setSummary(R.string.summer_irish);
+            irishLanguage.setKey(getString(R.string.pref_key_irish));
 
-            dataCollectionCategory.addPreference(dataCollectionCheckBox);
+            languageCategory.addPreference(irishLanguage);
 
             setPreferenceScreen(preferenceScreen);
             //End of Set up the components of the preference Scree
@@ -184,11 +183,11 @@ public class PreferencesActivity extends PreferenceActivity {
                     } else {
                         editHeightPref = new ImperialEditHeightDialog(thisActivity,null);
                         double[] feetAndInchesHeight = BloodAlcoholContent.MetricSystemConverter.converCmToFeetAndInches(height);
-                        editHeightPref.setSummary(String.valueOf((int)feetAndInchesHeight[0]) + " foot and "
+                        editHeightPref.setSummary(String.valueOf((int)feetAndInchesHeight[0]) + R.string.foot_and
                                 + (int)BloodAlcoholContent.round(Double.valueOf(feetAndInchesHeight[1]), 0)
-                                + " inches");
+                                + R.string.inches);
                     }
-                    editHeightPref.setTitle("Edit Height");
+                    editHeightPref.setTitle(getString(R.string.modify_height));
                     editHeightPref.setKey(getString(R.string.pref_key_editHeight));
 
                     int weight = Integer.valueOf(sp.getString(getString(R.string.pref_key_editWeight),""));
@@ -197,7 +196,7 @@ public class PreferencesActivity extends PreferenceActivity {
                     } else {
                         editWeightPref.setSummary(
                                 (int)BloodAlcoholContent.MetricSystemConverter.convertKilogramsToPounds(weight)
-                                        + " pounds");
+                                        + getString(R.string.pounds));
                     }
                     //Update the view of the profileDetailsCategory
                     profileDetailsCategory.addPreference(editGenderPref);
@@ -225,14 +224,14 @@ public class PreferencesActivity extends PreferenceActivity {
                                 BloodAlcoholContent.MetricSystemConverter.convertPoundsToKilograms(
                                         Double.valueOf((String) o)),0);
                         e.putString(preference.getKey(), String.valueOf(kgWeight));
-                        preference.setSummary(String.valueOf(o) + " pounds");
+                        preference.setSummary(String.valueOf(o) + getString(R.string.pounds));
                     }
                     e.apply();
                     return true;
                 }
             });
 
-            dataCollectionCheckBox.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            irishLanguage.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object o) {
                     preference.setSummary(String.valueOf(o));

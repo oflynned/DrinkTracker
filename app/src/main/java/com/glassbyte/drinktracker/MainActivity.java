@@ -44,10 +44,17 @@ public class MainActivity extends AppCompatActivity {
         else
             currentBACAlarm.setAlarm(this);
 
-        setLocale("en");
-
         //retrieve data from sharedreferences for initial run setup
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //set irish if the checkbox is checked in settings
+        boolean irish = false;
+        boolean irishChosen = sp.getBoolean(getResources().getString(R.string.pref_key_irish), irish);
+
+        if(irishChosen){
+            setLocale("ga");
+        }
+
         run = (sp.getString(getResources().getString(R.string.pref_key_run),""));
         if (run == "" || run == null) {
             Intent intent = new Intent(this, IntroActivity.class);
@@ -56,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
     }
 
     public void setLocale(String language){
@@ -68,10 +73,6 @@ public class MainActivity extends AppCompatActivity {
         Configuration conf = res.getConfiguration();
         conf.locale = locale;
         res.updateConfiguration(conf, dm);
-    }
-
-    public String getLocale(){
-        return language;
     }
 
     @Override

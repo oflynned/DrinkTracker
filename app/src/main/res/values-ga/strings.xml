@@ -124,4 +124,23 @@
     <string name="set_percentage">Suigh an Céatadán</string>
     <string name="set_volume">Suigh an Toirt</string>
     <string name="drink">Ól!</string>
+
+    <!--> Settings <-->
+    <string name="language_options">Roghanna Teanga</string>
+    <string name="irish_language_option">Rogha Gaeilge</string>
+    <string name="summer_irish">Roghnaigh an rogha seo más mian leat an aip a úsáid as Gaeilge</string>
+    <string name="more_from_glassbyte">Tuilleadh ó Glassbyte</string>
+    <string name="visit_website">Tabhair cuairt dúinn d\'ár suíomh!</string>
+    <string name="summer_glassbyte">Gliogáil anseo chun ár suíomh a fheiceáil ar son tuilleadh táirgí agus nuachta ó GlassByte</string>
+    <string name="remove_ads">Bain fógraí de agus cabhraigh tacú linn</string>
+    <string name="summary_ads">Gliogáil anseo chun an leagan gan fógraí a cheannach ó Google Play</string>
+    <string name="modify_details">Athraigh Sonraí</string>
+    <string name="modify_gender">Cuir inscne in eagar</string>
+    <string name="modify_units">Cuir aonaid in eagar</string>
+    <string name="modify_height">Cuir airde in eagar</string>
+    <string name="modify_weight">Cuir meáchan in eagar</string>
+    <string name="foot_and">troithe agus</string>
+    <string name="inches">orlach</string>
+    <string name="pounds">punt</string>
+    <string name="feet">troithe</string>
 </resources>

@@ -18,7 +18,7 @@
     <string name="pref_key_editUnits">pref_key_editUnits</string>
     <string name="pref_key_editHeight">pref_key_editHeight</string>
     <string name="pref_key_dataCollection">pref_key_dataCollection</string>
-    <string name="pref_key_dataCollectionPermission">pref_key_dataCollectionPermission</string>
+    <string name="pref_key_irish">pref_key_irish</string>
     <string name="pref_key_currentEbac">pref_key_currentEbac</string>
     <string name="pref_key_storage_settings">pref_key_storage_settings</string>
     <string name="pref_key_editFeet">pref_key_editFeet</string>
@@ -124,4 +124,22 @@
     <string name="set_percentage">Set Percentage</string>
     <string name="set_volume">Set Volume</string>
     <string name="drink">Drink!</string>
+
+    <!--> Settings <-->
+    <string name="language_options">Language Options</string>
+    <string name="irish_language_option">Irish Language Option</string>
+    <string name="summer_irish">Select this option if you wish to use Irish Gaelic as a language option</string>
+    <string name="more_from_glassbyte">More from Glassbyte</string>
+    <string name="visit_website">Visit us at our website!</string>
+    <string name="summer_glassbyte">Click here to view our website for more products and news from GlassByte</string>
+    <string name="remove_ads">Remove ads and help support us</string>
+    <string name="summary_ads">Click here to purchase the ad-free version from Google Play</string>
+    <string name="modify_details">Modify Details</string>
+    <string name="modify_gender">Edit Gender</string>
+    <string name="modify_units">Edit Units</string>
+    <string name="modify_height">Edit Height</string>
+    <string name="modify_weight">Edit Weight</string>
+    <string name="foot_and">foot and</string>
+    <string name="inches">inches</string>
+    <string name="pounds">pounds</string>
 </resources>
