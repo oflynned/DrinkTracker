@@ -125,7 +125,7 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
         drinkButton = new Button(thisActivity);
         drinkButton.setTypeface(null, Typeface.BOLD);
         drinkButton.setTextColor(Color.WHITE);
-        drinkButton.setText("Drink!");
+        drinkButton.setText(getResources().getText(R.string.drink));
         drinkButton.setBackgroundColor(Color.rgb(255, 120, 0));
         drinkButton.setId(View.generateViewId());
         RelativeLayout.LayoutParams drinkButtonParam = new RelativeLayout.LayoutParams(screenWidth/2-rl.getPaddingLeft()*2, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -136,7 +136,7 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
         setPercentageButton = new Button(this.getActivity());
         setPercentageButton.setTypeface(null, Typeface.BOLD);
         setPercentageButton.setTextColor(Color.WHITE);
-        setPercentageButton.setText("Set Percentage");
+        setPercentageButton.setText(getResources().getText(R.string.set_percentage));
         setPercentageButton.setBackgroundColor(Color.rgb(255, 120, 0));
         setPercentageButton.setId(View.generateViewId());
         RelativeLayout.LayoutParams setPercentageButtonParam = new RelativeLayout.LayoutParams(screenWidth/2-rl.getPaddingLeft()*2, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -232,7 +232,7 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
 
                 Vibrator vb = (Vibrator) thisActivity.getSystemService(Context.VIBRATOR_SERVICE);
                 vb.vibrate(100);
-                Toast.makeText(thisActivity, "Drink added successfully!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(thisActivity, R.string.drink_added, Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -137,7 +137,7 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
                 dou.insertNewDrink(getTitle(), getVolume(), getPercentage());
                 Vibrator vb = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                 vb.vibrate(100);
-                Toast.makeText(getActivity(), "Drink added successfully!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.drink_added, Toast.LENGTH_SHORT).show();
             }
         });
 

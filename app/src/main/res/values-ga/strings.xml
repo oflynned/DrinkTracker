@@ -38,7 +38,7 @@
     <!--Custom Drinks SetPercentage Dialog-->
     <string name="setPercentage_dialog_title">Suigh an Céatadán</string>
     <string name="setVolume_dialog_title">Suigh an Toirt</string>
-    <string name="cancel">Ceallaigh</string>
+    <string name="cancel">Cealaigh</string>
     <string name="done">Críochnaithe</string>
     <!--End of Custom Drinks SetPercentage Dialog-->
 
@@ -84,20 +84,20 @@
 
     <!--> dialog warnings <-->
     <string name="tier0">Sóbráilte.</string>
-    <string name="tier1">Mildly relaxed and no loss of coordination.</string>
-    <string name="tier2">Slight impairment, lowered inhibitions, lowered caution, exaggeration of behaviour.</string>
-    <string name="tier3">Mild impairment of balance, speech, vision and reaction time.</string>
-    <string name="tier4">Significant impairment of coordination, loss of judgement, and feeling of euphoria.</string>
-    <string name="tier5">Lack of physical control, loss of balance, and blurring of vision. Reduced euphoria and increased dysphoria. Severe impairment of perception and judgement.</string>
-    <string name="tier6">Intensifying of dysphoria, increase in nausea, appears &quot;more sloppy&quot;.</string>
-    <string name="tier7">Dazed, confusion, disorientation. May not feel pain if injured. Nausea and vomiting experienced around this level. Gag reflex may be impaired. Blackouts are more likely from this point.</string>
-    <string name="tier8">Severe impairment of all sensory, physical and mental functions. Increased risk of asphyxiation by vomiting and injury.</string>
-    <string name="tier9">Drunken stupor - you have little comprehension of where you are. Passing out and difficulty to be awoken is very likely.</string>
-    <string name="tier10">Equivalent to surgical level anaesthesia.</string>
-    <string name="tier11">Onset of coma and possible death due to respiratory arrest.</string>
+    <string name="tier1">Ag ligean do scíth, agus níl aon easpa comhordaithe fioscaigh ann go fóill.</string>
+    <string name="tier2">Lagú beag, urchoillte níos lú, aire níos lú, iompar áibhlithe.</string>
+    <string name="tier3">Meán-lagú an choirp cothroim, an ghutha, na súile, agus an ama frithghníomhaithe.</string>
+    <string name="tier4">Lagú mór comhordaithe, cailltear breithiúnas, agus mothtar treisiú eofóiria.</string>
+    <string name="tier5">Easpa smachta fisicigh, cailltear an chothromaíocht, agus geamhtear amharc an té. Téann an eofóiria i léig, agus treisíonn an diosfóiria. An-lagú braistinte agus breithiúnais.</string>
+    <string name="tier6">Treisíonn mothúcháin diosfóiria, mothú tinn agus tá cuma &quot;níos lú comhordaithe&quot; ar an té.</string>
+    <string name="tier7">Tá néal, mearbhall agus easpa fios na h-áite ort. Tá seans ann nach mothfaidh tú gortúchán. Braitear mothú tinn, agus tarraingt urla um an gcéim seo. Is féidir leis an athfhilleadh béil a bheith curtha i laghad freisin. Tá titim faoi laige i bhfad níos dóchaí ón gcéim seo amach.</string>
+    <string name="tier8">An-lagú gach aon feidhme céadfaí, fisicí, agus meabhraí! Is mór an priacal bás a fháil dá bharr aisfisce trí chur urlacain aníos, nó gortú.</string>
+    <string name="tier9">Dallbhach meisciúil - níl a lán tuiscint agat cá bhfuil tú. Dealraitheach go dtitfidh tú i laige agus is fíor-dheacar a dhúisiú!</string>
+    <string name="tier10">Cothrom le céim mháinliach ainéistéise.</string>
+    <string name="tier11">Titim faoi laige i gcóma, agus féideartha bás a fháil dá bharr stad riospráide.</string>
 
     <!--> unit warnings <-->
-    <string name="pollunits">Aonaid ólta go h-iomlán an tseachtain seo:</string>
+    <string name="pollunits">Aonaid iomlán ólta an tseachtain seo:</string>
     <string name="units">aonad</string>
     <string name="belowlimit">Faoin teoireann molta na seachtaine.</string>
     <string name="abovelimit">Ag ól an-iomarca!</string>
@@ -112,9 +112,16 @@
 
     <!--> miscellaneous <-->
     <string name="current_BAC">CAF\nReatha:\n</string>
-    <string name="current_BAC_level">Céim ChAF Reatha:</string>
+    <string name="current_BAC_level">Céim ChAF Reatha: </string>
     <string name="preset_drinks">DEOCHANNA RÉAMHSHOCRAITHE</string>
     <string name="custom_drinks">DEOCHANNA SAINCHEAPTHA</string>
     <string name="time">Am</string>
     <string name="BAC">CAF</string>
+
+    <!--> presets <-->
+    <string name="drink_added">Cuireadh deoch leis go rathúil!</string>
+    <string name="please_choose_drink">Roghnaigh deoch led thoil:</string>
+    <string name="set_percentage">Suigh an Céatadán</string>
+    <string name="set_volume">Suigh an Toirt</string>
+    <string name="drink">Ól!</string>
 </resources>

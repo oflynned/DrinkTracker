@@ -270,11 +270,11 @@ public class Statistics extends Activity {
         } else if (BAC >= 0.07 && BAC < 0.1) {
             //0.07-0.09
             BACrating.setText(R.string.tier3);
-            BACrating.setTextColor(Color.YELLOW);
+            BACrating.setTextColor(orange);
         } else if (BAC >= 0.1 && BAC < 0.13) {
             //0.1-0.129
             BACrating.setText(R.string.tier4);
-            BACrating.setTextColor(Color.YELLOW);
+            BACrating.setTextColor(orange);
         } else if (BAC >= 0.13 && BAC < 0.16) {
             //0.13-0.15
             BACrating.setText(R.string.tier5);

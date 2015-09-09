@@ -117,4 +117,11 @@
     <string name="custom_drinks">CUSTOM DRINKS</string>
     <string name="time">Time</string>
     <string name="BAC">BAC</string>
+
+    <!--> presets <-->
+    <string name="drink_added">Drink added successfully!</string>
+    <string name="please_choose_drink">Please choose a drink:</string>
+    <string name="set_percentage">Set Percentage</string>
+    <string name="set_volume">Set Volume</string>
+    <string name="drink">Drink!</string>
 </resources>

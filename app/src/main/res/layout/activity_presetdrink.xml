@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
                     android:gravity="center"
-                    android:text="Please choose a drink:" />
+                    android:text="@string/please_choose_drink" />
 
                 <Spinner
                     android:layout_below="@id/drinkPresetChoice"
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="Set Percentage"
+            android:text="@string/set_percentage"
             android:background="@color/orange700" />
 
         <Button
@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="Set Volume"
+            android:text="@string/set_volume"
             android:background="@color/orange700"
             android:layout_toRightOf="@+id/presetSetPercentage"
             android:layout_toEndOf="@+id/presetSetPercentage" />
@@ -129,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="Drink!"
+            android:text="@string/drink"
             android:background="@color/orange700"
             android:layout_toRightOf="@+id/presetSetVolume"
             android:layout_toEndOf="@+id/presetSetVolume" />

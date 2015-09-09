@@ -1,8 +1,6 @@
 package com.glassbyte.drinktracker;
 
-import android.app.AlertDialog;
 import android.app.PendingIntent;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -33,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private String run = "";
 
     Locale locale;
+    String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         else
             currentBACAlarm.setAlarm(this);
 
-        setLocale("en");
+        setLocale("ga");
 
         //retrieve data from sharedreferences for initial run setup
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -61,13 +60,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setLocale(String lang){
-        locale = new Locale(lang);
+    public void setLocale(String language){
+        this.language = language;
+        locale = new Locale(language);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
         conf.locale = locale;
         res.updateConfiguration(conf, dm);
+    }
+
+    public String getLocale(){
+        return language;
     }
 
     @Override
@@ -120,10 +124,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_removeads){
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.glassbyte.com/")));
-            return true;
-        } else if (id == R.id.action_intro){
-            Intent introIntent = new Intent(this, SwipeIntro.class);
-            startActivity(introIntent);
             return true;
         }
 
