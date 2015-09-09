@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         else
             currentBACAlarm.setAlarm(this);
 
-        setLocale("ga");
+        setLocale("en");
 
         //retrieve data from sharedreferences for initial run setup
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
