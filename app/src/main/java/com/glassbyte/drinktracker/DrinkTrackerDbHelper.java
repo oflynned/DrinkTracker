@@ -8,8 +8,6 @@ import java.util.Locale;
 
 public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
     private Context mContext;
-    public static final String STR_DATE_FORMAT = "HH:mm:ss dd/MM/yyyy";
-    public static final Locale DATE_LOCALE = Locale.UK;
     public static final int database_version = 1;
     public String CREATE_DRINKS_TABLE_QUERY =
             "CREATE TABLE " +
