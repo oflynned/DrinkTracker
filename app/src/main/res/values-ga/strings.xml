@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RianúAlcóil</string>
+    <string name="app_name">DrinkTracker</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Socruithe</string>
@@ -78,7 +78,7 @@
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Séanadh</string>
-    <string name="disclaimerbody">Cuimhnigh led thoil nach ach neastachán den chéatadán an alcóil san fhuil (CAF) í an aip RianúAlcóil, agus ní í a chur in úsáid in ionad scrúdú anáileadáin. Níl an chomhlacht GlassByte freagrach d\'aon ghníomh a tharlaíonn fad is atá an úsáideoir faoi mheisce. Tiomáin go freagrach led thoil, agus fan sabháilte faoi thionchar an alcóil. De bheith ag úsáid na h-aipe seo, aontaíonn tú cloí leis an réamhrabhadh seo.</string>
+    <string name="disclaimerbody">Cuimhnigh led thoil nach ach neastachán den chéatadán an alcóil san fhuil (CAF) í an aip DrinkTracker, agus ní í a chur in úsáid in ionad scrúdú anáileadáin. Níl an chomhlacht GlassByte freagrach d\'aon ghníomh a tharlaíonn fad is atá an úsáideoir faoi mheisce. Tiomáin go freagrach led thoil, agus fan sabháilte faoi thionchar an alcóil. De bheith ag úsáid na h-aipe seo, aontaíonn tú cloí leis an réamhrabhadh seo.</string>
     <string name="agree">Aontaím leis</string>
     <string name="disagree">Ní aontaím leis</string>
 
@@ -87,7 +87,7 @@
     <string name="tier1">Ag ligean do scíth, agus níl aon easpa comhordaithe fioscaigh ann go fóill.</string>
     <string name="tier2">Lagú beag, urchoillte níos lú, aire níos lú, iompar áibhlithe.</string>
     <string name="tier3">Meán-lagú an choirp cothroim, an ghutha, na súile, agus an ama frithghníomhaithe.</string>
-    <string name="tier4">Lagú mór comhordaithe, cailltear breithiúnas, agus mothtar treisiú eofóiria.</string>
+    <string name="tier4">Lagú mór comhordaithe, cailltear breithiúnas, agus mothtar treisiú na eofóiria.</string>
     <string name="tier5">Easpa smachta fisicigh, cailltear an chothromaíocht, agus geamhtear amharc an té. Téann an eofóiria i léig, agus treisíonn an diosfóiria. An-lagú braistinte agus breithiúnais.</string>
     <string name="tier6">Treisíonn mothúcháin diosfóiria, mothú tinn agus tá cuma &quot;níos lú comhordaithe&quot; ar an té.</string>
     <string name="tier7">Tá néal, mearbhall agus easpa fios na h-áite ort. Tá seans ann nach mothfaidh tú gortúchán. Braitear mothú tinn, agus tarraingt urla um an gcéim seo. Is féidir leis an athfhilleadh béil a bheith curtha i laghad freisin. Tá titim faoi laige i bhfad níos dóchaí ón gcéim seo amach.</string>
