@@ -101,11 +101,12 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
         return drinkId;
     }
 
-    public void insertDrinkBacRelation(long drinkId, long bacId){
+    public void insertDrinkBacRelation(long drinkId, long bacId, float bacAmt){
         SQLiteDatabase writeDb = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID, bacId);
         cv.put(DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID, drinkId);
+            cv.put(DrinkTrackerDatabase.DrinksBacRelationTable.BAC_AMT, bacAmt);
         writeDb.insert(DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME, null, cv);
     }
 
