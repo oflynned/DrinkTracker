@@ -111,44 +111,58 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
     }
 
     public void removeDrinks(Long[] drinksIds){
+        System.out.println("Remove drinks entered.");
+
         SQLiteDatabase readDB = this.getReadableDatabase();
         SQLiteDatabase writeDB = this.getWritableDatabase();
 
-        String deleteFromDrinksTableQuery = "DELETE * FROM "
-                + DrinkTrackerDatabase.DrinksTable.TABLE_NAME + " WHERE "
-                + DrinkTrackerDatabase.DrinksTable._ID + "=";
-        String deleteFromDrinkBacRelationTableQuery = "DELETE * FROM " +
-                DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME + " WHERE " +
-                DrinkTrackerDatabase.DrinksTable._ID + "=";
-        String oldestDrinkIdQuery = "SELECT * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME
-                + " WHERE " + DrinkTrackerDatabase.DrinksTable.DATE_TIME + "=(SELECT max("
-                + DrinkTrackerDatabase.DrinksTable.DATE_TIME + ") FROM TABLE WHERE ("; // close off with 2 brackets
+        //remove one at a time
         for (long drinkId:
-             drinksIds) {
-            oldestDrinkIdQuery += DrinkTrackerDatabase.DrinksTable._ID + "=" + drinkId + " OR ";
+            drinksIds) {
+            System.out.println("Drink id being removed: " + drinkId);
+
+            String selectDrinkInsertDateQuery = "SELECT * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME
+                    + " WHERE " + DrinkTrackerDatabase.DrinksTable._ID + "=" + Long.toString(drinkId);
+            Cursor drinkCursor = readDB.rawQuery(selectDrinkInsertDateQuery, null);
+            long drinkInsertDate = drinkCursor.getLong(1);
+            drinkCursor.close();
+
+            //Get the date of the first time bac was was 0 after inserting the drink that is being deleted
+            String selectFirstZeroBacQuery = "SELECT MIN(" + DrinkTrackerDatabase.BacTable.DATE_TIME
+                    + ") FROM (SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME
+                    + " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + ">" + drinkInsertDate
+                    + " AND " + DrinkTrackerDatabase.BacTable.BAC + "=0)";
+            Cursor firstZeroBacDateCursor = readDB.rawQuery(selectFirstZeroBacQuery, null);
+            //End of Get the date of the first time bac was was 0 after inserting the drink that is being deleted
+
+            String selectFirstDecayUpdateAffectingTheDrink = "SELECT MIN(" + DrinkTrackerDatabase.BacTable.TABLE_NAME +
+                    "." + DrinkTrackerDatabase.BacTable.DATE_TIME + ") FROM (SELECT * FROM " +
+                    DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME + " WHERE " +
+                    DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID + "=" +
+                    drinkId + " JOIN " + DrinkTrackerDatabase.BacTable.TABLE_NAME + " ON " +
+                    DrinkTrackerDatabase.BacTable.TABLE_NAME + "." + DrinkTrackerDatabase.BacTable._ID +
+                    "=" + DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME + "." +
+                    DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID + ") WHERE " +
+                    DrinkTrackerDatabase.BacTable.TABLE_NAME + "." + DrinkTrackerDatabase.BacTable.UPDATE_TYPE +
+                    "=" + DrinkTrackerDatabase.BacTable.DECAY_UPDATE;
+
+            Cursor firstDecayUpdateCursor = readDB.rawQuery(selectFirstDecayUpdateAffectingTheDrink, null);
+
+            if (firstZeroBacDateCursor.getCount() != 0) {
+                long firstZeroBacDate = firstZeroBacDateCursor.getLong(0);
+                //bac have reached zero since inserting the drink that's being deleted
+                //hence modify all the bac entries in between the insert date and the bac 0 date
+                System.out.println("The bac have reached 0 since the drink being deleted was inserted.");
+            } else {
+                //bac never reached zero yet after inserting the drink that's being deleted
+                //hence modify all the bac entries from the one that's being deleted till the end
+                System.out.println("The bac never reached 0 after inserting the drink being deleted.");
+                if (firstDecayUpdateCursor.getCount() == 0) {
+                    //no decay updates affecting the drink being deleted have been performed yet
+                    System.out.println("No decay updates affecting the drink being deleted have been performed yet.");
+                }
+            }
         }
-        oldestDrinkIdQuery += "1=0))"; //1=0 to ignore the last dot that is added after the last OR id=x
-
-        //Remove all the entries from the bac table that are younger then the oldest drink being removed
-        Cursor c =readDB.rawQuery(oldestDrinkIdQuery, null);
-        c.moveToFirst();
-        long date = c.getLong(1);
-        String deleteAllOlder = "DELETE * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME + " WHERE "
-                + DrinkTrackerDatabase.BacTable.DATE_TIME + ">" + Long.toString(date);
-        writeDB.execSQL(deleteAllOlder);
-        //End of Remove all the entries from the bac table that are younger then the oldest drink being removed
-
-        //Remove all the appriopiate entries from the drinks table and the relation table
-        for (long drinkId:
-             drinksIds) {
-            String query = deleteFromDrinksTableQuery + drinkId;
-            writeDB.execSQL(query);
-
-            query = deleteFromDrinkBacRelationTableQuery + drinkId;
-            writeDB.execSQL(query);
-        }
-        //End of Remove all the appriopiate entries from the drinks table and the relation table
-
 
         writeDB.close();
         readDB.close();
