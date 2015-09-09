@@ -150,7 +150,7 @@ public class BloodAlcoholContent {
 
         //Enter drink bac relation in the drink_bac_database
         if (updateType == DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE) {
-            dbHelper.insertDrinkBacRelation(drinksId,bacId);
+            dbHelper.insertDrinkBacRelation(drinksId,bacId,dCurrentBAC);
         } else if (updateType == DrinkTrackerDatabase.BacTable.DECAY_UPDATE) {
             ArrayList<Long> affectedDrinksId = new ArrayList<>();
             ArrayList<Float> affectedDrinksBac = new ArrayList<>();
