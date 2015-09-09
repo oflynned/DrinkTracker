@@ -17,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 /**
  * Created by root on 27/05/15.
@@ -81,6 +83,12 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
         volChosen.setText(getVolume() + getUnits());
 
         drinksChoice = (Spinner) V.findViewById(R.id.spinnerPresetDrink);
+
+        AdView mAdView = (AdView) V.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+
         drinksChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,

@@ -29,6 +29,9 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 /**
  * Created by ed on 25/08/15.
  */
@@ -68,6 +71,10 @@ public class Statistics extends Activity {
 
         setUpCalender();
         setMethods();
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         //graph instantiation
         chart = (LineChartView) findViewById(R.id.chart);
