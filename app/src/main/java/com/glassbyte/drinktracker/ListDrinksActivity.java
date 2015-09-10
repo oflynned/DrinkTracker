@@ -32,7 +32,6 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
     private final int[] MAX_DISPLAY_SPINNER_ITEMS = {5,10};
     private int displayLimit, currentPage;
     private DrinkTrackerDbHelper dtDb;
-    private SQLiteDatabase readDB;
     private final String query = "SELECT * FROM "+DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
     private ArrayList<CheckBox> checkBoxes;
 
@@ -57,7 +56,6 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
 
 
         dtDb = new DrinkTrackerDbHelper(this);
-        readDB = dtDb.getReadableDatabase();
 
         populateTable();
 
@@ -82,6 +80,7 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
 
     //returns true if the table was populate with one or more entries
     public boolean populateTable(){
+        SQLiteDatabase readDB = dtDb.getReadableDatabase();
         checkBoxes.clear();
         Button prevB = (Button)findViewById(R.id.drinks_list_prev_button);
         if (currentPage == 0)
@@ -105,9 +104,10 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
         int rowCount = c.getCount();
         System.out.println("Row Count: "+rowCount);
         Button nextB = (Button)findViewById(R.id.drinks_list_next_button);
-        if(rowCount == 0)
+        if(rowCount == 0) {
+            readDB.close();
             return false;
-        else if (rowCount == displayLimit+1) {
+        } else if (rowCount == displayLimit+1) {
             nextB.setEnabled(true);
             nextB.invalidate();
 
@@ -158,6 +158,7 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
 
             c.moveToNext();
         }
+        readDB.close();
         return true;
     }
 
@@ -209,6 +210,10 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
             }
         }
         dtDb.removeDrinks(drinksIds.toArray(new Integer[drinksIds.size()]));
+
+        populateTable();
+        TableLayout tl = (TableLayout) findViewById(R.id.drinks_list_table);
+        tl.invalidate();
     }
 
     @Override

@@ -174,6 +174,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
 
             printTableContents(DrinkTrackerDatabase.DrinksTable.TABLE_NAME);
             printTableContents(DrinkTrackerDatabase.BacTable.TABLE_NAME);
+            printTableContents(selectAllTheDrinksBacEntriesQuery);
             printTableContents(DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME);
 
             if (firstZeroBacDate > 0) {
@@ -192,9 +193,9 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
 
                     float totalDrinkDecay = 0f;
                     for (int i = 0; i < allTheDrinksBacDecayEntries.getCount(); i++) {
-                        totalDrinkDecay += allTheDrinksBacDecayEntries.getFloat(5);
+                        totalDrinkDecay += allTheDrinksBacDecayEntries.getFloat(2);
                         allTheDrinksBacDecayEntries.moveToNext();
-                    }
+                    } System.out.println("Total drink decay: "+totalDrinkDecay);
 
                     if (totalDrinkDecay >= drinkBac) {
                         //The drink being deleted has been already fully decayed
@@ -209,6 +210,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                     }
 
                 } else {
+                    System.out.println("No decay updates affecting the drink being deleted have been performed yet.");
                     //no decay updates affecting the drink being deleted have been performed yet
                     String selectAllBacEntriesAfterTheDrinkQuery = "SELECT * FROM " +
                             DrinkTrackerDatabase.BacTable.TABLE_NAME + " WHERE " +
@@ -235,6 +237,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                             Long.toString(drinkId);
                     Cursor selectBacRelationForTheDrink =
                             readDB.rawQuery(selectBacRelationForTheDrinkQuery, null);
+                    selectBacRelationForTheDrink.moveToFirst();
                     int bacId = selectBacRelationForTheDrink.getInt(0);
                     selectBacRelationForTheDrink.close();
 
@@ -244,6 +247,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                             - drinkBac;
                     SharedPreferences.Editor e = sp.edit();
                     e.putFloat(mContext.getString(R.string.pref_key_currentEbac), newCurrentBac);
+                    e.apply();
                     //End of Update Current Bac in the shared preferences
 
                     //Delete the entries in the relations, drinks and bac table
