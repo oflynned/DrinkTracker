@@ -2,9 +2,14 @@ package com.glassbyte.drinktracker;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
@@ -110,46 +115,67 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
         writeDb.insert(DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME, null, cv);
     }
 
-    public void removeDrinks(Long[] drinksIds){
+    public void removeDrinks(Integer[] drinksIds){
+        //For debugging only
         System.out.println("Remove drinks entered.");
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("d/M/yy HH:mm");
+        //End for debugging only
 
         SQLiteDatabase readDB = this.getReadableDatabase();
         SQLiteDatabase writeDB = this.getWritableDatabase();
 
         //remove one at a time
-        for (long drinkId:
+        for (int drinkId:
             drinksIds) {
             System.out.println("Drink id being removed: " + drinkId);
 
             String selectDrinkInsertDateQuery = "SELECT * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME
                     + " WHERE " + DrinkTrackerDatabase.DrinksTable._ID + "=" + Long.toString(drinkId);
             Cursor drinkCursor = readDB.rawQuery(selectDrinkInsertDateQuery, null);
+            drinkCursor.moveToFirst();
             long drinkInsertDate = drinkCursor.getLong(1);
+            float drinkBac = drinkCursor.getFloat(5);
             drinkCursor.close();
+            calendar.setTimeInMillis(drinkInsertDate);
+            System.out.println("Date of insertion: " + sdf.format(calendar.getTime()));
 
             //Get the date of the first time bac was was 0 after inserting the drink that is being deleted
             String selectFirstZeroBacQuery = "SELECT MIN(" + DrinkTrackerDatabase.BacTable.DATE_TIME
                     + ") FROM (SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME
                     + " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + ">" + drinkInsertDate
-                    + " AND " + DrinkTrackerDatabase.BacTable.BAC + "=0)";
+                    + " AND " + DrinkTrackerDatabase.BacTable.BAC + "=0.0)";
             Cursor firstZeroBacDateCursor = readDB.rawQuery(selectFirstZeroBacQuery, null);
+            firstZeroBacDateCursor.moveToFirst();
+            System.out.println(selectFirstZeroBacQuery);
+            long firstZeroBacDate = firstZeroBacDateCursor.getLong(0);
             //End of Get the date of the first time bac was was 0 after inserting the drink that is being deleted
 
-            String selectFirstDecayUpdateAffectingTheDrink = "SELECT MIN(" + DrinkTrackerDatabase.BacTable.TABLE_NAME +
-                    "." + DrinkTrackerDatabase.BacTable.DATE_TIME + ") FROM (SELECT * FROM " +
-                    DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME + " WHERE " +
-                    DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID + "=" +
-                    drinkId + " JOIN " + DrinkTrackerDatabase.BacTable.TABLE_NAME + " ON " +
+            // + DrinkTrackerDatabase.BacTable.TABLE_NAME +"."
+            String selectFirstDecayUpdateAffectingTheDrink = "SELECT MIN(" + DrinkTrackerDatabase.BacTable.DATE_TIME + ") FROM (SELECT * FROM " +
+                    DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME + " INNER JOIN " +
+                    DrinkTrackerDatabase.BacTable.TABLE_NAME + " ON " +
                     DrinkTrackerDatabase.BacTable.TABLE_NAME + "." + DrinkTrackerDatabase.BacTable._ID +
                     "=" + DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME + "." +
-                    DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID + ") WHERE " +
-                    DrinkTrackerDatabase.BacTable.TABLE_NAME + "." + DrinkTrackerDatabase.BacTable.UPDATE_TYPE +
-                    "=" + DrinkTrackerDatabase.BacTable.DECAY_UPDATE;
+                    DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID + " WHERE " +
+                    DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME + "." +
+                    DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID + "=" +
+                    drinkId + ") WHERE " + DrinkTrackerDatabase.BacTable.UPDATE_TYPE + "=" +
+                    DrinkTrackerDatabase.BacTable.DECAY_UPDATE;
+
+            System.out.println(selectFirstDecayUpdateAffectingTheDrink);
 
             Cursor firstDecayUpdateCursor = readDB.rawQuery(selectFirstDecayUpdateAffectingTheDrink, null);
+            firstDecayUpdateCursor.moveToFirst();
+            long firstDecayUpdateDate = firstDecayUpdateCursor.getLong(0);
 
-            if (firstZeroBacDateCursor.getCount() != 0) {
-                long firstZeroBacDate = firstZeroBacDateCursor.getLong(0);
+            printTableContents(DrinkTrackerDatabase.DrinksTable.TABLE_NAME);
+            printTableContents(DrinkTrackerDatabase.BacTable.TABLE_NAME);
+            printTableContents(DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME);
+
+            if (firstZeroBacDate > 0) {
+                calendar.setTimeInMillis(firstZeroBacDate);
+                System.out.println("Date of first zero bac: " + sdf.format(calendar.getTime()) + " ---- Millis: "+firstZeroBacDate);
                 //bac have reached zero since inserting the drink that's being deleted
                 //hence modify all the bac entries in between the insert date and the bac 0 date
                 System.out.println("The bac have reached 0 since the drink being deleted was inserted.");
@@ -157,14 +183,85 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                 //bac never reached zero yet after inserting the drink that's being deleted
                 //hence modify all the bac entries from the one that's being deleted till the end
                 System.out.println("The bac never reached 0 after inserting the drink being deleted.");
-                if (firstDecayUpdateCursor.getCount() == 0) {
+                if (firstDecayUpdateDate > 0) {
+                    //there is decay updates affecting the drink being deleted have been performed yet
+                    System.out.println("There is decay updates affecting the drink being deleted have been performed yet.");
+                } else {
                     //no decay updates affecting the drink being deleted have been performed yet
-                    System.out.println("No decay updates affecting the drink being deleted have been performed yet.");
+                    String selectAllBacEntriesAfterTheDrinkQuery = "SELELCT * FROM " +
+                            DrinkTrackerDatabase.BacTable.TABLE_NAME + " WHERE " +
+                            DrinkTrackerDatabase.BacTable.DATE_TIME + ">" + Long.toString(drinkInsertDate);
+
+                    Cursor allBacEntriesAfterTheDrink = readDB.rawQuery(selectAllBacEntriesAfterTheDrinkQuery, null);
+                    allBacEntriesAfterTheDrink.moveToFirst();
+
+                    for (int i = 0; i < allBacEntriesAfterTheDrink.getCount(); i++) {
+                        int bacId = allBacEntriesAfterTheDrink.getInt(0);
+                        float modifiedBac = allBacEntriesAfterTheDrink.getFloat(2) - drinkBac;
+                        String updateBacQuery = "UPDATE " + DrinkTrackerDatabase.BacTable.TABLE_NAME +
+                                " SET " + DrinkTrackerDatabase.BacTable.BAC + "=" +
+                                Float.toString(modifiedBac) + " WHERE " +
+                                DrinkTrackerDatabase.BacTable._ID + "=" + bacId;
+                        writeDB.execSQL(updateBacQuery);
+                    }
+
+                    //Update Current Bac in the shared preferences
+                    String selectBacRelationForTheDrinkQuery = "SELECT * FROM " +
+                            DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME + " WHERE " +
+                            DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID + "=" +
+                            Long.toString(drinkId);
+                    Cursor selectBacRelationForTheDrink =
+                            readDB.rawQuery(selectBacRelationForTheDrinkQuery, null);
+                    int bacId = selectBacRelationForTheDrink.getInt(0);
+
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
+                    float newCurrentBac =
+                            sp.getFloat(mContext.getString(R.string.pref_key_currentEbac), 0.0f)
+                            - drinkBac;
+                    SharedPreferences.Editor e = sp.edit();
+                    e.putFloat(mContext.getString(R.string.pref_key_currentEbac), drinkBac);
+                    //End of Update Current Bac in the shared preferences
+
+                    //Delete the entries in the relations, drinks and bac table
+                    String deleteFromRelationTableQuery = "DELETE FROM " +
+                            DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME + " WHERE " +
+                            DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID + "=" +
+                            Integer.toString(drinkId) + " AND " +
+                            DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID + "=" +
+                            Integer.toString(bacId);
+                    String deleteFromDrinkTableQuery = "DELETE FROM " +
+                            DrinkTrackerDatabase.DrinksTable.TABLE_NAME + " WHERE " +
+                            DrinkTrackerDatabase.DrinksTable._ID + "=" + Integer.toString(drinkId);
+                    String deleteFromBacTableQuery = "DELETE FROM " +
+                            DrinkTrackerDatabase.BacTable.TABLE_NAME + " WHERE " +
+                            DrinkTrackerDatabase.BacTable._ID + "=" + Integer.toString(bacId);
+                    writeDB.execSQL(deleteFromRelationTableQuery);
+                    writeDB.execSQL(deleteFromDrinkTableQuery);
+                    writeDB.execSQL(deleteFromBacTableQuery);
+                    //End of Delete the entries in the relations, drinks and bac table
                 }
             }
         }
 
         writeDB.close();
         readDB.close();
+    }
+
+    public void printTableContents(String tableName){
+        String q = "SELECT * FROM (" + tableName + ")";
+        SQLiteDatabase readDb = this.getReadableDatabase();
+        Cursor c = readDb.rawQuery(q, null);
+        c.moveToFirst();
+        int rowNum = c.getCount();
+        int colNum = c.getColumnCount();
+        System.out.println("Number of rows in " + tableName + " is " + rowNum);
+        System.out.println("Number of columns in each row is " + colNum);
+        for (int r = 0; r < rowNum; r++) {
+            for (int col = 0; col < colNum; col++) {
+                System.out.print(col + ". " + c.getString(col) + "; ");
+            }
+            System.out.print("\n");
+            c.moveToNext();
+        }
     }
 }

@@ -200,15 +200,15 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
     }
 
     public void removeSelected(View view){
-        ArrayList<Long> drinksIds = new ArrayList<>();
+        ArrayList<Integer> drinksIds = new ArrayList<>();
         Iterator<CheckBox> itr = checkBoxes.iterator();
         while (itr.hasNext()) {
             CheckBox cb = itr.next();
             if (cb.isChecked()) {
-                drinksIds.add((long)cb.getId());
+                drinksIds.add(cb.getId());
             }
         }
-        dtDb.removeDrinks(drinksIds.toArray(new Long[drinksIds.size()]));
+        dtDb.removeDrinks(drinksIds.toArray(new Integer[drinksIds.size()]));
     }
 
     @Override

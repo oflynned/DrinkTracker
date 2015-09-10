@@ -164,7 +164,7 @@ public class BloodAlcoholContent {
 
             //Start of store all the ids of the drinks which are being affected by the bac update and bac amt of how affected they are
             float drinkBac = cur.getFloat(5);
-            while (dCurrentBAC-drinkBac <= 0){
+            while (dCurrentBAC-drinkBac >= 0){
                 newCurrentBac-=drinkBac;
 
                 affectedDrinksId.add(cur.getLong(0));
