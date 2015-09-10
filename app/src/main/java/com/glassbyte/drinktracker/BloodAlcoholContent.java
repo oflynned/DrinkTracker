@@ -11,7 +11,6 @@ import android.preference.PreferenceManager;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -111,17 +110,22 @@ public class BloodAlcoholContent {
                 String query = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME
                         + " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + " = (SELECT max("
                         + DrinkTrackerDatabase.BacTable.DATE_TIME + ") FROM "
-                        + DrinkTrackerDatabase.BacTable.TABLE_NAME + ") AND "
-                        + DrinkTrackerDatabase.BacTable.UPDATE_TYPE + "=" + DrinkTrackerDatabase.BacTable.DECAY_UPDATE;
+                        + DrinkTrackerDatabase.BacTable.TABLE_NAME + " WHERE "
+                        + DrinkTrackerDatabase.BacTable.UPDATE_TYPE + "="
+                        + DrinkTrackerDatabase.BacTable.DECAY_UPDATE + ") AND "
+                        + DrinkTrackerDatabase.BacTable.UPDATE_TYPE + "="
+                        + DrinkTrackerDatabase.BacTable.DECAY_UPDATE;
                 Cursor cur = readDb.rawQuery(query, null);
                 cur.moveToFirst();
 
                 if (cur.getCount()>0) {
                     System.out.println("BacTable included some DECAY_UPDATE entry");
                     long lastUpdateDate = cur.getLong(1);
+                    System.out.println("Long lastUpdateDate: " + lastUpdateDate + " ---- Long newLastUpdateDate: " + newLastUpdateDate);
                     long timeDiffInMin = TimeUnit.MINUTES.convert((newLastUpdateDate - lastUpdateDate), TimeUnit.MILLISECONDS);
+                    System.out.println("Time difference in minutes: " + timeDiffInMin);
 
-                    dCurrentBAC = timeDiffInMin / 60 * ELAPSED_HOUR_FACTOR;
+                    dCurrentBAC = ((float)timeDiffInMin / 60f) * ELAPSED_HOUR_FACTOR;
                 } else {
                     System.out.println("No DECAY_UPDATE entry in the bacTable yet.");
                     //This will be the first DECAY_UPDATE entry in the database so assume this has happened after 15 minutes
@@ -130,7 +134,7 @@ public class BloodAlcoholContent {
 
                 if (dCurrentBAC < currentBac)
                     newCurrentBac = currentBac - dCurrentBAC;
-                System.out.println("newCurrentBac="+newCurrentBac+";");
+                System.out.println("newCurrentBac="+newCurrentBac+"; ------------ dCurrentBac="+dCurrentBAC);
             } else {System.out.println("return false;");return false;}
         }
 
