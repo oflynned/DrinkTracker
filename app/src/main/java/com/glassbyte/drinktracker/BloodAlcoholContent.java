@@ -11,7 +11,6 @@ import android.preference.PreferenceManager;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -107,22 +106,32 @@ public class BloodAlcoholContent {
             System.out.println("updateType == DECAY_UPDATE");
 
             if (currentBac > 0) {
+                //The current bac is greater than 0 thus should be decayed
                 System.out.println("currentBac > 0");
+                //Get the most recent decay bac entry
                 String query = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME
                         + " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + " = (SELECT max("
                         + DrinkTrackerDatabase.BacTable.DATE_TIME + ") FROM "
-                        + DrinkTrackerDatabase.BacTable.TABLE_NAME + ") AND "
-                        + DrinkTrackerDatabase.BacTable.UPDATE_TYPE + "=" + DrinkTrackerDatabase.BacTable.DECAY_UPDATE;
+                        + DrinkTrackerDatabase.BacTable.TABLE_NAME + " WHERE "
+                        + DrinkTrackerDatabase.BacTable.UPDATE_TYPE + "="
+                        + DrinkTrackerDatabase.BacTable.DECAY_UPDATE + ") AND "
+                        + DrinkTrackerDatabase.BacTable.UPDATE_TYPE + "="
+                        + DrinkTrackerDatabase.BacTable.DECAY_UPDATE;
                 Cursor cur = readDb.rawQuery(query, null);
                 cur.moveToFirst();
+                //End of Get the most recent decay bac entry
 
                 if (cur.getCount()>0) {
+                    //The bac table includes at least one decay bac update
                     System.out.println("BacTable included some DECAY_UPDATE entry");
                     long lastUpdateDate = cur.getLong(1);
+                    System.out.println("Long lastUpdateDate: " + lastUpdateDate + " ---- Long newLastUpdateDate: " + newLastUpdateDate);
                     long timeDiffInMin = TimeUnit.MINUTES.convert((newLastUpdateDate - lastUpdateDate), TimeUnit.MILLISECONDS);
+                    System.out.println("Time difference in minutes: " + timeDiffInMin);
 
-                    dCurrentBAC = timeDiffInMin / 60 * ELAPSED_HOUR_FACTOR;
+                    dCurrentBAC = ((float)timeDiffInMin / 60f) * ELAPSED_HOUR_FACTOR;
                 } else {
+                    //The bac table doesn't include any decay bac updates yet
                     System.out.println("No DECAY_UPDATE entry in the bacTable yet.");
                     //This will be the first DECAY_UPDATE entry in the database so assume this has happened after 15 minutes
                     dCurrentBAC = 0.25f * ELAPSED_HOUR_FACTOR;
@@ -130,8 +139,12 @@ public class BloodAlcoholContent {
 
                 if (dCurrentBAC < currentBac)
                     newCurrentBac = currentBac - dCurrentBAC;
-                System.out.println("newCurrentBac="+newCurrentBac+";");
-            } else {System.out.println("return false;");return false;}
+                System.out.println("newCurrentBac="+newCurrentBac+"; ------------ dCurrentBac="+dCurrentBAC);
+            } else {
+                //The current bac is 0 thus no reason for decaying
+                System.out.println("The current bac is 0 thus no reason for decaying. return false;");
+                return false;
+            }
         }
 
         //Store the newly calculated bac in the SP
@@ -155,16 +168,19 @@ public class BloodAlcoholContent {
             ArrayList<Long> affectedDrinksId = new ArrayList<>();
             ArrayList<Float> affectedDrinksBac = new ArrayList<>();
 
+            //Select all the drinks entries and order by date in a descending order
             String q = "SELECT * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME + " ORDER BY("
                     + DrinkTrackerDatabase.DrinksTable.DATE_TIME + ") DESC;";
             Cursor cur = readDb.rawQuery(q, null);
-            if (cur.getCount() <= 0)
+            //If there is no drinks inserted in the table yet then no reason for decaying thus return false
+            if (cur.getCount() == 0)
                 return false;
             cur.moveToFirst();
+            //End of Select all the drinks entries and order by date in a descending order
 
             //Start of store all the ids of the drinks which are being affected by the bac update and bac amt of how affected they are
             float drinkBac = cur.getFloat(5);
-            while (dCurrentBAC-drinkBac <= 0){
+            while (dCurrentBAC-drinkBac >= 0){
                 newCurrentBac-=drinkBac;
 
                 affectedDrinksId.add(cur.getLong(0));
@@ -180,7 +196,7 @@ public class BloodAlcoholContent {
             //End of store all the ids of the drinks which are being affected by the bac update and bac amt of how affected they are
 
             //Insert all of the relations between the drinks and the bac update into the relation table
-            for(int i = 0; i < affectedDrinksBac.size(); i++){
+            for(int i = affectedDrinksBac.size()-1; i > 0; i--){
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID, affectedDrinksId.get(i));
                 contentValues.put(DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID, bacId);
