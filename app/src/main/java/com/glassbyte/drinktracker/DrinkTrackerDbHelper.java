@@ -206,10 +206,31 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                         //hence remove the bac entry where the drink was inserted and all the bac decay entries until insertion of another drink
                         //check if any drink was inserted after the drink being deleted
                         //if there was then change all the decays that happened after the insertion of the other drink to decay that other drink instead of the one being deleted
-                        //next to do
+
+                        //Get all the drinks that were inserted after the one being deleted to see whether decay updates should be transferred to those
+                        String selectDrinksInsertedAfterTheDrinkQuery = "SELECT * FROM " +
+                                DrinkTrackerDatabase.DrinksTable.TABLE_NAME + " WHERE " +
+                                DrinkTrackerDatabase.DrinksTable.DATE_TIME + ">" +
+                                "(SELECT (" + DrinkTrackerDatabase.DrinksTable.DATE_TIME + ") FROM " +
+                                DrinkTrackerDatabase.DrinksTable.TABLE_NAME + " WHERE " +
+                                DrinkTrackerDatabase.DrinksTable._ID + "=" +
+                                Integer.toString(drinkId) + ")";
+                        Cursor drinksInsertedAfterTheDrink =
+                                readDB.rawQuery(selectDrinksInsertedAfterTheDrinkQuery, null);
+                        drinksInsertedAfterTheDrink.moveToFirst();
+
+                        printTableContents(selectDrinksInsertedAfterTheDrinkQuery);
+                        if (drinksInsertedAfterTheDrink.getCount() > 0) {
+                            //there were drinks inserted after the drink being deleted
+                        } else {
+                            //there was no drinks inserted after the drink being deleted
+
+                        }
                     }
 
                 } else {
+                    //THIS SECTION IS DONE
+
                     System.out.println("No decay updates affecting the drink being deleted have been performed yet.");
                     //no decay updates affecting the drink being deleted have been performed yet
                     String selectAllBacEntriesAfterTheDrinkQuery = "SELECT * FROM " +
@@ -267,6 +288,12 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                     writeDB.execSQL(deleteFromDrinkTableQuery);
                     writeDB.execSQL(deleteFromBacTableQuery);
                     //End of Delete the entries in the relations, drinks and bac table
+
+
+                    System.out.println("Tables state after removing adequate rows associated with drink id: " + drinkId);
+                    printTableContents(DrinkTrackerDatabase.DrinksTable.TABLE_NAME);
+                    printTableContents(DrinkTrackerDatabase.BacTable.TABLE_NAME);
+                    printTableContents(DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME);
                 }
             }
         }
