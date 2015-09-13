@@ -9,29 +9,31 @@ import android.support.v7.app.AlertDialog;
  */
 public class WarningDialog extends DialogFragment {
 
-    public void displayWarning(String tier){
+    public boolean warning1, warning2, warning3, warning4;
+
+    public void displayWarning(String warningTier){
 
         String warning = "";
-        switch(tier){
+        switch(warningTier){
 
             /*4 tiers of warnings:
-            * 1:
+            * 1: You're enroute to getting drunk, maybe take it easy if you're feeling a bit intoxicated
+            * 2: You've reached quite a drunk stage, watch yourself and make sure you don't lose personal belongings
+            * 3: Hangover-ville
+            * 4: You're extremely drunk, drink any more and you're endangering yourself!
             * */
 
-            case "tier0":
-                warning = getString(R.string.tier0);
+            case "warning1":
+                warning = getString(R.string.warning1);
                 break;
-            case "tier1":
-                warning = getString(R.string.tier1);
+            case "warning2":
+                warning = getString(R.string.warning2);
                 break;
-            case "tier2":
-                warning = getString(R.string.tier2);
+            case "warning3":
+                warning = getString(R.string.warning3);
                 break;
-            case "tier3":
-                warning = getString(R.string.tier3);
-                break;
-            case "tier4":
-                warning = getString(R.string.tier4);
+            case "warning4":
+                warning = getString(R.string.warning4);
                 break;
         }
 
@@ -47,5 +49,37 @@ public class WarningDialog extends DialogFragment {
                     }
                 })
                 .show();
+    }
+
+    public void setWarning1(boolean warning1){
+        this.warning1 = warning1;
+    }
+
+    public void setWarning2(boolean warning2){
+        this.warning2 = warning2;
+    }
+
+    public void setWarning3(boolean warning3){
+        this.warning3 = warning3;
+    }
+
+    public void setWarning4(boolean warning4){
+        this.warning4 = warning4;
+    }
+
+    public boolean getWarning1(){
+        return warning1;
+    }
+
+    public boolean getWarning2(){
+        return warning2;
+    }
+
+    public boolean getWarning3(){
+        return warning3;
+    }
+
+    public boolean getWarning4(){
+        return warning4;
     }
 }

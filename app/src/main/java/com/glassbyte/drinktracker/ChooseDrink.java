@@ -74,6 +74,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
         /*Set up the BloodAlcoholLevel object*/
         bloodAlcoholContent = new BloodAlcoholContent(this.getActivity());
+        WarningDialog warningDialog = new WarningDialog();
         /*End of Set up the BloodAlcoholLevel object*/
 
         RelativeLayout rl = new RelativeLayout(this.getActivity());
