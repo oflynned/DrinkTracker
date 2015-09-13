@@ -20,9 +20,9 @@
             android:layout_marginTop="20dp">
 
             <RelativeLayout
+                android:id="@+id/displayDrink"
                 android:layout_width="wrap_content"
-                android:layout_height="220dp"
-                android:id="@+id/displayDrink">
+                android:layout_height="220dp">
 
                 <ImageView
                     android:id="@+id/presetDrink"
@@ -31,47 +31,45 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_launcher"
-                    android:layout_margin="10dp" />
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_launcher" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="0"
                     android:id="@+id/percentageChosen"
-                    android:textColor="@color/white"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
-
-                <TextView
-                    android:layout_below="@+id/percentageChosen"
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="1"
-                    android:id="@+id/volChosen"
-                    android:textColor="@color/white"
+                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:text="0"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/volChosen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/percentageChosen"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:text="1"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white" />
 
             </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_margin="10dp"
+            android:id="@+id/lay1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/lay1"
-            >
+            android:layout_margin="10dp">
 
             <RelativeLayout
                 android:id="@+id/drinkChoice"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/drinkPresetChoice"
@@ -82,81 +80,76 @@
                     android:text="@string/please_choose_drink" />
 
                 <Spinner
-                    android:layout_below="@id/drinkPresetChoice"
                     android:id="@+id/spinnerPresetDrink"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_below="@id/drinkPresetChoice"
                     android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
                     android:entries="@array/drinks" />
-
-
             </RelativeLayout>
         </LinearLayout>
+
         <RelativeLayout
+            android:id="@+id/rel1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:paddingBottom="50dp"
-            android:id="@+id/rel1"
+            android:paddingBottom="50dp">
 
-            >
-        <Button
-            android:layout_margin="10dp"
-            android:padding="5dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/presetSetPercentage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/set_percentage"
-            android:background="@color/orange700" />
+            <Button
+                android:id="@+id/presetSetPercentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/orange700"
+                android:padding="5dp"
+                android:text="@string/set_percentage" />
 
-        <Button
-            android:layout_margin="10dp"
-            android:padding="5dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/presetSetVolume"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/set_volume"
-            android:background="@color/orange700"
-            android:layout_toRightOf="@+id/presetSetPercentage"
-            android:layout_toEndOf="@+id/presetSetPercentage" />
+            <Button
+                android:id="@+id/presetSetVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/presetSetPercentage"
+                android:background="@color/orange700"
+                android:padding="5dp"
+                android:text="@string/set_volume" />
 
-        <Button
-            android:layout_margin="10dp"
-            android:padding="5dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/presetAddDrink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/drink"
-            android:background="@color/orange700"
-            android:layout_toRightOf="@+id/presetSetVolume"
-            android:layout_toEndOf="@+id/presetSetVolume" />
+            <Button
+                android:id="@+id/presetAddDrink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/presetSetVolume"
+                android:background="@color/orange700"
+                android:padding="5dp"
+                android:text="@string/drink" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
             <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 ads:adSize="BANNER"
-                ads:adUnitId="@string/banner_ad_unit_id">
-            </com.google.android.gms.ads.AdView>
+                ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

@@ -6,6 +6,7 @@ package com.glassbyte.drinktracker;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -54,6 +55,8 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     private BloodAlcoholContent bloodAlcoholContent;
     SharedPreferences sp;
 
+    //mock id for testing
+    private final static String AD_ID = "ca-app-pub-3940256099942544/6300978111";
     int progress;
 
     CustomProgressBar customProgressBar;
@@ -122,8 +125,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         pbBAC.setLayoutParams(pbBACParams);
         pbBAC.setId(View.generateViewId());
 
-        //fab layout
-        final FloatingActionMenu menu = new FloatingActionMenu(getContext());
         final FloatingActionButton fab1 = new FloatingActionButton(getContext());
         final FloatingActionButton fab2 = new FloatingActionButton(getContext());
 
@@ -132,62 +133,45 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int width = size.x;
         int height = size.y;
+        int width = size.x;
 
-        //menu.setBackgroundColor(getResources().getColor(R.color.cyan500));
-        RelativeLayout.LayoutParams fabParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        //RelativeLayout.LayoutParams fabParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        fabParams.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
-        fabParams.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
-        fabParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        fabParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        fabParams.setMargins(0, 0, (width * 10) / 45, 16);
-        menu.setId(View.generateViewId());
-
+        //fab1 fab
         RelativeLayout.LayoutParams paramsFAB1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        paramsFAB1.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
         paramsFAB1.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
-        paramsFAB1.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        paramsFAB1.addRule(RelativeLayout.ABOVE, menu.getId());
-        paramsFAB1.setMargins(0, 0, 0, 16);
+        paramsFAB1.addRule(RelativeLayout.ALIGN_LEFT);
+        paramsFAB1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         fab1.setLayoutParams(paramsFAB1);
-        fab1.setId(View.generateViewId());
-
-        RelativeLayout.LayoutParams paramsFAB2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        paramsFAB2.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
-        paramsFAB1.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
-        paramsFAB1.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        paramsFAB1.addRule(RelativeLayout.ABOVE, fab1.getId());
-        paramsFAB2.setMargins(0, 0, 0, 16);
-        fab2.setLayoutParams(paramsFAB2);
-        fab2.setId(View.generateViewId());
-
-        menu.setMenuButtonColorRipple(getResources().getColor(R.color.orange300));
-        menu.setMenuButtonColorNormal(getResources().getColor(R.color.orange500));
-        menu.setMenuButtonColorPressed(getResources().getColor(R.color.orange700));
-
-        menu.setOnMenuButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                menu.toggle(false);
-            }
-        });
 
         fab1.setButtonSize(FloatingActionButton.SIZE_NORMAL);
-        fab1.setLabelText("Graphs & Effects");
-        fab1.setImageResource(R.drawable.ic_action_clock);
+        fab1.setImageResource(R.drawable.graphs);
+        fab1.setColorRipple(getResources().getColor(R.color.orange300));
+        fab1.setColorNormal(getResources().getColor(R.color.orange500));
+        fab1.setColorPressed(getResources().getColor(R.color.orange700));
+        fab1.setId(View.generateViewId());
+
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "fab1 pressed", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), Statistics.class));
             }
         });
 
+        //fab2 fab
+        RelativeLayout.LayoutParams paramsFAB2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsFAB2.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
+        paramsFAB2.addRule(RelativeLayout.ALIGN_RIGHT);
+        paramsFAB2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        fab2.setLayoutParams(paramsFAB2);
+
         fab2.setButtonSize(FloatingActionButton.SIZE_NORMAL);
-        fab2.setLabelText("Detailed Stats");
-        fab2.setImageResource(R.drawable.ic_action_info);
+        fab2.setImageResource(R.drawable.info);
+        fab2.setColorRipple(getResources().getColor(R.color.orange300));
+        fab2.setColorNormal(getResources().getColor(R.color.orange500));
+        fab2.setColorPressed(getResources().getColor(R.color.orange700));
+        fab2.setId(View.generateViewId());
+
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,32 +194,13 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             }
         });
 
-        menu.setLayoutParams(fabParams);
-        menu.addMenuButton(fab1);
-        menu.addMenuButton(fab2);
-
-        menu.setClosedOnTouchOutside(true);
-        menu.hideMenuButton(false);
-
-        menus.add(menu);
-
-        int delay = 400;
-        for (final FloatingActionMenu menu0 : menus) {
-            mUiHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    menu0.showMenuButton(true);
-                }
-            }, delay);
-            delay += 150;
-        }
-
         rl.addView(leftSideBar);
         rl.addView(rightSideBar);
         rl.addView(bacDisplay);
         rl.addView(customProgressBar);
         rl.addView(pbBAC);
-        rl.addView(menu);
+        rl.addView(fab1);
+        rl.addView(fab2);
 
         bacDisplay.invalidate();
 

@@ -1,16 +1,25 @@
 package com.glassbyte.drinktracker;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.internal.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -29,9 +38,6 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
 /**
  * Created by ed on 25/08/15.
  */
@@ -47,6 +53,7 @@ public class Statistics extends Activity {
 
     BloodAlcoholContent bloodAlcoholContent;
     DrinkTrackerDbHelper drinkTrackerDbHelper;
+    FloatingActionButton stats_details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -62,6 +69,24 @@ public class Statistics extends Activity {
         rating = (TextView) findViewById(R.id.rating);
         BACinfo = (TextView) findViewById(R.id.briefInfoBAC);
         BACrating = (TextView) findViewById(R.id.ratingBAC);
+        stats_details = (FloatingActionButton) findViewById(R.id.stats_details);
+        stats_details.hide(false);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                stats_details.show(true);
+                stats_details.setShowAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.fab_slide_in_from_left));
+                stats_details.setHideAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.fab_slide_out_to_right));
+            }
+        }, 1000);
+
+        stats_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogStats();
+            }
+        });
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender), ""));
@@ -72,15 +97,35 @@ public class Statistics extends Activity {
         setUpCalender();
         setMethods();
 
+        //ad request
+        /*
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        */
 
         //graph instantiation
         chart = (LineChartView) findViewById(R.id.chart);
         graphValues();
         chart.setViewportCalculationEnabled(false);
         chart.startDataAnimation();
+    }
+
+    private void showDialogStats(){
+        new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AppTheme))
+                .setTitle(R.string.detailed_stats_title)
+                .setMessage(
+                        getResources().getString(R.string.avg_drink_strength) + "\n" + getAvgABV() + "%" + "\n\n" +
+                                getResources().getString(R.string.avg_drink_volume) + "\n" + getAvgVol() + getUnits() + "\n\n" +
+                                getResources().getString(R.string.avg_calories) + "\n" + getCalories() + " " + getResources().getString(R.string.calories) + "\n\n" +
+                                getResources().getString(R.string.max_bac) + "\n" + getMaxBAC()
+                )
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
     }
 
     private void graphValues() {
@@ -120,7 +165,7 @@ public class Statistics extends Activity {
 
             final Viewport v = new Viewport(chart.getMaximumViewport());
             v.bottom = 0;
-            v.top = 0.6f;
+            v.top = 0.4f;
             v.left = 0;
             v.right = cursor.getCount();
             chart.setMaximumViewport(v);
@@ -207,7 +252,8 @@ public class Statistics extends Activity {
         //col 6 for units
         //sum row of col 6 if its date lies between start and end
 
-        /*if (cursor.getCount() != 0) {
+        /*
+        if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
                 if (dateStringFormat.parseDateTime(cursor.getString(1)).isAfter(startDate) &&
@@ -266,8 +312,8 @@ public class Statistics extends Activity {
             //at 0-0.01
             BACrating.setText(R.string.tier0);
             BACrating.setTextColor(Color.GREEN);
-        } else if (BAC >= 0.02 && BAC < 0.04) {
-            //0.02-0.03
+        } else if (BAC >= 0.01 && BAC < 0.04) {
+            //0.01-0.04
             BACrating.setText(R.string.tier1);
             BACrating.setTextColor(Color.GREEN);
         } else if (BAC >= 0.04 && BAC < 0.07) {
@@ -275,7 +321,7 @@ public class Statistics extends Activity {
             BACrating.setText(R.string.tier2);
             BACrating.setTextColor(Color.GREEN);
         } else if (BAC >= 0.07 && BAC < 0.1) {
-            //0.07-0.09
+            //0.07-0.1
             BACrating.setText(R.string.tier3);
             BACrating.setTextColor(orange);
         } else if (BAC >= 0.1 && BAC < 0.13) {

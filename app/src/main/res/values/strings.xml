@@ -142,7 +142,10 @@
     <string name="foot_and">foot and</string>
     <string name="inches">inches</string>
     <string name="pounds">pounds</string>
+
     <!--> Mock Banner Ad Key <-->
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="French">3</string>
+    <string name="warning">Warning</string>
+    <string name="ok">OK</string>
 </resources>
