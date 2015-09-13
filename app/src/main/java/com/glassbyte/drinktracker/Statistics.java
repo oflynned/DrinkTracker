@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 
@@ -53,7 +52,6 @@ public class Statistics extends Activity {
 
     BloodAlcoholContent bloodAlcoholContent;
     DrinkTrackerDbHelper drinkTrackerDbHelper;
-    FloatingActionButton stats_details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -69,24 +67,6 @@ public class Statistics extends Activity {
         rating = (TextView) findViewById(R.id.rating);
         BACinfo = (TextView) findViewById(R.id.briefInfoBAC);
         BACrating = (TextView) findViewById(R.id.ratingBAC);
-        stats_details = (FloatingActionButton) findViewById(R.id.stats_details);
-        stats_details.hide(false);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                stats_details.show(true);
-                stats_details.setShowAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.fab_slide_in_from_left));
-                stats_details.setHideAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.fab_slide_out_to_right));
-            }
-        }, 1000);
-
-        stats_details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogStats();
-            }
-        });
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender), ""));
@@ -109,23 +89,6 @@ public class Statistics extends Activity {
         graphValues();
         chart.setViewportCalculationEnabled(false);
         chart.startDataAnimation();
-    }
-
-    private void showDialogStats(){
-        new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AppTheme))
-                .setTitle(R.string.detailed_stats_title)
-                .setMessage(
-                        getResources().getString(R.string.avg_drink_strength) + "\n" + getAvgABV() + "%" + "\n\n" +
-                                getResources().getString(R.string.avg_drink_volume) + "\n" + getAvgVol() + getUnits() + "\n\n" +
-                                getResources().getString(R.string.avg_calories) + "\n" + getCalories() + " " + getResources().getString(R.string.calories) + "\n\n" +
-                                getResources().getString(R.string.max_bac) + "\n" + getMaxBAC()
-                )
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .show();
     }
 
     private void graphValues() {

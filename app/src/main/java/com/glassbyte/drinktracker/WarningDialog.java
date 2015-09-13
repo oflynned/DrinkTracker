@@ -41,7 +41,7 @@ public class WarningDialog extends DialogFragment {
         new AlertDialog.Builder(getContext())
                 //set title
                 .setTitle(R.string.warning)
-                        //depending on BAC we set the tier
+                //depending on BAC we set the tier
                 .setMessage(warning)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

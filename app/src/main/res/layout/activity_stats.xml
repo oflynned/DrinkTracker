@@ -105,19 +105,6 @@
                 android:layout_margin="10dp"
                 android:background="@color/hint_grey" />
         </RelativeLayout>
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/stats_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/graphs"
-            fab:fab_colorNormal="@color/orange500"
-            fab:fab_colorPressed="@color/orange700"
-            fab:fab_colorRipple="@color/orange300"
-            fab:fab_label="Graphs"
-            fab:fab_size="normal"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
 </LinearLayout>
