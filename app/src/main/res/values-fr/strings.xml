@@ -78,29 +78,29 @@
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Attention</string>
-    <string name="disclaimerbody">Rappelez vous, s'il vous plait, DrinkTracker est seulement une approximation de votre taux d'alcoolémie (BAC),il est pas un substitut pour un examen de l'alcootest. GlassByte est en aucun cas responsable de toutes les actions menées dans le cadre d'intoxication. S'il vous plaît conduire de façon responsable. En utilisant cette application, vous vous engagez à respecter ce préavis.</string>
-    <string name="agree">Je suis d'accord</string>
-    <string name="disagree">Je ne suis d'accord</string>
+    <string name="disclaimerbody">Rappelez vous, s\'il vous plait, DrinkTracker est seulement une approximation de votre taux d\'alcoolémie (BAC),il est pas un substitut pour un examen de l\'alcootest. GlassByte est en aucun cas responsable de toutes les actions menées dans le cadre d\'intoxication. S\'il vous plaît conduire de façon responsable. En utilisant cette application, vous vous engagez à respecter ce préavis.</string>
+    <string name="agree">Je suis d\'accord</string>
+    <string name="disagree">Je ne suis d\'accord</string>
 
     <!--> dialog warnings <-->
     <string name="tier0">Sobre.</string>
     <string name="tier1">Légèrement détendu et sans perte de coordination.</string>
-    <string name="tier2">Altération légère , inhibitions baissés, abaissé la prudence , l'exagération du comportement .</string>
-    <string name="tier3">Déficience légère de l'équilibre , de la parole , de la vision et de temps de réaction .</string>
-    <string name="tier4">Altération significative de la coordination , perte de jugement , et le sentiment d'euphorie .</string>
-    <string name="tier5">Manque de contrôle physique , perte d'équilibre , et le flou de la vision . Euphorie réduite et augmenté la dysphorie . Déficience grave de la perception et de jugement.</string>
-    <string name="tier6">L'intensification de la dysphorie , augmentation des nausées , apparaît &quot;plus bâclée&quot;.</string>
+    <string name="tier2">Altération légère , inhibitions baissés, abaissé la prudence , l\'exagération du comportement .</string>
+    <string name="tier3">Déficience légère de l\'équilibre , de la parole , de la vision et de temps de réaction .</string>
+    <string name="tier4">Altération significative de la coordination , perte de jugement , et le sentiment d\'euphorie .</string>
+    <string name="tier5">Manque de contrôle physique , perte d\'équilibre , et le flou de la vision . Euphorie réduite et augmenté la dysphorie . Déficience grave de la perception et de jugement.</string>
+    <string name="tier6">L\'intensification de la dysphorie , augmentation des nausées , apparaît &quot;plus bâclée&quot;.</string>
     <string name="tier7">Confusion, désorientation . Peut ne pas ressentir la douleur en cas de blessure . Nausées et vomissements expérimentés autour de ce niveau . Réflexe nauséeux peut être altérée. Blackouts sont plus susceptibles de ce point .</string>
-    <string name="tier8">Déficience grave de toutes les fonctions sensorielles , physiques et mentales . Augmentation du risque d'asphyxie par des vomissements et des blessures .</string>
-    <string name="tier9">Vous avez peu de compréhension de l'endroit où vous êtes. Distribuer et de la difficulté à être réveillé est très probable ..</string>
+    <string name="tier8">Déficience grave de toutes les fonctions sensorielles , physiques et mentales . Augmentation du risque d\'asphyxie par des vomissements et des blessures .</string>
+    <string name="tier9">Vous avez peu de compréhension de l\'endroit où vous êtes. Distribuer et de la difficulté à être réveillé est très probable ..</string>
     <string name="tier10">Coma</string>
     <string name="tier11">Deces</string>
 
     <!--> unit warnings <-->
-    <string name="pollunits">Total d'unités bu cette semaine</string>
+    <string name="pollunits">Total d\'unités bu cette semaine</string>
     <string name="units">Unites</string>
     <string name="belowlimit">Ci-dessous recommandé limite hebdomadaire </string>
-    <string name="abovelimit">Consommation excessive d'alcool</string>
+    <string name="abovelimit">Consommation excessive d\'alcool</string>
 
     <!--> detailed stats <-->
     <string name="detailed_stats_title">Detailed Statistics</string>
@@ -120,7 +120,7 @@
 
     <!--> presets <-->
     <string name="drink_added">Boisson ajouté avec succès</string>
-    <string name="please_choose_drink">Choisir une boisson s'il vous plaît :</string>
+    <string name="please_choose_drink">Choisir une boisson s\'il vous plaît :</string>
     <string name="set_percentage">Set Percentage</string>
     <string name="set_volume">Set Volume</string>
     <string name="drink">Boire</string>
