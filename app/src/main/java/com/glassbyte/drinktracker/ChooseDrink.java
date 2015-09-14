@@ -8,39 +8,40 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 /**
@@ -59,11 +60,17 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     private BloodAlcoholContent bloodAlcoholContent;
     SharedPreferences sp;
 
+    String spGender, spUnits, units;
+
+    double totUnits, maxUnits, maxBAC, avgABV, avgVol, currBAC;
+    int calories;
+
     //mock id for testing
     private final static String AD_ID = "ca-app-pub-3940256099942544/6300978111";
     int progress;
 
     WarningDialog warningDialog;
+    DrinkTrackerDbHelper drinkTrackerDbHelper;
     CustomProgressBar customProgressBar;
     private AdView adView;
 
@@ -73,11 +80,24 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         /*Register the sharepreferences listener so that it doesn't get garbage collected*/
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         sp.registerOnSharedPreferenceChangeListener(this);
+        spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender), ""));
+        spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits), ""));
+
         /*End Register the sharepreferences listener*/
 
         /*Set up the BloodAlcoholLevel object*/
         bloodAlcoholContent = new BloodAlcoholContent(this.getActivity());
         warningDialog = new WarningDialog(this.getActivity());
+        drinkTrackerDbHelper = new DrinkTrackerDbHelper(this.getActivity());
+
+        setMaxUnits(spGender);
+        setUpCalender();
+        setTotalUnits(0);
+        setCalories((int) (totUnits * 56));
+        setAvgABV();
+        setAvgVol();
+        setUnits(spUnits);
+        setMaxBAC();
 
         if(bloodAlcoholContent.getCurrentEbac()==0){
             warningDialog.setWarning1(false);
@@ -193,14 +213,13 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             @Override
             public void onClick(View v) {
                 //open dialog of stats
-                Statistics statistics = new Statistics();
                 new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.detailed_stats_title)
                         .setMessage(
-                                getResources().getString(R.string.avg_drink_strength) + "\n" + statistics.getAvgABV() + "%" + "\n\n" +
-                                        getResources().getString(R.string.avg_drink_volume) + "\n" + statistics.getAvgVol() + statistics.getUnits() + "\n\n" +
-                                        getResources().getString(R.string.avg_calories) + "\n" + statistics.getCalories() + " " + getResources().getString(R.string.calories) + "\n\n" +
-                                        getResources().getString(R.string.max_bac) + "\n" + statistics.getMaxBAC()
+                                getResources().getString(R.string.avg_drink_strength) + "\n" + getAvgABV() + "%" + "\n\n" +
+                                        getResources().getString(R.string.avg_drink_volume) + "\n" + getAvgVol() + getUnits() + "\n\n" +
+                                        getResources().getString(R.string.avg_calories) + "\n" + getCalories() + " " + getResources().getString(R.string.calories) + "\n\n" +
+                                        getResources().getString(R.string.max_bac) + "\n" + getMaxBAC()
                         )
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -267,6 +286,223 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         return rl;
     }
 
+    protected void setUpCalender() {
+        // Get calendar set to current date and time
+        Calendar c = Calendar.getInstance();
+
+        // Set the calendar to monday of the current week
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+        // Print start and end of the current week starting on Monday
+        DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        //1 day before week start at 23:59:59
+        c.add(Calendar.DATE, -1);
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        c.set(Calendar.MINUTE, 59);
+        c.set(Calendar.SECOND, 59);
+        String whileAfter = df.format(c.getTime());
+        //1 day after week end at 00:00:00
+        c.add(Calendar.DATE, 8);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        String whileBefore = df.format(c.getTime());
+
+        //select first row by date fo start of week and sum until it reaches whileNot
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        String currUnits;
+
+        DateTimeFormatter dateStringFormat = DateTimeFormat.forPattern("HH:mm:ss dd/MM/yyyy");
+        DateTime startDate = dateStringFormat.parseDateTime(whileAfter);
+        DateTime endDate = dateStringFormat.parseDateTime(whileBefore);
+
+        //col 1 for time
+        //col 6 for units
+        //sum row of col 6 if its date lies between start and end
+
+        /*
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                if (dateStringFormat.parseDateTime(cursor.getString(1)).isAfter(startDate) &&
+                        dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate)) {
+                    //if date lies within period
+                    currUnits = cursor.getString(6);
+                    System.out.println(currUnits);
+                    totUnits = totUnits + Double.parseDouble(currUnits);
+                } else {
+                    //go to next row
+                    cursor.moveToNext();
+                }
+            }
+            while (cursor.moveToNext() && dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate));
+
+            System.out.println(totUnits);
+            setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
+
+            //close operations and sum
+            db.close();
+            cursor.close();
+        }*/
+    }
+
+    private void setAvgABV() {
+        //select first row by date fo start of week and sum until it reaches whileNot
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        int count = 0;
+        int totABV = 0;
+        String ABV;
+        float currABV;
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                if (!cursor.isNull(4)) {
+                    //if date lies within period
+                    ABV = cursor.getString(4);
+                    currABV = Float.parseFloat(ABV);
+                    totABV = (int) (totABV + currABV);
+                    count++;
+                } else {
+                    //go to next row
+                    cursor.moveToNext();
+                }
+            } while (cursor.moveToNext());
+
+            avgABV = totABV / count;
+
+            //close operations and sum
+            db.close();
+            cursor.close();
+        }
+    }
+
+    private void setAvgVol() {
+        //select first row by date fo start of week and sum until it reaches whileNot
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        int count = 0;
+        int totVol = 0;
+        String ABV;
+        float currVol;
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                if (!cursor.isNull(3)) {
+                    //if date lies within period
+                    ABV = cursor.getString(3);
+                    currVol = Float.parseFloat(ABV);
+                    totVol = (int) (totVol + currVol);
+                    count++;
+                } else {
+                    //go to next row
+                    cursor.moveToNext();
+                }
+            } while (cursor.moveToNext());
+
+            //ml
+            avgVol = totVol / count;
+
+            //convert to oz if imperial as they are stored in ml regardless of preference
+            /*if (getUnits().equals("oz")) {
+                avgVol = BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(avgVol);
+                avgVol = BloodAlcoholContent.round(avgVol, 2);
+            }*/
+
+            //close operations and sum
+            db.close();
+            cursor.close();
+        }
+    }
+
+    protected double getAvgVol() {
+        return avgVol;
+    }
+
+    protected double getAvgABV() {
+        return avgABV;
+    }
+
+    protected double getMaxBAC() {
+        return maxBAC;
+    }
+
+    protected void setMaxUnits(String spGender) {
+        if (spGender.equals("male") || spGender.equals("Male")) {
+            this.maxUnits = 21;
+        } else {
+            this.maxUnits = 14;
+        }
+    }
+
+    protected double getMaxUnits() {
+        return maxUnits;
+    }
+
+    protected void setUnits(String spUnits) {
+        if (spUnits.equals("metric") || spUnits.equals("Metric")) {
+            this.units = "ml";
+        } else {
+            this.units = "oz";
+        }
+    }
+
+    protected String getUnits() {
+        return units;
+    }
+
+    protected void setTotalUnits(double totUnits) {
+        this.totUnits = totUnits;
+    }
+
+    protected double getTotalUnits() {
+        return totUnits;
+    }
+
+    protected void setCalories(int calories) {
+        this.calories = calories;
+    }
+
+    protected double getCalories() {
+        return calories;
+    }
+
+    protected void setMaxBAC() {
+
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            maxBAC = 0;
+            do {
+                currBAC = Double.parseDouble(cursor.getString(2));
+                if (currBAC > maxBAC) {
+                    maxBAC = currBAC;
+                } else {
+                    //go to next row
+                    cursor.moveToNext();
+                }
+            } while (cursor.moveToNext());
+
+            maxBAC = BloodAlcoholContent.round(maxBAC, 3);
+
+            //close operations and sum
+            db.close();
+            cursor.close();
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -326,6 +562,14 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 warningDialog.setWarning4(false);
             }
         }
+        //calories are units*7*8 as 1 unit = 8g where 1g = 7 calories therefore
+        setUpCalender();
+        setCalories((int) (totUnits * 56));
+        setAvgABV();
+        setAvgVol();
+        setUnits(spUnits);
+        setMaxUnits(spGender);
+        setMaxBAC();
     }
 
     public class SelectionSideBar extends View {
