@@ -152,4 +152,5 @@
     <string name="warning2">You\'ve reached quite a drunk stage, watch yourself and make sure you don\'t lose personal belongings.</string>
     <string name="warning4">You\'re extremely drunk, drink any more and you\'re endangering yourself!</string>
     <string name="warning3">You\'re very drunk and should expect a bad hangover tomorrow morning.</string>
+    <string name="notice">DrinkTracker Notice</string>
 </resources>

@@ -63,6 +63,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     private final static String AD_ID = "ca-app-pub-3940256099942544/6300978111";
     int progress;
 
+    WarningDialog warningDialog;
     CustomProgressBar customProgressBar;
     private AdView adView;
 
@@ -76,7 +77,15 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
         /*Set up the BloodAlcoholLevel object*/
         bloodAlcoholContent = new BloodAlcoholContent(this.getActivity());
-        WarningDialog warningDialog = new WarningDialog();
+        warningDialog = new WarningDialog(this.getActivity());
+
+        if(bloodAlcoholContent.getCurrentEbac()==0){
+            warningDialog.setWarning1(false);
+            warningDialog.setWarning2(false);
+            warningDialog.setWarning3(false);
+            warningDialog.setWarning4(false);
+        }
+
         /*End of Set up the BloodAlcoholLevel object*/
 
         final RelativeLayout rl = new RelativeLayout(this.getActivity());
@@ -297,6 +306,25 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 startAnimation(progress);
             }
             pbBAC.invalidate();
+
+            if((bloodAlcoholContent.getCurrentEbac()>=0.07) && (!warningDialog.getWarning1())) {
+                warningDialog.setWarning1(true);
+                warningDialog.displayWarning("1");
+            } else if (bloodAlcoholContent.getCurrentEbac()>=0.13 && (!warningDialog.getWarning2())) {
+                warningDialog.setWarning2(true);
+                warningDialog.displayWarning("2");
+            } else if (bloodAlcoholContent.getCurrentEbac()>=0.17 && (!warningDialog.getWarning3())) {
+                warningDialog.setWarning3(true);
+                warningDialog.displayWarning("3");
+            } else if (bloodAlcoholContent.getCurrentEbac()>=0.22 && (!warningDialog.getWarning4())) {
+                warningDialog.setWarning4(true);
+                warningDialog.displayWarning("4");
+            } else if (bloodAlcoholContent.getCurrentEbac()==0){
+                warningDialog.setWarning1(false);
+                warningDialog.setWarning2(false);
+                warningDialog.setWarning3(false);
+                warningDialog.setWarning4(false);
+            }
         }
     }
 
