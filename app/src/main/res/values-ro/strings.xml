@@ -1,0 +1,155 @@
+<resources>
+    <string name="app_name">DrinkTracker</string>
+    <string name="hello_world">Bunaziua Lume!</string>
+    <string name="action_settings">Setari</string>
+    <string name="action_aboutus">Despre Noi</string>
+    <string name="action_listDrinks">Lista Bauturi</string>
+    <string name="action_stats">Statistici</string>
+    <string name="action_removeads">Scoate Reclame</string>
+
+    <!-- Intro Screen -->
+    <string name="pref_key_run">pref_key_run</string>
+
+    <!-- Preferences -->
+    <string name="pref_key_contact">pref_key_contact</string>
+    <string name="pref_key_editGender">pref_key_editGender</string>
+    <string name="pref_key_editWeight">pref_key_editWeight</string>
+    <string name="pref_key_editUnits">pref_key_editUnits</string>
+    <string name="pref_key_editHeight">pref_key_editHeight</string>
+    <string name="pref_key_dataCollection">pref_key_dataCollection</string>
+    <string name="pref_key_irish">pref_key_irish</string>
+    <string name="pref_key_currentEbac">pref_key_currentEbac</string>
+    <string name="pref_key_storage_settings">pref_key_storage_settings</string>
+    <string name="pref_key_editFeet">pref_key_editFeet</string>
+    <string name="pref_key_editInches">pref_key_editInches</string>
+    <string name="pref_key_last_update_currentEbac">pref_key_last_update_currentEbac</string>
+    <string name="pref_key_maxBAC">pref_key_maxBAC</string>
+
+    <!-- End of Preferences -->
+
+    <!--Custom Drinks Titles-->
+    <string name="shot_glass_title">Pahar Shot</string>
+    <string name="water_glass_title">Pahar</string>
+    <string name="pint_glass_title">Pahar Pint</string>
+    <string name="wine_glass_title">Pahar Vin</string>
+    <!-- End of Custom Drinks Titles -->
+
+    <!--Custom Drinks SetPercentage Dialog-->
+    <string name="setPercentage_dialog_title">Setează %</string>
+    <string name="setVolume_dialog_title">Setează Volum</string>
+    <string name="cancel">Cancelează</string>
+    <string name="done">Termina</string>
+    <!--End of Custom Drinks SetPercentage Dialog-->
+
+    <string-array name="optgender">
+        <item>Masculin</item>
+        <item>Feminin</item>
+    </string-array>
+
+    <string-array name="optunits">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+
+    <!-->types of drinks<-->
+    <string-array name="drinks">
+        <item>""</item>
+        <item>Bere</item>
+        <item>Lager</item>
+        <item>Stout</item>
+        <item>Ale</item>
+        <item>Cidru</item>
+        <item>Alcopop</item>
+        <item>Cocktail</item>
+    </string-array>
+
+    <!-->types of drinks<-->
+    <string-array name="period">
+        <item>Sesiune Curentă</item>
+        <item>Noaptea Trecută</item>
+        <item>Saptamana Trecută</item>
+        <item>Luna Trecută</item>
+        <item>De la Inceput</item>
+    </string-array>
+
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_list_drinks">ListDrinksActivity</string>
+
+    <!--> disclaimer <-->
+    <string name="disclaimertitle">Aviz</string>
+    <string name="disclaimerbody">Vă rugăm să vă amintiti programul DrinkTracker este numai un program care aproximează volumul de alcol in sange (BAC), el nu este un substitut pentru un bretilizator. GlassByte nu este responsabil pentru actiunile facute de indivizi sub influenta alcolului. Va rugăm sa conduceti cu grija. Prin folosinta programului sunteti de acord cu termenurile de utilizare.</string>
+    <string name="agree">Accept</string>
+    <string name="disagree">Nu accept</string>
+
+    <!--> dialog warnings <-->
+    <string name="tier0">Treaz</string>
+    <string name="tier1">Relaxat, fără pierdere de coordonare.</string>
+    <string name="tier2">Inhibiti scazute, atentie scazuta, exagerare de comportament</string>
+    <string name="tier3">Depreciere de balanta, vorbit, viziune si reactie.</string>
+    <string name="tier4">Depreciere significanta de coordonare, pieredere de discernamant, si simtiri de euforie.</string>
+    <string name="tier5">Depreciere de control fizic, pierdere de balanta, si scadere de viziune. Euforie redusa si tristete. Depreciere severa de peprceptie si discernamant.</string>
+    <string name="tier6">Depresie,crestere de greata, apărenta de  &quot;depresie&quot;.</string>
+    <string name="tier7">Confuzie, desorientare. Sar putea sa nu simta durere. Greata si vomitare. Pierdere de constinta</string>
+    <string name="tier8">Scadere severă de functiuni fizice si mentale. Cresere de risc de asfixiere prin vomitare.</string>
+    <string name="tier9">Desorientare completă.Pierdere de constinta si dificultati in a se trezi.</string>
+    <string name="tier10">Coma</string>
+    <string name="tier11">Moarte</string>
+
+    <!--> unit warnings <-->
+    <string name="pollunits">Totale unitati bauta saptamana asta</string>
+    <string name="units">Unitati</string>
+    <string name="belowlimit">Sub limita saptamanala</string>
+    <string name="abovelimit">Peste limita saptamanala</string>
+
+    <!--> detailed stats <-->
+    <string name="detailed_stats_title">Statistici Detaliate</string>
+    <string name="avg_drink_strength">Puterea medie a bauturii:</string>
+    <string name="avg_drink_volume">Volumul medie al bauturii</string>
+    <string name="avg_calories">Calorii alcolice saptamanale</string>
+    <string name="max_bac">Maximum BAC ajuns:</string>
+    <string name="calories">calorii</string>
+
+    <!--> miscellaneous <-->
+    <string name="current_BAC">Current\nBAC:\n</string>
+    <string name="current_BAC_level">Current BAC level:</string>
+    <string name="preset_drinks">PRESET DRINKS</string>
+    <string name="custom_drinks">CUSTOM DRINKS</string>
+    <string name="time">Timp</string>
+    <string name="BAC">BAC</string>
+
+    <!--> presets <-->
+    <string name="drink_added">Bautura adăunată</string>
+    <string name="please_choose_drink">Alegeti o băutură:</string>
+    <string name="set_percentage">Setează %</string>
+    <string name="set_volume">Setează Volum</string>
+    <string name="drink">Bea</string>
+
+    <!--> Settings <-->
+    <string name="language_options">Optiuni de Limbi</string>
+    <string name="irish_language_option">Optiuni de Limba Irlandeză</string>
+    <string name="summer_irish">Selectati această optiune dace doriti sa folositi limba Irlandeză</string>
+    <string name="more_from_glassbyte">Produse de Glassbyte</string>
+    <string name="visit_website">Viziteazăne la websitu nostru</string>
+    <string name="summer_glassbyte">Apăsati aici pentru a vedea mai multe de la Glassbyte</string>
+    <string name="remove_ads">Elimină Reclame</string>
+    <string name="summary_ads">Apăsati aici pentru a cumpăra versiunea de pe  Google Play</string>
+    <string name="modify_details">Modifică Detalii</string>
+    <string name="modify_gender">Modifică Sexul</string>
+    <string name="modify_units">Modifică Unităti</string>
+    <string name="modify_height">Modifică Inaltime</string>
+    <string name="modify_weight">Modifică Greutate</string>
+    <string name="foot_and">foot si</string>
+    <string name="inches">inches</string>
+    <string name="pounds">pounds</string>
+
+    <!--> Mock Banner Ad Key <-->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="French">3</string>
+    <string name="warning">Avertizare</string>
+    <string name="ok">OK</string>
+    <string name="warning1">Sunteti aproape sub influenta alcolului</string>
+    <string name="warning2">Sunteti sub ifluenta alcolului, aveti grija.</string>
+    <string name="warning4">Sunteti sub influenta majoră al alcolului, atentie!</string>
+    <string name="warning3">Sunteti sub influenta majoră al alcolului, o sa aveti o dimineată groaznică</string>
+    <string name="notice">DrinkTracker Avertizare</string>
+</resources>

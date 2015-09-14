@@ -1,34 +1,21 @@
 package com.glassbyte.drinktracker;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.DialogPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
+import android.support.v7.app.AlertDialog;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by ed on 30/05/15.
@@ -75,8 +62,48 @@ public class PreferencesActivity extends PreferenceActivity {
             removeAds.setSummary(R.string.summary_ads);
             removeAds.setIntent(visitGlassbyteWebsiteIntent);
 
+            Preference libraries = new Preference(this.getActivity());
+            libraries.setTitle(R.string.libraries);
+            libraries.setSummary(getString(R.string.libraries_summary));
+            libraries.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    new AlertDialog.Builder(thisActivity)
+                            .setTitle(R.string.plugins)
+                            .setMessage(R.string.plugins_body)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .show();
+                    return true;
+                }
+            });
+
+            Preference apache = new Preference(this.getActivity());
+            apache.setTitle(R.string.apache);
+            apache.setSummary(getString(R.string.apache_summary));
+            apache.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    new AlertDialog.Builder(thisActivity)
+                            .setTitle(R.string.apache)
+                            .setMessage(R.string.apache_licence)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .show();
+                    return true;
+                }
+            });
+
             moreCategory.addPreference(glassbyteWebsite);
             moreCategory.addPreference(removeAds);
+            moreCategory.addPreference(libraries);
+            moreCategory.addPreference(apache);
             
             final PreferenceCategory profileDetailsCategory = new PreferenceCategory(this.getActivity());
             profileDetailsCategory.setTitle(R.string.modify_details);

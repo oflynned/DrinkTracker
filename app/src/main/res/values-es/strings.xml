@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">DrinkTracker</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_aboutus">About Us</string>
-    <string name="action_listDrinks">List Drinks</string>
-    <string name="action_stats">Statistics</string>
-    <string name="action_removeads">Remove Ads</string>
+    <string name="hello_world">Hola Mundo!</string>
+    <string name="action_settings">Ajuste</string>
+    <string name="action_aboutus">Acerca de nosotros</string>
+    <string name="action_listDrinks">Lista de las bebidas</string>
+    <string name="action_stats">Estadísticas</string>
+    <string name="action_removeads">Quitar anuncios</string>
 
     <!-- Intro Screen -->
     <string name="pref_key_run">pref_key_run</string>
@@ -29,22 +29,22 @@
     <!-- End of Preferences -->
 
     <!--Custom Drinks Titles-->
-    <string name="shot_glass_title">Shot Glass</string>
-    <string name="water_glass_title">Glass</string>
-    <string name="pint_glass_title">Pint Glass</string>
-    <string name="wine_glass_title">Wine Glass</string>
+    <string name="shot_glass_title">Vaso de chupito</string>
+    <string name="water_glass_title">Vaso</string>
+    <string name="pint_glass_title">Vaso de una pinta</string>
+    <string name="wine_glass_title">Copa de vino</string>
     <!-- End of Custom Drinks Titles -->
 
     <!--Custom Drinks SetPercentage Dialog-->
-    <string name="setPercentage_dialog_title">Set Percentage</string>
-    <string name="setVolume_dialog_title">Set Volume</string>
-    <string name="cancel">Cancel</string>
-    <string name="done">Done</string>
+    <string name="setPercentage_dialog_title">Set Porcentaje</string>
+    <string name="setVolume_dialog_title">Conjunto de volumene</string>
+    <string name="cancel">Cancelar</string>
+    <string name="done">Hecho</string>
     <!--End of Custom Drinks SetPercentage Dialog-->
 
     <string-array name="optgender">
-        <item>Male</item>
-        <item>Female</item>
+        <item>Hombre</item>
+        <item>Mujer</item>
     </string-array>
 
     <string-array name="optunits">
@@ -55,7 +55,7 @@
     <!-->types of drinks<-->
     <string-array name="drinks">
         <item>""</item>
-        <item>Beer</item>
+        <item>Cerveza</item>
         <item>Lager</item>
         <item>Stout</item>
         <item>Ale</item>
@@ -66,47 +66,47 @@
 
     <!-->types of drinks<-->
     <string-array name="period">
-        <item>Current session</item>
-        <item>Last night</item>
-        <item>Last week</item>
-        <item>Last month</item>
-        <item>All time</item>
+        <item>Sesión actual</item>
+        <item>Anoche</item>
+        <item>La semana pasada</item>
+        <item>El mes pasado</item>
+        <item>Todo el tiempo</item>
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_list_drinks">ListDrinksActivity</string>
 
     <!--> disclaimer <-->
-    <string name="disclaimertitle">Disclaimer</string>
-    <string name="disclaimerbody">Please remember that DrinkTracker is only an approximation of your blood alcohol content (BAC), and not a substitute for a breathalyser examination. GlassByte is in no way responsible for any actions carried out under intoxication. Please drive responsibly and stay safe under the influence of alcohol. By using this app, you agree to abide by this forewarning.</string>
-    <string name="agree">I agree</string>
-    <string name="disagree">I disagree</string>
+    <string name="disclaimertitle">Aviso</string>
+    <string name="disclaimerbody">Por favor recuerde que DrinkTracker es sólo una aproximación de su contenido de alcohol en sangre (BAC),no es un sustituto para un examen de alcoholemia.GlassByte es en ningún caso responsable de cualesquiera acciones llevadas a cabo bajo la intoxicación.Por favor maneje con responsabilidad . Mediante el uso de esta aplicación, usted acepta cumplir con esta advertencia .</string>
+    <string name="agree">Estoy de acuerdo</string>
+    <string name="disagree">Estoy en desacuerdo</string>
 
     <!--> dialog warnings <-->
-    <string name="tier0">Sober.</string>
-    <string name="tier1">Mildly relaxed and no loss of coordination.</string>
-    <string name="tier2">Slight impairment, lowered inhibitions, lowered caution, exaggeration of behaviour.</string>
-    <string name="tier3">Mild impairment of balance, speech, vision and reaction time.</string>
-    <string name="tier4">Significant impairment of coordination, loss of judgement, and feeling of euphoria.</string>
-    <string name="tier5">Lack of physical control, loss of balance, and blurring of vision. Reduced euphoria and increased dysphoria. Severe impairment of perception and judgement.</string>
-    <string name="tier6">Intensifying of dysphoria, increase in nausea, appears &quot;more sloppy&quot;.</string>
-    <string name="tier7">Dazed, confusion, disorientation. May not feel pain if injured. Nausea and vomiting experienced around this level. Gag reflex may be impaired. Blackouts are more likely from this point.</string>
-    <string name="tier8">Severe impairment of all sensory, physical and mental functions. Increased risk of asphyxiation by vomiting and injury.</string>
-    <string name="tier9">Drunken stupor - you have little comprehension of where you are. Passing out and difficulty to be awoken is very likely.</string>
-    <string name="tier10">Equivalent to surgical level anaesthesia.</string>
-    <string name="tier11">Onset of coma and possible death due to respiratory arrest.</string>
+    <string name="tier0">Sobrio.</string>
+    <string name="tier1">Ligeramente relajado y sin pérdida de coordinación.</string>
+    <string name="tier2">Deterioro leve , inhibiciones bajos, bajaron la precaución , la exageración del comportamiento</string>
+    <string name="tier3">Deterioro leve de equilibrio , el habla , la visión y tiempo de reacción.</string>
+    <string name="tier4">Un deterioro significativo de la coordinación, pérdida del juicio , y el sentimiento de euforia .</string>
+    <string name="tier5">La falta de control físico , pérdida de equilibrio y visión borrosa. Euforia reducida y el aumento de la disforia . Grave deterioro de la percepción y el juicio.</string>
+    <string name="tier6">Intensificación de disforia, aumento de náuseas , aparece&quot;más descuidado&quot;.</string>
+    <string name="tier7">Aturdido , confusión , desorientación . Es posible que no sienta dolor si se lesionan . Las náuseas y los vómitos experimentaron alrededor de este nivel . Reflejo nauseoso puede verse afectada. Los apagones son más probables de este punto.</string>
+    <string name="tier8">Grave deterioro de todas las funciones sensoriales , físicas y mentales. Aumento del riesgo de asfixia por el vómito y lesiones.</string>
+    <string name="tier9">Borrachera - usted tiene poca comprensión de dónde se encuentre. Desmayo y dificultad para ser despertado es muy probable.</string>
+    <string name="tier10">Equivalente a la anestesia nivel quirúrgico.</string>
+    <string name="tier11">El inicio de la coma y posible muerte por paro respiratorio.</string>
 
     <!--> unit warnings <-->
-    <string name="pollunits">Total units drunk this week:</string>
-    <string name="units">units</string>
-    <string name="belowlimit">Below recommended weekly limit.</string>
-    <string name="abovelimit">Excessive drinking!</string>
+    <string name="pollunits">Total de unidades bebido esta semana :</string>
+    <string name="units">unidades</string>
+    <string name="belowlimit">A continuación recomendada límite semanal .</string>
+    <string name="abovelimit">beber en exceso</string>
 
     <!--> detailed stats <-->
-    <string name="detailed_stats_title">Detailed Statistics</string>
-    <string name="avg_drink_strength">Average strength of drinks:</string>
-    <string name="avg_drink_volume">Average volume of drinks:</string>
-    <string name="avg_calories">Alcohol calories this week:</string>
+    <string name="detailed_stats_title">Estadísticas detalladas</string>
+    <string name="avg_drink_strength">Resistencia promedio de bebidas :</string>
+    <string name="avg_drink_volume">El volumen medio de las bebidas :</string>
+    <string name="avg_calories">Calorías del alcohol en esta semana:</string>
     <string name="max_bac">Maximum BAC achieved:</string>
     <string name="calories">calories</string>
 
@@ -115,30 +115,30 @@
     <string name="current_BAC_level">Current BAC level:</string>
     <string name="preset_drinks">PRESET DRINKS</string>
     <string name="custom_drinks">CUSTOM DRINKS</string>
-    <string name="time">Time</string>
+    <string name="time">Hora</string>
     <string name="BAC">BAC</string>
 
     <!--> presets <-->
-    <string name="drink_added">Drink added successfully!</string>
-    <string name="please_choose_drink">Please choose a drink:</string>
-    <string name="set_percentage">Set Percentage</string>
-    <string name="set_volume">Set Volume</string>
-    <string name="drink">Drink!</string>
+    <string name="drink_added">Bebida añadido correctamente</string>
+    <string name="please_choose_drink">Elija una bebida, por favor, :</string>
+    <string name="set_percentage">Set Porcentaje</string>
+    <string name="set_volume">Conjunto de volumen</string>
+    <string name="drink">Beber</string>
 
     <!--> Settings <-->
-    <string name="language_options">Language Options</string>
-    <string name="irish_language_option">Irish Language Option</string>
-    <string name="summer_irish">Select this option if you wish to use Irish Gaelic as a language option</string>
-    <string name="more_from_glassbyte">More from Glassbyte</string>
-    <string name="visit_website">Visit us at our website!</string>
-    <string name="summer_glassbyte">Click here to view our website for more products and news from GlassByte</string>
-    <string name="remove_ads">Remove ads and help support us</string>
-    <string name="summary_ads">Click here to purchase the ad-free version from Google Play</string>
-    <string name="modify_details">Modify Details</string>
-    <string name="modify_gender">Edit Gender</string>
-    <string name="modify_units">Edit Units</string>
-    <string name="modify_height">Edit Height</string>
-    <string name="modify_weight">Edit Weight</string>
+    <string name="language_options">Opciones de idioma</string>
+    <string name="irish_language_option">Opción lengua irlandesa</string>
+    <string name="summer_irish">Seleccione esta opción si desea utilizar el gaélico irlandés como una opción de idioma</string>
+    <string name="more_from_glassbyte">Más de Glassbyte</string>
+    <string name="visit_website">Visítenos en nuestra página web !</string>
+    <string name="summer_glassbyte">Haga clic aquí para ver nuestro sitio web para más productos y noticias de GlassByte</string>
+    <string name="remove_ads">Eliminar publicidad y nos ayudan a apoyar</string>
+    <string name="summary_ads">Haga clic aquí para comprar la versión sin publicidad de Google Play</string>
+    <string name="modify_details">Modificar detalles</string>
+    <string name="modify_gender">Editar Género</string>
+    <string name="modify_units">Editar Unidades</string>
+    <string name="modify_height">Editar Altura</string>
+    <string name="modify_weight">Editar Peso</string>
     <string name="foot_and">foot and</string>
     <string name="inches">inches</string>
     <string name="pounds">pounds</string>

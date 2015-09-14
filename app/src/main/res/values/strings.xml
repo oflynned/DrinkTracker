@@ -123,17 +123,21 @@
     <string name="please_choose_drink">Please choose a drink:</string>
     <string name="set_percentage">Set Percentage</string>
     <string name="set_volume">Set Volume</string>
-    <string name="drink">Drink!</string>
+    <string name="drink">Drink</string>
 
     <!--> Settings <-->
     <string name="language_options">Language Options</string>
     <string name="irish_language_option">Irish Language Option</string>
     <string name="summer_irish">Select this option if you wish to use Irish Gaelic as a language option</string>
-    <string name="more_from_glassbyte">More from Glassbyte</string>
+    <string name="more_from_glassbyte">More from GlassByte</string>
     <string name="visit_website">Visit us at our website!</string>
     <string name="summer_glassbyte">Click here to view our website for more products and news from GlassByte</string>
     <string name="remove_ads">Remove ads and help support us</string>
     <string name="summary_ads">Click here to purchase the ad-free version from Google Play</string>
+    <string name="libraries">Libraries Used</string>
+    <string name="libraries_summary">Here is a list of the libraries we used in the creation of this app</string>
+    <string name="apache_summary">Apache Summary</string>
+    <string name="apache">Apache Licence</string>
     <string name="modify_details">Modify Details</string>
     <string name="modify_gender">Edit Gender</string>
     <string name="modify_units">Edit Units</string>
@@ -153,4 +157,8 @@
     <string name="warning4">You\'re extremely drunk, drink any more and you\'re endangering yourself!</string>
     <string name="warning3">You\'re very drunk and should expect a bad hangover tomorrow morning.</string>
     <string name="notice">DrinkTracker Notice</string>
+    <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="plugins">Plugins Used</string>
+    <string name="plugins_body">App Intro\nby PaoloRotolo\n\nFloatingActionButton\nby Clans\n\nJoda-Time-Android\nby dlew\n\nHelloCharts for Android\nby lecho</string>
+
 </resources>
