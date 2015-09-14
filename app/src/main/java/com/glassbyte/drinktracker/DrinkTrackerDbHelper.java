@@ -201,9 +201,11 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
 
                     if (totalDrinkDecay >= drinkBac) {
                         //The drink being deleted has been already fully decayed
+                        //NEXT TO DO 
                         System.out.println("The drink being deleted has been already fully decayed.");
 
                     } else {
+                        //THIS IS DONE
                         //The drink being deleted has not been fully decayed yet
                         System.out.println("The drink being deleted has not been fully decayed yet.");
                         //hence remove the bac entry where the drink was inserted and all the bac decay entries until insertion of another drink
