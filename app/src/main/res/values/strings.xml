@@ -123,7 +123,7 @@
     <string name="please_choose_drink">Please choose a drink:</string>
     <string name="set_percentage">Set Percentage</string>
     <string name="set_volume">Set Volume</string>
-    <string name="drink">Drink!</string>
+    <string name="drink">Drink</string>
 
     <!--> Settings <-->
     <string name="language_options">Language Options</string>
