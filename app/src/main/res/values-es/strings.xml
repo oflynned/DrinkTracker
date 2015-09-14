@@ -9,7 +9,7 @@
     <string name="action_removeads">Remove Ads</string>
 
     <!-- Intro Screen -->
-        <string name="pref_key_run">pref_key_run</string>
+    <string name="pref_key_run">pref_key_run</string>
 
     <!-- Preferences -->
     <string name="pref_key_contact">pref_key_contact</string>
@@ -18,7 +18,7 @@
     <string name="pref_key_editUnits">pref_key_editUnits</string>
     <string name="pref_key_editHeight">pref_key_editHeight</string>
     <string name="pref_key_dataCollection">pref_key_dataCollection</string>
-    <string name="pref_key_dataCollectionPermission">pref_key_dataCollectionPermission</string>
+    <string name="pref_key_irish">pref_key_irish</string>
     <string name="pref_key_currentEbac">pref_key_currentEbac</string>
     <string name="pref_key_storage_settings">pref_key_storage_settings</string>
     <string name="pref_key_editFeet">pref_key_editFeet</string>
@@ -119,11 +119,11 @@
     <string name="BAC">BAC</string>
 
     <!--> presets <-->
-    <string name="drink_added">Drink added successfully</string>
+    <string name="drink_added">Drink added successfully!</string>
     <string name="please_choose_drink">Please choose a drink:</string>
     <string name="set_percentage">Set Percentage</string>
     <string name="set_volume">Set Volume</string>
-    <string name="drink">Drink</string>
+    <string name="drink">Drink!</string>
 
     <!--> Settings <-->
     <string name="language_options">Language Options</string>
@@ -142,4 +142,7 @@
     <string name="foot_and">foot and</string>
     <string name="inches">inches</string>
     <string name="pounds">pounds</string>
+    <!--> Mock Banner Ad Key <-->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="French">3</string>
 </resources>
