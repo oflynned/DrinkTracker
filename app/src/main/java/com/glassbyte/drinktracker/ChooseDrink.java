@@ -34,6 +34,10 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,9 +64,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     int progress;
 
     CustomProgressBar customProgressBar;
-
-    private List<FloatingActionMenu> menus = new ArrayList<>();
-    private Handler mUiHandler = new Handler();
+    private AdView adView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,7 +79,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         WarningDialog warningDialog = new WarningDialog();
         /*End of Set up the BloodAlcoholLevel object*/
 
-        RelativeLayout rl = new RelativeLayout(this.getActivity());
+        final RelativeLayout rl = new RelativeLayout(this.getActivity());
         rl.setBackgroundColor(getResources().getColor(R.color.orange100));
 
         leftSideBar = new SelectionSideBar(this.getActivity(), true);
@@ -129,19 +131,25 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         final FloatingActionButton fab1 = new FloatingActionButton(getContext());
         final FloatingActionButton fab2 = new FloatingActionButton(getContext());
 
-        //get phone's width and height programmatically
-        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int height = size.y;
-        int width = size.x;
+        //advert
+        adView = new AdView(getContext());
+        RelativeLayout.LayoutParams paramsAds = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsAds.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        paramsAds.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        adView.setLayoutParams(paramsAds);
+        adView.setId(View.generateViewId());
+        adView.setAdSize(AdSize.SMART_BANNER);
+        adView.setAdUnitId(AD_ID);
+
+        //request ads to target emulated device
+        AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
+        adRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
 
         //fab1 fab
-        RelativeLayout.LayoutParams paramsFAB1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final RelativeLayout.LayoutParams paramsFAB1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsFAB1.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
         paramsFAB1.addRule(RelativeLayout.ALIGN_LEFT);
-        paramsFAB1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        paramsFAB1.addRule(RelativeLayout.ABOVE, adView.getId());
         fab1.setLayoutParams(paramsFAB1);
 
         fab1.setButtonSize(FloatingActionButton.SIZE_NORMAL);
@@ -154,16 +162,15 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "fab1 pressed", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), Statistics.class));
             }
         });
 
         //fab2 fab
-        RelativeLayout.LayoutParams paramsFAB2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final RelativeLayout.LayoutParams paramsFAB2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsFAB2.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
         paramsFAB2.addRule(RelativeLayout.ALIGN_RIGHT);
-        paramsFAB2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        paramsFAB2.addRule(RelativeLayout.ABOVE, adView.getId());
         fab2.setLayoutParams(paramsFAB2);
 
         fab2.setButtonSize(FloatingActionButton.SIZE_NORMAL);
@@ -200,10 +207,43 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         rl.addView(bacDisplay);
         rl.addView(customProgressBar);
         rl.addView(pbBAC);
+        rl.addView(adView);
         rl.addView(fab1);
         rl.addView(fab2);
 
-        bacDisplay.invalidate();
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                paramsFAB1.addRule(RelativeLayout.ALIGN_BOTTOM);
+                paramsFAB2.addRule(RelativeLayout.ALIGN_BOTTOM);
+                fab1.setLayoutParams(paramsFAB1);
+                fab2.setLayoutParams(paramsFAB2);
+                fab1.invalidate();
+                fab2.invalidate();
+            }
+
+            @Override
+            public void onAdLoaded() {
+                paramsFAB1.addRule(RelativeLayout.ABOVE, adView.getId());
+                paramsFAB2.addRule(RelativeLayout.ABOVE, adView.getId());
+                fab1.setLayoutParams(paramsFAB1);
+                fab2.setLayoutParams(paramsFAB2);
+                fab1.invalidate();
+                fab2.invalidate();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                paramsFAB1.addRule(RelativeLayout.ALIGN_BOTTOM);
+                paramsFAB2.addRule(RelativeLayout.ALIGN_BOTTOM);
+                fab1.setLayoutParams(paramsFAB1);
+                fab2.setLayoutParams(paramsFAB2);
+                fab1.invalidate();
+                fab2.invalidate();
+            }
+        });
+
+        adView.loadAd(adRequestBuilder.build());
 
         progress = (int) (bloodAlcoholContent.getCurrentEbac() * PROGESS_BAR_RATIO);
         if (progress < 75) {
@@ -216,6 +256,24 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         }
 
         return rl;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adView.resume();
+    }
+
+    @Override
+    public void onPause() {
+        adView.pause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        adView.destroy();
+        super.onDestroy();
     }
 
     private void startAnimation(float BAC) {
