@@ -2,11 +2,11 @@
     <string name="app_name">DrinkTracker</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_aboutus">About Us</string>
-    <string name="action_listDrinks">List Drinks</string>
-    <string name="action_stats">Statistics</string>
-    <string name="action_removeads">Remove Ads</string>
+    <string name="action_settings">设置</string>
+    <string name="action_aboutus">关于我们</string>
+    <string name="action_listDrinks">名单饮料</string>
+    <string name="action_stats">统计</string>
+    <string name="action_removeads">移除广告</string>
 
     <!-- Intro Screen -->
         <string name="pref_key_run">pref_key_run</string>
@@ -97,49 +97,49 @@
     <string name="tier11">Onset of coma and possible death due to respiratory arrest.</string>
 
     <!--> unit warnings <-->
-    <string name="pollunits">Total units drunk this week:</string>
-    <string name="units">units</string>
-    <string name="belowlimit">Below recommended weekly limit.</string>
-    <string name="abovelimit">Excessive drinking!</string>
+    <string name="pollunits">本周共醉醇单元:</string>
+    <string name="units">酒精单位</string>
+    <string name="belowlimit">下面推荐的每周上限.</string>
+    <string name="abovelimit">过量饮酒!</string>
 
     <!--> detailed stats <-->
-    <string name="detailed_stats_title">Detailed Statistics</string>
-    <string name="avg_drink_strength">Average strength of drinks:</string>
-    <string name="avg_drink_volume">Average volume of drinks:</string>
-    <string name="avg_calories">Alcohol calories this week:</string>
-    <string name="max_bac">Maximum BAC achieved:</string>
-    <string name="calories">calories</string>
+    <string name="detailed_stats_title">详细统计</string>
+    <string name="avg_drink_strength">饮料平均人数:</string>
+    <string name="avg_drink_volume">饮料平均量:</string>
+    <string name="avg_calories">酒精卡路里本:</string>
+    <string name="max_bac">最大的血液酒精取得:</string>
+    <string name="calories">卡路里</string>
 
     <!--> miscellaneous <-->
-    <string name="current_BAC">Current\nBAC:\n</string>
-    <string name="current_BAC_level">Current BAC level:</string>
-    <string name="preset_drinks">PRESET DRINKS</string>
-    <string name="custom_drinks">CUSTOM DRINKS</string>
-    <string name="time">Time</string>
-    <string name="BAC">BAC</string>
+    <string name="current_BAC">血液中\n酒精电流:\n</string>
+    <string name="current_BAC_level">在血液中的酒精当前水平:</string>
+    <string name="preset_drinks">预设饮料</string>
+    <string name="custom_drinks">定制饮料</string>
+    <string name="time">时间</string>
+    <string name="BAC">在血液中的酒精</string>
 
     <!--> presets <-->
-    <string name="drink_added">Drink added successfully</string>
-    <string name="please_choose_drink">Please choose a drink:</string>
-    <string name="set_percentage">Set Percentage</string>
-    <string name="set_volume">Set Volume</string>
-    <string name="drink">Drink</string>
+    <string name="drink_added">饮料添加成功</string>
+    <string name="please_choose_drink">请选择饮料:</string>
+    <string name="set_percentage">设定百分率</string>
+    <string name="set_volume">设置音量</string>
+    <string name="drink">喝</string>
 
     <!--> Settings <-->
-    <string name="language_options">Language Options</string>
-    <string name="irish_language_option">Irish Language Option</string>
-    <string name="summer_irish">Select this option if you wish to use Irish Gaelic as a language option</string>
-    <string name="more_from_glassbyte">More from Glassbyte</string>
-    <string name="visit_website">Visit us at our website!</string>
-    <string name="summer_glassbyte">Click here to view our website for more products and news from GlassByte</string>
-    <string name="remove_ads">Remove ads and help support us</string>
-    <string name="summary_ads">Click here to purchase the ad-free version from Google Play</string>
-    <string name="modify_details">Modify Details</string>
-    <string name="modify_gender">Edit Gender</string>
-    <string name="modify_units">Edit Units</string>
-    <string name="modify_height">Edit Height</string>
-    <string name="modify_weight">Edit Weight</string>
-    <string name="foot_and">foot and</string>
-    <string name="inches">inches</string>
-    <string name="pounds">pounds</string>
+    <string name="language_options">语言选项</string>
+    <string name="irish_language_option">爱尔兰语言选项</string>
+    <string name="summer_irish">如果你想使用爱尔兰盖尔语作为一种语言选项，请选择此选项</string>
+    <string name="more_from_glassbyte">更多来自GlassByte</string>
+    <string name="visit_website">访问我们的网站!</string>
+    <string name="summer_glassbyte">点击此处查看我们的网站了解更多产品和新闻从GlassByte</string>
+    <string name="remove_ads">删除广告，并帮助支持我们</string>
+    <string name="summary_ads">点击这里购买从Google Play中的无广告版</string>
+    <string name="modify_details">修改详细信息</string>
+    <string name="modify_gender">编辑性别</string>
+    <string name="modify_units">编辑单位</string>
+    <string name="modify_height">编辑高程</string>
+    <string name="modify_weight">编辑重量</string>
+    <string name="foot_and">英尺,</string>
+    <string name="inches">英寸</string>
+    <string name="pounds">英镑</string>
 </resources>
