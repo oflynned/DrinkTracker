@@ -78,7 +78,7 @@
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Disclaimer</string>
-    <string name="disclaimerbody">Please remember that DrinkTracker is only an approximation of your blood alcohol content (BAC), and not a substitute for a breathalyser examination. GlassByte is in no way responsible for any actions carried out under intoxication. Please drive responsibly and stay safe under the influence of alcohol. By using this app, you agree to abide by this forewarning.</string>
+    <string name="disclaimerbody">Please remember that DrinkTracker is only an approximation of your blood alcohol content (BAC), and not a substitute for a breathalyser examination. GlassByte is in no way responsible for any actions carried out under intoxication. Please stay safe under the influence of alcohol. By using this app, you agree to abide by this forewarning.</string>
     <string name="agree">I agree</string>
     <string name="disagree">I disagree</string>
 
