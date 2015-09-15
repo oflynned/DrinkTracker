@@ -185,6 +185,72 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                 //bac have reached zero since inserting the drink that's being deleted
                 //hence modify all the bac entries in between the insert date and the bac 0 date
                 System.out.println("The bac have reached 0 since the drink being deleted was inserted.");
+
+                //Set up string queries for later use
+                String deleteFromRelationsTable = "DELETE FROM " +
+                        DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME;
+                String deleteFromBacTableWhithId = "DELETE FROM " +
+                        DrinkTrackerDatabase.BacTable.TABLE_NAME + " WHERE " +
+                        DrinkTrackerDatabase.BacTable._ID + "=";
+                String deleteFromDrinksTableWithId = "DELETE FROM " +
+                        DrinkTrackerDatabase.DrinksTable.TABLE_NAME + " WHERE " +
+                        DrinkTrackerDatabase.DrinksTable._ID + "=";
+                //End of Set up string queries for later use
+
+                String selectAllBacEntriesBetweenTheDrinkAndFirstZeroBacEntry =
+                        "SELECT * FROM " + DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME +
+                                " INNER JOIN " + DrinkTrackerDatabase.BacTable.TABLE_NAME +
+                        " ON " + DrinkTrackerDatabase.BacTable.TABLE_NAME + "." +
+                                DrinkTrackerDatabase.BacTable._ID + "=" +
+                                DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID + " WHERE " +
+                                DrinkTrackerDatabase.BacTable.TABLE_NAME + "." +
+                                DrinkTrackerDatabase.BacTable.DATE_TIME + " BETWEEN " +
+                                Long.toString(drinkInsertDate) + " AND " +
+                                Long.toString(firstZeroBacDate) + "ORDER BY (" +
+                                DrinkTrackerDatabase.BacTable.TABLE_NAME + "." +
+                                DrinkTrackerDatabase.BacTable.DATE_TIME + ") ASC";
+
+                Cursor allBacEntriesBetweenTheDrinkAndZeroBac = readDB.rawQuery(
+                        selectAllBacEntriesBetweenTheDrinkAndFirstZeroBacEntry,
+                        null
+                );
+                allBacEntriesBetweenTheDrinkAndZeroBac.moveToFirst();
+
+                //Deal with the first insertion entry of the drink being deleted
+                int bacId = allBacEntriesBetweenTheDrinkAndZeroBac.getInt(0);
+                float drinkBacAtInsertion = allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(6);
+
+                String deleteInsertionFromRelationTable =
+                        deleteFromRelationsTable + " WHERE " +
+                                DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID + "=" +
+                                Integer.toString(bacId) + " AND " +
+                                DrinkTrackerDatabase.DrinksBacRelationTable.DRINK_ID + "="
+                                + Integer.toString(drinkId);
+                String deleteInsertionFromDrinksTable = deleteFromDrinksTableWithId +
+                        Integer.toString(drinkId);
+                String deleteInsertionFromBacTable = deleteFromBacTableWhithId +
+                        Integer.toString(bacId);
+
+                writeDB.execSQL(deleteInsertionFromRelationTable);
+                writeDB.execSQL(deleteInsertionFromBacTable);
+                writeDB.execSQL(deleteInsertionFromDrinksTable);
+                //End of Deal with the first insertion entry of the drink being deleted
+
+                for (int i = 1; i < allBacEntriesBetweenTheDrinkAndZeroBac.getCount(); i++) {
+                    //Looping through all the bac entries between the drink inserted(incl.) and
+                    // the first zero bac after(incl.)
+
+                    int updateType = allBacEntriesBetweenTheDrinkAndZeroBac.getInt(3);
+                    if (updateType == DrinkTrackerDatabase.BacTable.DECAY_UPDATE) {
+
+                    }
+                    else if (updateType == DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE){
+
+                    }
+
+                    allBacEntriesBetweenTheDrinkAndZeroBac.moveToNext();
+                }
+
             } else {
                 //bac never reached zero yet after inserting the drink that's being deleted
                 //hence modify all the bac entries from the one that's being deleted till the end
@@ -201,7 +267,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
 
                     if (totalDrinkDecay >= drinkBac) {
                         //The drink being deleted has been already fully decayed
-                        //NEXT TO DO 
+                        //NEXT TO DO
                         System.out.println("The drink being deleted has been already fully decayed.");
 
                     } else {
