@@ -90,15 +90,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         warningDialog = new WarningDialog(this.getActivity());
         drinkTrackerDbHelper = new DrinkTrackerDbHelper(this.getActivity());
 
-        setMaxUnits(spGender);
-        setUpCalender();
-        setTotalUnits(0);
-        setCalories((int) (totUnits * 56));
-        setAvgABV();
-        setAvgVol();
-        setUnits(spUnits);
-        setMaxBAC();
-
         if(bloodAlcoholContent.getCurrentEbac()==0){
             warningDialog.setWarning1(false);
             warningDialog.setWarning2(false);
@@ -212,6 +203,16 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setUnits(spUnits);
+                setMaxUnits(spGender);
+                setUpCalender();
+                setTotalUnits(0);
+                //calories are units*7*8 as 1 unit = 8g where 1g = 7 calories therefore
+                setCalories((int) (totUnits * 56));
+                setAvgABV();
+                setAvgVol();
+                setMaxBAC();
+
                 //open dialog of stats
                 new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.detailed_stats_title)
@@ -413,10 +414,10 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             avgVol = totVol / count;
 
             //convert to oz if imperial as they are stored in ml regardless of preference
-            /*if (getUnits().equals("oz")) {
+            if (getUnits().equals("oz")) {
                 avgVol = BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(avgVol);
                 avgVol = BloodAlcoholContent.round(avgVol, 2);
-            }*/
+            }
 
             //close operations and sum
             db.close();
@@ -562,14 +563,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 warningDialog.setWarning4(false);
             }
         }
-        //calories are units*7*8 as 1 unit = 8g where 1g = 7 calories therefore
-        setUpCalender();
-        setCalories((int) (totUnits * 56));
-        setAvgABV();
-        setAvgVol();
-        setUnits(spUnits);
-        setMaxUnits(spGender);
-        setMaxBAC();
     }
 
     public class SelectionSideBar extends View {
