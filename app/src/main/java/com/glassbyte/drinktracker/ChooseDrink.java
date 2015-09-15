@@ -4,6 +4,7 @@ package com.glassbyte.drinktracker;
 * -change all the fonts and dimensions to be expressed in dp or dpi
 * */
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.ads.AdListener;
@@ -74,6 +76,11 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     CustomProgressBar customProgressBar;
     private AdView adView;
 
+    FloatingActionButton fab1;
+    FloatingActionButton fab2;
+
+    Dialog dialog;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,7 +97,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         warningDialog = new WarningDialog(this.getActivity());
         drinkTrackerDbHelper = new DrinkTrackerDbHelper(this.getActivity());
 
-        if(bloodAlcoholContent.getCurrentEbac()==0){
+        if (bloodAlcoholContent.getCurrentEbac() == 0) {
             warningDialog.setWarning1(false);
             warningDialog.setWarning2(false);
             warningDialog.setWarning3(false);
@@ -148,8 +155,8 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         pbBAC.setLayoutParams(pbBACParams);
         pbBAC.setId(View.generateViewId());
 
-        final FloatingActionButton fab1 = new FloatingActionButton(getContext());
-        final FloatingActionButton fab2 = new FloatingActionButton(getContext());
+        fab1 = new FloatingActionButton(getContext());
+        fab2 = new FloatingActionButton(getContext());
 
         //advert
         adView = new AdView(getContext());
@@ -214,7 +221,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 setMaxBAC();
 
                 //open dialog of stats
-                new AlertDialog.Builder(getActivity())
+                dialog = new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.detailed_stats_title)
                         .setMessage(
                                 getResources().getString(R.string.avg_drink_strength) + "\n" + getAvgABV() + "%" + "\n\n" +
@@ -224,7 +231,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                         )
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
+                                dialog.cancel();
                             }
                         })
                         .show();
@@ -544,24 +551,51 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             }
             pbBAC.invalidate();
 
-            if((bloodAlcoholContent.getCurrentEbac()>=0.07) && (!warningDialog.getWarning1())) {
+            if ((bloodAlcoholContent.getCurrentEbac() >= 0.07) && (!warningDialog.getWarning1())) {
                 warningDialog.setWarning1(true);
                 warningDialog.displayWarning("1");
-            } else if (bloodAlcoholContent.getCurrentEbac()>=0.13 && (!warningDialog.getWarning2())) {
+            } else if (bloodAlcoholContent.getCurrentEbac() >= 0.13 && (!warningDialog.getWarning2())) {
                 warningDialog.setWarning2(true);
                 warningDialog.displayWarning("2");
-            } else if (bloodAlcoholContent.getCurrentEbac()>=0.17 && (!warningDialog.getWarning3())) {
+            } else if (bloodAlcoholContent.getCurrentEbac() >= 0.17 && (!warningDialog.getWarning3())) {
                 warningDialog.setWarning3(true);
                 warningDialog.displayWarning("3");
-            } else if (bloodAlcoholContent.getCurrentEbac()>=0.22 && (!warningDialog.getWarning4())) {
+            } else if (bloodAlcoholContent.getCurrentEbac() >= 0.22 && (!warningDialog.getWarning4())) {
                 warningDialog.setWarning4(true);
                 warningDialog.displayWarning("4");
-            } else if (bloodAlcoholContent.getCurrentEbac()==0){
+            } else if (bloodAlcoholContent.getCurrentEbac() == 0) {
                 warningDialog.setWarning1(false);
                 warningDialog.setWarning2(false);
                 warningDialog.setWarning3(false);
                 warningDialog.setWarning4(false);
+            } else if (bloodAlcoholContent.getCurrentEbac() < 0.07 && warningDialog.getWarning1()){
+                warningDialog.setWarning1(false);
+            } else if (bloodAlcoholContent.getCurrentEbac() < 0.13 && warningDialog.getWarning2()){
+                warningDialog.setWarning2(false);
+            } else if (bloodAlcoholContent.getCurrentEbac() < 0.17 && warningDialog.getWarning3()){
+                warningDialog.setWarning3(false);
+            } else if (bloodAlcoholContent.getCurrentEbac() < 0.22 && warningDialog.getWarning4()){
+                warningDialog.setWarning4(false);
             }
+        }
+
+        if (s == this.getString(R.string.pref_key_editUnits)) {
+            SharedPreferences spEditUnits = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+            //acquire new units and convert
+            String changedUnits = spEditUnits.getString(s, "");
+            Toast.makeText(getContext(),changedUnits,Toast.LENGTH_SHORT).show();
+            if(changedUnits.equalsIgnoreCase("metric")) {
+                setUnits("ml");
+                avgVol = BloodAlcoholContent.MetricSystemConverter.convertOzToMillilitres(avgVol);
+                avgVol = BloodAlcoholContent.round(avgVol, 2);
+            }
+            else {
+                setUnits("oz");
+                avgVol = BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(avgVol);
+                avgVol = BloodAlcoholContent.round(avgVol, 2);
+            }
+            fab2.invalidate();
         }
     }
 

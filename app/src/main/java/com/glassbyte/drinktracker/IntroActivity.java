@@ -39,7 +39,7 @@ public class IntroActivity extends Activity {
                 .setMessage(R.string.disclaimerbody)
                 .setPositiveButton(R.string.agree, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
+                        dialog.dismiss();
                     }
                 })
                 .setNegativeButton(R.string.disagree, new DialogInterface.OnClickListener() {
