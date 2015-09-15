@@ -130,4 +130,8 @@
     <string name="pounds">pounds</string>
     <string name="ok">OK</string>
     <string name="warning">Warning!</string>
+    <string name="ml">ml</string>
+    <string name="libraries">Libraries Used</string>
+    <string name="libraries_summary">Here is a list of the libraries we used in the creation of this app</string>
+    <string name="oz">oz</string>
 </resources>

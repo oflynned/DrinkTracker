@@ -129,4 +129,6 @@
     <string name="inches">inches</string>
     <string name="pounds">pounds</string>
     <string name="ok">OK</string>
+    <string name="ml">ml</string>
+    <string name="warning">Attention!</string>
 </resources>

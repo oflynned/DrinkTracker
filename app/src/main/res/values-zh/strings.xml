@@ -133,6 +133,4 @@
     <string name="oz">盎司</string>
     <string name="warning">警告！</string>
     <string name="ok">	好</string>
-    <string name="pref_key_editInches" translatable="false"></string>
-    <string name="pref_key_editUnits" translatable="false"></string>
 </resources>

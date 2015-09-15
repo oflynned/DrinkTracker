@@ -130,4 +130,6 @@
     <string name="pounds">pounds</string>
     <!--> Mock Banner Ad Key <-->
     <string name="ok">OK</string>
+    <string name="ml">ml</string>
+    <string name="warning">¡Advertencia!</string>
 </resources>

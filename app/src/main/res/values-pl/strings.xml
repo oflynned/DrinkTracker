@@ -130,4 +130,5 @@
     <string name="pounds">pounds</string>
     <string name="ok">OK</string>
     <string name="pref_key_dataCollection" translatable="false"></string>
+    <string name="warning">Ostrzeżenie!</string>
 </resources>

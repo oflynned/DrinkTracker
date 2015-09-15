@@ -421,7 +421,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             avgVol = totVol / count;
 
             //convert to oz if imperial as they are stored in ml regardless of preference
-            if (getUnits().equals("oz")) {
+            if (getUnits().equals(getResources().getString(R.string.oz))) {
                 avgVol = BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(avgVol);
                 avgVol = BloodAlcoholContent.round(avgVol, 2);
             }
@@ -458,9 +458,9 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
     protected void setUnits(String spUnits) {
         if (spUnits.equals("metric") || spUnits.equals("Metric")) {
-            this.units = "ml";
+            this.units = getResources().getString(R.string.ml);
         } else {
-            this.units = "oz";
+            this.units = getResources().getString(R.string.oz);
         }
     }
 
@@ -586,12 +586,12 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             String changedUnits = spEditUnits.getString(s, "");
             Toast.makeText(getContext(),changedUnits,Toast.LENGTH_SHORT).show();
             if(changedUnits.equalsIgnoreCase("metric")) {
-                setUnits("ml");
+                setUnits(getResources().getString(R.string.ml));
                 avgVol = BloodAlcoholContent.MetricSystemConverter.convertOzToMillilitres(avgVol);
                 avgVol = BloodAlcoholContent.round(avgVol, 2);
             }
             else {
-                setUnits("oz");
+                setUnits(getResources().getString(R.string.oz));
                 avgVol = BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(avgVol);
                 avgVol = BloodAlcoholContent.round(avgVol, 2);
             }

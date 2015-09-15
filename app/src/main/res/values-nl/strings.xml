@@ -2,46 +2,40 @@
     <string name="app_name">DrinkTracker</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_aboutus">About Us</string>
-    <string name="action_listDrinks">List Drinks</string>
-    <string name="action_stats">Statistics</string>
-    <string name="action_removeads">Remove Ads</string>
-
-    <!-- Intro Screen -->
-
-    <!-- Preferences -->
-
-    <!-- End of Preferences -->
+    <string name="action_settings">Instellingen</string>
+    <string name="action_aboutus">Over ons</string>
+    <string name="action_listDrinks">Lijst van Dranken</string>
+    <string name="action_stats">Statistiek</string>
+    <string name="action_removeads">Verwijder advertenties</string>
 
     <!--Custom Drinks Titles-->
-    <string name="shot_glass_title">Shot Glass</string>
-    <string name="water_glass_title">Glass</string>
-    <string name="pint_glass_title">Pint Glass</string>
-    <string name="wine_glass_title">Wine Glass</string>
+    <string name="shot_glass_title">Shotglas</string>
+    <string name="water_glass_title">Glas</string>
+    <string name="pint_glass_title">Pint Glas</string>
+    <string name="wine_glass_title">Wijnglas</string>
     <!-- End of Custom Drinks Titles -->
 
     <!--Custom Drinks SetPercentage Dialog-->
-    <string name="setPercentage_dialog_title">Set Percentage</string>
-    <string name="setVolume_dialog_title">Set Volume</string>
-    <string name="cancel">Cancel</string>
-    <string name="done">Done</string>
+    <string name="setPercentage_dialog_title">Stel Percentage</string>
+    <string name="setVolume_dialog_title">Stel Volume</string>
+    <string name="cancel">Annuleer</string>
+    <string name="done">Gedaan</string>
     <!--End of Custom Drinks SetPercentage Dialog-->
 
     <string-array name="optgender">
-        <item>Male</item>
-        <item>Female</item>
+        <item>Mannelijk</item>
+        <item>Vrouwelijk</item>
     </string-array>
 
     <string-array name="optunits">
-        <item>Metric</item>
-        <item>Imperial</item>
+        <item>Metrisch</item>
+        <item>Keizerlijk</item>
     </string-array>
 
     <!-->types of drinks<-->
     <string-array name="drinks">
         <item>""</item>
-        <item>Beer</item>
+        <item>Bier</item>
         <item>Lager</item>
         <item>Stout</item>
         <item>Ale</item>
@@ -52,24 +46,24 @@
 
     <!-->types of drinks<-->
     <string-array name="period">
-        <item>Current session</item>
-        <item>Last night</item>
-        <item>Last week</item>
-        <item>Last month</item>
-        <item>All time</item>
+        <item>Huidige sessie</item>
+        <item>Afgelopen nacht</item>
+        <item>Vorige week</item>
+        <item>Vorige maand</item>
+        <item>Altijd</item>
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_list_drinks">ListDrinksActivity</string>
 
     <!--> disclaimer <-->
-    <string name="disclaimertitle">Disclaimer</string>
+    <string name="disclaimertitle">Ontkenning</string>
     <string name="disclaimerbody">Please remember that DrinkTracker is only an approximation of your blood alcohol content (BAC), and not a substitute for a breathalyser examination. GlassByte is in no way responsible for any actions carried out under intoxication. Please drive responsibly and stay safe under the influence of alcohol. By using this app, you agree to abide by this forewarning.</string>
-    <string name="agree">I agree</string>
-    <string name="disagree">I disagree</string>
+    <string name="agree">Ik ga akkoord</string>
+    <string name="disagree">Ik ben het oneens</string>
 
     <!--> dialog warnings <-->
-    <string name="tier0">Sober.</string>
+    <string name="tier0">Nuchter.</string>
     <string name="tier1">Mildly relaxed and no loss of coordination.</string>
     <string name="tier2">Slight impairment, lowered inhibitions, lowered caution, exaggeration of behaviour.</string>
     <string name="tier3">Mild impairment of balance, speech, vision and reaction time.</string>
@@ -83,51 +77,52 @@
     <string name="tier11">Onset of coma and possible death due to respiratory arrest.</string>
 
     <!--> unit warnings <-->
-    <string name="pollunits">Total units drunk this week:</string>
-    <string name="units">units</string>
-    <string name="belowlimit">Below recommended weekly limit.</string>
-    <string name="abovelimit">Excessive drinking!</string>
+    <string name="pollunits">Totale eenheden gedronken deze week:</string>
+    <string name="units">eenheden</string>
+    <string name="belowlimit">Onder de aanbevolen wekelijkse limiet..</string>
+    <string name="abovelimit">Overmatig alcohol drinken!</string>
 
     <!--> detailed stats <-->
-    <string name="detailed_stats_title">Detailed Statistics</string>
-    <string name="avg_drink_strength">Average strength of drinks:</string>
-    <string name="avg_drink_volume">Average volume of drinks:</string>
-    <string name="avg_calories">Alcohol calories this week:</string>
-    <string name="max_bac">Maximum BAC achieved:</string>
-    <string name="calories">calories</string>
+    <string name="detailed_stats_title">Gedetailleerde Statistieken</string>
+    <string name="avg_drink_strength">Gemiddelde kracht van dranken:</string>
+    <string name="avg_drink_volume">Gemiddelde omvang van dranken:</string>
+    <string name="avg_calories">Alcohol calorieën deze week:</string>
+    <string name="max_bac">Maximale BAG bereikt:</string>
+    <string name="calories">calorieën</string>
 
     <!--> miscellaneous <-->
-    <string name="current_BAC">Current\nBAC:\n</string>
-    <string name="current_BAC_level">Current BAC level:</string>
-    <string name="preset_drinks">PRESET DRINKS</string>
-    <string name="custom_drinks">CUSTOM DRINKS</string>
-    <string name="time">Time</string>
-    <string name="BAC">BAC</string>
+    <string name="current_BAC">Huidige\nBAG:\n</string>
+    <string name="current_BAC_level">Huidige BAG niveau:</string>
+    <string name="preset_drinks">PRESET DRANKEN</string>
+    <string name="custom_drinks">AANGEPASTE DRANKEN</string>
+    <string name="time">Tijd</string>
+    <string name="BAC">BAG</string>
 
     <!--> presets <-->
-    <string name="drink_added">Drink added successfully</string>
-    <string name="please_choose_drink">Please choose a drink:</string>
-    <string name="set_percentage">Set Percentage</string>
-    <string name="set_volume">Set Volume</string>
-    <string name="drink">Drink</string>
+    <string name="drink_added">Het drankje werd geslaagd toegevoegd</string>
+    <string name="please_choose_drink">Kies een drankje:</string>
+    <string name="set_percentage">Stel de Percentage</string>
+    <string name="set_volume">Stel het Volume</string>
+    <string name="drink">Drink!</string>
 
     <!--> Settings <-->
-    <string name="language_options">Language Options</string>
-    <string name="irish_language_option">Irish Language Option</string>
-    <string name="summer_irish">Select this option if you wish to use Irish Gaelic as a language option</string>
-    <string name="more_from_glassbyte">More from Glassbyte</string>
-    <string name="visit_website">Visit us at our website!</string>
-    <string name="summer_glassbyte">Click here to view our website for more products and news from GlassByte</string>
-    <string name="remove_ads">Remove ads and help support us</string>
-    <string name="summary_ads">Click here to purchase the ad-free version from Google Play</string>
-    <string name="modify_details">Modify Details</string>
-    <string name="modify_gender">Edit Gender</string>
-    <string name="modify_units">Edit Units</string>
-    <string name="modify_height">Edit Height</string>
-    <string name="modify_weight">Edit Weight</string>
-    <string name="foot_and">foot and</string>
-    <string name="inches">inches</string>
-    <string name="pounds">pounds</string>
+    <string name="language_options">Taalopties</string>
+    <string name="irish_language_option">Ierse Taalopties</string>
+    <string name="summer_irish">Selecteer deze optie om Iers-Gaelisch als een taaloptie te gebruiken</string>
+    <string name="more_from_glassbyte">Meer van Glassbyte</string>
+    <string name="visit_website">Bezoek onze website!</string>
+    <string name="summer_glassbyte">Klik hier om onze website te bekijken. Hier kant u voor meer producten en nieuws van GlassByte zien</string>
+    <string name="remove_ads">Verwijder advertenties en help ons steunen</string>
+    <string name="summary_ads">Klik hier om de advertentie-vrije versie van Google Play te kopen</string>
+    <string name="modify_details">Wijzigen Details</string>
+    <string name="modify_gender">Bewerk Geslacht</string>
+    <string name="modify_units">Bewerk Eenheden</string>
+    <string name="modify_height">Bewerk Hoogte</string>
+    <string name="modify_weight">Bewerk Gewicht</string>
+    <string name="foot_and">voet</string>
+    <string name="inches">duim</string>
+    <string name="pounds">pond</string>
     <string name="ok">OK</string>
-    <string name="pref_key_storage_settings" translatable="false"></string>
+    <string name="ml">ml</string>
+    <string name="warning">Waarschuwing!</string>
 </resources>

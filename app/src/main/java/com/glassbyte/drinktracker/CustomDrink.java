@@ -413,11 +413,11 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
                 /*Draw the current volume text into the canvas*/
                 String strDrinkVol;
                 if(sp.getString(getString(R.string.pref_key_editUnits),"").equalsIgnoreCase("metric"))
-                    strDrinkVol = getCurrentDrinkVolume() + "ml";
+                    strDrinkVol = getCurrentDrinkVolume() + getResources().getString(R.string.ml);
                 else
                     strDrinkVol = BloodAlcoholContent.round(
                             BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(getCurrentDrinkVolume()),
-                            2) + "oz";
+                            2) + getResources().getString(R.string.oz);
 
                 float strDrinkVolWidth = currentVolTextPaint.measureText(strDrinkVol);
                 if (leftBottomEdgeY < super.getHeight() - 2*VOLUME_TEXT_PADDING - VOLUME_TEXT_SIZE){
@@ -576,11 +576,11 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
                 /*Draw the current volume text into the canvas*/
                 String strDrinkVol;
                 if(sp.getString(getString(R.string.pref_key_editUnits),"").equalsIgnoreCase("metric"))
-                    strDrinkVol = getCurrentDrinkVolume() + "ml";
+                    strDrinkVol = getCurrentDrinkVolume() + getResources().getString(R.string.ml);
                 else
                     strDrinkVol = BloodAlcoholContent.round(
                             BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(getCurrentDrinkVolume()),
-                            2) + "oz";
+                            2) + getResources().getString(R.string.oz);
 
                 float strDrinkVolWidth = currentVolTextPaint.measureText(strDrinkVol);
                 if (leftBottomEdgeY < super.getHeight() - 2*VOLUME_TEXT_PADDING - VOLUME_TEXT_SIZE){
@@ -593,7 +593,7 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
                     float textX = leftEdge.calculateX(leftBottomEdgeY - VOLUME_TEXT_SIZE)/2 - strDrinkVolWidth/2;
                     float textY = leftBottomEdgeY;
 
-                    canvas.drawText(getCurrentDrinkVolume()+"ml", textX, textY, currentVolTextPaint);
+                    canvas.drawText(getCurrentDrinkVolume()+getResources().getString(R.string.ml), textX, textY, currentVolTextPaint);
                 }
                 /*End of Draw the current volume text into the canvas*/
 

@@ -161,5 +161,6 @@
     <string name="plugins_body">App Intro\nby PaoloRotolo\n\nFloatingActionButton\nby Clans\n\nJoda-Time-Android\nby dlew\n\nHelloCharts for Android\nby lecho</string>
     <string name="pref_key_dataCollectionPermission" translatable="false">pref_key_dataCollectionPermission</string>
     <string name="oz">oz</string>
+    <string name="ml">ml</string>
 
 </resources>
