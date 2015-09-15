@@ -16,6 +16,8 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
+import java.util.Random;
+
 /**
  * Created by ed on 09/09/15.
  */
@@ -37,7 +39,7 @@ public class WarningDialog {
         String warning = "";
         Vibrator v;
 
-        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd = new InterstitialAd(context);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
 
         mInterstitialAd.setAdListener(new AdListener() {
@@ -103,10 +105,13 @@ public class WarningDialog {
                 .setMessage(warning)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        Random rand = new Random();
+                        int number = rand.nextInt(3);
 
-                        if (mInterstitialAd.isLoaded())
-                        {
-                            mInterstitialAd.show();
+                        if (number == 0) {
+                            if (mInterstitialAd.isLoaded()) {
+                                mInterstitialAd.show();
+                            }
                         }
 
                     }
