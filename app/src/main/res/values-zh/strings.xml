@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DrinkTracker</string>
+    <string name="app_name">轨道酒精</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">设置</string>
@@ -29,72 +29,72 @@
     <!-- End of Preferences -->
 
     <!--Custom Drinks Titles-->
-    <string name="shot_glass_title">Shot Glass</string>
-    <string name="water_glass_title">Glass</string>
-    <string name="pint_glass_title">Pint Glass</string>
-    <string name="wine_glass_title">Wine Glass</string>
+    <string name="shot_glass_title">镜头玻璃</string>
+    <string name="water_glass_title">玻</string>
+    <string name="pint_glass_title">品脱玻璃杯</string>
+    <string name="wine_glass_title">红酒杯</string>
     <!-- End of Custom Drinks Titles -->
 
     <!--Custom Drinks SetPercentage Dialog-->
-    <string name="setPercentage_dialog_title">Set Percentage</string>
-    <string name="setVolume_dialog_title">Set Volume</string>
-    <string name="cancel">Cancel</string>
-    <string name="done">Done</string>
+    <string name="setPercentage_dialog_title">设定百分率</string>
+    <string name="setVolume_dialog_title">设置音量</string>
+    <string name="cancel">撤消</string>
+    <string name="done">做完</string>
     <!--End of Custom Drinks SetPercentage Dialog-->
 
     <string-array name="optgender">
-        <item>Male</item>
-        <item>Female</item>
+        <item>男</item>
+        <item>女</item>
     </string-array>
 
     <string-array name="optunits">
-        <item>Metric</item>
-        <item>Imperial</item>
+        <item>公制</item>
+        <item>皇家</item>
     </string-array>
 
     <!-->types of drinks<-->
     <string-array name="drinks">
         <item>""</item>
-        <item>Beer</item>
-        <item>Lager</item>
-        <item>Stout</item>
-        <item>Ale</item>
-        <item>Cider</item>
+        <item>啤酒</item>
+        <item>拉格</item>
+        <item>肥硕</item>
+        <item>强麦酒</item>
+        <item>果酒</item>
         <item>Alcopop</item>
-        <item>Cocktail</item>
+        <item>鸡尾酒</item>
     </string-array>
 
     <!-->types of drinks<-->
     <string-array name="period">
-        <item>Current session</item>
-        <item>Last night</item>
-        <item>Last week</item>
-        <item>Last month</item>
-        <item>All time</item>
+        <item>当前会话</item>
+        <item>昨夜</item>
+        <item>上星期</item>
+        <item>上个月</item>
+        <item>所有的时间</item>
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_list_drinks">ListDrinksActivity</string>
 
     <!--> disclaimer <-->
-    <string name="disclaimertitle">Disclaimer</string>
-    <string name="disclaimerbody">Please remember that DrinkTracker is only an approximation of your blood alcohol content (BAC), and not a substitute for a breathalyser examination. GlassByte is in no way responsible for any actions carried out under intoxication. Please drive responsibly and stay safe under the influence of alcohol. By using this app, you agree to abide by this forewarning.</string>
-    <string name="agree">I agree</string>
-    <string name="disagree">I disagree</string>
+    <string name="disclaimertitle">免责声明</string>
+    <string name="disclaimerbody">请记住，DrinkTracker只有在你的血液中酒精的近似值，并不能代替一个酒精测试检查。GlassByte绝不负责根据中毒进行任何操作。请负责任地驾驶和酒精的影响下保持安全。通过使用这个程序，你同意这个预警遵守。</string>
+    <string name="agree">我同意</string>
+    <string name="disagree">我不同意</string>
 
     <!--> dialog warnings <-->
-    <string name="tier0">Sober.</string>
-    <string name="tier1">Mildly relaxed and no loss of coordination.</string>
-    <string name="tier2">Slight impairment, lowered inhibitions, lowered caution, exaggeration of behaviour.</string>
-    <string name="tier3">Mild impairment of balance, speech, vision and reaction time.</string>
-    <string name="tier4">Significant impairment of coordination, loss of judgement, and feeling of euphoria.</string>
-    <string name="tier5">Lack of physical control, loss of balance, and blurring of vision. Reduced euphoria and increased dysphoria. Severe impairment of perception and judgement.</string>
-    <string name="tier6">Intensifying of dysphoria, increase in nausea, appears &quot;more sloppy&quot;.</string>
-    <string name="tier7">Dazed, confusion, disorientation. May not feel pain if injured. Nausea and vomiting experienced around this level. Gag reflex may be impaired. Blackouts are more likely from this point.</string>
-    <string name="tier8">Severe impairment of all sensory, physical and mental functions. Increased risk of asphyxiation by vomiting and injury.</string>
-    <string name="tier9">Drunken stupor - you have little comprehension of where you are. Passing out and difficulty to be awoken is very likely.</string>
-    <string name="tier10">Equivalent to surgical level anaesthesia.</string>
-    <string name="tier11">Onset of coma and possible death due to respiratory arrest.</string>
+    <string name="tier0">清醒.</string>
+    <string name="tier1">轻度放松，没有失去协调能力。</string>
+    <string name="tier2">感官轻微受损，降低了紧箍咒，降低了谨慎，行为夸张。</string>
+    <string name="tier3">平衡，言语，视力和反应时间轻度受损。</string>
+    <string name="tier4">协调显著障碍，判断力丧失，兴奋的感觉。</string>
+    <string name="tier5">缺乏身体的控制，失去平衡，和视力模糊。降低兴奋和增加烦躁不安。感知和判断的严重损害。</string>
+    <string name="tier6">强化烦躁不安，增加恶心，出现&quot;更马虎&quot;。</string>
+    <string name="tier7">茫然，困惑，迷失方向。可能感觉不到疼痛，如果受伤。恶心和呕吐经历在这个水平。咽反射可能会被削弱。在此阶段，有可能传递出</string>
+    <string name="tier8">所有的感官，身体和心理功能严重受损。呕吐和伤害增加窒息的危险。</string>
+    <string name="tier9">酒醉昏迷，你不知道你在哪里。昏了过去，就很难唤醒一个人了。</string>
+    <string name="tier10">相当于麻醉手术。</string>
+    <string name="tier11">昏迷，甚至死亡因呼吸骤停。</string>
 
     <!--> unit warnings <-->
     <string name="pollunits">本周共醉醇单元:</string>
@@ -142,4 +142,7 @@
     <string name="foot_and">英尺,</string>
     <string name="inches">英寸</string>
     <string name="pounds">英镑</string>
+
+    <string name="ml">毫升</string>
+    <string name="oz">盎司</string>
 </resources>
