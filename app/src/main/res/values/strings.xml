@@ -9,22 +9,22 @@
     <string name="action_removeads">Remove Ads</string>
 
     <!-- Intro Screen -->
-        <string name="pref_key_run">pref_key_run</string>
+        <string name="pref_key_run" translatable="false">pref_key_run</string>
 
     <!-- Preferences -->
-    <string name="pref_key_contact">pref_key_contact</string>
-    <string name="pref_key_editGender">pref_key_editGender</string>
-    <string name="pref_key_editWeight">pref_key_editWeight</string>
-    <string name="pref_key_editUnits">pref_key_editUnits</string>
-    <string name="pref_key_editHeight">pref_key_editHeight</string>
-    <string name="pref_key_dataCollection">pref_key_dataCollection</string>
-    <string name="pref_key_irish">pref_key_irish</string>
-    <string name="pref_key_currentEbac">pref_key_currentEbac</string>
-    <string name="pref_key_storage_settings">pref_key_storage_settings</string>
-    <string name="pref_key_editFeet">pref_key_editFeet</string>
-    <string name="pref_key_editInches">pref_key_editInches</string>
-    <string name="pref_key_last_update_currentEbac">pref_key_last_update_currentEbac</string>
-    <string name="pref_key_maxBAC">pref_key_maxBAC</string>
+    <string name="pref_key_contact" translatable="false">pref_key_contact</string>
+    <string name="pref_key_editGender" translatable="false">pref_key_editGender</string>
+    <string name="pref_key_editWeight" translatable="false">pref_key_editWeight</string>
+    <string name="pref_key_editUnits" translatable="false">pref_key_editUnits</string>
+    <string name="pref_key_editHeight" translatable="false">pref_key_editHeight</string>
+    <string name="pref_key_dataCollection" translatable="false">pref_key_dataCollection</string>
+    <string name="pref_key_irish" translatable="false">pref_key_irish</string>
+    <string name="pref_key_currentEbac" translatable="false">pref_key_currentEbac</string>
+    <string name="pref_key_storage_settings" translatable="false">pref_key_storage_settings</string>
+    <string name="pref_key_editFeet" translatable="false">pref_key_editFeet</string>
+    <string name="pref_key_editInches" translatable="false">pref_key_editInches</string>
+    <string name="pref_key_last_update_currentEbac" translatable="false">pref_key_last_update_currentEbac</string>
+    <string name="pref_key_maxBAC" translatable="false">pref_key_maxBAC</string>
 
     <!-- End of Preferences -->
 
@@ -148,17 +148,19 @@
     <string name="pounds">pounds</string>
 
     <!--> Mock Banner Ad Key <-->
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="French">3</string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="warning">Warning</string>
     <string name="ok">OK</string>
     <string name="warning1">You\'re enroute to getting drunk, maybe take it easy if you\'re feeling a bit intoxicated.</string>
     <string name="warning2">You\'ve reached quite a drunk stage, watch yourself and make sure you don\'t lose personal belongings.</string>
     <string name="warning4">You\'re extremely drunk, drink any more and you\'re endangering yourself!</string>
     <string name="warning3">You\'re very drunk and should expect a bad hangover tomorrow morning.</string>
-    <string name="notice">DrinkTracker Notice</string>
+    <string name="notice">DrinkTracker </string>
     <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
     <string name="plugins">Plugins Used</string>
     <string name="plugins_body">App Intro\nby PaoloRotolo\n\nFloatingActionButton\nby Clans\n\nJoda-Time-Android\nby dlew\n\nHelloCharts for Android\nby lecho</string>
+    <string name="pref_key_dataCollectionPermission" translatable="false">pref_key_dataCollectionPermission</string>
+    <string name="oz">oz</string>
+    <string name="ml">ml</string>
 
 </resources>

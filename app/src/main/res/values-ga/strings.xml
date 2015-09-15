@@ -9,22 +9,8 @@
     <string name="action_removeads">Bain Fógraí De</string>
 
     <!-- Intro Screen -->
-        <string name="pref_key_run">pref_key_run</string>
 
     <!-- Preferences -->
-    <string name="pref_key_contact">pref_key_contact</string>
-    <string name="pref_key_editGender">pref_key_editGender</string>
-    <string name="pref_key_editWeight">pref_key_editWeight</string>
-    <string name="pref_key_editUnits">pref_key_editUnits</string>
-    <string name="pref_key_editHeight">pref_key_editHeight</string>
-    <string name="pref_key_dataCollection">pref_key_dataCollection</string>
-    <string name="pref_key_dataCollectionPermission">pref_key_dataCollectionPermission</string>
-    <string name="pref_key_currentEbac">pref_key_currentEbac</string>
-    <string name="pref_key_storage_settings">pref_key_storage_settings</string>
-    <string name="pref_key_editFeet">pref_key_editFeet</string>
-    <string name="pref_key_editInches">pref_key_editInches</string>
-    <string name="pref_key_last_update_currentEbac">pref_key_last_update_currentEbac</string>
-    <string name="pref_key_maxBAC">pref_key_maxBAC</string>
 
     <!-- End of Preferences -->
 
@@ -142,6 +128,7 @@
     <string name="foot_and">troithe agus</string>
     <string name="inches">orlach</string>
     <string name="pounds">punt</string>
-    <string name="feet">troithe</string>
     <string name="ok">OK</string>
+    <string name="warning">Rabhadh!</string>
+    <string name="ml">ml</string>
 </resources>
