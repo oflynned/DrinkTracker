@@ -28,15 +28,13 @@ public class WarningDialog {
     Context context;
     InterstitialAd mInterstitialAd;
 
-
-
     public WarningDialog (Context context) {
         this.context = context;
     }
 
     public void displayWarning(String warningTier){
 
-        String warning = "";
+        String warning;
         Vibrator v;
 
         mInterstitialAd = new InterstitialAd(context);
@@ -69,28 +67,28 @@ public class WarningDialog {
             case "1":
                 warning = context.getResources().getString(R.string.warning1);
                 dialogNotification(warning);
-                notify(1, R.drawable.indicator_dot_white, context.getResources().getString(R.string.notice), warning);
+                notify(1, R.drawable.ic_error_outline_white_48dp, context.getResources().getString(R.string.notice), warning);
                 v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(300);
                 break;
             case "2":
                 warning = context.getResources().getString(R.string.warning2);
                 dialogNotification(warning);
-                notify(1, R.drawable.indicator_dot_white, context.getResources().getString(R.string.notice), warning);
+                notify(1, R.drawable.ic_error_outline_white_48dp, context.getResources().getString(R.string.notice), warning);
                 v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(600);
                 break;
             case "3":
                 warning = context.getResources().getString(R.string.warning3);
                 dialogNotification(warning);
-                notify(1, R.drawable.indicator_dot_white, context.getResources().getString(R.string.notice), warning);
+                notify(1, R.drawable.ic_error_outline_white_48dp, context.getResources().getString(R.string.notice), warning);
                 v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(900);
                 break;
             case "4":
                 warning = context.getResources().getString(R.string.warning4);
                 dialogNotification(warning);
-                notify(1, R.drawable.indicator_dot_white, context.getResources().getString(R.string.notice), warning);
+                notify(1, R.drawable.ic_error_outline_white_48dp, context.getResources().getString(R.string.notice), warning);
                 v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(1200);
                 break;
@@ -129,12 +127,14 @@ public class WarningDialog {
     public void notify(int visibility, int icon, String title, String text) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Notification notification = new NotificationCompat.Builder(context)
-                    .setCategory(Notification.CATEGORY_ALARM)
+                    .setCategory(Notification.CATEGORY_EVENT)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                    .setPriority(Notification.PRIORITY_HIGH)
                     .setContentTitle(title)
                     .setContentText(text)
                     .setSmallIcon(icon)
                     .setAutoCancel(true)
-                    .setVisibility(visibility).build();
+                    .build();
             NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(notification_id, notification);
@@ -144,7 +144,8 @@ public class WarningDialog {
                     .setContentText(text)
                     .setSmallIcon(icon)
                     .setAutoCancel(true)
-                    .setVisibility(visibility).build();
+                    .setVisibility(visibility)
+                    .build();
             NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(notification_id, notification);
