@@ -12,6 +12,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
+import java.util.Random;
+
 /**
  * Created by ed on 09/09/15.
  */
@@ -20,6 +26,9 @@ public class WarningDialog {
     public boolean warning1, warning2, warning3, warning4;
     private int notification_id = 1;
     Context context;
+    InterstitialAd mInterstitialAd;
+
+
 
     public WarningDialog (Context context) {
         this.context = context;
@@ -29,6 +38,18 @@ public class WarningDialog {
 
         String warning = "";
         Vibrator v;
+
+        mInterstitialAd = new InterstitialAd(context);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });
+
+        requestNewInterstitial();
 
         switch(warningTier){
 
@@ -84,10 +105,25 @@ public class WarningDialog {
                 .setMessage(warning)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        Random rand = new Random();
+                        int number = rand.nextInt(3);
+
+                        if (number == 0) {
+                            if (mInterstitialAd.isLoaded()) {
+                                mInterstitialAd.show();
+                            }
+                        }
 
                     }
                 })
                 .show();
+    }
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("SEE_YOUR_LOGCAT_TO_GET_YOUR_DEVICE_ID")
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
     }
 
     public void notify(int visibility, int icon, String title, String text) {
