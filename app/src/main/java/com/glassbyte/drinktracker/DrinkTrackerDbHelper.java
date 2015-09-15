@@ -218,7 +218,9 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
 
                 //Deal with the first insertion entry of the drink being deleted
                 int bacId = allBacEntriesBetweenTheDrinkAndZeroBac.getInt(0);
+                float currentBacAtTheTime = allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(2);
                 float drinkBacAtInsertion = allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(6);
+                currentBacAtTheTime -= drinkBacAtInsertion;
 
                 String deleteInsertionFromRelationTable =
                         deleteFromRelationsTable + " WHERE " +
@@ -236,16 +238,35 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                 writeDB.execSQL(deleteInsertionFromDrinksTable);
                 //End of Deal with the first insertion entry of the drink being deleted
 
+                boolean isPastFirstTheDrinksDecayEntry = false;
                 for (int i = 1; i < allBacEntriesBetweenTheDrinkAndZeroBac.getCount(); i++) {
                     //Looping through all the bac entries between the drink inserted(incl.) and
                     // the first zero bac after(incl.)
-
+                    bacId = allBacEntriesBetweenTheDrinkAndZeroBac.getInt(0);
                     int updateType = allBacEntriesBetweenTheDrinkAndZeroBac.getInt(3);
-                    if (updateType == DrinkTrackerDatabase.BacTable.DECAY_UPDATE) {
 
+                    if (updateType == DrinkTrackerDatabase.BacTable.DECAY_UPDATE) {
+                        if (allBacEntriesBetweenTheDrinkAndZeroBac.getInt(5) == drinkId) {
+                            //The bac entry being checked is a decay update affecting the drink being deleted
+                            isPastFirstTheDrinksDecayEntry = true;
+                        }
                     }
                     else if (updateType == DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE){
+                        //Change the bac value of the bac entry by subtracting
 
+                        //Add the bac of the insertion to the currentBac before the insertion at the time
+                        currentBacAtTheTime += allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(6);
+                        //End add the bac of the insertion...
+
+                        //Modify the bac value of the bac entry of the currently checked entry
+                        String modifyBacValueInTheBacEntry = "UPDATE " +
+                                DrinkTrackerDatabase.BacTable.TABLE_NAME + " SET " +
+                                DrinkTrackerDatabase.BacTable.BAC + "=" +
+                                Float.toString(currentBacAtTheTime) + " WHERE " +
+                                DrinkTrackerDatabase.BacTable._ID + "=" +
+                                Integer.toString(bacId);
+                        writeDB.execSQL(modifyBacValueInTheBacEntry);
+                        //End of Modify the bac value of the bac entry of the currently checked entry
                     }
 
                     allBacEntriesBetweenTheDrinkAndZeroBac.moveToNext();
