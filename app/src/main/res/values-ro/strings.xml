@@ -8,22 +8,8 @@
     <string name="action_removeads">Scoate Reclame</string>
 
     <!-- Intro Screen -->
-    <string name="pref_key_run">pref_key_run</string>
 
     <!-- Preferences -->
-    <string name="pref_key_contact">pref_key_contact</string>
-    <string name="pref_key_editGender">pref_key_editGender</string>
-    <string name="pref_key_editWeight">pref_key_editWeight</string>
-    <string name="pref_key_editUnits">pref_key_editUnits</string>
-    <string name="pref_key_editHeight">pref_key_editHeight</string>
-    <string name="pref_key_dataCollection">pref_key_dataCollection</string>
-    <string name="pref_key_irish">pref_key_irish</string>
-    <string name="pref_key_currentEbac">pref_key_currentEbac</string>
-    <string name="pref_key_storage_settings">pref_key_storage_settings</string>
-    <string name="pref_key_editFeet">pref_key_editFeet</string>
-    <string name="pref_key_editInches">pref_key_editInches</string>
-    <string name="pref_key_last_update_currentEbac">pref_key_last_update_currentEbac</string>
-    <string name="pref_key_maxBAC">pref_key_maxBAC</string>
 
     <!-- End of Preferences -->
 
@@ -143,13 +129,10 @@
     <string name="pounds">pounds</string>
 
     <!--> Mock Banner Ad Key <-->
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="French">3</string>
     <string name="warning">Avertizare</string>
     <string name="ok">OK</string>
     <string name="warning1">Sunteti aproape sub influenta alcolului</string>
     <string name="warning2">Sunteti sub ifluenta alcolului, aveti grija.</string>
     <string name="warning4">Sunteti sub influenta majoră al alcolului, atentie!</string>
     <string name="warning3">Sunteti sub influenta majoră al alcolului, o sa aveti o dimineată groaznică</string>
-    <string name="notice">DrinkTracker Avertizare</string>
 </resources>
