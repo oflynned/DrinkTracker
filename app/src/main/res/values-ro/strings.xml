@@ -131,17 +131,10 @@
     <!--> Mock Banner Ad Key <-->
     <string name="warning">Avertizare</string>
     <string name="ok">OK</string>
-<<<<<<< HEAD
     <string name="warning1">Sunteți aproape sub influenta alcolului</string>
     <string name="warning2">Sunteți sub influența alcolului, aveți grijă.</string>
     <string name="warning4">Sunteți sub influența majoră al alcolului, atenție!</string>
     <string name="warning3">Sunteți sub influența majoră al alcolului, o sa aveți o dimineață groaznică</string>
     <string name="notice">DrinkTracker Avertizare</string>
-=======
-    <string name="warning1">Sunteti aproape sub influenta alcolului</string>
-    <string name="warning2">Sunteti sub ifluenta alcolului, aveti grija.</string>
-    <string name="warning4">Sunteti sub influenta majoră al alcolului, atentie!</string>
-    <string name="warning3">Sunteti sub influenta majoră al alcolului, o sa aveti o dimineată groaznică</string>
-    <string name="ml">ml</string>
->>>>>>> f5a125d6f6ecc2b7c68ef19292566c4beed87176
+
 </resources>

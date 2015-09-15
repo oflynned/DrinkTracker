@@ -89,18 +89,18 @@
     <string name="abovelimit">Consommation excessive d\'alcool</string>
 
     <!--> detailed stats <-->
-    <string name="detailed_stats_title">Detailed Statistics</string>
-    <string name="avg_drink_strength">Average strength of drinks:</string>
-    <string name="avg_drink_volume">Average volume of drinks:</string>
-    <string name="avg_calories">Alcohol calories this week:</string>
-    <string name="max_bac">Maximum BAC achieved:</string>
-    <string name="calories">calories</string>
+    <string name="detailed_stats_title">Statistiques détaillées</string>
+    <string name="avg_drink_strength">Puissance moyenne des boissons:</string>
+    <string name="avg_drink_volume">Le volume moyen de boissons:</string>
+    <string name="avg_calories">Calories de l'alcool cette semaine:</string>
+    <string name="max_bac">BAC maximal atteint:</string>
+    <string name="calories">calorie</string>
 
     <!--> miscellaneous <-->
     <string name="current_BAC">Current\nBAC:\n</string>
     <string name="current_BAC_level">Current BAC level:</string>
-    <string name="preset_drinks">PRESET DRINKS</string>
-    <string name="custom_drinks">CUSTOM DRINKS</string>
+    <string name="preset_drinks">BOISSONSPRÉDÉFINI</string>
+    <string name="custom_drinks">BOISSONSCOUTUME</string>
     <string name="time">Temps</string>
     <string name="BAC">BAC</string>
 
