@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="red">#B0464C</color>
+    <color name="lightblue">#0290d6</color>
+    <color name="blue">#017cb8</color>
+    <color name="statusblue">#02608e</color>
+    <color name="black">#000000</color>
+    <color name="lightorange">#eeeeee</color>
+    <color name="white">#ffffff</color>
+    <color name="lightestgrey">#E5E5E5</color>
+    <color name="lightgrey">#D3D3D3</color>
+    <color name="darkgrey">#BDBDBD</color>
+    <color name="fade_drawer">#99000000</color>
+
+    <color name="cream">#F8F1FF</color>
+    <color name="textblack">#040404</color>
+    <color name="darkcream">#DECDF5</color>
+
+    <color name="main_green">#97D5A4</color>
+    <color name="green">#26ae90</color>
+    <color name="dark_grad_green">#216869</color>
+    <color name="light_black">#2e3237</color>
+    <color name="skyblue">#428bca</color>
+    <color name="input_login">#222222</color>
+    <color name="hint_grey">#999999</color>
+    <color name="dark_hint_grey">#888888</color>
+    <color name="darker_hint_grey">#3b4148</color>
+    <color name="input_register_hint">#5e6266</color>
+    <color name="btn_login_bg">#eceef1</color>
+    <color name="lbl_name">#333333</color>
+
+
+    <color name="dt_orange">#E57E00</color>
+    <color name="dt_lightgreen">#A8C686</color>
+    <color name="dt_white">#F0F8EA</color>
+    <color name="dt_yellow">#F0F66E</color>
+    <color name="dt_brown">#9D9C62</color>
+    <color name="dt_greenblue">#B7F0AD</color>
+    <color name="dt_wine">#4C061D</color>
+    <color name="dt_grey">#736F4E</color>
+    <color name="dt_black">#010001</color>
+    <color name="dt_blue">#2274A5</color>
+
+    <!--Transparrent Colors-->
+    <color name="tc_red">#66FF0000</color>>
+
+    <color name="transparent">#9FFFFFFF</color>
+
+    <color name="orange50">#FFF3E0</color>
+    <color name="orange100">#FFE0B2</color>
+    <color name="orange200">#FFCC80</color>
+    <color name="orange300">#FFB74D</color>
+    <color name="orange400">#FFA726</color>
+    <color name="orange500">#FF9800</color>
+    <color name="orange600">#FB8C00</color>
+    <color name="orange700">#F57C00</color>
+    <color name="orange800">#EF6C00</color>
+    <color name="orange900">#E65100</color>
+
+    <color name="backgroundgrey">#eeeeee</color>
+
+    <color name="cyan50">#E0F7FA</color>
+    <color name="cyan100">#B2EBF2</color>
+    <color name="cyan200">#80DEEA</color>
+    <color name="cyan300">#4DD0E1</color>
+    <color name="cyan400">#26C6DA</color>
+    <color name="cyan500">#00BCD4</color>
+    <color name="cyan600">#00ACC1</color>
+    <color name="cyan700">#0097A7</color>
+    <color name="cyan800">#00838F</color>
+    <color name="cyan900">#006064</color>
+
+
+    <color name="red100">#FFCDD2</color>
+    <color name="red300">#E57373</color>
+    <color name="red500">#f44336</color>
+    <color name="red700">#D32F2F</color>
+    <color name="red900">#B71C1C</color>
+
+    <color name="blue100">#C5CAE9</color>
+    <color name="blue300">#7986CB</color>
+    <color name="blue500">#3F51B5</color>
+    <color name="blue700">#303F9F</color>
+    <color name="blue900">#1A237E</color>
+
+    <color name="lightblue300">#4FC3F7</color>
+    <color name="lightblue700">#0288D1</color>
+</resources>
