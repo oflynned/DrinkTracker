@@ -64,9 +64,13 @@
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Avviso</string>
-    <string name="disclaimerbody">Si ricorda che DrinkTracker è solo un'approssimazione della tua alcolemia(BAC), e non un sostituto per un esame etilometro. GlassByte è in alcun modo responsabile di eventuali azioni svolte nell'ambito intossicazione. Si prega di rimanere al sicuro sotto l'influenza di alcool. Utilizzando questa applicazione , l'utente accetta di rispettare questo preavviso .</string>
-    <string name="agree">Sono d'accordo</string>
-    <string name="disagree">Non sono d'accordo</string>
+    <string name="disclaimerbody">Si ricorda che DrinkTracker è solo un\'approssimazione della tua
+        alcolemia(BAC), e non un sostituto per un esame etilometro. GlassByte è in alcun modo
+        responsabile di eventuali azioni svolte nell\'ambito intossicazione. Si prega di rimanere
+        al sicuro sotto l\'influenza di alcool. Utilizzando questa applicazione , l\'utente accetta
+        di rispettare questo preavviso .</string>
+    <string name="agree">Sono d\'accordo</string>
+    <string name="disagree">Non sono d\'accordo</string>
 
     <!--> dialog warnings <-->
     <string name="tier0">Sobrio.</string>

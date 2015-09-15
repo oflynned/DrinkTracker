@@ -92,7 +92,7 @@
     <string name="detailed_stats_title">Statistiques détaillées</string>
     <string name="avg_drink_strength">Puissance moyenne des boissons:</string>
     <string name="avg_drink_volume">Le volume moyen de boissons:</string>
-    <string name="avg_calories">Calories de l'alcool cette semaine:</string>
+    <string name="avg_calories">Calories de l\'alcool cette semaine:</string>
     <string name="max_bac">BAC maximal atteint:</string>
     <string name="calories">calorie</string>
 
