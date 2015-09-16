@@ -13,12 +13,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdSize;
+
 
 /**
  * Created by root on 27/05/15.
@@ -29,15 +35,16 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
     private DrinkTrackerDbHelper dou;
     private ImageView glass;
     private Spinner drinksChoice;
-
     private BloodAlcoholContent bloodAlcoholContent;
+    private AdView adView;
     SharedPreferences sp;
 
     //for setting input for database
     private String spUnits, units, title;
-
     private float alcPercentage = 0f;
     private int alcVolume = 0;
+
+    private final static String AD_ID = "ca-app-pub-3940256099942544/6300978111";
 
     Button setPercentage, setVolume, drink;
     TextView percentageChosen, volChosen;
@@ -51,13 +58,70 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
         sp.registerOnSharedPreferenceChangeListener(this);
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        final RelativeLayout rl = new RelativeLayout(this.getActivity());
+        rl.setBackgroundColor(getResources().getColor(R.color.orange100));
+
+        adView = new AdView(getContext());
+        RelativeLayout.LayoutParams paramsAds = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsAds.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        paramsAds.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        adView.setLayoutParams(paramsAds);
+        adView.setId(View.generateViewId());
+        adView.setAdSize(AdSize.SMART_BANNER);
+        adView.setAdUnitId(AD_ID);
+
+        //request ads to target emulated device
+        AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
+        adRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
+
+        rl.addView(adView);
+
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+
+            }
+
+            @Override
+            public void onAdLoaded() {
+
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+
+            }
+        });
+
+        adView.loadAd(adRequestBuilder.build());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         V = inflater.inflate(R.layout.activity_presetdrink, container, false);
-
         spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits), ""));
-
         if (spUnits.equals("metric") || spUnits.equals("Metric")) {
             setUnits("ml");
         } else {
@@ -84,9 +148,9 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
 
         drinksChoice = (Spinner) V.findViewById(R.id.spinnerPresetDrink);
 
-        AdView mAdView = (AdView) V.findViewById(R.id.adView);
+      /*  AdView mAdView = (AdView) V.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
 
 
         drinksChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
