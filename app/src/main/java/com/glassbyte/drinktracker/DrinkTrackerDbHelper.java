@@ -209,17 +209,18 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                                 Long.toString(firstZeroBacDate) + "ORDER BY (" +
                                 DrinkTrackerDatabase.BacTable.TABLE_NAME + "." +
                                 DrinkTrackerDatabase.BacTable.DATE_TIME + ") ASC";
-
                 Cursor allBacEntriesBetweenTheDrinkAndZeroBac = readDB.rawQuery(
                         selectAllBacEntriesBetweenTheDrinkAndFirstZeroBacEntry,
                         null
                 );
+                //0=Relation.BacId; 1=Relation.DrinkId; 2=Relation.BacAmt;
+                // 3=BacTable.BacId; 4=BacTable.DateTime; 5=BacTable.Bac; 6=BacTable.UpdateType;
                 allBacEntriesBetweenTheDrinkAndZeroBac.moveToFirst();
 
                 //Deal with the first insertion entry of the drink being deleted
                 int bacId = allBacEntriesBetweenTheDrinkAndZeroBac.getInt(0);
-                float currentBacAtTheTime = allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(2);
-                float drinkBacAtInsertion = allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(6);
+                float currentBacAtTheTime = allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(5);
+                float drinkBacAtInsertion = allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(2);
                 currentBacAtTheTime -= drinkBacAtInsertion;
 
                 String deleteInsertionFromRelationTable =
@@ -238,20 +239,82 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                 writeDB.execSQL(deleteInsertionFromDrinksTable);
                 //End of Deal with the first insertion entry of the drink being deleted
 
-                boolean isPastFirstTheDrinksDecayEntry = false;
+                //Get all the drink inserted between the date of the insertion of the one being
+                // deleted and the first 0 bac entry (does not include the one deleted)
+                String selectAllDrinksInsertedAfterTheDrinkAndBeforeFirstZeroBac =
+                        "SELECT * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME + " WHERE " +
+                                DrinkTrackerDatabase.DrinksTable.DATE_TIME + " BETWEEN " +
+                                Long.toString(drinkInsertDate) + " AND " + Long.toString(firstZeroBacDate);
+                Cursor drinksInsertedBetweenTheDrinkAndFirstZeroBac =
+                        readDB.rawQuery(selectAllDrinksInsertedAfterTheDrinkAndBeforeFirstZeroBac, null);
+                drinksInsertedBetweenTheDrinkAndFirstZeroBac.moveToFirst();
+                //0=drinkId;1=dateTime;2=title;3=vol;4=percentage;5=bac;6=units;
+                int drinksCount = 0;
+                //End of Get all the drink inserted between the date of the insertion of...
+
+                boolean isPastTheDrinksFirstDecayEntry = false;
                 for (int i = 1; i < allBacEntriesBetweenTheDrinkAndZeroBac.getCount(); i++) {
                     //Looping through all the bac entries between the drink inserted(incl.) and
                     // the first zero bac after(incl.)
                     bacId = allBacEntriesBetweenTheDrinkAndZeroBac.getInt(0);
-                    int updateType = allBacEntriesBetweenTheDrinkAndZeroBac.getInt(3);
+                    int updateType = allBacEntriesBetweenTheDrinkAndZeroBac.getInt(6);
 
                     if (updateType == DrinkTrackerDatabase.BacTable.DECAY_UPDATE) {
-                        if (allBacEntriesBetweenTheDrinkAndZeroBac.getInt(5) == drinkId) {
+                        if (isPastTheDrinksFirstDecayEntry) {
                             //The bac entry being checked is a decay update affecting the drink being deleted
-                            isPastFirstTheDrinksDecayEntry = true;
+                        } else {
+                            if (allBacEntriesBetweenTheDrinkAndZeroBac.getInt(1) == drinkId) {
+                                isPastTheDrinksFirstDecayEntry = true;
+                                //This is the first decay entry of the drink being deleted
+
+                                if (drinksInsertedBetweenTheDrinkAndFirstZeroBac.getCount() > 0) {
+                                    //There are drinks that were inserted after the one being deleted
+                                    for (;drinksCount < drinksInsertedBetweenTheDrinkAndFirstZeroBac.getCount();
+                                            drinksCount++) {
+                                        float bacAmt = allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(2);
+                                        drinkBac = drinksInsertedBetweenTheDrinkAndFirstZeroBac.getFloat(5);
+                                        if (bacAmt < drinkBac) {
+                                            //The bacAmt to be decayed is less of the bac of the drink
+                                            break;
+                                        } else {
+                                            //The bacAmt to be decayed is LARGER than the bac of the
+                                            // drink to be decayed from
+
+
+                                            if(drinksCount + 1 < drinksInsertedBetweenTheDrinkAndFirstZeroBac.getCount())
+                                                drinksInsertedBetweenTheDrinkAndFirstZeroBac.moveToNext();
+                                        }
+                                    }
+                                } else {
+                                    //remove bac relation
+                                    //remove bac table entry if the amt in the bac relation is equal to the bac in the bac table entry otherwise subtract the bac amt from the relation table from the bac in the bac entry
+                                }
+
+                            } else {
+                                //SEEMS DONE
+                                //The entry is a decay entry that happened before the first decay of the drink being deleted
+                                //Change the bac value of the bac entry by subtracting
+
+                                //Add the bac of the insertion to the currentBac before the insertion at the time
+                                currentBacAtTheTime -= allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(2);
+                                //End add the bac of the insertion...
+
+                                //Modify the bac value of the bac entry of the currently checked entry
+                                String modifyBacValueInTheBacEntry = "UPDATE " +
+                                        DrinkTrackerDatabase.BacTable.TABLE_NAME + " SET " +
+                                        DrinkTrackerDatabase.BacTable.BAC + "=" +
+                                        Float.toString(currentBacAtTheTime) + " WHERE " +
+                                        DrinkTrackerDatabase.BacTable._ID + "=" +
+                                        Integer.toString(bacId);
+                                writeDB.execSQL(modifyBacValueInTheBacEntry);
+                                //End of Modify the bac value of the bac entry of the currently checked entry
+                            }
+
                         }
                     }
+
                     else if (updateType == DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE){
+                        //SEEMS DONE
                         //Change the bac value of the bac entry by subtracting
 
                         //Add the bac of the insertion to the currentBac before the insertion at the time
