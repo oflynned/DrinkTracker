@@ -60,6 +60,10 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+
+
+
+
         final RelativeLayout rl = new RelativeLayout(this.getActivity());
         rl.setBackgroundColor(getResources().getColor(R.color.orange100));
 
@@ -77,40 +81,27 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
         adRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
 
         rl.addView(adView);
-
-        adView.setAdListener(new AdListener() {
+        /*adView.setAdListener(new AdListener()
+        {
             @Override
-            public void onAdClosed() {
-
+            public void onAdClosed()
+            {
             }
-
             @Override
-            public void onAdLoaded() {
-
+            public void onAdLoaded()
+            {
             }
-
             @Override
-            public void onAdFailedToLoad(int errorCode) {
-
+            public void onAdFailedToLoad(int errorCode)
+            {
             }
-        });
+        });*/
 
         adView.loadAd(adRequestBuilder.build());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        /*  AdView mAdView = (AdView) V.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);*/
 
 
 
@@ -147,11 +138,6 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
         volChosen.setText(getVolume() + getUnits());
 
         drinksChoice = (Spinner) V.findViewById(R.id.spinnerPresetDrink);
-
-      /*  AdView mAdView = (AdView) V.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
-
 
         drinksChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
