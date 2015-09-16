@@ -250,7 +250,12 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                 drinksInsertedBetweenTheDrinkAndFirstZeroBac.moveToFirst();
                 //0=drinkId;1=dateTime;2=title;3=vol;4=percentage;5=bac;6=units;
                 int drinksCount = 0;
+                drinkBac = drinksInsertedBetweenTheDrinkAndFirstZeroBac.getFloat(5);
                 //End of Get all the drink inserted between the date of the insertion of...
+
+                float presentDrinkBacAtTheTime = 0f;
+                if (drinksCount < drinksInsertedBetweenTheDrinkAndFirstZeroBac.getCount())
+                    presentDrinkBacAtTheTime = drinksInsertedBetweenTheDrinkAndFirstZeroBac.getFloat(5);
 
                 boolean isPastTheDrinksFirstDecayEntry = false;
                 for (int i = 1; i < allBacEntriesBetweenTheDrinkAndZeroBac.getCount(); i++) {
@@ -262,32 +267,109 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                     if (updateType == DrinkTrackerDatabase.BacTable.DECAY_UPDATE) {
                         if (isPastTheDrinksFirstDecayEntry) {
                             //The bac entry being checked is a decay update affecting the drink being deleted
+                            if (presentDrinkBacAtTheTime == 0f &&
+                                    drinksCount < drinksInsertedBetweenTheDrinkAndFirstZeroBac.getCount()) {
+                                //Get the next drink to be decayed if the last one was fully decayed and there were drinks inserted after the last one
+                                drinksInsertedBetweenTheDrinkAndFirstZeroBac.moveToNext();
+                                presentDrinkBacAtTheTime = drinksInsertedBetweenTheDrinkAndFirstZeroBac.getFloat(5);
+                                drinksCount++;
+                            }
+
+                            if (presentDrinkBacAtTheTime > 0) {
+                                //Decay the remainder of the drink that is being decayed
+                                float bacAmt = allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(2);
+
+                                if (bacAmt < presentDrinkBacAtTheTime) {
+                                    //The bacAmt to be decayed is less than the remaining present bac of the drink
+
+                                    //todo: Change the entry in the relation table to reference this drink instead of the one being deleted
+
+                                    currentBacAtTheTime -= bacAmt;
+                                    presentDrinkBacAtTheTime -= bacAmt;
+                                    continue;
+                                } else {
+                                    //The bacAmt to be decayed is LARGER than the bac of the
+                                    // drink to be decayed
+
+                                    //Remove the relation table entry of the drink being deleted
+
+                                    //Deal with the first drink inserted without moving the cursor to the next
+                                    //todo drinkBac = drinksInsertedBetweenTheDrinkAndFirstZeroBac.getFloat(X);
+                                    //todo Make new entry in the relation table to decay the drink by the drink bac amt
+                                    bacAmt -= drinkBac;
+                                    drinksCount++;
+                                    //End of Deal with the first drink inserted without moving ...
+
+                                    while (bacAmt > 0 && drinksCount < drinksInsertedBetweenTheDrinkAndFirstZeroBac.getCount()) {
+                                        drinksInsertedBetweenTheDrinkAndFirstZeroBac.moveToNext();
+                                        presentDrinkBacAtTheTime = drinksInsertedBetweenTheDrinkAndFirstZeroBac.getFloat(5);
+                                        //todo Make new entry in the relation table to decay the drink by the drink bac amt
+                                        bacAmt -= drinkBac;
+                                        drinksCount++;
+                                    }
+
+                                }
+                            } else {
+                                //no more drinks inserted after that need to be decayed
+
+                                //todo: check if the bac entry is related only to the drink from the relation entry being checked
+                                //todo if yes then delete that bac entry --- else subtract the bacamt in the relation entry from the bac in the bac entry
+                                //todo delete the relation entry row
+                                //todo change the currentBacAtTheTime -= bacAmt
+                            }
                         } else {
                             if (allBacEntriesBetweenTheDrinkAndZeroBac.getInt(1) == drinkId) {
-                                isPastTheDrinksFirstDecayEntry = true;
                                 //This is the first decay entry of the drink being deleted
+                                isPastTheDrinksFirstDecayEntry = true;
 
                                 if (drinksInsertedBetweenTheDrinkAndFirstZeroBac.getCount() > 0) {
                                     //There are drinks that were inserted after the one being deleted
-                                    for (;drinksCount < drinksInsertedBetweenTheDrinkAndFirstZeroBac.getCount();
-                                            drinksCount++) {
-                                        float bacAmt = allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(2);
-                                        drinkBac = drinksInsertedBetweenTheDrinkAndFirstZeroBac.getFloat(5);
-                                        if (bacAmt < drinkBac) {
-                                            //The bacAmt to be decayed is less of the bac of the drink
-                                            break;
-                                        } else {
-                                            //The bacAmt to be decayed is LARGER than the bac of the
-                                            // drink to be decayed from
-
-
-                                            if(drinksCount + 1 < drinksInsertedBetweenTheDrinkAndFirstZeroBac.getCount())
-                                                drinksInsertedBetweenTheDrinkAndFirstZeroBac.moveToNext();
-                                        }
+                                    float bacAmt = allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(2);
+                                    if (presentDrinkBacAtTheTime == 0f) {
+                                        drinksInsertedBetweenTheDrinkAndFirstZeroBac.moveToNext();
+                                        presentDrinkBacAtTheTime = drinksInsertedBetweenTheDrinkAndFirstZeroBac.getFloat(5);
+                                        drinksCount++;
                                     }
+
+                                    if (bacAmt < presentDrinkBacAtTheTime) {
+                                        //The bacAmt to be decayed is less than the remaining present bac of the drink
+
+                                        //todo: Change the entry in the relation table to reference this drink instead of the one being deleted
+
+                                        currentBacAtTheTime -= bacAmt;
+                                        presentDrinkBacAtTheTime -= bacAmt;
+                                        continue;
+                                    } else {
+                                        //The bacAmt to be decayed is LARGER than the bac of the
+                                        // drink to be decayed
+
+                                        //Remove the relation table entry of the drink being deleted
+
+                                        //Deal with the first drink inserted without moving the cursor to the next
+                                        //todo drinkBac = drinksInsertedBetweenTheDrinkAndFirstZeroBac.getFloat(X);
+                                        //todo Make new entry in the relation table to decay the drink by the drink bac amt
+                                        bacAmt -= drinkBac;
+                                        drinksCount++;
+                                        //End of Deal with the first drink inserted without moving ...
+
+                                        while (bacAmt > 0 && drinksCount < drinksInsertedBetweenTheDrinkAndFirstZeroBac.getCount()) {
+                                            drinksInsertedBetweenTheDrinkAndFirstZeroBac.moveToNext();
+                                            presentDrinkBacAtTheTime = drinksInsertedBetweenTheDrinkAndFirstZeroBac.getFloat(5);
+                                            //todo Make new entry in the relation table to decay the drink by the drink bac amt
+                                            bacAmt -= drinkBac;
+                                            drinksCount++;
+                                        }
+
+                                    }
+
                                 } else {
-                                    //remove bac relation
-                                    //remove bac table entry if the amt in the bac relation is equal to the bac in the bac table entry otherwise subtract the bac amt from the relation table from the bac in the bac entry
+                                    //No drinks inserted after the one being deleted and before the 0 bac entry
+                                    //todo remove bac relation
+
+                                    //todo remove bac table entry if the bac relation entry affects only this drink
+                                    //todo otherwise subtract the bac amt from the relation table from the bac in the bac entry
+
+                                    //todo set the currentBac -= bacAmt
                                 }
 
                             } else {
@@ -296,7 +378,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                                 //Change the bac value of the bac entry by subtracting
 
                                 //Add the bac of the insertion to the currentBac before the insertion at the time
-                                currentBacAtTheTime -= allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(2);
+                                currentBacAtTheTime += allBacEntriesBetweenTheDrinkAndZeroBac.getFloat(2);
                                 //End add the bac of the insertion...
 
                                 //Modify the bac value of the bac entry of the currently checked entry
