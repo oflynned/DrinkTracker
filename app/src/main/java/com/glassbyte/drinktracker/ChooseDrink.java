@@ -91,6 +91,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         sp.registerOnSharedPreferenceChangeListener(this);
         spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender), ""));
         spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits), ""));
+        setUnits(spUnits);
 
         /*End Register the sharepreferences listener*/
 
@@ -208,6 +209,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         fab2 = new FloatingActionButton(getContext());
 
         //advert
+
         adView = new AdView(getContext());
         RelativeLayout.LayoutParams paramsAds = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsAds.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -217,9 +219,12 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         adView.setAdSize(AdSize.SMART_BANNER);
         adView.setAdUnitId(AD_ID);
 
+
         //request ads to target emulated device
         AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
-        adRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
+        adRequestBuilder
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .setGender(getGender(spGender));
 
         //fab1 fab
         final RelativeLayout.LayoutParams paramsFAB1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -259,7 +264,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setUnits(spUnits);
                 setMaxUnits(spGender);
                 setUpCalender();
                 setTotalUnits(0);
@@ -323,8 +327,9 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 paramsFAB2.addRule(RelativeLayout.ALIGN_BOTTOM);
                 fab1.setLayoutParams(paramsFAB1);
                 fab2.setLayoutParams(paramsFAB2);
-                fab1.invalidate();
-                fab2.invalidate();
+                rl.addView(fab1);
+                rl.addView(fab2);
+                rl.invalidate();
             }
         });
 
@@ -560,6 +565,14 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         }
     }
 
+    public int getGender(String spGender) {
+        if (spGender.equals("male") || spGender.equals("Male")) {
+            return AdRequest.GENDER_MALE;
+        } else {
+            return AdRequest.GENDER_FEMALE;
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -607,13 +620,12 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
             //acquire new units and convert
             String changedUnits = spEditUnits.getString(s, "");
-            Toast.makeText(getContext(),changedUnits,Toast.LENGTH_SHORT).show();
-            if(changedUnits.equalsIgnoreCase("metric")) {
+            Toast.makeText(getContext(), changedUnits, Toast.LENGTH_SHORT).show();
+            if (changedUnits.equalsIgnoreCase("metric")) {
                 setUnits(getResources().getString(R.string.ml));
                 avgVol = BloodAlcoholContent.MetricSystemConverter.convertOzToMillilitres(avgVol);
                 avgVol = BloodAlcoholContent.round(avgVol, 2);
-            }
-            else {
+            } else {
                 setUnits(getResources().getString(R.string.oz));
                 avgVol = BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(avgVol);
                 avgVol = BloodAlcoholContent.round(avgVol, 2);
