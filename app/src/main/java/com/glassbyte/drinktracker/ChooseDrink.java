@@ -80,6 +80,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     FloatingActionButton fab2;
 
     Dialog dialog;
+    Runnable warningSystem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,12 +98,59 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         warningDialog = new WarningDialog(this.getActivity());
         drinkTrackerDbHelper = new DrinkTrackerDbHelper(this.getActivity());
 
-        if (bloodAlcoholContent.getCurrentEbac() == 0) {
-            warningDialog.setWarning1(false);
-            warningDialog.setWarning2(false);
-            warningDialog.setWarning3(false);
-            warningDialog.setWarning4(false);
-        }
+        //instantiate warning system by use of a thread
+        warningSystem = new Runnable() {
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        if (bloodAlcoholContent.getCurrentEbac() == 0) {
+                            warningDialog.setWarning1(false);
+                            warningDialog.setWarning2(false);
+                            warningDialog.setWarning3(false);
+                            warningDialog.setWarning4(false);
+                        } else if ((bloodAlcoholContent.getCurrentEbac() >= 0.07)
+                                && (bloodAlcoholContent.getCurrentEbac() < 0.13)
+                                && (!warningDialog.getWarning1())) {
+                            warningDialog.setWarning1(true);
+                            warningDialog.displayWarning("1");
+                        } else if (bloodAlcoholContent.getCurrentEbac() >= 0.13
+                                && (bloodAlcoholContent.getCurrentEbac() < 0.17)
+                                && (!warningDialog.getWarning2())) {
+                            warningDialog.setWarning2(true);
+                            warningDialog.displayWarning("2");
+                        } else if (bloodAlcoholContent.getCurrentEbac() >= 0.17
+                                && (bloodAlcoholContent.getCurrentEbac() < 0.22)
+                                && (!warningDialog.getWarning3())) {
+                            warningDialog.setWarning3(true);
+                            warningDialog.displayWarning("3");
+                        } else if (bloodAlcoholContent.getCurrentEbac() > 0.22
+                                && (!warningDialog.getWarning4())) {
+                            warningDialog.setWarning4(true);
+                            warningDialog.displayWarning("4");
+                        } else if (bloodAlcoholContent.getCurrentEbac() < 0.07
+                                && warningDialog.getWarning1()) {
+                            warningDialog.setWarning1(false);
+                        } else if (bloodAlcoholContent.getCurrentEbac() < 0.13
+                                && warningDialog.getWarning2()) {
+                            warningDialog.setWarning2(false);
+                        } else if (bloodAlcoholContent.getCurrentEbac() < 0.17
+                                && warningDialog.getWarning3()) {
+                            warningDialog.setWarning3(false);
+                        } else if (bloodAlcoholContent.getCurrentEbac() < 0.22
+                                && warningDialog.getWarning4()) {
+                            warningDialog.setWarning4(false);
+                        } else if (bloodAlcoholContent.getCurrentEbac() == 0) {
+                            warningDialog.setWarning1(false);
+                            warningDialog.setWarning2(false);
+                            warningDialog.setWarning3(false);
+                            warningDialog.setWarning4(false);
+                        }
+                    }
+                });
+            }
+        };
+
+        warningSystem.run();
 
         /*End of Set up the BloodAlcoholLevel object*/
 
@@ -550,33 +598,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 startAnimation(progress);
             }
             pbBAC.invalidate();
-
-            if ((bloodAlcoholContent.getCurrentEbac() >= 0.07) && (!warningDialog.getWarning1())) {
-                warningDialog.setWarning1(true);
-                warningDialog.displayWarning("1");
-            } else if (bloodAlcoholContent.getCurrentEbac() >= 0.13 && (!warningDialog.getWarning2())) {
-                warningDialog.setWarning2(true);
-                warningDialog.displayWarning("2");
-            } else if (bloodAlcoholContent.getCurrentEbac() >= 0.17 && (!warningDialog.getWarning3())) {
-                warningDialog.setWarning3(true);
-                warningDialog.displayWarning("3");
-            } else if (bloodAlcoholContent.getCurrentEbac() >= 0.22 && (!warningDialog.getWarning4())) {
-                warningDialog.setWarning4(true);
-                warningDialog.displayWarning("4");
-            } else if (bloodAlcoholContent.getCurrentEbac() == 0) {
-                warningDialog.setWarning1(false);
-                warningDialog.setWarning2(false);
-                warningDialog.setWarning3(false);
-                warningDialog.setWarning4(false);
-            } else if (bloodAlcoholContent.getCurrentEbac() < 0.07 && warningDialog.getWarning1()){
-                warningDialog.setWarning1(false);
-            } else if (bloodAlcoholContent.getCurrentEbac() < 0.13 && warningDialog.getWarning2()){
-                warningDialog.setWarning2(false);
-            } else if (bloodAlcoholContent.getCurrentEbac() < 0.17 && warningDialog.getWarning3()){
-                warningDialog.setWarning3(false);
-            } else if (bloodAlcoholContent.getCurrentEbac() < 0.22 && warningDialog.getWarning4()){
-                warningDialog.setWarning4(false);
-            }
+            warningSystem.run();
         }
 
         if (s == this.getString(R.string.pref_key_editUnits)) {
