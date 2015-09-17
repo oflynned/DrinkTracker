@@ -211,7 +211,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         //advert
 
         adView = new AdView(getContext());
-        RelativeLayout.LayoutParams paramsAds = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final RelativeLayout.LayoutParams paramsAds = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsAds.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         paramsAds.addRule(RelativeLayout.CENTER_HORIZONTAL);
         adView.setLayoutParams(paramsAds);
@@ -239,7 +239,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         fab1.setColorNormal(getResources().getColor(R.color.orange500));
         fab1.setColorPressed(getResources().getColor(R.color.orange700));
         fab1.setId(View.generateViewId());
-
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -303,28 +302,42 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         adView.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                paramsFAB1.addRule(RelativeLayout.ALIGN_BOTTOM);
-                paramsFAB2.addRule(RelativeLayout.ALIGN_BOTTOM);
+                rl.removeView(fab1);
+                rl.removeView(fab2);
+                paramsFAB1.removeRule(RelativeLayout.ABOVE);
+                paramsFAB2.removeRule(RelativeLayout.ABOVE);
+                paramsFAB1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                paramsFAB2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 fab1.setLayoutParams(paramsFAB1);
                 fab2.setLayoutParams(paramsFAB2);
-                fab1.invalidate();
-                fab2.invalidate();
+                rl.addView(fab1);
+                rl.addView(fab2);
+                rl.invalidate();
             }
 
             @Override
             public void onAdLoaded() {
+                rl.removeView(fab1);
+                rl.removeView(fab2);
+                paramsFAB1.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                paramsFAB2.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 paramsFAB1.addRule(RelativeLayout.ABOVE, adView.getId());
                 paramsFAB2.addRule(RelativeLayout.ABOVE, adView.getId());
                 fab1.setLayoutParams(paramsFAB1);
                 fab2.setLayoutParams(paramsFAB2);
-                fab1.invalidate();
-                fab2.invalidate();
+                rl.addView(fab1);
+                rl.addView(fab2);
+                rl.invalidate();
             }
 
             @Override
             public void onAdFailedToLoad(int errorCode) {
-                paramsFAB1.addRule(RelativeLayout.ALIGN_BOTTOM);
-                paramsFAB2.addRule(RelativeLayout.ALIGN_BOTTOM);
+                rl.removeView(fab1);
+                rl.removeView(fab2);
+                paramsFAB1.removeRule(RelativeLayout.ABOVE);
+                paramsFAB2.removeRule(RelativeLayout.ABOVE);
+                paramsFAB1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                paramsFAB2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 fab1.setLayoutParams(paramsFAB1);
                 fab2.setLayoutParams(paramsFAB2);
                 rl.addView(fab1);
