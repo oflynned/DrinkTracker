@@ -163,4 +163,7 @@
     <string name="oz">oz</string>
     <string name="ml">ml</string>
 
+    <string name="about_us">GlassByte is a software development start-up company headquartered in Dublin, Ireland. Our small, ambitious team strives to create innovative and useful software for computing platforms.</string>
+    <string name="about_us_more">For more apps or business enquiries, visit our website!\nhttp://www.glassbyte.com/</string>
+
 </resources>

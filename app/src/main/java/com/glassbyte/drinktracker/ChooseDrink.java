@@ -360,6 +360,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             startAnimation(progress);
         }
 
+        System.out.println("totunits in main: " + totUnits);
         return rl;
     }
 
@@ -388,6 +389,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         Cursor cursor = db.rawQuery(countQuery, null);
 
         String currUnits;
+        totUnits = 0;
 
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
@@ -396,7 +398,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                         Long.parseLong(cursor.getString(1)) < startOfNextWeek) {
                     //if date lies within period
                     currUnits = cursor.getString(6);
-                    System.out.println(currUnits);
+                    System.out.println("curr units: " + currUnits);
                     totUnits = totUnits + Double.parseDouble(currUnits);
                 } else {
                     //go to next row
@@ -405,7 +407,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             }
             while (cursor.moveToNext() && Long.parseLong(cursor.getString(1)) < startOfNextWeek);
 
-            System.out.println(totUnits);
+            System.out.println("totunis: " + totUnits);
             setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
 
             //close operations and sum
@@ -420,8 +422,8 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
 
-        int count = 0;
-        int totABV = 0;
+        double count = 0;
+        double totABV = 0;
         String ABV;
         float currABV;
 
