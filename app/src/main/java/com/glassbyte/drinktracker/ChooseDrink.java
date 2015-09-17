@@ -5,6 +5,7 @@ package com.glassbyte.drinktracker;
 * */
 
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -103,6 +104,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             public void run() {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
+                        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
                         if (bloodAlcoholContent.getCurrentEbac() == 0) {
                             warningDialog.setWarning1(false);
                             warningDialog.setWarning2(false);
@@ -111,20 +113,24 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                         } else if ((bloodAlcoholContent.getCurrentEbac() >= 0.07)
                                 && (bloodAlcoholContent.getCurrentEbac() < 0.13)
                                 && (!warningDialog.getWarning1())) {
+                            notificationManager.cancel(warningDialog.NOTIFICATION_ID);
                             warningDialog.setWarning1(true);
                             warningDialog.displayWarning("1");
                         } else if (bloodAlcoholContent.getCurrentEbac() >= 0.13
                                 && (bloodAlcoholContent.getCurrentEbac() < 0.17)
                                 && (!warningDialog.getWarning2())) {
+                            notificationManager.cancel(warningDialog.NOTIFICATION_ID);
                             warningDialog.setWarning2(true);
                             warningDialog.displayWarning("2");
                         } else if (bloodAlcoholContent.getCurrentEbac() >= 0.17
                                 && (bloodAlcoholContent.getCurrentEbac() < 0.22)
                                 && (!warningDialog.getWarning3())) {
+                            notificationManager.cancel(warningDialog.NOTIFICATION_ID);
                             warningDialog.setWarning3(true);
                             warningDialog.displayWarning("3");
                         } else if (bloodAlcoholContent.getCurrentEbac() > 0.22
                                 && (!warningDialog.getWarning4())) {
+                            notificationManager.cancel(warningDialog.NOTIFICATION_ID);
                             warningDialog.setWarning4(true);
                             warningDialog.displayWarning("4");
                         } else if (bloodAlcoholContent.getCurrentEbac() < 0.07
@@ -138,11 +144,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                             warningDialog.setWarning3(false);
                         } else if (bloodAlcoholContent.getCurrentEbac() < 0.22
                                 && warningDialog.getWarning4()) {
-                            warningDialog.setWarning4(false);
-                        } else if (bloodAlcoholContent.getCurrentEbac() == 0) {
-                            warningDialog.setWarning1(false);
-                            warningDialog.setWarning2(false);
-                            warningDialog.setWarning3(false);
                             warningDialog.setWarning4(false);
                         }
                     }
