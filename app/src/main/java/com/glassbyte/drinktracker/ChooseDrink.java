@@ -151,7 +151,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                         }
 
                         //also update the current stats
-                        setMaxUnits(spGender);
                         setUpCalender();
                         setTotalUnits(totUnits);
                         //calories are units*7*8 as 1 unit = 8g where 1g = 7 calories therefore
@@ -408,7 +407,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
             System.out.println(totUnits);
             setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
-            Toast.makeText(getContext(), "total units: " + getTotalUnits(), Toast.LENGTH_SHORT).show();
 
             //close operations and sum
             db.close();
@@ -501,18 +499,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
     protected double getMaxBAC() {
         return maxBAC;
-    }
-
-    protected void setMaxUnits(String spGender) {
-        if (spGender.equals("male") || spGender.equals("Male")) {
-            this.maxUnits = 21;
-        } else {
-            this.maxUnits = 14;
-        }
-    }
-
-    protected double getMaxUnits() {
-        return maxUnits;
     }
 
     protected void setUnits(String spUnits) {
