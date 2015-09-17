@@ -45,6 +45,7 @@ import org.joda.time.format.DateTimeFormatter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -106,6 +107,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
                         NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                        //constantly poll the bac on update via another thread
                         if (bloodAlcoholContent.getCurrentEbac() == 0) {
                             warningDialog.setWarning1(false);
                             warningDialog.setWarning2(false);
@@ -147,6 +149,16 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                                 && warningDialog.getWarning4()) {
                             warningDialog.setWarning4(false);
                         }
+
+                        //also update the current stats
+                        setMaxUnits(spGender);
+                        setUpCalender();
+                        setTotalUnits(totUnits);
+                        //calories are units*7*8 as 1 unit = 8g where 1g = 7 calories therefore
+                        setCalories((int) (totUnits * 56));
+                        setAvgABV();
+                        setAvgVol();
+                        setMaxBAC();
                     }
                 });
             }
@@ -263,15 +275,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setMaxUnits(spGender);
-                setUpCalender();
-                setTotalUnits(0);
-                //calories are units*7*8 as 1 unit = 8g where 1g = 7 calories therefore
-                setCalories((int) (totUnits * 56));
-                setAvgABV();
-                setAvgVol();
-                setMaxBAC();
-
                 //open dialog of stats
                 dialog = new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.detailed_stats_title)
@@ -362,48 +365,36 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     }
 
     protected void setUpCalender() {
-        // Get calendar set to current date and time
-        Calendar c = Calendar.getInstance();
+        // get today and clear time of day
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+        cal.clear(Calendar.MINUTE);
+        cal.clear(Calendar.SECOND);
+        cal.clear(Calendar.MILLISECOND);
 
-        // Set the calendar to monday of the current week
-        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        // get start of this week in milliseconds
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+        long startOfWeek = cal.getTimeInMillis();
 
-        // Print start and end of the current week starting on Monday
-        DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-        //1 day before week start at 23:59:59
-        c.add(Calendar.DATE, -1);
-        c.set(Calendar.HOUR_OF_DAY, 23);
-        c.set(Calendar.MINUTE, 59);
-        c.set(Calendar.SECOND, 59);
-        String whileAfter = df.format(c.getTime());
-        //1 day after week end at 00:00:00
-        c.add(Calendar.DATE, 8);
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        String whileBefore = df.format(c.getTime());
+        // start of the next week
+        cal.add(Calendar.WEEK_OF_YEAR, 1);
+        long startOfNextWeek = cal.getTimeInMillis();
 
-        //select first row by date fo start of week and sum until it reaches whileNot
+        //col 1 for time
+        //col 6 for units
+        //sum row of col 6 if its date lies between start and end
+
         String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
         SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
 
         String currUnits;
 
-        DateTimeFormatter dateStringFormat = DateTimeFormat.forPattern("HH:mm:ss dd/MM/yyyy");
-        DateTime startDate = dateStringFormat.parseDateTime(whileAfter);
-        DateTime endDate = dateStringFormat.parseDateTime(whileBefore);
-
-        //col 1 for time
-        //col 6 for units
-        //sum row of col 6 if its date lies between start and end
-
-        /*
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
-                if (dateStringFormat.parseDateTime(cursor.getString(1)).isAfter(startDate) &&
-                        dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate)) {
+                if (Long.parseLong(cursor.getString(1)) > startOfWeek &&
+                        Long.parseLong(cursor.getString(1)) < startOfNextWeek) {
                     //if date lies within period
                     currUnits = cursor.getString(6);
                     System.out.println(currUnits);
@@ -413,15 +404,16 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                     cursor.moveToNext();
                 }
             }
-            while (cursor.moveToNext() && dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate));
+            while (cursor.moveToNext() && Long.parseLong(cursor.getString(1)) < startOfNextWeek);
 
             System.out.println(totUnits);
             setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
+            Toast.makeText(getContext(), "total units: " + getTotalUnits(), Toast.LENGTH_SHORT).show();
 
             //close operations and sum
             db.close();
             cursor.close();
-        }*/
+        }
     }
 
     private void setAvgABV() {
@@ -552,7 +544,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     }
 
     protected void setMaxBAC() {
-
         String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
         SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);

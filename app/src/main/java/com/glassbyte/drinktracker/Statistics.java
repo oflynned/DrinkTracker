@@ -129,7 +129,7 @@ public class Statistics extends Activity {
     private void setMethods() {
         //set current
         double BAC = BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), 3);
-        BACinfo.setText(getResources().getString(R.string.current_BAC_level) + BAC);
+        BACinfo.setText(getResources().getString(R.string.current_BAC_level) + " " + BAC);
 
         setWarning(BAC);
 
