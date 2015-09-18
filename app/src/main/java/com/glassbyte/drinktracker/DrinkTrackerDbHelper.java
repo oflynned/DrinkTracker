@@ -87,9 +87,10 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
         float units = percentage * mlVol/1000;
         BloodAlcoholContent bac = new BloodAlcoholContent(mContext);
         float bacValue = bac.getEstimatedBloodAlcoholContent(mlVol, percentage);
+        Long time = System.currentTimeMillis();
 
         ContentValues cv = new ContentValues(); //create instance; id_col = col 0
-        cv.put(DrinkTrackerDatabase.DrinksTable.DATE_TIME, System.currentTimeMillis()); //coll 1
+        cv.put(DrinkTrackerDatabase.DrinksTable.DATE_TIME, time); //coll 1
         cv.put(DrinkTrackerDatabase.DrinksTable.TITLE, title); //coll 2
         cv.put(DrinkTrackerDatabase.DrinksTable.VOLUME, mlVol); //coll 3
         cv.put(DrinkTrackerDatabase.DrinksTable.PERCENTAGE, percentage); //coll 4
@@ -98,7 +99,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
         long drinkId = sq.insert(DrinkTrackerDatabase.DrinksTable.TABLE_NAME, null, cv);
 
         BloodAlcoholContent.updateCurrentBac(mContext, bacValue,
-                DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE, drinkId);
+                DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE, drinkId, time);
 
 
         return drinkId;
@@ -203,7 +204,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                                 DrinkTrackerDatabase.BacTable._ID + "=" +
                                 DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID + " WHERE " +
                                 DrinkTrackerDatabase.BacTable.TABLE_NAME + "." +
-                                DrinkTrackerDatabase.BacTable.DATE_TIME + ">" +
+                                DrinkTrackerDatabase.BacTable.DATE_TIME + ">=" +
                                 Long.toString(drinkInsertDate) + " ORDER BY (" +
                                 DrinkTrackerDatabase.BacTable.TABLE_NAME + "." +
                                 DrinkTrackerDatabase.BacTable.DATE_TIME + ") ASC";
@@ -243,6 +244,11 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
             writeDB.execSQL(deleteInsertionFromDrinksTable);
             //End of Deal with the first insertion entry of the drink being deleted
 
+            System.out.println("TABLES STATE AFTER DELETION OF ENTRIES ASSOCIATED WITH INSERTION OF DRINK ID = " + drinkId);
+            printTableContents(DrinkTrackerDatabase.DrinksTable.TABLE_NAME);
+            printTableContents(DrinkTrackerDatabase.BacTable.TABLE_NAME);
+            printTableContents(DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME);
+
             //Get all the drink inserted between the date of the insertion of the one being
             // deleted and the first 0 bac entry (does not include the one deleted)
             String selectAllDrinksInsertedAfterTheDrinkAndBeforeFirstZeroBac =
@@ -268,6 +274,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
             for (int i = 1; i < listOfBacEntriesToBeRecalculated.getCount(); i++) {
                 //Looping through all the bac entries between the drink inserted(incl.) and
                 // the first zero bac after(incl.)
+                listOfBacEntriesToBeRecalculated.moveToNext();
                 bacId = listOfBacEntriesToBeRecalculated.getInt(0);
                 int updateType = listOfBacEntriesToBeRecalculated.getInt(6);
                 System.out.println("Iteration: " + i+"; BacId: "+ bacId+"; updateType: " + updateType );
@@ -694,7 +701,6 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
 
                     System.out.println("BacId: "+bacId + "; CurrentBacAtTheTimeL " +currentBacAtTheTime +"; -- " + modifyBacValueInTheBacEntry);
                 }
-                listOfBacEntriesToBeRecalculated.moveToNext();
             }
             listOfBacEntriesToBeRecalculated.close();
             drinksInsertedBetweenTheDrinkAndFirstZeroBac.close();
