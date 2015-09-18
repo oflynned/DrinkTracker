@@ -61,9 +61,6 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
 
-
-
-
         final RelativeLayout rl = new RelativeLayout(this.getActivity());
         rl.setBackgroundColor(getResources().getColor(R.color.orange100));
 
@@ -102,14 +99,6 @@ public class PresetDrink extends Fragment implements View.OnClickListener, Share
         /*  AdView mAdView = (AdView) V.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);*/
-
-
-
-
-
-
-
-
 
         V = inflater.inflate(R.layout.activity_presetdrink, container, false);
         spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits), ""));
