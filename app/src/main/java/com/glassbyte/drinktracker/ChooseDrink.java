@@ -78,8 +78,8 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     Runnable warningSystem;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         /*Register the sharepreferences listener so that it doesn't get garbage collected*/
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         sp.registerOnSharedPreferenceChangeListener(this);
