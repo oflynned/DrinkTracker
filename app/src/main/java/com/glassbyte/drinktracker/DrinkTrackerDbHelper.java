@@ -146,7 +146,6 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                     + " AND " + DrinkTrackerDatabase.BacTable.BAC + "=0.0)";
             Cursor firstZeroBacDateCursor = readDB.rawQuery(selectFirstZeroBacQuery, null);
             firstZeroBacDateCursor.moveToFirst();
-            System.out.println(selectFirstZeroBacQuery);
             long firstZeroBacDate = firstZeroBacDateCursor.getLong(0);
             firstZeroBacDateCursor.close();
             //End of Get the date of the first time bac was was 0 after inserting the drink that is being deleted
@@ -166,7 +165,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                     DrinkTrackerDatabase.DrinksTable._ID + "=";
             //End of Set up string queries for later use
 
-            Cursor listOfBacEntriesToBeRecalculated;int count=0;
+            Cursor listOfBacEntriesToBeRecalculated;
             if (firstZeroBacDate > 0) {
                 calendar.setTimeInMillis(firstZeroBacDate);
                 System.out.println("Date of first zero bac: " + sdf.format(calendar.getTime()) + " ---- Millis: " + firstZeroBacDate);
@@ -188,14 +187,13 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                                 Long.toString(firstZeroBacDate) + " ORDER BY (" +
                                 DrinkTrackerDatabase.BacTable.TABLE_NAME + "." +
                                 DrinkTrackerDatabase.BacTable.DATE_TIME + ") ASC";
-                count++;
-                System.out.println("listOfBacEntriesToBeRecalculated opened "+count + " times");
                 listOfBacEntriesToBeRecalculated = readDB.rawQuery(
                         selectAllBacEntriesBetweenTheDrinkAndFirstZeroBacEntry,
                         null
                 );
             }
             else {
+                System.out.println("Bac never reached zero yet after inserting");
                 //bac never reached zero yet after inserting the drink that's being deleted
                 //hence modify all the bac entries from the one that's being deleted till the end
                 String selectAllBacEntriesFromTheDrinkToTheLast =
@@ -209,8 +207,6 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                                 Long.toString(drinkInsertDate) + " ORDER BY (" +
                                 DrinkTrackerDatabase.BacTable.TABLE_NAME + "." +
                                 DrinkTrackerDatabase.BacTable.DATE_TIME + ") ASC";
-                count++;
-                System.out.println("listOfBacEntriesToBeRecalculated opened "+count + " times");
                 listOfBacEntriesToBeRecalculated = readDB.rawQuery(
                         selectAllBacEntriesFromTheDrinkToTheLast,
                         null
@@ -228,6 +224,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
             float currentBacAtTheTime = listOfBacEntriesToBeRecalculated.getFloat(5);
             float drinkBacAtInsertion = listOfBacEntriesToBeRecalculated.getFloat(2);
             currentBacAtTheTime -= drinkBacAtInsertion;
+            System.out.println("Deletion of first drink -- reset currentBacAtTheTime = " + currentBacAtTheTime + " -= " + drinkBacAtInsertion);
 
             String deleteInsertionFromRelationTable =
                     deleteFromRelationsTable + " WHERE " +
@@ -239,6 +236,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                     Integer.toString(drinkId);
             String deleteInsertionFromBacTable = deleteFromBacTableWhithId +
                     Integer.toString(bacId);
+            System.out.println(deleteInsertionFromBacTable);
 
             writeDB.execSQL(deleteInsertionFromRelationTable);
             writeDB.execSQL(deleteInsertionFromBacTable);
@@ -272,9 +270,12 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                 // the first zero bac after(incl.)
                 bacId = listOfBacEntriesToBeRecalculated.getInt(0);
                 int updateType = listOfBacEntriesToBeRecalculated.getInt(6);
+                System.out.println("Iteration: " + i+"; BacId: "+ bacId+"; updateType: " + updateType );
 
                 if (updateType == DrinkTrackerDatabase.BacTable.DECAY_UPDATE) {
+                    System.out.println("type: DECAY_UPDATE");
                     if (isPastTheDrinksFirstDecayEntry) {
+                        System.out.println("Past the drink's being deleted first decay entry.");
                         //The bac entry being checked is a decay update affecting the drink being deleted
                         if (presentDrinkBacAtTheTime == 0f &&
                                 drinksCount < drinksInsertedBetweenTheDrinkAndFirstZeroBac.getCount()) {
@@ -462,6 +463,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                             isPastTheDrinksFirstDecayEntry = true;
 
                             if (drinksInsertedBetweenTheDrinkAndFirstZeroBac.getCount() > 0) {
+                                System.out.println("There are drinks that were inserted after the one being deleted");
                                 //There are drinks that were inserted after the one being deleted
                                 float bacAmt = listOfBacEntriesToBeRecalculated.getFloat(2);
                                 if (presentDrinkBacAtTheTime == 0f) {
@@ -470,6 +472,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                                 }
 
                                 if (bacAmt < presentDrinkBacAtTheTime) {
+                                    System.out.println("The bacAmt to be decayed is less than the remaining present bac of the drink");
                                     //The bacAmt to be decayed is less than the remaining present bac of the drink
 
                                     //Change the entry in the relation table to reference this drink instead of the one being deleted
@@ -489,6 +492,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                                     presentDrinkBacAtTheTime -= bacAmt;
                                     continue;
                                 } else {
+                                    System.out.println("The bacAmt to be decayed is LARGER than the bac of the drink to be decayed");
                                     //The bacAmt to be decayed is LARGER than the bac of the
                                     // drink to be decayed
 
@@ -601,7 +605,8 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                                 }
 
                             } else {
-                                //No drinks inserted after the one being deleted and before the 0 bac entry
+                                System.out.println("No drinks inserted after the one being deleted and before the 0 bac entry");
+                                //No drinks inserted after the one being deleted
                                 //remove bac relation
                                 String deleteBacRelation = deleteFromRelationsTable + " WHERE " +
                                         DrinkTrackerDatabase.DrinksBacRelationTable.BAC_ID + "=" +
@@ -622,6 +627,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                                         ).getCount() > 0;
 
                                 if (areRelationsLeftWithBacId) {
+                                    System.out.println("There are other relation entries with the bac id.");
                                     //subtract the bac amt from the relation table from the bac in the bac entry
                                     float newBacValue = listOfBacEntriesToBeRecalculated.getFloat(5)
                                             - listOfBacEntriesToBeRecalculated.getFloat(2);
@@ -634,6 +640,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
 
                                     writeDB.execSQL(modifyBacEntryBacValue);
                                 } else {
+                                    System.out.println("No other relation entries with the bac id.");
                                     //remove bac table entry if the bac relation entry affects only this drink
                                     String deleteBacTableEntry = deleteFromBacTableWhithId +
                                             Integer.toString(bacId);
@@ -667,11 +674,12 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                 }
 
                 else if (updateType == DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE){
+                    System.out.println("type: INSERT_NEW_UPDATE");
                     //SEEMS DONE
                     //Change the bac value of the bac entry by subtracting
 
                     //Add the bac of the insertion to the currentBac before the insertion at the time
-                    currentBacAtTheTime += listOfBacEntriesToBeRecalculated.getFloat(6);
+                    currentBacAtTheTime += listOfBacEntriesToBeRecalculated.getFloat(2);
                     //End add the bac of the insertion...
 
                     //Modify the bac value of the bac entry of the currently checked entry
@@ -683,6 +691,8 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
                             Integer.toString(bacId);
                     writeDB.execSQL(modifyBacValueInTheBacEntry);
                     //End of Modify the bac value of the bac entry of the currently checked entry
+
+                    System.out.println("BacId: "+bacId + "; CurrentBacAtTheTimeL " +currentBacAtTheTime +"; -- " + modifyBacValueInTheBacEntry);
                 }
                 listOfBacEntriesToBeRecalculated.moveToNext();
             }
@@ -696,7 +706,7 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
     }
 
     public float getCurrentBacFromDb(){
-        System.out.println("getCurrentBacFromDb got called");
+        System.out.println("CurrentBac as the most recent value from the bac table has been requested.");
         SQLiteDatabase readDb = this.getReadableDatabase();
         String selectMostRecentBacEntryQuery = "SELECT (" + DrinkTrackerDatabase.BacTable.BAC
                 + ") FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME + " WHERE "

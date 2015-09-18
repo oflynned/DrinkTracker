@@ -178,7 +178,7 @@ public class BloodAlcoholContent {
             cur.moveToFirst();
             //End of Select all the drinks entries and order by date in a descending order
 
-            //Start of store all the ids of the drinks which are being affected by the bac update and bac amt of how affected they are
+            //Store all the ids of the drinks which are being affected by the bac update and bac amt of how affected they are
             float drinkBac = cur.getFloat(5);
             while (dCurrentBAC-drinkBac >= 0){
                 newCurrentBac-=drinkBac;
@@ -187,6 +187,7 @@ public class BloodAlcoholContent {
                 affectedDrinksBac.add(drinkBac);
 
                 cur.moveToNext();
+                //// FIXME: 17/09/2015 android.database.CursorIndexOutOfBoundsException: Index 1 requested, with a size of 1 
                 drinkBac = cur.getFloat(5);
             }
             if (dCurrentBAC > 0) {
