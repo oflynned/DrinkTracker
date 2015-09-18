@@ -1,16 +1,20 @@
 package com.glassbyte.drinktracker;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import lecho.lib.hellocharts.model.Axis;
@@ -23,7 +27,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 /**
  * Created by ed on 25/08/15.
  */
-public class Statistics extends Activity {
+public class Statistics extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     int orange;
 
@@ -36,8 +40,21 @@ public class Statistics extends Activity {
 
     ChooseDrink chooseDrink;
 
+    String spGender;
+    double totUnits, maxUnits;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        sp.registerOnSharedPreferenceChangeListener(this);
+        spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender), ""));
+
+        drinkTrackerDbHelper = new DrinkTrackerDbHelper(this);
+
+        setUpCalender();
+        setMaxUnits(spGender);
+        setTotalUnits(totUnits);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
@@ -129,21 +146,72 @@ public class Statistics extends Activity {
     private void setMethods() {
         //set current
         double BAC = BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), 3);
-        BACinfo.setText(getResources().getString(R.string.current_BAC_level) + BAC);
+        BACinfo.setText(getResources().getString(R.string.current_BAC_level) + " " + BAC);
 
         setWarning(BAC);
 
         //set weekly
         briefInfo.setText(getResources().getString(R.string.pollunits) +
-                "\n" + chooseDrink.getTotalUnits() + "/" + chooseDrink.getMaxUnits() + " " +
+                "\n" + getTotalUnits() + "/" + getMaxUnits() + " " +
                 getResources().getString(R.string.units));
 
-        if (chooseDrink.getTotalUnits() <= chooseDrink.getMaxUnits()) {
+        if (getTotalUnits() <= getMaxUnits()) {
             rating.setTextColor(Color.GREEN);
             rating.setText(R.string.belowlimit);
-        } else if (chooseDrink.getTotalUnits() > chooseDrink.getMaxUnits()) {
+        } else if (getTotalUnits() > getMaxUnits()) {
             rating.setTextColor(Color.RED);
             rating.setText(R.string.abovelimit);
+        }
+    }
+
+    protected void setUpCalender() {
+        // get today and clear time of day
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+        cal.clear(Calendar.MINUTE);
+        cal.clear(Calendar.SECOND);
+        cal.clear(Calendar.MILLISECOND);
+
+        // get start of this week in milliseconds
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+        long startOfWeek = cal.getTimeInMillis();
+
+        // start of the next week
+        cal.add(Calendar.WEEK_OF_YEAR, 1);
+        long startOfNextWeek = cal.getTimeInMillis();
+
+        //col 1 for time
+        //col 6 for units
+        //sum row of col 6 if its date lies between start and end
+
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        String currUnits;
+
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                if (Long.parseLong(cursor.getString(1)) > startOfWeek &&
+                        Long.parseLong(cursor.getString(1)) < startOfNextWeek) {
+                    //if date lies within period
+                    currUnits = cursor.getString(6);
+                    System.out.println(currUnits);
+                    totUnits = totUnits + Double.parseDouble(currUnits);
+                } else {
+                    //go to next row
+                    cursor.moveToNext();
+                }
+            }
+            while (cursor.moveToNext() && Long.parseLong(cursor.getString(1)) < startOfNextWeek);
+
+            System.out.println(totUnits);
+            setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
+
+            //close operations and sum
+            db.close();
+            cursor.close();
         }
     }
 
@@ -219,5 +287,30 @@ public class Statistics extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void setMaxUnits(String spGender) {
+        if (spGender.equals("male") || spGender.equals("Male")) {
+            this.maxUnits = 21;
+        } else {
+            this.maxUnits = 14;
+        }
+    }
+
+    protected double getMaxUnits() {
+        return maxUnits;
+    }
+
+    protected void setTotalUnits(double totUnits) {
+        this.totUnits = totUnits;
+    }
+
+    protected double getTotalUnits() {
+        return totUnits;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
     }
 }

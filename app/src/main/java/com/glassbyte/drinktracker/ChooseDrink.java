@@ -5,6 +5,7 @@ package com.glassbyte.drinktracker;
 * */
 
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,6 +45,7 @@ import org.joda.time.format.DateTimeFormatter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -80,6 +82,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     FloatingActionButton fab2;
 
     Dialog dialog;
+    Runnable warningSystem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -89,6 +92,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         sp.registerOnSharedPreferenceChangeListener(this);
         spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender), ""));
         spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits), ""));
+        setUnits(spUnits);
 
         /*End Register the sharepreferences listener*/
 
@@ -97,12 +101,69 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         warningDialog = new WarningDialog(this.getActivity());
         drinkTrackerDbHelper = new DrinkTrackerDbHelper(this.getActivity());
 
-        if (bloodAlcoholContent.getCurrentEbac() == 0) {
-            warningDialog.setWarning1(false);
-            warningDialog.setWarning2(false);
-            warningDialog.setWarning3(false);
-            warningDialog.setWarning4(false);
-        }
+        //instantiate warning system by use of a thread
+        warningSystem = new Runnable() {
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                        //constantly poll the bac on update via another thread
+                        if (bloodAlcoholContent.getCurrentEbac() == 0) {
+                            warningDialog.setWarning1(false);
+                            warningDialog.setWarning2(false);
+                            warningDialog.setWarning3(false);
+                            warningDialog.setWarning4(false);
+                        } else if ((bloodAlcoholContent.getCurrentEbac() >= 0.07)
+                                && (bloodAlcoholContent.getCurrentEbac() < 0.13)
+                                && (!warningDialog.getWarning1())) {
+                            notificationManager.cancel(warningDialog.NOTIFICATION_ID);
+                            warningDialog.setWarning1(true);
+                            warningDialog.displayWarning("1");
+                        } else if (bloodAlcoholContent.getCurrentEbac() >= 0.13
+                                && (bloodAlcoholContent.getCurrentEbac() < 0.17)
+                                && (!warningDialog.getWarning2())) {
+                            notificationManager.cancel(warningDialog.NOTIFICATION_ID);
+                            warningDialog.setWarning2(true);
+                            warningDialog.displayWarning("2");
+                        } else if (bloodAlcoholContent.getCurrentEbac() >= 0.17
+                                && (bloodAlcoholContent.getCurrentEbac() < 0.22)
+                                && (!warningDialog.getWarning3())) {
+                            notificationManager.cancel(warningDialog.NOTIFICATION_ID);
+                            warningDialog.setWarning3(true);
+                            warningDialog.displayWarning("3");
+                        } else if (bloodAlcoholContent.getCurrentEbac() > 0.22
+                                && (!warningDialog.getWarning4())) {
+                            notificationManager.cancel(warningDialog.NOTIFICATION_ID);
+                            warningDialog.setWarning4(true);
+                            warningDialog.displayWarning("4");
+                        } else if (bloodAlcoholContent.getCurrentEbac() < 0.07
+                                && warningDialog.getWarning1()) {
+                            warningDialog.setWarning1(false);
+                        } else if (bloodAlcoholContent.getCurrentEbac() < 0.13
+                                && warningDialog.getWarning2()) {
+                            warningDialog.setWarning2(false);
+                        } else if (bloodAlcoholContent.getCurrentEbac() < 0.17
+                                && warningDialog.getWarning3()) {
+                            warningDialog.setWarning3(false);
+                        } else if (bloodAlcoholContent.getCurrentEbac() < 0.22
+                                && warningDialog.getWarning4()) {
+                            warningDialog.setWarning4(false);
+                        }
+
+                        //also update the current stats
+                        setUpCalender();
+                        setTotalUnits(totUnits);
+                        //calories are units*7*8 as 1 unit = 8g where 1g = 7 calories therefore
+                        setCalories((int) (totUnits * 56));
+                        setAvgABV();
+                        setAvgVol();
+                        setMaxBAC();
+                    }
+                });
+            }
+        };
+
+        warningSystem.run();
 
         /*End of Set up the BloodAlcoholLevel object*/
 
@@ -159,8 +220,9 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         fab2 = new FloatingActionButton(getContext());
 
         //advert
+
         adView = new AdView(getContext());
-        RelativeLayout.LayoutParams paramsAds = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final RelativeLayout.LayoutParams paramsAds = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsAds.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         paramsAds.addRule(RelativeLayout.CENTER_HORIZONTAL);
         adView.setLayoutParams(paramsAds);
@@ -168,9 +230,12 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         adView.setAdSize(AdSize.SMART_BANNER);
         adView.setAdUnitId(AD_ID);
 
+
         //request ads to target emulated device
         AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
-        adRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
+        adRequestBuilder
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .setGender(getGender(spGender));
 
         //fab1 fab
         final RelativeLayout.LayoutParams paramsFAB1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -185,7 +250,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         fab1.setColorNormal(getResources().getColor(R.color.orange500));
         fab1.setColorPressed(getResources().getColor(R.color.orange700));
         fab1.setId(View.generateViewId());
-
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -210,16 +274,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setUnits(spUnits);
-                setMaxUnits(spGender);
-                setUpCalender();
-                setTotalUnits(0);
-                //calories are units*7*8 as 1 unit = 8g where 1g = 7 calories therefore
-                setCalories((int) (totUnits * 56));
-                setAvgABV();
-                setAvgVol();
-                setMaxBAC();
-
                 //open dialog of stats
                 dialog = new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.detailed_stats_title)
@@ -250,32 +304,47 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         adView.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                paramsFAB1.addRule(RelativeLayout.ALIGN_BOTTOM);
-                paramsFAB2.addRule(RelativeLayout.ALIGN_BOTTOM);
+                rl.removeView(fab1);
+                rl.removeView(fab2);
+                paramsFAB1.removeRule(RelativeLayout.ABOVE);
+                paramsFAB2.removeRule(RelativeLayout.ABOVE);
+                paramsFAB1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                paramsFAB2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 fab1.setLayoutParams(paramsFAB1);
                 fab2.setLayoutParams(paramsFAB2);
-                fab1.invalidate();
-                fab2.invalidate();
+                rl.addView(fab1);
+                rl.addView(fab2);
+                rl.invalidate();
             }
 
             @Override
             public void onAdLoaded() {
+                rl.removeView(fab1);
+                rl.removeView(fab2);
+                paramsFAB1.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                paramsFAB2.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 paramsFAB1.addRule(RelativeLayout.ABOVE, adView.getId());
                 paramsFAB2.addRule(RelativeLayout.ABOVE, adView.getId());
                 fab1.setLayoutParams(paramsFAB1);
                 fab2.setLayoutParams(paramsFAB2);
-                fab1.invalidate();
-                fab2.invalidate();
+                rl.addView(fab1);
+                rl.addView(fab2);
+                rl.invalidate();
             }
 
             @Override
             public void onAdFailedToLoad(int errorCode) {
-                paramsFAB1.addRule(RelativeLayout.ALIGN_BOTTOM);
-                paramsFAB2.addRule(RelativeLayout.ALIGN_BOTTOM);
+                rl.removeView(fab1);
+                rl.removeView(fab2);
+                paramsFAB1.removeRule(RelativeLayout.ABOVE);
+                paramsFAB2.removeRule(RelativeLayout.ABOVE);
+                paramsFAB1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                paramsFAB2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 fab1.setLayoutParams(paramsFAB1);
                 fab2.setLayoutParams(paramsFAB2);
-                fab1.invalidate();
-                fab2.invalidate();
+                rl.addView(fab1);
+                rl.addView(fab2);
+                rl.invalidate();
             }
         });
 
@@ -291,70 +360,60 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             startAnimation(progress);
         }
 
+        System.out.println("totunits in main: " + totUnits);
         return rl;
     }
 
     protected void setUpCalender() {
-        // Get calendar set to current date and time
-        Calendar c = Calendar.getInstance();
+        // get today and clear time of day
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+        cal.clear(Calendar.MINUTE);
+        cal.clear(Calendar.SECOND);
+        cal.clear(Calendar.MILLISECOND);
 
-        // Set the calendar to monday of the current week
-        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        // get start of this week in milliseconds
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+        long startOfWeek = cal.getTimeInMillis();
 
-        // Print start and end of the current week starting on Monday
-        DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-        //1 day before week start at 23:59:59
-        c.add(Calendar.DATE, -1);
-        c.set(Calendar.HOUR_OF_DAY, 23);
-        c.set(Calendar.MINUTE, 59);
-        c.set(Calendar.SECOND, 59);
-        String whileAfter = df.format(c.getTime());
-        //1 day after week end at 00:00:00
-        c.add(Calendar.DATE, 8);
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        String whileBefore = df.format(c.getTime());
-
-        //select first row by date fo start of week and sum until it reaches whileNot
-        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
-        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-
-        String currUnits;
-
-        DateTimeFormatter dateStringFormat = DateTimeFormat.forPattern("HH:mm:ss dd/MM/yyyy");
-        DateTime startDate = dateStringFormat.parseDateTime(whileAfter);
-        DateTime endDate = dateStringFormat.parseDateTime(whileBefore);
+        // start of the next week
+        cal.add(Calendar.WEEK_OF_YEAR, 1);
+        long startOfNextWeek = cal.getTimeInMillis();
 
         //col 1 for time
         //col 6 for units
         //sum row of col 6 if its date lies between start and end
 
-        /*
+        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.DrinksTable.TABLE_NAME;
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        String currUnits;
+        totUnits = 0;
+
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
-                if (dateStringFormat.parseDateTime(cursor.getString(1)).isAfter(startDate) &&
-                        dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate)) {
+                if (Long.parseLong(cursor.getString(1)) > startOfWeek &&
+                        Long.parseLong(cursor.getString(1)) < startOfNextWeek) {
                     //if date lies within period
                     currUnits = cursor.getString(6);
-                    System.out.println(currUnits);
+                    System.out.println("curr units: " + currUnits);
                     totUnits = totUnits + Double.parseDouble(currUnits);
                 } else {
                     //go to next row
                     cursor.moveToNext();
                 }
             }
-            while (cursor.moveToNext() && dateStringFormat.parseDateTime(cursor.getString(1)).isBefore(endDate));
+            while (cursor.moveToNext() && Long.parseLong(cursor.getString(1)) < startOfNextWeek);
 
-            System.out.println(totUnits);
+            System.out.println("totunis: " + totUnits);
             setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
 
             //close operations and sum
             db.close();
             cursor.close();
-        }*/
+        }
     }
 
     private void setAvgABV() {
@@ -363,8 +422,8 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
 
-        int count = 0;
-        int totABV = 0;
+        double count = 0;
+        double totABV = 0;
         String ABV;
         float currABV;
 
@@ -444,18 +503,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         return maxBAC;
     }
 
-    protected void setMaxUnits(String spGender) {
-        if (spGender.equals("male") || spGender.equals("Male")) {
-            this.maxUnits = 21;
-        } else {
-            this.maxUnits = 14;
-        }
-    }
-
-    protected double getMaxUnits() {
-        return maxUnits;
-    }
-
     protected void setUnits(String spUnits) {
         if (spUnits.equals("metric") || spUnits.equals("Metric")) {
             this.units = getResources().getString(R.string.ml);
@@ -485,7 +532,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     }
 
     protected void setMaxBAC() {
-
         String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
         SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
@@ -508,6 +554,14 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             //close operations and sum
             db.close();
             cursor.close();
+        }
+    }
+
+    public int getGender(String spGender) {
+        if (spGender.equals("male") || spGender.equals("Male")) {
+            return AdRequest.GENDER_MALE;
+        } else {
+            return AdRequest.GENDER_FEMALE;
         }
     }
 
@@ -550,33 +604,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 startAnimation(progress);
             }
             pbBAC.invalidate();
-
-            if ((bloodAlcoholContent.getCurrentEbac() >= 0.07) && (!warningDialog.getWarning1())) {
-                warningDialog.setWarning1(true);
-                warningDialog.displayWarning("1");
-            } else if (bloodAlcoholContent.getCurrentEbac() >= 0.13 && (!warningDialog.getWarning2())) {
-                warningDialog.setWarning2(true);
-                warningDialog.displayWarning("2");
-            } else if (bloodAlcoholContent.getCurrentEbac() >= 0.17 && (!warningDialog.getWarning3())) {
-                warningDialog.setWarning3(true);
-                warningDialog.displayWarning("3");
-            } else if (bloodAlcoholContent.getCurrentEbac() >= 0.22 && (!warningDialog.getWarning4())) {
-                warningDialog.setWarning4(true);
-                warningDialog.displayWarning("4");
-            } else if (bloodAlcoholContent.getCurrentEbac() == 0) {
-                warningDialog.setWarning1(false);
-                warningDialog.setWarning2(false);
-                warningDialog.setWarning3(false);
-                warningDialog.setWarning4(false);
-            } else if (bloodAlcoholContent.getCurrentEbac() < 0.07 && warningDialog.getWarning1()){
-                warningDialog.setWarning1(false);
-            } else if (bloodAlcoholContent.getCurrentEbac() < 0.13 && warningDialog.getWarning2()){
-                warningDialog.setWarning2(false);
-            } else if (bloodAlcoholContent.getCurrentEbac() < 0.17 && warningDialog.getWarning3()){
-                warningDialog.setWarning3(false);
-            } else if (bloodAlcoholContent.getCurrentEbac() < 0.22 && warningDialog.getWarning4()){
-                warningDialog.setWarning4(false);
-            }
+            warningSystem.run();
         }
 
         if (s == this.getString(R.string.pref_key_editUnits)) {
@@ -584,13 +612,12 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
             //acquire new units and convert
             String changedUnits = spEditUnits.getString(s, "");
-            Toast.makeText(getContext(),changedUnits,Toast.LENGTH_SHORT).show();
-            if(changedUnits.equalsIgnoreCase("metric")) {
+            Toast.makeText(getContext(), changedUnits, Toast.LENGTH_SHORT).show();
+            if (changedUnits.equalsIgnoreCase("metric")) {
                 setUnits(getResources().getString(R.string.ml));
                 avgVol = BloodAlcoholContent.MetricSystemConverter.convertOzToMillilitres(avgVol);
                 avgVol = BloodAlcoholContent.round(avgVol, 2);
-            }
-            else {
+            } else {
                 setUnits(getResources().getString(R.string.oz));
                 avgVol = BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(avgVol);
                 avgVol = BloodAlcoholContent.round(avgVol, 2);

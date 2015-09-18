@@ -16,8 +16,8 @@
     <!-- End of Custom Drinks Titles -->
 
     <!--Custom Drinks SetPercentage Dialog-->
-    <string name="setPercentage_dialog_title">Stel Percentage</string>
-    <string name="setVolume_dialog_title">Stel Volume</string>
+    <string name="setPercentage_dialog_title">Stel de Percentage</string>
+    <string name="setVolume_dialog_title">Stel het Volume</string>
     <string name="cancel">Annuleer</string>
     <string name="done">Gedaan</string>
     <!--End of Custom Drinks SetPercentage Dialog-->

@@ -24,7 +24,7 @@ import java.util.Random;
 public class WarningDialog {
 
     public boolean warning1, warning2, warning3, warning4;
-    private int notification_id = 1;
+    public final int NOTIFICATION_ID = 1;
     Context context;
     InterstitialAd mInterstitialAd;
 
@@ -137,7 +137,7 @@ public class WarningDialog {
                     .build();
             NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(notification_id, notification);
+            notificationManager.notify(NOTIFICATION_ID, notification);
         } else {
             Notification notification  = new NotificationCompat.Builder(context)
                     .setContentTitle(title)
@@ -148,7 +148,7 @@ public class WarningDialog {
                     .build();
             NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(notification_id, notification);
+            notificationManager.notify(NOTIFICATION_ID, notification);
         }
     }
 

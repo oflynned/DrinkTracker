@@ -57,8 +57,8 @@ public class BloodAlcoholContent {
     }
 
     public static boolean updateCurrentBac(Context context, int updateType){return updateCurrentBac(context, 0, updateType);}
-    public static boolean updateCurrentBac(Context context, float dCurrentBAC, int updateType){return updateCurrentBac(context, dCurrentBAC, updateType, -1);}
-    public static boolean updateCurrentBac(Context context, float dCurrentBAC, int updateType, long drinksId){
+    public static boolean updateCurrentBac(Context context, float dCurrentBAC, int updateType){return updateCurrentBac(context, dCurrentBAC, updateType, -1, System.currentTimeMillis());}
+    public static boolean updateCurrentBac(Context context, float dCurrentBAC, int updateType, long drinksId, long time){
         System.out.println("Entered updateCurrentBac with: dCurrentBAC="+dCurrentBAC+"; updateType="+updateType+";");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         DrinkTrackerDbHelper dbHelper = new DrinkTrackerDbHelper(context);
@@ -94,7 +94,7 @@ public class BloodAlcoholContent {
         System.out.println("currentBac="+currentBac+";");
 
         float newCurrentBac = 0;
-        long newLastUpdateDate = System.currentTimeMillis();
+        long newLastUpdateDate = time;
 
         if (updateType == DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE) {
             System.out.println("updateType == INSERT_NEW_DRINK");
@@ -178,7 +178,7 @@ public class BloodAlcoholContent {
             cur.moveToFirst();
             //End of Select all the drinks entries and order by date in a descending order
 
-            //Start of store all the ids of the drinks which are being affected by the bac update and bac amt of how affected they are
+            //Store all the ids of the drinks which are being affected by the bac update and bac amt of how affected they are
             float drinkBac = cur.getFloat(5);
             while (dCurrentBAC-drinkBac >= 0){
                 newCurrentBac-=drinkBac;
@@ -187,6 +187,7 @@ public class BloodAlcoholContent {
                 affectedDrinksBac.add(drinkBac);
 
                 cur.moveToNext();
+                //// FIXME: 17/09/2015 android.database.CursorIndexOutOfBoundsException: Index 1 requested, with a size of 1 
                 drinkBac = cur.getFloat(5);
             }
             if (dCurrentBAC > 0) {

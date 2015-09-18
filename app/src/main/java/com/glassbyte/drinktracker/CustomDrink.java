@@ -70,11 +70,15 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
     private BloodAlcoholContent bloodAlcoholContent;
     private SharedPreferences sp;
 
+    ChooseDrink chooseDrink;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         sp.registerOnSharedPreferenceChangeListener(this);
+
+        chooseDrink = new ChooseDrink();
 
         if (this.getArguments() != null) {
             actionBarHeight = this.getArguments().getInt(ARG_ACTION_BAR_HEIGHT);
