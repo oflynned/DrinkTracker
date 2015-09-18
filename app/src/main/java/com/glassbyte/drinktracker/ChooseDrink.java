@@ -434,7 +434,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                     //if date lies within period
                     ABV = cursor.getString(4);
                     currABV = Float.parseFloat(ABV);
-                    totABV = (int) (totABV + currABV);
+                    totABV = totABV + currABV;
                     count++;
                 } else {
                     //go to next row
@@ -442,7 +442,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 }
             } while (cursor.moveToNext());
 
-            avgABV = totABV / count;
+            avgABV = BloodAlcoholContent.round((totABV / count), 1);
 
             //close operations and sum
             db.close();

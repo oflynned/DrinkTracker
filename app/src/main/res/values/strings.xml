@@ -136,7 +136,7 @@
     <string name="summary_ads">Click here to purchase the ad-free version from Google Play</string>
     <string name="libraries">Libraries Used</string>
     <string name="libraries_summary">Here is a list of the libraries we used in the creation of this app</string>
-    <string name="apache_summary">Apache Summary</string>
+    <string name="apache_summary">Info about the licences we use to distribute software</string>
     <string name="apache">Apache Licence</string>
     <string name="modify_details">Modify Details</string>
     <string name="modify_gender">Edit Gender</string>
