@@ -136,5 +136,6 @@
     <string name="warning4">Sunteți sub influența majoră al alcolului, atenție!</string>
     <string name="warning3">Sunteți sub influența majoră al alcolului, o sa aveți o dimineață groaznică</string>
     <string name="notice">DrinkTracker Avertizare</string>
+    <string name="ml">ml</string>
 
 </resources>
