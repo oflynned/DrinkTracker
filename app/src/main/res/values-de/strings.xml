@@ -132,18 +132,20 @@
     <string name="warning">Achtung!</string>
     <string name="ml">ml</string>
     <string name="oz">oz</string>
+
     <string name="notice">DrinkTracker</string>
-    <string name="plugins">Plugins Used</string>
-    <string name="plugins_body">App Intro\nby PaoloRotolo\n\nFloatingActionButton\nby Clans\n\nJoda-Time-Android\nby dlew\n\nHelloCharts for Android\nby lecho</string>
-    <string name="warning1">You\'re enroute to getting drunk, maybe take it easy if you\'re feeling a bit intoxicated.</string>
-    <string name="warning2">You\'ve reached quite a drunk stage, watch yourself and make sure you don\'t lose personal belongings.</string>
-    <string name="warning3">You\'re very drunk and should expect a bad hangover tomorrow morning.</string>
-    <string name="warning4">You\'re extremely drunk, drink any more and you\'re endangering yourself!</string>
-    <string name="libraries">Libraries Used</string>
-    <string name="libraries_summary">Here is a list of the libraries we used in the creation of this app</string>
-    <string name="apache_summary">Info about the licences we use to distribute software</string>
+
+    <string name="plugins">Benutzte Plugins</string>
+    <string name="plugins_body">App Intro\nvon PaoloRotolo\n\nFloatingActionButton\nvon Clans\n\nJoda-Time-Android\nvon dlew\n\nHelloCharts for Android\nvon lecho</string>
+    <string name="warning1">Unterwegs betrunken, vielleicht nehmen Sie es leicht, wenn Sie sich ein bisschen betrunken fühlen.</string>
+    <string name="warning2">Sie haben ein ziemliches betrunkenes Niveau erreicht, passen Sie auf sich auf, und seien Sie sicher, dass Sie keine persönliche Gegenstände verlieren.</string>
+    <string name="warning3">Sie sind echt betrunken, und sollten einen großen Kater im Morgen erfahren.</string>
+    <string name="warning4">Sie sind extrem-betrunken. Wenn Sie irgendwas mehr trinken, sollten Sie wissen, dass Sie sich selbst gefährden. Passen Sie auf sich auf.</string>
+    <string name="libraries">Benutzte Programmbibliotheke</string>
+    <string name="libraries_summary">Hier gibts eine Liste der Programmbibliotheke, die wir bei der Entwicklung dieser App benutzt haben.</string>
+    <string name="apache_summary">Informationen uber die Bewilligungen, die wir benutzenm um diese Software zu verteilen.</string>
     <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
-    <string name="apache">Apache Licence</string>
-    <string name="about_us">GlassByte is a software development start-up company headquartered in Dublin, Ireland. Our small, ambitious team strives to create innovative and useful software for computing platforms.</string>
-    <string name="about_us_more">For more apps or business enquiries, visit our website!\nhttp://www.glassbyte.com/</string>
+    <string name="apache">Apache-Bewilligung</string>
+    <string name="about_us">GlassByte ist eine Softwareentwicklungsfirma, die in Dublin begrundet wurde, und da Hauptsitz haben. Unseres kleines, ambitionierties Team trachtet nach innovativem und nützlichem Software auf Computer-Plattformen.</string>
+    <string name="about_us_more">Für mehr Apps oder geschäftliche Anfragen, besuchen Sie unsere Webseite!\nhttp://www.glassbyte.com/</string>
 </resources>
