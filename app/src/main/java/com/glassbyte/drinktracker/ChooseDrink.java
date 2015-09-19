@@ -16,6 +16,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -76,6 +77,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
     Dialog dialog;
     Runnable warningSystem;
+    Handler handler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -352,8 +354,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             customProgressBar.setProgress(progress);
             startAnimation(progress);
         }
-
-        System.out.println("totunits in main: " + totUnits);
         return rl;
     }
 
@@ -391,7 +391,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                         Long.parseLong(cursor.getString(1)) < startOfNextWeek) {
                     //if date lies within period
                     currUnits = cursor.getString(6);
-                    System.out.println("curr units: " + currUnits);
                     totUnits = totUnits + Double.parseDouble(currUnits);
                 } else {
                     //go to next row
@@ -400,7 +399,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             }
             while (cursor.moveToNext() && Long.parseLong(cursor.getString(1)) < startOfNextWeek);
 
-            System.out.println("totunis: " + totUnits);
             setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
 
             //close operations and sum
