@@ -2,8 +2,10 @@ package com.glassbyte.drinktracker;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -17,6 +19,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by ed on 09/09/15.
@@ -28,11 +32,11 @@ public class WarningDialog {
     Context context;
     InterstitialAd mInterstitialAd;
 
-    public WarningDialog (Context context) {
+    public WarningDialog(Context context) {
         this.context = context;
     }
 
-    public void displayWarning(String warningTier){
+    public void displayWarning(String warningTier) {
 
         String warning;
         Vibrator v;
@@ -49,7 +53,7 @@ public class WarningDialog {
 
         requestNewInterstitial();
 
-        switch(warningTier){
+        switch (warningTier) {
 
             /*
             * 4 tiers of warnings:
@@ -95,8 +99,8 @@ public class WarningDialog {
         }
     }
 
-    public void dialogNotification(String warning){
-        new AlertDialog.Builder(context)
+    public void dialogNotification(String warning) {
+        final AlertDialog alertDialog = new AlertDialog.Builder(context)
                 //set title
                 .setTitle(R.string.warning)
                         //depending on BAC we set the tier
@@ -105,17 +109,24 @@ public class WarningDialog {
                     public void onClick(DialogInterface dialog, int which) {
                         Random rand = new Random();
                         int number = rand.nextInt(3);
-
                         if (number == 0) {
                             if (mInterstitialAd.isLoaded()) {
                                 mInterstitialAd.show();
                             }
                         }
-
                     }
                 })
                 .show();
+
+        final Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                alertDialog.dismiss();
+                t.cancel();
+            }
+        }, 60000); //close after 60s
     }
+
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("SEE_YOUR_LOGCAT_TO_GET_YOUR_DEVICE_ID")
@@ -139,7 +150,7 @@ public class WarningDialog {
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(NOTIFICATION_ID, notification);
         } else {
-            Notification notification  = new NotificationCompat.Builder(context)
+            Notification notification = new NotificationCompat.Builder(context)
                     .setContentTitle(title)
                     .setContentText(text)
                     .setSmallIcon(icon)
@@ -152,35 +163,35 @@ public class WarningDialog {
         }
     }
 
-    public void setWarning1(boolean warning1){
+    public void setWarning1(boolean warning1) {
         this.warning1 = warning1;
     }
 
-    public void setWarning2(boolean warning2){
+    public void setWarning2(boolean warning2) {
         this.warning2 = warning2;
     }
 
-    public void setWarning3(boolean warning3){
+    public void setWarning3(boolean warning3) {
         this.warning3 = warning3;
     }
 
-    public void setWarning4(boolean warning4){
+    public void setWarning4(boolean warning4) {
         this.warning4 = warning4;
     }
 
-    public boolean getWarning1(){
+    public boolean getWarning1() {
         return warning1;
     }
 
-    public boolean getWarning2(){
+    public boolean getWarning2() {
         return warning2;
     }
 
-    public boolean getWarning3(){
+    public boolean getWarning3() {
         return warning3;
     }
 
-    public boolean getWarning4(){
+    public boolean getWarning4() {
         return warning4;
     }
 }

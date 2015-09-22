@@ -13,6 +13,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -71,11 +74,9 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
         setMethods();
 
         //ad request
-        /*
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        */
 
         //graph instantiation
         chart = (LineChartView) findViewById(R.id.chart);

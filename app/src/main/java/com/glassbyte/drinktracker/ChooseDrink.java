@@ -16,6 +16,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -38,14 +39,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 
 /**
@@ -83,10 +77,11 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
     Dialog dialog;
     Runnable warningSystem;
+    Handler handler;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         /*Register the sharepreferences listener so that it doesn't get garbage collected*/
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         sp.registerOnSharedPreferenceChangeListener(this);
@@ -359,8 +354,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             customProgressBar.setProgress(progress);
             startAnimation(progress);
         }
-
-        System.out.println("totunits in main: " + totUnits);
         return rl;
     }
 
@@ -398,7 +391,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                         Long.parseLong(cursor.getString(1)) < startOfNextWeek) {
                     //if date lies within period
                     currUnits = cursor.getString(6);
-                    System.out.println("curr units: " + currUnits);
                     totUnits = totUnits + Double.parseDouble(currUnits);
                 } else {
                     //go to next row
@@ -407,7 +399,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             }
             while (cursor.moveToNext() && Long.parseLong(cursor.getString(1)) < startOfNextWeek);
 
-            System.out.println("totunis: " + totUnits);
             setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
 
             //close operations and sum
@@ -434,7 +425,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                     //if date lies within period
                     ABV = cursor.getString(4);
                     currABV = Float.parseFloat(ABV);
-                    totABV = (int) (totABV + currABV);
+                    totABV = totABV + currABV;
                     count++;
                 } else {
                     //go to next row
@@ -442,7 +433,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 }
             } while (cursor.moveToNext());
 
-            avgABV = totABV / count;
+            avgABV = BloodAlcoholContent.round((totABV / count), 1);
 
             //close operations and sum
             db.close();

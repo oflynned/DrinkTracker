@@ -36,9 +36,7 @@ public class SplashScreenActivity extends Activity
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/good-times.regular.ttf");
         TextView GlassByte = (TextView) findViewById(R.id.logotext);
         GlassByte.setTypeface(tf);
-
         StartAnimations();
-
         Thread splash = new Thread() {
             public void run() {
                 try {

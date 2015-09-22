@@ -64,7 +64,7 @@
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Ausschlussklausel</string>
-    <string name="disclaimerbody">Please remember that DrinkTracker is only an approximation of your blood alcohol content (BAC), and not a substitute for a breathalyser examination. GlassByte is in no way responsible for any actions carried out under intoxication. Please drive responsibly and stay safe under the influence of alcohol. By using this app, you agree to abide by this forewarning.</string>
+    <string name="disclaimerbody">Bitte erinneren Sie sich, dass DrinkTracker nur eine Näherung der Hohe von Alkohol in der Blut (AB), und ist deswegen kein Ersatz in Vergleicht mit einer Alkoholmessgerätprüfung. GlassByte wird in keiner Weise für die Handlungen verantwortlich, die unter der Vergiftung Alkohols durchgeführt. Bitte fahren Sie verantwortlich, und bleiben Sie sicher unter der Vergiftung Alkohols. Durch die benutzung dieser App, Sie stimmen zu, mit dieser Vorwarnung zu bleiben.</string>
     <string name="agree">Ich stimme zu</string>
     <string name="disagree">Ich spreche wider</string>
 
@@ -114,11 +114,11 @@
     <!--> Settings <-->
     <string name="language_options">Sprachoptionen</string>
     <string name="irish_language_option">Irische Sprachwahl</string>
-    <string name="summer_irish">Wählen Sie diese Option, wenn Sie Gälisch als Sprachoption nutzen möchten</string>
+    <string name="summer_irish">Wählen Sie diese Option, wenn Sie Gälisch als Sprachoption benutzen möchten</string>
     <string name="more_from_glassbyte">Mehr von GlassByte</string>
-    <string name="visit_website">Besuchen Sie uns unsere Webseite!</string>
+    <string name="visit_website">Besuchen Sie uns auf unserer Webseite!</string>
     <string name="summer_glassbyte">Klicken Sie hier, um weitere Produkte und Nachrichten von GlassByte anzusehen</string>
-    <string name="remove_ads">Helfen und unterstützen Sie uns durch Anzeigen entfernen</string>
+    <string name="remove_ads">Helfen Sie uns durch Anzeigen entfernen</string>
     <string name="summary_ads">Klicken Sie hier, um die werbefreie Version von Google-Play zu kaufen</string>
     <string name="modify_details">Ändere Einzelheiten</string>
     <string name="modify_gender">Ändere Geschlecht</string>
@@ -131,4 +131,21 @@
     <string name="ok">OK</string>
     <string name="warning">Achtung!</string>
     <string name="ml">ml</string>
+    <string name="oz">oz</string>
+
+    <string name="notice">DrinkTracker</string>
+
+    <string name="plugins">Benutzte Plugins</string>
+    <string name="plugins_body">App Intro\nvon PaoloRotolo\n\nFloatingActionButton\nvon Clans\n\nJoda-Time-Android\nvon dlew\n\nHelloCharts for Android\nvon lecho</string>
+    <string name="warning1">Unterwegs betrunken, vielleicht nehmen Sie es leicht, wenn Sie sich ein bisschen betrunken fühlen.</string>
+    <string name="warning2">Sie haben ein ziemliches betrunkenes Niveau erreicht, passen Sie auf sich auf, und seien Sie sicher, dass Sie keine persönliche Gegenstände verlieren.</string>
+    <string name="warning3">Sie sind echt betrunken, und sollten einen großen Kater im Morgen erfahren.</string>
+    <string name="warning4">Sie sind extrem-betrunken. Wenn Sie irgendwas mehr trinken, sollten Sie wissen, dass Sie sich selbst gefährden. Passen Sie auf sich auf.</string>
+    <string name="libraries">Benutzte Programmbibliotheke</string>
+    <string name="libraries_summary">Hier gibts eine Liste der Programmbibliotheke, die wir bei der Entwicklung dieser App benutzt haben.</string>
+    <string name="apache_summary">Informationen über die Bewilligungen, die wir benutzen, um diese Software zu verteilen.</string>
+    <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="apache">Apache-Bewilligung</string>
+    <string name="about_us">GlassByte ist eine Softwareentwicklungsfirma, die in Dublin begründet wurde, und da Hauptsitz haben. Unseres kleines, ambitionierties Team trachtet nach innovativer und nützlicher Software auf Computer-Plattformen.</string>
+    <string name="about_us_more">Für mehr Apps oder geschäftliche Anfragen, besuchen Sie unsere Webseite!\nhttp://www.glassbyte.com/</string>
 </resources>
