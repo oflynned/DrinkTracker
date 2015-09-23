@@ -165,5 +165,37 @@
 
     <string name="about_us">GlassByte is a software development start-up company headquartered in Dublin, Ireland. Our small, ambitious team strives to create innovative and useful software for computing platforms.</string>
     <string name="about_us_more">For more apps or business enquiries, visit our website!\nhttp://www.glassbyte.com/</string>
+    
+    <!--> Cocktail names <-->
+    <string name="alexander">Alexander</string>
+    <string name="americano">Americano</string>
+    <string name="angel_face">Angel Face</string>
+    <string name="aviation">Aviation</string>
+    <string name="bacardi">Bacardi</string>
+    <string name="between_the_sheets">Between the Sheets</string>
+    <string name="casino">Casino</string>
+    <string name="clover_club">Clover Club</string>
+    <string name="daiquiri">Daiquiri</string>
+    <string name="derby">Derby</string>
+    <string name="dry_martini">Dry Martini</string>
+    <string name="gin_fizz">Gin Fizz</string>
+    <string name="john_collins">John Collins</string>
+    <string name="manhattan">Manhattan</string>
+    <string name="mary_pickford">Mary Pickford</string>
+    <string name="monkey_gland">Monkey Gland</string>
+    <string name="negroni">Negroni</string>
+    <string name="old_fashioned">Old Fashioned</string>
+    <string name="paradise">Paradise</string>
+    <string name="planters_punch">Planter's Punch</string>
+    <string name="porto_flip">Port Flip</string>
+    <string name="ramos_fizz">Ramos Fizz</string>
+    <string name="rusty_nail">Rusty Nail</string>
+    <string name="sazerac">Sazerac</string>
+    <string name="screwdriver">Screwdriver</string>
+    <string name="sidecar">Sidecar</string>
+    <string name="stinger">Stinger</string>
+    <string name="tuxedo">Tuxedo</string>
+    <string name="whiskey_sour">Whiskey Sour</string>
+    <string name="white_lady">White Lady</string>
 
 </resources>
