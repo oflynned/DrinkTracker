@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,36 +26,15 @@ public class PresetDrink extends Fragment {
     private PresetCategory currentCategory;
     private BaseAdapter adapter;
     private GridView gridView;
-
-    Preset[] categoryPresets = {
-            new Preset(R.drawable.ic_beer, "Beer"),
-            new Preset(R.drawable.ic_beer, "Wine"),
-            new Preset(R.drawable.ic_beer, "Spirits"),
-            new Preset(R.drawable.ic_beer, "Cocktails"),
-    };
-    Preset[] spiritPresets = {
-            new Preset(R.drawable.ic_beer, "30%\nShot"),
-            new Preset(R.drawable.ic_beer, "35%\nShot"),
-            new Preset(R.drawable.ic_beer, "40%\nShot"),
-            new Preset(R.drawable.ic_beer, "45%\nShot")
-    };
-    Preset[] beerStageOnePresets = {
-            new Preset(R.drawable.ic_beer, "2-3%"),
-            new Preset(R.drawable.ic_beer, "4-5%"),
-            new Preset(R.drawable.ic_beer, "6-7%"),
-            new Preset(R.drawable.ic_beer, "7-8%")
-    };
-    Preset[] beerStageTwoPresets = {
-            new Preset(R.drawable.ic_beer, "250ml"),
-            new Preset(R.drawable.ic_beer, "330ml"),
-            new Preset(R.drawable.ic_beer, "500ml")
-    };
-    Preset[] cocktailsPresets = {
-            new Preset(R.drawable.ic_beer, "Black Russian"),
-            new Preset(R.drawable.ic_beer, "White Russian"),
-            new Preset(R.drawable.ic_beer, "Sex On The Beach"),
-            new Preset(R.drawable.ic_beer, "Motherfucker")
-    };
+    private float currentChosenPecentage = 0;
+    private int currentChosenVolume = 0;
+    Preset[] categoryPresets;
+    Preset[] spiritStageOnePresets;
+    Preset[] spiritStageTwoPresets;
+    Preset[] beerStageOnePresets;
+    Preset[] beerStageTwoPresets;
+    Preset[] wineStageOnePresets;
+    Preset[] cocktailsPresets;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +43,179 @@ public class PresetDrink extends Fragment {
         LocalBroadcastManager.getInstance(this.getContext()).registerReceiver(onBackPressedBroadcastReceiver,
                 new IntentFilter(MainActivity.ON_BACK_PRESSED_EVENT));
 
+        categoryPresets = new Preset[4];
+        categoryPresets[0] =
+                new Preset(R.drawable.ic_beer, getString(R.string.beerCategory));
+        categoryPresets[1] =
+                new Preset(R.drawable.ic_beer, getString(R.string.wineCategory), 17f);
+        categoryPresets[2] =
+                new Preset(R.drawable.ic_beer, getString(R.string.spiritsCategory));
+        categoryPresets[3] =
+                new Preset(R.drawable.ic_beer, getString(R.string.cocktailsCategory));
+
+        spiritStageOnePresets = new Preset[9];
+        spiritStageOnePresets[0] =
+            new Preset(R.drawable.ic_beer, getString(R.string.absinthe_spirit), 70f);
+        spiritStageOnePresets[1] =
+            new Preset(R.drawable.ic_beer, getString(R.string.brandy_spirit), 40f);
+        spiritStageOnePresets[2] =
+            new Preset(R.drawable.ic_beer, getString(R.string.gin_spirit), 40f);
+        spiritStageOnePresets[3] =
+            new Preset(R.drawable.ic_beer, getString(R.string.jager_spirit), 35f);
+        spiritStageOnePresets[4] =
+            new Preset(R.drawable.ic_beer, getString(R.string.rum_spirit), 40f);
+        spiritStageOnePresets[5] =
+            new Preset(R.drawable.ic_beer, getString(R.string.sambuca_spirit), 42f);
+        spiritStageOnePresets[6] =
+            new Preset(R.drawable.ic_beer, getString(R.string.tequila_spirit), 40f);
+        spiritStageOnePresets[7] =
+            new Preset(R.drawable.ic_beer, getString(R.string.vodka_spirit), 40f);
+        spiritStageOnePresets[8] =
+            new Preset(R.drawable.ic_beer, getString(R.string.whiskey_spirit), 40f);
+
+        spiritStageTwoPresets = new Preset[3];
+        spiritStageTwoPresets[0] =
+                new Preset(R.drawable.ic_beer, getString(R.string.q_single), (int)35);
+        spiritStageTwoPresets[1] =
+                new Preset(R.drawable.ic_beer, getString(R.string.q_double), (int)70);
+        spiritStageTwoPresets[2] =
+                new Preset(R.drawable.ic_beer, getString(R.string.q_triple), (int)105);
+
+        beerStageOnePresets = new Preset[12];
+        beerStageOnePresets[0] =
+                new Preset(R.drawable.ic_beer, "1-2%", 1.5f);
+        beerStageOnePresets[1] =
+                new Preset(R.drawable.ic_beer, "2-3%", 2.5f);
+        beerStageOnePresets[2] =
+                new Preset(R.drawable.ic_beer, "3-4%", 3.5f);
+        beerStageOnePresets[3] =
+                new Preset(R.drawable.ic_beer, "4-5%", 4.5f);
+        beerStageOnePresets[4] =
+                new Preset(R.drawable.ic_beer, "5-6%", 5.5f);
+        beerStageOnePresets[5] =
+                new Preset(R.drawable.ic_beer, "6-7%", 6.5f);
+        beerStageOnePresets[6] =
+                new Preset(R.drawable.ic_beer, "7-8%", 7.5f);
+        beerStageOnePresets[7] =
+                new Preset(R.drawable.ic_beer, "8-9%", 8.5f);
+        beerStageOnePresets[8] =
+                new Preset(R.drawable.ic_beer, "9-10%", 9.5f);
+        beerStageOnePresets[9] =
+                new Preset(R.drawable.ic_beer, "10-11%", 10.5f);
+        beerStageOnePresets[10] =
+                new Preset(R.drawable.ic_beer, "11-12%", 11.5f);
+        beerStageOnePresets[11] =
+                new Preset(R.drawable.ic_beer, "12-13%", 12.5f);
+
+        beerStageTwoPresets = new Preset[4];
+        beerStageTwoPresets[0] =
+                new Preset(R.drawable.ic_beer, "250ml", (int)250);
+        beerStageTwoPresets[1] =
+                new Preset(R.drawable.ic_beer, "330ml", (int)330);
+        beerStageTwoPresets[2] =
+                new Preset(R.drawable.ic_beer, "350ml", (int)330);
+        beerStageTwoPresets[3] =
+                new Preset(R.drawable.ic_beer, "500ml", (int)500);
+
+        wineStageOnePresets = new Preset[3];
+        wineStageOnePresets[0] =
+                new Preset(R.drawable.ic_beer, getString(R.string.quarter_wine_glass),(int)(215/4));
+        wineStageOnePresets[1] =
+                new Preset(R.drawable.ic_beer, getString(R.string.half_wine_glass),(int)(215/2));
+        wineStageOnePresets[2] =
+                new Preset(R.drawable.ic_beer, getString(R.string.three_quarter_wine_glass),(int)(215/4*3));
+
+        cocktailsPresets = new Preset[30];
+        cocktailsPresets[0] = new Preset(R.drawable.ic_beer,
+                getString(R.string.bellini_cocktail),
+                0.4f, 300);
+        cocktailsPresets[1] = new Preset(R.drawable.ic_beer,
+                getString(R.string.black_russian_cocktail),
+                8f, 300);
+        cocktailsPresets[2] = new Preset(R.drawable.ic_beer,
+                getString(R.string.bloody_mary_cocktail),
+                6f, 300);
+        cocktailsPresets[3] = new Preset(R.drawable.ic_beer,
+                getString(R.string.caipirinha_cocktail),
+                6.7f, 300);
+        cocktailsPresets[4] = new Preset(R.drawable.ic_beer,
+                getString(R.string.champagne_cocktail),
+                7.9f, 300);
+        cocktailsPresets[5] = new Preset(R.drawable.ic_beer,
+                getString(R.string.cosmopolitan_cocktail),
+                17.3f, 130);
+        cocktailsPresets[6] = new Preset(R.drawable.ic_beer,
+                getString(R.string.cuba_libre_cocktail),
+                15.4f, 130);
+        cocktailsPresets[7] = new Preset(R.drawable.ic_beer,
+                getString(R.string.french_75_cocktail),
+                6.4f, 300);
+        cocktailsPresets[8] = new Preset(R.drawable.ic_beer,
+                getString(R.string.french_connection_cocktail),
+                8f, 300);
+        cocktailsPresets[9] = new Preset(R.drawable.ic_beer,
+                getString(R.string.god_father_cocktail),
+                8f, 300);
+        cocktailsPresets[10] = new Preset(R.drawable.ic_beer,
+                getString(R.string.god_mother_cocktail),
+                8f, 300);
+        cocktailsPresets[11] = new Preset(R.drawable.ic_beer,
+                getString(R.string.golden_dream_cocktail),
+                9.6f, 130);
+        cocktailsPresets[12] = new Preset(R.drawable.ic_beer,
+                getString(R.string.grasshopper_cocktail),
+                11.5f, 130);
+        cocktailsPresets[13] = new Preset(R.drawable.ic_beer,
+                getString(R.string.harvey_wallbanger_cocktail),
+                8.1f, 300);
+        cocktailsPresets[14] = new Preset(R.drawable.ic_beer,
+                getString(R.string.horses_neck_cocktail),
+                6.8f, 300);
+        cocktailsPresets[15] = new Preset(R.drawable.ic_beer,
+                getString(R.string.irish_coffee_cocktail),
+                6.8f, 350);
+        cocktailsPresets[16] = new Preset(R.drawable.ic_beer,
+                getString(R.string.kir_cocktail),
+                6.6f, 215);
+        cocktailsPresets[17] = new Preset(R.drawable.ic_beer,
+                getString(R.string.long_island_iced_tea_cocktail),
+                9f, 300);
+        cocktailsPresets[18] = new Preset(R.drawable.ic_beer,
+                getString(R.string.mai_tai_cocktail),
+                9.5f, 300);
+        cocktailsPresets[19] = new Preset(R.drawable.ic_beer,
+                getString(R.string.margarita_cocktail),
+                6.3f, 350);
+        cocktailsPresets[20] = new Preset(R.drawable.ic_beer,
+                getString(R.string.mimosa_cocktail),
+                3.3f, 300);
+        cocktailsPresets[21] = new Preset(R.drawable.ic_beer,
+                getString(R.string.mint_julep_cocktail),
+                8f, 300);
+        cocktailsPresets[22] = new Preset(R.drawable.ic_beer,
+                getString(R.string.mojito_cocktail),
+                4f, 400);
+        cocktailsPresets[23] = new Preset(R.drawable.ic_beer,
+                getString(R.string.moscow_mule_cocktail),
+                5.1f, 350);
+        cocktailsPresets[24] = new Preset(R.drawable.ic_beer,
+                getString(R.string.pina_colada_cocktail),
+                4f, 300);
+        cocktailsPresets[25] = new Preset(R.drawable.ic_beer,
+                getString(R.string.rose_cocktail),
+                13.1f, 130);
+        cocktailsPresets[26] = new Preset(R.drawable.ic_beer,
+                getString(R.string.sea_breeze_cocktail),
+                5.3f, 300);
+        cocktailsPresets[27] = new Preset(R.drawable.ic_beer,
+                getString(R.string.sex_on_the_beach_cocktail),
+                6.3f, 300);
+        cocktailsPresets[28] = new Preset(R.drawable.ic_beer,
+                getString(R.string.singapore_sling_cocktail),
+                8.3f, 300);
+        cocktailsPresets[29] = new Preset(R.drawable.ic_beer,
+                getString(R.string.tequila_sunrise_cocktail),
+                4.6f, 400);
     }
 
     private BroadcastReceiver onBackPressedBroadcastReceiver = new BroadcastReceiver() {
@@ -102,47 +253,106 @@ public class PresetDrink extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
+                Preset[] currentPresets = null;
 
                 if (stage == 0) {
                     //at chose preset category
+                    currentPresets = categoryPresets;
+                    stage++;
                     switch (position) {
                         case 0:
                             //beer
-                            adapter = new PresetsAdapter(PresetDrink.this.getContext());
-                            gridView.setAdapter(adapter);
-                            stage++;
                             currentCategory = PresetCategory.BEER;
                             break;
                         case 1:
                             //wine
+                            currentCategory = PresetCategory.WINE;
                             break;
                         case 2:
                             //spirits
-                            adapter = new PresetsAdapter(PresetDrink.this.getContext());
-                            gridView.setAdapter(adapter);
-                            stage++;
                             currentCategory = PresetCategory.SPIRITS;
                             break;
                         case 3:
                             //cocktails
-                            adapter = new PresetsAdapter(PresetDrink.this.getContext());
-                            gridView.setAdapter(adapter);
-                            stage++;
                             currentCategory = PresetCategory.COCKTAILS;
                             break;
                     }
+                    gridView.setAdapter(adapter);
                 } else if (stage == 1) {
                     if (currentCategory == PresetCategory.BEER) {
-                      adapter.notifyDataSetChanged();
+                        currentPresets = beerStageOnePresets;
+                        stage++;
+                        gridView.setAdapter(adapter);
                     } else if (currentCategory == PresetCategory.SPIRITS) {
-                        Toast.makeText(PresetDrink.this.getContext(), "Drink added! Pos:" + position,
-                                Toast.LENGTH_SHORT).show();
+                        currentPresets = spiritStageOnePresets;
+                        stage++;
+                        gridView.setAdapter(adapter);
                     } else if (currentCategory == PresetCategory.COCKTAILS) {
-                        Toast.makeText(PresetDrink.this.getContext(), "Drink added! Pos:" + position,
+                        currentPresets = cocktailsPresets;
+                        if (currentPresets[position].isPercentageAssigned()){
+                            currentChosenPecentage = currentPresets[position].getPercentage();
+                        }
+                        if (currentPresets[position].isVolumeAssigned()){
+                            currentChosenVolume = currentPresets[position].getVolume();
+                        }
+
+                        Toast.makeText(PresetDrink.this.getContext(), "Drink added!\nPercent: " +
+                                        currentChosenPecentage + "\nVolume: " + currentChosenVolume,
                                 Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (currentCategory == PresetCategory.WINE) {
+                        currentPresets = wineStageOnePresets;
+                        if (currentPresets[position].isPercentageAssigned()){
+                            currentChosenPecentage = currentPresets[position].getPercentage();
+                        }
+                        if (currentPresets[position].isVolumeAssigned()){
+                            currentChosenVolume = currentPresets[position].getVolume();
+                        }
+
+                        Toast.makeText(PresetDrink.this.getContext(), "Drink added!\nPercent: " +
+                                        currentChosenPecentage + "\nVolume: " + currentChosenVolume,
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } else if (stage == 2) {
+                    if (currentCategory == PresetCategory.BEER) {
+                        currentPresets = beerStageTwoPresets;
+                        if (currentPresets[position].isPercentageAssigned()){
+                            currentChosenPecentage = currentPresets[position].getPercentage();
+                        }
+                        if (currentPresets[position].isVolumeAssigned()){
+                            currentChosenVolume = currentPresets[position].getVolume();
+                        }
+
+                        Toast.makeText(PresetDrink.this.getContext(), "Drink added!\nPercent: " +
+                                        currentChosenPecentage + "\nVolume: " + currentChosenVolume,
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (currentCategory == PresetCategory.SPIRITS) {
+                        currentPresets = spiritStageTwoPresets;
+                        if (currentPresets[position].isPercentageAssigned()){
+                            currentChosenPecentage = currentPresets[position].getPercentage();
+                        }
+                        if (currentPresets[position].isVolumeAssigned()){
+                            currentChosenVolume = currentPresets[position].getVolume();
+                        }
+
+                        Toast.makeText(PresetDrink.this.getContext(), "Drink added!\nPercent: " +
+                                        currentChosenPecentage + "\nVolume: " + currentChosenVolume,
+                                Toast.LENGTH_SHORT).show();
+                        return;
                     }
                 }
 
+                if (currentPresets != null) {
+                    if (currentPresets[position].isPercentageAssigned()){
+                        currentChosenPecentage = currentPresets[position].getPercentage();
+                    }
+
+                    if (currentPresets[position].isVolumeAssigned()){
+                        currentChosenVolume = currentPresets[position].getVolume();
+                    }
+                }
             }
         });
 
@@ -162,7 +372,27 @@ public class PresetDrink extends Fragment {
 
         @Override
         public int getCount() {
-            return categoryPresets.length;
+            int count = 0;
+
+            if (stage == 0) {
+                count = categoryPresets.length;
+            } else if (stage == 1) {
+                if (currentCategory == PresetCategory.BEER)
+                    count = beerStageOnePresets.length;
+                else if (currentCategory == PresetCategory.SPIRITS)
+                    count = spiritStageOnePresets.length;
+                else if (currentCategory == PresetCategory.WINE)
+                    count = wineStageOnePresets.length;
+                else if (currentCategory == PresetCategory.COCKTAILS)
+                    count = cocktailsPresets.length;
+            } else if (stage == 2) {
+                if (currentCategory == PresetCategory.BEER)
+                    count = beerStageTwoPresets.length;
+                else if (currentCategory == PresetCategory.SPIRITS)
+                    count = spiritStageTwoPresets.length;
+            }
+
+            return count;
         }
 
         @Override
@@ -194,17 +424,24 @@ public class PresetDrink extends Fragment {
                             title = beerStageOnePresets[i].getTitle();
                             imageId = beerStageOnePresets[i].getImageResId();
                         } else if (currentCategory == PresetCategory.SPIRITS) {
-                            title = spiritPresets[i].getTitle();
-                            imageId = spiritPresets[i].getImageResId();
+                            title = spiritStageOnePresets[i].getTitle();
+                            imageId = spiritStageOnePresets[i].getImageResId();
                         } else if (currentCategory == PresetCategory.COCKTAILS) {
                             title = cocktailsPresets[i].getTitle();
                             imageId = cocktailsPresets[i].getImageResId();
+                        } else if (currentCategory == PresetCategory.WINE) {
+                            title = wineStageOnePresets[i].getTitle();
+                            imageId = wineStageOnePresets[i].getImageResId();
                         }
                         break;
                     case 2:
-                        title = beerStageTwoPresets[i].getTitle();
-                        imageId = beerStageTwoPresets[i].getImageResId();
-                        break;
+                        if (currentCategory == PresetCategory.BEER) {
+                            title = beerStageTwoPresets[i].getTitle();
+                            imageId = beerStageTwoPresets[i].getImageResId();
+                        } else if (currentCategory == PresetCategory.SPIRITS) {
+                            title = spiritStageTwoPresets[i].getTitle();
+                            imageId = spiritStageTwoPresets[i].getImageResId();
+                        }break;
                 }
 
                 TextView titleTV = (TextView)view.findViewById(R.id.presetTileTitle);
@@ -222,13 +459,36 @@ public class PresetDrink extends Fragment {
     public class Preset {
         private String title;
         private int imageResId;
+        private boolean percentageAssigned = false;
+        private boolean volumeAssigned = false;
+        private float percentage = 0;
+        private int volume = 0;
 
-        public Preset(int imageResId, String title){
+        public Preset(int imageResId, String title){this(imageResId, title, -1, -1);}
+        public Preset(int imageResId, String title, float percentage){this(imageResId, title, percentage, -1);}
+        public Preset(int imageResId, String title, int volume){this(imageResId, title, -1, volume);}
+        public Preset(int imageResId, String title, float percentage, int volume){
+            if (percentage > 0f) {
+                percentageAssigned = true;
+                this.percentage = percentage;
+            }
+
+            if (volume > 0) {
+                volumeAssigned = true;
+                this.volume = volume;
+            }
+
             this.title = title;
             this.imageResId = imageResId;
         }
 
         public String getTitle(){return title;}
         public int getImageResId(){return imageResId;}
+
+        public boolean isVolumeAssigned(){return volumeAssigned;}
+        public boolean isPercentageAssigned(){return percentageAssigned;}
+
+        public int getVolume(){return volume;}
+        public float getPercentage(){return percentage;}
     }
 }

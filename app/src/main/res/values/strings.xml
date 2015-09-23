@@ -118,13 +118,6 @@
     <string name="time">Time</string>
     <string name="BAC">BAC</string>
 
-    <!--> presets <-->
-    <string name="drink_added">Drink added successfully!</string>
-    <string name="please_choose_drink">Please choose a drink:</string>
-    <string name="set_percentage">Set Percentage</string>
-    <string name="set_volume">Set Volume</string>
-    <string name="drink">Drink</string>
-
     <!--> Settings <-->
     <string name="language_options">Language Options</string>
     <string name="irish_language_option">Irish Language Option</string>
@@ -166,6 +159,12 @@
     <string name="about_us">GlassByte is a software development start-up company headquartered in Dublin, Ireland. Our small, ambitious team strives to create innovative and useful software for computing platforms.</string>
     <string name="about_us_more">For more apps or business enquiries, visit our website!\nhttp://www.glassbyte.com/</string>
     
+    <!-- Preset Categories -->
+    <string name="beerCategory">Beer</string>
+    <string name="wineCategory">Wine</string>
+    <string name="spiritsCategory">Spirits</string>
+    <string name="cocktailsCategory">Cocktails</string>
+
     <!--> Cocktails - The Unforgettables <-->
     <string name="alexander">Alexander</string>
     <string name="americano">Americano</string>
@@ -199,36 +198,36 @@
     <string name="white_lady">White Lady</string>
 
     <!--> Cocktails - Contemporary Classics <-->
-    <string name="bellini">Bellini</string>
-    <string name="black_russian">Black Russian</string>
-    <string name="bloody_mary">Bloody Mary</string>
-    <string name="caipirinha">Caipirinha</string>
+    <string name="bellini_cocktail">Bellini</string>
+    <string name="black_russian_cocktail">Black Russian</string>
+    <string name="bloody_mary_cocktail">Bloody Mary</string>
+    <string name="caipirinha_cocktail">Caipirinha</string>
     <string name="champagne_cocktail">Champagne Cocktail</string>
-    <string name="cosmopolitan">Cosmopolitan</string>
-    <string name="cuba_libre">Cuba Libre</string>
-    <string name="french_connection">French Connection</string>
-    <string name="god_father">God Father</string>
-    <string name="god_mother">God Mother</string>
-    <string name="golden_dream">Golden Dream</string>
-    <string name="grasshopper">Grasshopper</string>
-    <string name="french_75">French 75</string>
-    <string name="harvey_wallbanger">Harvey Wallbanger</string>
-    <string name="horses_neck">Horse\'s Neck</string>
-    <string name="irish_coffee">Irish Coffee</string>
-    <string name="kir">Kir</string>
-    <string name="long_island_iced_tea">Long Island Iced Tea</string>
-    <string name="mai_tai">Mai Tai</string>
-    <string name="margarita">Margarita</string>
-    <string name="mimosa">Mimosa</string>
-    <string name="mint_julep">Mint Julep</string>
-    <string name="mojito">Mojito</string>
-    <string name="moscow_mule">Moscow Mule</string>
-    <string name="pina_colada">Pina Colada</string>
-    <string name="rose">Rose</string>
-    <string name="sea_breeze">Sea Breeze</string>
-    <string name="sex_on_the_beach">Sex on the Beach</string>
-    <string name="singapore_sling">Singapore Sling</string>
-    <string name="tequila_sunrise">Tequila Sunrise</string>
+    <string name="cosmopolitan_cocktail">Cosmopolitan</string>
+    <string name="cuba_libre_cocktail">Cuba Libre</string>
+    <string name="french_connection_cocktail">French Connection</string>
+    <string name="god_father_cocktail">God Father</string>
+    <string name="god_mother_cocktail">God Mother</string>
+    <string name="golden_dream_cocktail">Golden Dream</string>
+    <string name="grasshopper_cocktail">Grasshopper</string>
+    <string name="french_75_cocktail">French 75</string>
+    <string name="harvey_wallbanger_cocktail">Harvey Wallbanger</string>
+    <string name="horses_neck_cocktail">Horse\'s Neck</string>
+    <string name="irish_coffee_cocktail">Irish Coffee</string>
+    <string name="kir_cocktail">Kir</string>
+    <string name="long_island_iced_tea_cocktail">Long Island Iced Tea</string>
+    <string name="mai_tai_cocktail">Mai Tai</string>
+    <string name="margarita_cocktail">Margarita</string>
+    <string name="mimosa_cocktail">Mimosa</string>
+    <string name="mint_julep_cocktail">Mint Julep</string>
+    <string name="mojito_cocktail">Mojito</string>
+    <string name="moscow_mule_cocktail">Moscow Mule</string>
+    <string name="pina_colada_cocktail">Pina Colada</string>
+    <string name="rose_cocktail">Rose</string>
+    <string name="sea_breeze_cocktail">Sea Breeze</string>
+    <string name="sex_on_the_beach_cocktail">Sex on the Beach</string>
+    <string name="singapore_sling_cocktail">Singapore Sling</string>
+    <string name="tequila_sunrise_cocktail">Tequila Sunrise</string>
 
     <!--> Cocktail Glasses <-->
     <string name="cocktail_glass">Cocktail Glass</string>
@@ -242,20 +241,20 @@
     <string name="poco_grande_glass">Poco Grande Glass</string>
 
     <!--> Wine volumes <-->
-    <string name="quarter_glass">Quarter Glass</string>
-    <string name="half_glass">Half Glass</string>
-    <string name="three_quarter_glass">Three-Quarter Glass</string>
+    <string name="quarter_wine_glass">Quarter Glass</string>
+    <string name="half_wine_glass">Half Glass</string>
+    <string name="three_quarter_wine_glass">Three-Quarter Glass</string>
 
     <!--> Shot bases <-->
-    <string name="absinthe">Absinthe</string>
-    <string name="sambuca">Sambuca</string>
-    <string name="vodka">Vodka</string>
-    <string name="tequila">Tequila</string>
-    <string name="gin">Gin</string>
-    <string name="rum">Rum</string>
-    <string name="whiskey">Whiskey</string>
-    <string name="brandy">Brandy</string>
-    <string name="jager">Jäger</string>
+    <string name="absinthe_spirit">Absinthe</string>
+    <string name="sambuca_spirit">Sambuca</string>
+    <string name="vodka_spirit">Vodka</string>
+    <string name="tequila_spirit">Tequila</string>
+    <string name="gin_spirit">Gin</string>
+    <string name="rum_spirit">Rum</string>
+    <string name="whiskey_spirit">Whiskey</string>
+    <string name="brandy_spirit">Brandy</string>
+    <string name="jager_spirit">Jäger</string>
 
     <!--> Shot quantities <-->
     <string name="q_single">Single</string>
