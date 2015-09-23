@@ -39,24 +39,10 @@
     </string-array>
 
     <!-->types of drinks<-->
-    <string-array name="drinks">
-        <item>""</item>
-        <item>Beoir</item>
-        <item>Lágar</item>
-        <item>Leann Dubh</item>
-        <item>Leann</item>
-        <item>Leann Úll</item>
-        <item>Mianra Meisciúil</item>
-        <item>Manglam</item>
-    </string-array>
-
-    <!-->types of drinks<-->
     <string-array name="period">
         <item>Anois díreach</item>
-        <item>Aréir</item>
         <item>An tseachtain seo caite</item>
         <item>An mhí seo caite</item>
-        <item>An t-am ar fad</item>
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>

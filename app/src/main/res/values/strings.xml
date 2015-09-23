@@ -53,24 +53,10 @@
     </string-array>
 
     <!-->types of drinks<-->
-    <string-array name="drinks">
-        <item>""</item>
-        <item>Beer</item>
-        <item>Lager</item>
-        <item>Stout</item>
-        <item>Ale</item>
-        <item>Cider</item>
-        <item>Alcopop</item>
-        <item>Cocktail</item>
-    </string-array>
-
-    <!-->types of drinks<-->
     <string-array name="period">
         <item>Current session</item>
-        <item>Last night</item>
         <item>Last week</item>
         <item>Last month</item>
-        <item>All time</item>
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>

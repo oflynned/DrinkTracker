@@ -8,12 +8,6 @@
     <string name="action_stats">Statistics</string>
     <string name="action_removeads">Remove Ads</string>
 
-    <!-- Intro Screen -->
-
-    <!-- Preferences -->
-
-    <!-- End of Preferences -->
-
     <!--Custom Drinks Titles-->
     <string name="shot_glass_title">Shot Glass</string>
     <string name="water_glass_title">Glass</string>
@@ -39,24 +33,10 @@
     </string-array>
 
     <!-->types of drinks<-->
-    <string-array name="drinks">
-        <item>""</item>
-        <item>Beer</item>
-        <item>Lager</item>
-        <item>Stout</item>
-        <item>Ale</item>
-        <item>Cider</item>
-        <item>Alcopop</item>
-        <item>Cocktail</item>
-    </string-array>
-
-    <!-->types of drinks<-->
     <string-array name="period">
         <item>Current session</item>
-        <item>Last night</item>
         <item>Last week</item>
         <item>Last month</item>
-        <item>All time</item>
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>

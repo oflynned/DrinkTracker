@@ -10,32 +10,32 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.jjoe64.graphview.DefaultLabelFormatter;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
-import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.model.Viewport;
-import lecho.lib.hellocharts.view.LineChartView;
 
 /**
  * Created by ed on 25/08/15.
  */
-public class Statistics extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class Statistics extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener, OnDataPointTapListener {
 
-    int orange;
+    int orange, count;
+    double totUnits, maxUnits, BAC;
+    long BACTime;
 
-    LineChartView chart;
-
+    Spinner spinner;
+    GraphView graph;
     TextView briefInfo, rating, BACinfo, BACrating;
 
     BloodAlcoholContent bloodAlcoholContent;
@@ -44,7 +44,6 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
     ChooseDrink chooseDrink;
 
     String spGender;
-    double totUnits, maxUnits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +68,8 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
         rating = (TextView) findViewById(R.id.rating);
         BACinfo = (TextView) findViewById(R.id.briefInfoBAC);
         BACrating = (TextView) findViewById(R.id.ratingBAC);
+        graph = (GraphView) findViewById(R.id.graph);
+        spinner = (Spinner) findViewById(R.id.periodSpinner);
 
         bloodAlcoholContent = new BloodAlcoholContent(this);
         setRecommendations();
@@ -78,11 +79,42 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        //graph instantiation
-        chart = (LineChartView) findViewById(R.id.chart);
-        //graphValues();
-        chart.setViewportCalculationEnabled(false);
-        chart.startDataAnimation();
+        //graph data
+        setGraphParams();
+        //generateData();
+    }
+
+    private void setGraphParams(){
+        graph.getViewport().setScrollable(true);
+        graph.getViewport().setScalable(true);
+    }
+
+    private DataPoint[] generateData() {
+        setCount(count);
+        DataPoint[] values = new DataPoint[getCount()];
+        for (int i=0; i<getCount(); i++) {
+            double x = getBACTime();
+            double y = getBAC();
+            DataPoint v = new DataPoint(x, y);
+            values[i] = v;
+        }
+        return values;
+    }
+
+    private void setCount(int count){
+        this.count = count;
+    }
+
+    private int getCount(){
+        return count;
+    }
+
+    private double getBAC(){
+        return BAC;
+    }
+
+    private long getBACTime(){
+        return BACTime;
     }
 
     private void setWeeklyAmounts() {
@@ -252,6 +284,11 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+    }
+
+    @Override
+    public void onTap(Series series, DataPointInterface dataPointInterface) {
 
     }
 }

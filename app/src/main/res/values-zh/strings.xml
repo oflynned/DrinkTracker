@@ -39,24 +39,10 @@
     </string-array>
 
     <!-->types of drinks<-->
-    <string-array name="drinks">
-        <item>""</item>
-        <item>啤酒</item>
-        <item>拉格</item>
-        <item>肥硕</item>
-        <item>强麦酒</item>
-        <item>果酒</item>
-        <item>Alcopop</item>
-        <item>鸡尾酒</item>
-    </string-array>
-
-    <!-->types of drinks<-->
     <string-array name="period">
         <item>当前会话</item>
-        <item>昨夜</item>
         <item>上星期</item>
         <item>上个月</item>
-        <item>所有的时间</item>
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>

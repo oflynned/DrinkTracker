@@ -16,7 +16,7 @@
         <!--dummy item to get a nice separator-->
         <item
             android:title=""
-            app:showAsAction="always"
+            app:showAsAction="ifRoom"
             android:enabled="false" />
     </group>
 
