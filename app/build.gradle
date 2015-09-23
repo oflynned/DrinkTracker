@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.glassbyte.drinktracker"
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -28,7 +28,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.github.lecho:hellocharts-library:1.5.5@aar'
     compile 'com.github.paolorotolo:appintro:3.2.0'
-    compile 'joda-time:joda-time:2.7'
     compile 'com.android.support:design:23.0.1'
     compile 'com.github.clans:fab:1.6.0'
     compile 'com.google.android.gms:play-services-ads:7.8.0'

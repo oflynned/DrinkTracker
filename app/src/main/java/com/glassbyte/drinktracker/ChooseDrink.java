@@ -542,6 +542,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     @Override
     public void onResume() {
         super.onResume();
+        isPaused = false;
         adView.resume();
     }
 
@@ -592,7 +593,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
             //acquire new units and convert
             String changedUnits = spEditUnits.getString(s, "");
-            Toast.makeText(getContext(), changedUnits, Toast.LENGTH_SHORT).show();
             if (changedUnits.equalsIgnoreCase("metric")) {
                 setUnits(getResources().getString(R.string.ml));
                 avgVol = BloodAlcoholContent.MetricSystemConverter.convertOzToMillilitres(avgVol);
