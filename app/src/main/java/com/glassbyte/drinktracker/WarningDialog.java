@@ -32,6 +32,8 @@ public class WarningDialog {
     Context context;
     InterstitialAd mInterstitialAd;
 
+    public AlertDialog alertDialog;
+
     public WarningDialog(Context context) {
         this.context = context;
     }
@@ -100,7 +102,7 @@ public class WarningDialog {
     }
 
     public void dialogNotification(String warning) {
-        final AlertDialog alertDialog = new AlertDialog.Builder(context)
+        alertDialog = new AlertDialog.Builder(context)
                 //set title
                 .setTitle(R.string.warning)
                         //depending on BAC we set the tier
@@ -117,14 +119,6 @@ public class WarningDialog {
                     }
                 })
                 .show();
-
-        final Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            public void run() {
-                alertDialog.dismiss();
-                t.cancel();
-            }
-        }, 60000); //close after 60s
     }
 
     private void requestNewInterstitial() {

@@ -103,7 +103,9 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                     public void run() {
                         NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
                         //constantly poll the bac on update via another thread
-                        if (bloodAlcoholContent.getCurrentEbac() == 0) {
+
+                        //if the BAC goes below the first tier, we reset the warning system
+                        if (bloodAlcoholContent.getCurrentEbac() < 0.07) {
                             warningDialog.setWarning1(false);
                             warningDialog.setWarning2(false);
                             warningDialog.setWarning3(false);
@@ -565,6 +567,9 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     @Override
     public void onPause() {
         adView.pause();
+        if (warningDialog.alertDialog != null) {
+            warningDialog.alertDialog.dismiss();
+        }
         super.onPause();
     }
 
