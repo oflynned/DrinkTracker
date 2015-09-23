@@ -298,54 +298,32 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         rl.addView(fab1);
         rl.addView(fab2);
 
+        adView.loadAd(adRequestBuilder.build());
         adView.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                rl.removeView(fab1);
-                rl.removeView(fab2);
-                paramsFAB1.removeRule(RelativeLayout.ABOVE);
-                paramsFAB2.removeRule(RelativeLayout.ABOVE);
-                paramsFAB1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                paramsFAB2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                fab1.setLayoutParams(paramsFAB1);
-                fab2.setLayoutParams(paramsFAB2);
-                rl.addView(fab1);
-                rl.addView(fab2);
+                Toast.makeText(getContext(),"onAdClosed()",Toast.LENGTH_SHORT).show();
+                paramsAds.height = 0;
+                adView.setLayoutParams(paramsAds);
                 rl.invalidate();
             }
 
             @Override
             public void onAdLoaded() {
-                rl.removeView(fab1);
-                rl.removeView(fab2);
-                paramsFAB1.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                paramsFAB2.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                paramsFAB1.addRule(RelativeLayout.ABOVE, adView.getId());
-                paramsFAB2.addRule(RelativeLayout.ABOVE, adView.getId());
-                fab1.setLayoutParams(paramsFAB1);
-                fab2.setLayoutParams(paramsFAB2);
-                rl.addView(fab1);
-                rl.addView(fab2);
+                Toast.makeText(getContext(),"onAdLoaded()",Toast.LENGTH_SHORT).show();
+                paramsAds.height = adView.getMeasuredHeightAndState();
+                adView.setLayoutParams(paramsAds);
                 rl.invalidate();
             }
 
             @Override
             public void onAdFailedToLoad(int errorCode) {
-                rl.removeView(fab1);
-                rl.removeView(fab2);
-                paramsFAB1.removeRule(RelativeLayout.ABOVE);
-                paramsFAB2.removeRule(RelativeLayout.ABOVE);
-                paramsFAB1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                paramsFAB2.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                fab1.setLayoutParams(paramsFAB1);
-                fab2.setLayoutParams(paramsFAB2);
-                rl.addView(fab1);
-                rl.addView(fab2);
+                Toast.makeText(getContext(),"onAdFailedToLoad()",Toast.LENGTH_SHORT).show();
+                paramsAds.height = 0;
+                adView.setLayoutParams(paramsAds);
                 rl.invalidate();
             }
         });
-
-        adView.loadAd(adRequestBuilder.build());
 
         progress = (int) (bloodAlcoholContent.getCurrentEbac() * PROGESS_BAR_RATIO);
         if (progress < 75) {
