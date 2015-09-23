@@ -78,11 +78,11 @@ public class PresetDrink extends Fragment {
                         break;
                     default:
                         if (currentCategory == PresetCategory.BEER)
-                            gridView.setAdapter(new BeerAdapter(context));
+                            gridView.setAdapter(new PresetsAdapter(context));
                         else if (currentCategory == PresetCategory.SPIRITS)
-                            gridView.setAdapter(new SpiritsAdapter(context));
+                            gridView.setAdapter(new PresetsAdapter(context));
                         else if (currentCategory == PresetCategory.COCKTAILS)
-                            gridView.setAdapter(new SpiritsAdapter(context));
+                            gridView.setAdapter(new PresetsAdapter(context));
                 }
                 gridView.invalidate();
             }
@@ -108,7 +108,7 @@ public class PresetDrink extends Fragment {
                     switch (position) {
                         case 0:
                             //beer
-                            adapter = new BeerAdapter(PresetDrink.this.getContext());
+                            adapter = new PresetsAdapter(PresetDrink.this.getContext());
                             gridView.setAdapter(adapter);
                             stage++;
                             currentCategory = PresetCategory.BEER;
@@ -118,14 +118,14 @@ public class PresetDrink extends Fragment {
                             break;
                         case 2:
                             //spirits
-                            adapter = new SpiritsAdapter(PresetDrink.this.getContext());
+                            adapter = new PresetsAdapter(PresetDrink.this.getContext());
                             gridView.setAdapter(adapter);
                             stage++;
                             currentCategory = PresetCategory.SPIRITS;
                             break;
                         case 3:
                             //cocktails
-                            adapter = new CocktailsAdapter(PresetDrink.this.getContext());
+                            adapter = new PresetsAdapter(PresetDrink.this.getContext());
                             gridView.setAdapter(adapter);
                             stage++;
                             currentCategory = PresetCategory.COCKTAILS;
@@ -216,94 +216,6 @@ public class PresetDrink extends Fragment {
             }
 
             return view;
-        }
-    }
-
-    public class BeerAdapter extends BaseAdapter {
-        LayoutInflater inflater;
-        public BeerAdapter(Context context) {
-            inflater = LayoutInflater.from(context);
-        }
-
-        @Override
-        public int getCount() {
-            return 0;
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            if (view == null) {
-                view = inflater.inflate(R.layout.preset_tile_layout, null);
-
-
-            }
-            return view;
-        }
-    }
-
-    public class SpiritsAdapter extends BaseAdapter {
-        Context mContext;
-
-        public SpiritsAdapter(Context context) {
-            this.mContext = context;
-        }
-
-        @Override
-        public int getCount() {
-            return 0;
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            return null;
-        }
-    }
-
-    public class CocktailsAdapter extends BaseAdapter {
-        Context mContext;
-
-        public CocktailsAdapter(Context context) {
-            this.mContext = context;
-        }
-
-        @Override
-        public int getCount() {
-            return 0;
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            return null;
         }
     }
 
