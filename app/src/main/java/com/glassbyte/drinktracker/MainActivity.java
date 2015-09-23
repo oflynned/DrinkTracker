@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
+    public final static String ON_BACK_PRESSED_EVENT = "on_back_pressed_event";
     private UpdateCurrentBACAlarmReceiver currentBACAlarm = new UpdateCurrentBACAlarmReceiver();
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
@@ -131,8 +133,15 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed(){
         if(mPager.getCurrentItem() == 1){
             super.onBackPressed();
-        } else {
+        } else if (mPager.getCurrentItem() == 2){
             mPager.setCurrentItem(1);
+        } else if (mPager.getCurrentItem() == 0) {
+            if (PresetDrink.getCurrentStage() == 0)
+                mPager.setCurrentItem(1);
+            else {
+                Intent broadcastIntent = new Intent(ON_BACK_PRESSED_EVENT);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+            }
         }
     }
 
