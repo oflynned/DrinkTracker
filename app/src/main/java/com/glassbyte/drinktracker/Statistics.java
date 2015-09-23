@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Spinner;
@@ -16,14 +17,24 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 
@@ -85,16 +96,12 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
         //graph data
         series = new LineGraphSeries<>(getBACTuple());
         graph.addSeries(series);
-        //setGraphParams();
+        styleAxes();
     }
 
-    private void setGraphParams() {
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setMaxX(maxTime);
-        graph.getViewport().setMinX(minTime);
-        graph.getViewport().setMaxY(maxBAC);
-        graph.getViewport().setMinY(0);
+    private void styleAxes(){
+        graph.setTitle("Alcohol Consumption");
+        graph.setTitleColor(R.color.red700);
     }
 
     private DataPoint[] getBACTuple() {
@@ -118,9 +125,11 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
         maxBAC = 0;
         maxTime = 0;
 
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        TimeZone timeZone = gregorianCalendar.getTimeZone();
+
         //given the case that no drinks have been added and BAC was always 0
         if(cursor.getCount() == 0){
-            System.out.println("inside cursor.getCount()==0");
             countQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
             cursor = db.rawQuery(countQuery, null);
             cursor.moveToFirst();
@@ -132,20 +141,23 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
             //continue the query as there is a populated table with decays and BAC updated
             //as we need to return the value at a certain count, we need the counter value to offset
             do {
-                System.out.println("moved to first pos and executed query");
-
                 if(counter < cursor.getCount()){
                     cursor.moveToFirst();
-                    System.out.println("counter < getCount()");
                     cursor.move(counter);
                     //store and return appropriate BAC within row
                     BAC = cursor.getDouble(2);
                     //get BAC and convert to an hour as a double
                     BACTime = cursor.getLong(1);
-                    double xAxisValue = BACTime / (1000*60*60) % 24;
+
+                    int xAxisValueHours = (int) (BACTime / (1000*60*60) % 24)
+                            + (timeZone.getDSTSavings() / (1000*60*60)%24);
+                    int xAxisValueMins = (int) (((BACTime / (1000*60)) % 60) / 0.6);
+                    String xAxisValueConcat = Integer.parseInt(Integer.toString(xAxisValueHours))
+                            + "." + Integer.parseInt(Integer.toString(xAxisValueMins));
+                    double xAxisValue = Double.parseDouble(xAxisValueConcat);
+
                     DataPoint v = new DataPoint(xAxisValue, BAC);
                     values[counter] = v;
-                    System.out.println("count #" + counter + " : " + values[counter]);
 
                     if(BAC > maxBAC){
                         maxBAC = BAC;
@@ -153,11 +165,8 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
                     counter++;
                 }
             } while (!cursor.isAfterLast() && cursor.moveToNext());
-            System.out.println("counter: " + counter);
-            System.out.println("completed query, assigned values to points and returned to series");
         }
         else if (cursor.getCount() > 0) {
-            System.out.println("inside cursor.getCount()>0");
             //get first value of time
             //a time of 0 is not possible, so if this exists
             //we go into the other loop and terminate
@@ -168,8 +177,6 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
             cursor = db.rawQuery(countQuery, null);
             cursor.moveToFirst();
 
-            System.out.println("moved to first pos and executed query");
-
             values = new DataPoint[cursor.getCount()];
             counter = 0;
             minTime = cursor.getLong(1);
@@ -177,15 +184,19 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
             //continue the query as there is a populated table with decays and BAC updated
             //as we need to return the value at a certain count, we need the counter value to offset
             do {
-                System.out.println("inside do while");
                 cursor.move(counter);
                 //store and return appropriate BAC within row
                 BAC = cursor.getDouble(2);
                 BACTime = cursor.getLong(1);
-                double xAxisValue = BACTime / (1000*60*60) % 24;
+                int xAxisValueHours = (int) (BACTime / (1000*60*60) % 24)
+                        + (timeZone.getDSTSavings() / (1000*60*60)%24);
+                int xAxisValueMins = (int) ((BACTime / (1000*60)) / (0.6));
+                String xAxisValueConcat = Integer.parseInt(Integer.toString(xAxisValueHours))
+                        + "." + Integer.parseInt(Integer.toString(xAxisValueMins));
+                double xAxisValue = Double.parseDouble(xAxisValueConcat);
+
                 DataPoint v = new DataPoint(xAxisValue, BAC);
                 values[counter] = v;
-                System.out.println("count #" + counter + " : " + values[counter]);
 
                 if(BAC > maxBAC){
                     maxBAC = BAC;
