@@ -241,4 +241,25 @@
     <string name="margarita_glass">Margarita Glass</string>
     <string name="poco_grande_glass">Poco Grande Glass</string>
 
+    <!--> Wine volumes <-->
+    <string name="quarter_glass">Quarter Glass</string>
+    <string name="half_glass">Half Glass</string>
+    <string name="three_quarter_glass">Three-Quarter Glass</string>
+
+    <!--> Shot bases <-->
+    <string name="absinthe">Absinthe</string>
+    <string name="sambuca">Sambuca</string>
+    <string name="vodka">Vodka</string>
+    <string name="tequila">Tequila</string>
+    <string name="gin">Gin</string>
+    <string name="rum">Rum</string>
+    <string name="whiskey">Whiskey</string>
+    <string name="brandy">Brandy</string>
+    <string name="jager">Jäger</string>
+
+    <!--> Shot quantities <-->
+    <string name="q_single">Single</string>
+    <string name="q_double">Double</string>
+    <string name="q_triple">Triple</string>
+
 </resources>
