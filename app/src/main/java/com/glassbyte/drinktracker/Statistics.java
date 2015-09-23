@@ -55,7 +55,7 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
 
         drinkTrackerDbHelper = new DrinkTrackerDbHelper(this);
 
-        setUpCalender();
+        setWeeklyAmounts();
         setMaxUnits(spGender);
         setTotalUnits(totUnits);
 
@@ -71,7 +71,7 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
         BACrating = (TextView) findViewById(R.id.ratingBAC);
 
         bloodAlcoholContent = new BloodAlcoholContent(this);
-        setMethods();
+        setRecommendations();
 
         //ad request
         AdView mAdView = (AdView) findViewById(R.id.adView);
@@ -85,87 +85,7 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
         chart.startDataAnimation();
     }
 
-    private void graphValues() {
-        //select first row by date fo start of week and sum until it reaches whileNot
-        String countQuery = "SELECT  * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
-        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-
-        String bac;
-        float bacPoint;
-        int count = 0;
-        List<PointValue> values = new ArrayList<>();
-
-        if (cursor.getCount() != 0) {
-            cursor.moveToFirst();
-            do {
-                if (!cursor.isNull(2)) {
-                    //if date lies within period
-                    bac = cursor.getString(2);
-                    bacPoint = Float.parseFloat(bac);
-                    values.add(new PointValue(count, bacPoint));
-                    count++;
-                } else {
-                    //go to next row
-                    cursor.moveToNext();
-                }
-            } while (cursor.moveToNext());
-
-            Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
-            List<Line> lines = new ArrayList<>();
-            lines.add(line);
-
-            LineChartData data = new LineChartData();
-            data.setLines(lines);
-            setAxes(data);
-            chart.setLineChartData(data);
-
-            final Viewport v = new Viewport(chart.getMaximumViewport());
-            v.bottom = 0;
-            v.top = 0.4f;
-            v.left = 0;
-            v.right = cursor.getCount();
-            chart.setMaximumViewport(v);
-            chart.setCurrentViewport(v);
-            chart.setScrollX(1);
-
-            //close operations and sum
-            db.close();
-            cursor.close();
-        }
-    }
-
-    private void setAxes(LineChartData data) {
-        Axis axisX = new Axis();
-        Axis axisY = new Axis().setHasLines(true);
-        axisX.setName(getResources().getString(R.string.time));
-        axisY.setName(getResources().getString(R.string.BAC));
-        data.setAxisXBottom(axisX);
-        data.setAxisYLeft(axisY);
-    }
-
-    private void setMethods() {
-        //set current
-        double BAC = BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), 3);
-        BACinfo.setText(getResources().getString(R.string.current_BAC_level) + " " + BAC);
-
-        setWarning(BAC);
-
-        //set weekly
-        briefInfo.setText(getResources().getString(R.string.pollunits) +
-                "\n" + getTotalUnits() + "/" + getMaxUnits() + " " +
-                getResources().getString(R.string.units));
-
-        if (getTotalUnits() <= getMaxUnits()) {
-            rating.setTextColor(Color.GREEN);
-            rating.setText(R.string.belowlimit);
-        } else if (getTotalUnits() > getMaxUnits()) {
-            rating.setTextColor(Color.RED);
-            rating.setText(R.string.abovelimit);
-        }
-    }
-
-    protected void setUpCalender() {
+    private void setWeeklyAmounts() {
         // get today and clear time of day
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
@@ -190,6 +110,7 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
         Cursor cursor = db.rawQuery(countQuery, null);
 
         String currUnits;
+        totUnits = 0;
 
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
@@ -198,7 +119,6 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
                         Long.parseLong(cursor.getString(1)) < startOfNextWeek) {
                     //if date lies within period
                     currUnits = cursor.getString(6);
-                    System.out.println(currUnits);
                     totUnits = totUnits + Double.parseDouble(currUnits);
                 } else {
                     //go to next row
@@ -207,12 +127,32 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
             }
             while (cursor.moveToNext() && Long.parseLong(cursor.getString(1)) < startOfNextWeek);
 
-            System.out.println(totUnits);
             setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
 
             //close operations and sum
             db.close();
             cursor.close();
+        }
+    }
+
+    private void setRecommendations() {
+        //set current
+        double BAC = BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), 3);
+        BACinfo.setText(getResources().getString(R.string.current_BAC_level) + " " + BAC);
+
+        setWarning(BAC);
+
+        //set weekly
+        briefInfo.setText(getResources().getString(R.string.pollunits) +
+                "\n" + getTotalUnits() + "/" + getMaxUnits() + " " +
+                getResources().getString(R.string.units));
+
+        if (getTotalUnits() <= getMaxUnits()) {
+            rating.setTextColor(Color.GREEN);
+            rating.setText(R.string.belowlimit);
+        } else if (getTotalUnits() > getMaxUnits()) {
+            rating.setTextColor(Color.RED);
+            rating.setText(R.string.abovelimit);
         }
     }
 

@@ -77,11 +77,13 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
     Dialog dialog;
     Runnable warningSystem;
-    Handler handler;
+
+    public boolean isPaused;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+        isPaused = false;
         /*Register the sharepreferences listener so that it doesn't get garbage collected*/
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         sp.registerOnSharedPreferenceChangeListener(this);
@@ -160,7 +162,8 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             }
         };
 
-        warningSystem.run();
+        if(!isPaused)
+            warningSystem.run();
 
         /*End of Set up the BloodAlcoholLevel object*/
 
@@ -544,6 +547,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
     @Override
     public void onPause() {
+        isPaused = true;
         adView.pause();
         if (warningDialog.alertDialog != null) {
             warningDialog.alertDialog.dismiss();
@@ -578,7 +582,9 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 startAnimation(progress);
             }
             pbBAC.invalidate();
-            warningSystem.run();
+
+            if(!isPaused)
+                warningSystem.run();
         }
 
         if (s == this.getString(R.string.pref_key_editUnits)) {
