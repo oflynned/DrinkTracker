@@ -38,24 +38,10 @@
     </string-array>
 
     <!-->types of drinks<-->
-    <string-array name="drinks">
-        <item>""</item>
-        <item>Bere</item>
-        <item>Lager</item>
-        <item>Stout</item>
-        <item>Ale</item>
-        <item>Cidru</item>
-        <item>Alcopop</item>
-        <item>Cocktail</item>
-    </string-array>
-
-    <!-->types of drinks<-->
     <string-array name="period">
         <item>Sesiune Curentă</item>
-        <item>Noaptea Trecută</item>
         <item>Saptamana Trecută</item>
         <item>Luna Trecută</item>
-        <item>Total</item>
     </string-array>
 
     <string name="title_activity_settings">ActivitateSetării</string>

@@ -16,7 +16,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -31,7 +30,6 @@ import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.ads.AdListener;
@@ -60,7 +58,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
     String spGender, spUnits, units;
 
-    double totUnits, maxUnits, maxBAC, avgABV, avgVol, currBAC;
+    double totUnits, maxBAC, avgABV, avgVol, currBAC;
     int calories;
 
     //mock id for testing
@@ -305,7 +303,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         adView.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                Toast.makeText(getContext(),"onAdClosed()",Toast.LENGTH_SHORT).show();
                 paramsAds.height = 0;
                 adView.setLayoutParams(paramsAds);
                 rl.invalidate();
@@ -313,7 +310,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
             @Override
             public void onAdLoaded() {
-                Toast.makeText(getContext(),"onAdLoaded()",Toast.LENGTH_SHORT).show();
                 paramsAds.height = adView.getMeasuredHeightAndState();
                 adView.setLayoutParams(paramsAds);
                 rl.invalidate();
@@ -321,7 +317,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
             @Override
             public void onAdFailedToLoad(int errorCode) {
-                Toast.makeText(getContext(),"onAdFailedToLoad()",Toast.LENGTH_SHORT).show();
                 paramsAds.height = 0;
                 adView.setLayoutParams(paramsAds);
                 rl.invalidate();

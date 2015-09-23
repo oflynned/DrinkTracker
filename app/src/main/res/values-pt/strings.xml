@@ -39,24 +39,10 @@
     </string-array>
 
     <!-->types of drinks<-->
-    <string-array name="drinks">
-        <item>""</item>
-        <item>Cerveja</item>
-        <item>Lager</item>
-        <item>Stout</item>
-        <item>Cerveja Inglesa</item>
-        <item>Cidra</item>
-        <item>Alcopop</item>
-        <item>Cocktail</item>
-    </string-array>
-
-    <!-->types of drinks<-->
     <string-array name="period">
         <item>sessão atual</item>
-        <item>Noite passada</item>
         <item>Semana passada</item>
         <item>Mês passado</item>
-        <item>Total</item>
     </string-array>
 
     <string name="title_activity_settings">DefiniçõesAtividade</string>
