@@ -166,7 +166,7 @@
     <string name="about_us">GlassByte is a software development start-up company headquartered in Dublin, Ireland. Our small, ambitious team strives to create innovative and useful software for computing platforms.</string>
     <string name="about_us_more">For more apps or business enquiries, visit our website!\nhttp://www.glassbyte.com/</string>
     
-    <!--> Cocktail names <-->
+    <!--> Cocktails - The Unforgettables <-->
     <string name="alexander">Alexander</string>
     <string name="americano">Americano</string>
     <string name="angel_face">Angel Face</string>
@@ -197,5 +197,48 @@
     <string name="tuxedo">Tuxedo</string>
     <string name="whiskey_sour">Whiskey Sour</string>
     <string name="white_lady">White Lady</string>
+
+    <!--> Cocktails - Contemporary Classics <-->
+    <string name="bellini">Bellini</string>
+    <string name="black_russian">Black Russian</string>
+    <string name="bloody_mary">Bloody Mary</string>
+    <string name="caipirinha">Caipirinha</string>
+    <string name="champagne_cocktail">Champagne Cocktail</string>
+    <string name="cosmopolitan">Cosmopolitan</string>
+    <string name="cuba_libre">Cuba Libre</string>
+    <string name="french_connection">French Connection</string>
+    <string name="god_father">God Father</string>
+    <string name="god_mother">God Mother</string>
+    <string name="golden_dream">Golden Dream</string>
+    <string name="grasshopper">Grasshopper</string>
+    <string name="french_75">French 75</string>
+    <string name="harvey_wallbanger">Harvey Wallbanger</string>
+    <string name="horses_neck">Horse's Neck</string>
+    <string name="irish_coffee">Irish Coffee</string>
+    <string name="kir">Kir</string>
+    <string name="long_island_iced_tea">Long Island Iced Tea</string>
+    <string name="mai_tai">Mai Tai</string>
+    <string name="margarita">Margarita</string>
+    <string name="mimosa">Mimosa</string>
+    <string name="mint_julep">Mint Julep</string>
+    <string name="mojito">Mojito</string>
+    <string name="moscow_mule">Moscow Mule</string>
+    <string name="pina_colada">Pina Colada</string>
+    <string name="rose">Rose</string>
+    <string name="sea_breeze">Sea Breeze</string>
+    <string name="sex_on_the_beach">Sex on the Beach</string>
+    <string name="singapore_sling">Singapore Sling</string>
+    <string name="tequila_sunrise">Tequila Sunrise</string>
+
+    <!--> Cocktail Glasses <-->
+    <string name="cocktail_glass">Cocktail Glass</string>
+    <string name="highball_glass">Highball Glass</string>
+    <string name="collins_glass">Collins Glass</string>
+    <string name="lowball_glass">Lowball Glass</string>
+    <string name="champagne_flute">Champagne Glass</string>
+    <string name="mug">Mug</string>
+    <string name="wine_glass">Wine Glass</string>
+    <string name="margarita_glass">Margarita Glass</string>
+    <string name="poco_grande_glass">Poco Grande Glass</string>
 
 </resources>
