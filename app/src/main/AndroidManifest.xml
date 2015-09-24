@@ -51,6 +51,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Statistics"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".PreferencesActivity"
@@ -64,10 +65,12 @@
         </activity>
         <activity
             android:name=".ListDrinksActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_list_drinks" >
         </activity>
 
-        <activity android:name=".SwipeIntro"/>
+        <activity android:name=".SwipeIntro"
+            android:screenOrientation="portrait"/>
 
         <receiver android:name=".UpdateCurrentBACBootReceiver"
             android:enabled="false">

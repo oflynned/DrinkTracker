@@ -15,7 +15,7 @@
         <com.jjoe64.graphview.GraphView
             android:layout_width="match_parent"
             android:layout_height="200dip"
-            android:id="@+id/graph" />
+            android:id="@+id/graph"/>
 
     </LinearLayout>
 
@@ -37,16 +37,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
             android:gravity="center_vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_above="@+id/briefInfoBAC"
-                android:layout_margin="10dp"
-                android:background="@color/hint_grey" />
 
             <TextView
                 android:id="@+id/briefInfoBAC"
@@ -67,19 +59,12 @@
                 android:gravity="center"
                 android:text="Rating placeholder" />
 
-            <View
-                android:id="@+id/line2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/ratingBAC"
-                android:layout_margin="10dp"
-                android:background="@color/hint_grey" />
-
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/briefInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/line2"
+                android:layout_below="@+id/ratingBAC"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
@@ -95,13 +80,6 @@
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:text="Rating placeholder" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/rating"
-                android:layout_margin="10dp"
-                android:background="@color/hint_grey" />
         </RelativeLayout>
     </RelativeLayout>
 
