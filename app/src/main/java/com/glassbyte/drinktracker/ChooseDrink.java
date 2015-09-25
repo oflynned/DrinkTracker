@@ -32,6 +32,7 @@ import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.ads.AdListener;
@@ -89,31 +90,48 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     private float FONT_RATIO_XL;
     private float FONT_RATIO_LARGE;
     private float FONT_RATIO_SMALL;
-    private float CIRCLE_WIDTH = 135.0f;
-    private float CIRCLE_RATIO = 0.125f;
+    private float CIRCLE_RATIO;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+        //poll for screen size of the device
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         SCREEN_WIDTH = size.x;
         SCREEN_HEIGHT = size.y;
 
+        //assign ratios for various screen sizes
         if (SCREEN_WIDTH >= 1080){
             BAC_FONT_SIZE = 40;
             BAC_FONT_SIZE_SMALL = 30;
+
             FONT_RATIO_XL = 1f;
             FONT_RATIO_LARGE = 1f;
             FONT_RATIO_SMALL = 1f;
+
+            CIRCLE_RATIO = 1f;
+        }
+        else if (SCREEN_WIDTH >= 720 && SCREEN_WIDTH < 1080){
+            BAC_FONT_SIZE = 40;
+            BAC_FONT_SIZE_SMALL = 30;
+
+            FONT_RATIO_XL = 0.7f;
+            FONT_RATIO_LARGE = 1.2f;
+            FONT_RATIO_SMALL = 1.5f;
+
+            CIRCLE_RATIO = 0.8f;
         }
         else {
             BAC_FONT_SIZE = 40;
             BAC_FONT_SIZE_SMALL = 30;
+
             FONT_RATIO_XL = 0.5f;
             FONT_RATIO_LARGE = 0.6f;
             FONT_RATIO_SMALL = 0.7f;
+
+            CIRCLE_RATIO = 0.5f;
         }
 
         SIDE_BAR_WIDTH = (int) (SCREEN_WIDTH * RATIO_TAB_WIDTH);
@@ -674,12 +692,12 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
             if (isLeft) {
                 float textWidth = textPaint.measureText(LEFT_SIDE_BAR_TEXT);
-                c.translate(SIDE_BAR_WIDTH / 2 - FONT_SIZE * FONT_RATIO_LARGE / 2, this.getHeight() / 2 - textWidth / 2);
+                c.translate(SIDE_BAR_WIDTH / 2 - FONT_SIZE / 2, this.getHeight() / 2 - textWidth / 2);
                 c.rotate(90);
                 c.drawText(LEFT_SIDE_BAR_TEXT, 0, 0, textPaint);
             } else {
                 float textWidth = textPaint.measureText(RIGHT_SIDE_BAR_TEXT);
-                c.translate(SIDE_BAR_WIDTH / 2 + FONT_SIZE * FONT_RATIO_LARGE / 2, this.getHeight() / 2 + textWidth / 2);
+                c.translate(SIDE_BAR_WIDTH / 2 + FONT_SIZE / 2, this.getHeight() / 2 + textWidth / 2);
                 c.rotate(-90);
                 c.drawText(RIGHT_SIDE_BAR_TEXT, 0, 0, textPaint);
             }
@@ -708,6 +726,9 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             paramCanvas.save();
             paramCanvas.rotate(135f, i / 2, j / 2);
             super.draw(paramCanvas);
+            super.setScaleX(CIRCLE_RATIO);
+            super.setScaleY(CIRCLE_RATIO);
+
             paramCanvas.restore();
         }
     }
