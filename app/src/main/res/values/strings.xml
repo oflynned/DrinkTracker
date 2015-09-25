@@ -246,5 +246,10 @@
     <string name="q_single">Single</string>
     <string name="q_double">Double</string>
     <string name="q_triple">Triple</string>
+    <string name="please_choose_drink">Please Choose a Drink</string>
+    <string name="drink">Drink!</string>
+    <string name="drink_added">The drink was successfully added</string>
+    <string name="set_percentage">Set Percentage</string>
+    <string name="set_volume">Set Volume</string>
 
 </resources>

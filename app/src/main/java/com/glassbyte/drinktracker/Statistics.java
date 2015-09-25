@@ -33,7 +33,9 @@ import java.util.TimeZone;
 /**
  * Created by ed on 25/08/15.
  */
-public class Statistics extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener, OnDataPointTapListener {
+public class Statistics extends Activity implements
+        SharedPreferences.OnSharedPreferenceChangeListener,
+        OnDataPointTapListener {
 
     int orange, counter;
     double totUnits, maxUnits, BAC, maxBAC;
@@ -116,6 +118,7 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
                         graph.addSeries(series);
                         styleAxes();
                         break;
+                    //if nothing is selected, show default as current session
                     default:
                         Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
                         series = new LineGraphSeries<>(getBACTuple());
@@ -182,7 +185,7 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
                     BACTime = cursor.getLong(1);
 
                     int xAxisValueHours = (int) (BACTime / (1000*60*60) % 24)
-                            + (timeZone.getDSTSavings() / (1000*60*60)%24);
+                            + (timeZone.getDSTSavings() / (1000*60*60) % 24);
                     int xAxisValueMins = (int) (((BACTime / (1000*60)) % 60) / 0.6);
                     String xAxisValueConcat = Integer.parseInt(Integer.toString(xAxisValueHours))
                             + "." + Integer.parseInt(Integer.toString(xAxisValueMins));
@@ -221,7 +224,7 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
                 BAC = cursor.getDouble(2);
                 BACTime = cursor.getLong(1);
                 int xAxisValueHours = (int) (BACTime / (1000*60*60) % 24)
-                        + (timeZone.getDSTSavings() / (1000*60*60)%24);
+                        + (timeZone.getDSTSavings() / (1000*60*60) % 24);
                 int xAxisValueMins = (int) ((BACTime / (1000*60)) / (0.6));
                 String xAxisValueConcat = Integer.parseInt(Integer.toString(xAxisValueHours))
                         + "." + Integer.parseInt(Integer.toString(xAxisValueMins));
