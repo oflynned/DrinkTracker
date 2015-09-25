@@ -8,34 +8,26 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
-import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
-import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -93,10 +85,51 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        //graph data
-        series = new LineGraphSeries<>(getBACTuple());
-        graph.addSeries(series);
-        styleAxes();
+        //get the selection from the spinner to display the correct time period
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parent,
+                                       View view, int pos, long id) {
+
+                //Get item from spinner and store in string
+                String selected = String.valueOf(parent.getSelectedItemPosition());
+
+                switch (selected) {
+                    //current
+                    case "0":
+                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
+                        series = new LineGraphSeries<>(getBACTuple());
+                        graph.addSeries(series);
+                        styleAxes();
+                        break;
+                    //weekly
+                    case "1":
+                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
+                        series = new LineGraphSeries<>(getBACTuple());
+                        graph.addSeries(series);
+                        styleAxes();
+                        break;
+                    //monthly
+                    case "2":
+                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
+                        series = new LineGraphSeries<>(getBACTuple());
+                        graph.addSeries(series);
+                        styleAxes();
+                        break;
+                    default:
+                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
+                        series = new LineGraphSeries<>(getBACTuple());
+                        graph.addSeries(series);
+                        styleAxes();
+                        break;
+                }
+
+            }
+
+            public void onNothingSelected(AdapterView parent) {
+                //Do nothing
+            }
+        });
     }
 
     private void styleAxes(){
@@ -118,7 +151,6 @@ public class Statistics extends Activity implements SharedPreferences.OnSharedPr
         System.out.println(countQuery);
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.moveToFirst();
-        Toast.makeText(getApplicationContext(),cursor.getCount() + "",Toast.LENGTH_SHORT).show();
         DataPoint[] values = new DataPoint[cursor.getCount()];
         long lastZeroBACDate;
 

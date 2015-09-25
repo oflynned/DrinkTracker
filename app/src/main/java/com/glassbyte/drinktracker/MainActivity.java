@@ -96,10 +96,8 @@ public class MainActivity extends AppCompatActivity {
             mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
             mPager.setAdapter(mPagerAdapter);
 
-
             mPager.setCurrentItem(1);
         }
-
         return true;
     }
 
