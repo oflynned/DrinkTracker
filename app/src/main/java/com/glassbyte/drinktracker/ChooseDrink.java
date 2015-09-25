@@ -15,11 +15,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,9 +51,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     private SelectionSideBar leftSideBar, rightSideBar;
     private TextView bacDisplay, pbBAC, warningText;
     private final int BAC_DECIMAL_PLACES = 4;
-    private final int BAC_FONT_SIZE = 40;
-    private final int BAC_FONT_SIZE_SMALL = 30;
-    private final int SIDE_BAR_WIDTH = 200;
     private final int PROGESS_BAR_RATIO = 300;
     private BloodAlcoholContent bloodAlcoholContent;
     SharedPreferences sp;
@@ -78,9 +77,47 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
     public boolean isPaused;
 
+    //scaling
+    public static int SCREEN_HEIGHT;
+    public static int SCREEN_WIDTH;
+    public static float RATIO_TAB_WIDTH = 0.185f;
+    public int SIDE_BAR_WIDTH;
+
+
+    private int BAC_FONT_SIZE;
+    private int BAC_FONT_SIZE_SMALL;
+    private float FONT_RATIO_XL;
+    private float FONT_RATIO_LARGE;
+    private float FONT_RATIO_SMALL;
+    private float CIRCLE_WIDTH = 135.0f;
+    private float CIRCLE_RATIO = 0.125f;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        SCREEN_WIDTH = size.x;
+        SCREEN_HEIGHT = size.y;
+
+        if (SCREEN_WIDTH >= 1080){
+            BAC_FONT_SIZE = 40;
+            BAC_FONT_SIZE_SMALL = 30;
+            FONT_RATIO_XL = 1f;
+            FONT_RATIO_LARGE = 1f;
+            FONT_RATIO_SMALL = 1f;
+        }
+        else {
+            BAC_FONT_SIZE = 40;
+            BAC_FONT_SIZE_SMALL = 30;
+            FONT_RATIO_XL = 0.5f;
+            FONT_RATIO_LARGE = 0.6f;
+            FONT_RATIO_SMALL = 0.7f;
+        }
+
+        SIDE_BAR_WIDTH = (int) (SCREEN_WIDTH * RATIO_TAB_WIDTH);
+
         isPaused = false;
         /*Register the sharepreferences listener so that it doesn't get garbage collected*/
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
@@ -192,7 +229,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         customProgressBar.setId(View.generateViewId());
 
         bacDisplay = new TextView(this.getActivity());
-        bacDisplay.setTextSize(BAC_FONT_SIZE);
+        bacDisplay.setTextSize(BAC_FONT_SIZE * FONT_RATIO_LARGE);
         bacDisplay.setTextColor(Color.BLACK);
         bacDisplay.setGravity(Gravity.CENTER);
         bacDisplay.setText(getResources().getString(R.string.current_BAC));
@@ -205,7 +242,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         bacDisplay.setId(View.generateViewId());
 
         pbBAC = new TextView(this.getActivity());
-        pbBAC.setTextSize(BAC_FONT_SIZE_SMALL);
+        pbBAC.setTextSize(BAC_FONT_SIZE_SMALL * FONT_RATIO_SMALL);
         pbBAC.setTextColor(Color.BLACK);
         pbBAC.setGravity(Gravity.CENTER);
         pbBAC.setText("" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
@@ -218,7 +255,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         fab2 = new FloatingActionButton(getContext());
 
         //advert
-
         adView = new AdView(getContext());
         final RelativeLayout.LayoutParams paramsAds = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsAds.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -488,10 +524,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         this.totUnits = totUnits;
     }
 
-    protected double getTotalUnits() {
-        return totUnits;
-    }
-
     protected void setCalories(int calories) {
         this.calories = calories;
     }
@@ -632,7 +664,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
             textPaint = new Paint();
             textPaint.setColor(Color.WHITE);
-            textPaint.setTextSize(FONT_SIZE);
+            textPaint.setTextSize(FONT_SIZE * FONT_RATIO_XL);
             textPaint.setFakeBoldText(true);
         }
 
@@ -642,12 +674,12 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
             if (isLeft) {
                 float textWidth = textPaint.measureText(LEFT_SIDE_BAR_TEXT);
-                c.translate(SIDE_BAR_WIDTH / 2 - FONT_SIZE / 2, this.getHeight() / 2 - textWidth / 2);
+                c.translate(SIDE_BAR_WIDTH / 2 - FONT_SIZE * FONT_RATIO_LARGE / 2, this.getHeight() / 2 - textWidth / 2);
                 c.rotate(90);
                 c.drawText(LEFT_SIDE_BAR_TEXT, 0, 0, textPaint);
             } else {
                 float textWidth = textPaint.measureText(RIGHT_SIDE_BAR_TEXT);
-                c.translate(SIDE_BAR_WIDTH / 2 + FONT_SIZE / 2, this.getHeight() / 2 + textWidth / 2);
+                c.translate(SIDE_BAR_WIDTH / 2 + FONT_SIZE * FONT_RATIO_LARGE / 2, this.getHeight() / 2 + textWidth / 2);
                 c.rotate(-90);
                 c.drawText(RIGHT_SIDE_BAR_TEXT, 0, 0, textPaint);
             }
@@ -674,7 +706,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             int i = getMeasuredWidth();
             int j = getMeasuredHeight();
             paramCanvas.save();
-            paramCanvas.rotate(135.0F, i / 2, j / 2);
+            paramCanvas.rotate(135f, i / 2, j / 2);
             super.draw(paramCanvas);
             paramCanvas.restore();
         }
