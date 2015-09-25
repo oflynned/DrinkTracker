@@ -19,6 +19,8 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.Locale;
 
@@ -148,6 +150,11 @@ public class MainActivity extends AppCompatActivity {
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm){
             super(fm);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup viewPager, int position, Object object) {
+            System.out.println("Destroy item: "+object.toString());
         }
 
         @Override
