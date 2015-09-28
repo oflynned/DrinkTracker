@@ -244,4 +244,19 @@
     <string name="track_drinking">Track Your Drinking</string>
     <string name="know_exactly">Know exactly how much is too much and educate yourself on alcohol limits</string>
 
+
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="units_title">Units</string>
+    <string name="gender_title">Gender</string>
+    <string name="input_info">Input\nInformation</string>
+    <string name="imperial">Imperial</string>
+    <string name="weight">Weight</string>
+    <string name="metric">Metric</string>
+    <string name="kg">kg</string>
+    <string name="height">Height</string>
+    <string name="cm">cm</string>
+    <string name="feet">Feet:</string>
+    <string name="inches_title">Inches:</string>
+    <string name="continue_button">Continue</string>
 </resources>
