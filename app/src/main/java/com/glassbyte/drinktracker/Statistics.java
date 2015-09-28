@@ -247,7 +247,7 @@ public class Statistics extends Activity implements
             cursor.close();
         }
         else{
-            //populate table
+            Toast.makeText(getBaseContext(),getResources().getString(R.string.add_drink),Toast.LENGTH_SHORT).show();
         }
 
         return values;
