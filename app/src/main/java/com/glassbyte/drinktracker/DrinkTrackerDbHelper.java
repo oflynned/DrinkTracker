@@ -101,7 +101,6 @@ public class DrinkTrackerDbHelper extends SQLiteOpenHelper {
         BloodAlcoholContent.updateCurrentBac(mContext, bacValue,
                 DrinkTrackerDatabase.BacTable.INSERT_NEW_UPDATE, drinkId, time);
 
-
         return drinkId;
     }
 

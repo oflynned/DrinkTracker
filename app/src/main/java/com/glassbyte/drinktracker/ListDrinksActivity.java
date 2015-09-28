@@ -102,7 +102,7 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
         Cursor c = readDB.rawQuery(queryWLimit, null);
 
         int rowCount = c.getCount();
-        System.out.println("Row Count: "+rowCount);
+        System.out.println("Row Count: " + rowCount);
         Button nextB = (Button)findViewById(R.id.drinks_list_next_button);
         if(rowCount == 0) {
             readDB.close();
@@ -182,6 +182,22 @@ public class ListDrinksActivity extends AppCompatActivity implements AdapterView
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPause(){
+        dtDb.close();
+        super.onPause();
+    }
+
+    public void onResume(){
+        dtDb = new DrinkTrackerDbHelper(this);
+        super.onResume();
+    }
+
+    public void onDestroy(){
+        dtDb.close();
+        super.onDestroy();
     }
 
     public void prevPage(View v){

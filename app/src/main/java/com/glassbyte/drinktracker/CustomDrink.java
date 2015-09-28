@@ -260,6 +260,24 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
         return rl;
     }
 
+    @Override
+    public void onPause(){
+        dou.close();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        dou = new DrinkTrackerDbHelper(this.getContext());
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy(){
+        dou.close();
+        super.onDestroy();
+    }
+
     private int getChosenGlassWidth(int previewGlassWidth){
         Point size = new Point();
         display.getSize(size);

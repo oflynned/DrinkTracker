@@ -125,6 +125,22 @@ public class Statistics extends Activity implements
         });
     }
 
+    @Override
+    public void onPause(){
+        drinkTrackerDbHelper.close();
+        super.onPause();
+    }
+
+    public void onResume(){
+        drinkTrackerDbHelper = new DrinkTrackerDbHelper(this);
+        super.onResume();
+    }
+
+    public void onDestroy(){
+        drinkTrackerDbHelper.close();
+        super.onDestroy();
+    }
+
     private DataPoint[] getBACTupleCurrent() {
 
         // select the prior time where BAC was at 0 the previous time and 
