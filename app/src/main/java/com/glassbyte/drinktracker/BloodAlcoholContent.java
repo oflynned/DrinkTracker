@@ -1,6 +1,5 @@
 package com.glassbyte.drinktracker;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -36,13 +35,7 @@ public class BloodAlcoholContent {
         String gender = sp.getString(context.getString(R.string.pref_key_editGender),"");
 
         this.bodyWeight = Float.valueOf(sp.getString(context.getString(R.string.pref_key_editWeight), "")) * 1000;
-        this.isMan = (gender == "male");
-    }
-
-    // bodyWeight arg must be specified in kilograms
-    public BloodAlcoholContent(boolean isMan, float bodyWeight){
-        this.isMan = isMan;
-        this.bodyWeight = bodyWeight * 1000; //convert kg's to g's
+        this.isMan = (gender.equals("male"));
     }
 
     public float getCurrentEbac(){return sp.getFloat(mContext.getString(R.string.pref_key_currentEbac),0);}
@@ -91,6 +84,7 @@ public class BloodAlcoholContent {
 
         } else {currentBac = sp.getFloat(context.getString(R.string.pref_key_currentEbac), 0);System.out.println("BacTable had no entries.");}
         //End of Get the correct value of current BAC
+        c.close();
         System.out.println("currentBac="+currentBac+";");
 
         float newCurrentBac = 0;
@@ -139,6 +133,8 @@ public class BloodAlcoholContent {
 
                 if (dCurrentBAC < currentBac)
                     newCurrentBac = currentBac - dCurrentBAC;
+
+                cur.close();
                 System.out.println("newCurrentBac="+newCurrentBac+"; ------------ dCurrentBac="+dCurrentBAC);
             } else {
                 //The current bac is 0 thus no reason for decaying
@@ -205,6 +201,7 @@ public class BloodAlcoholContent {
                 writeDb.insert(DrinkTrackerDatabase.DrinksBacRelationTable.TABLE_NAME, null, contentValues);
             }
             //End of Insert all of the relations between the drinks and the bac update into the relation table
+            cur.close();
         }
         //End of Enter drink bac relation in the drink_bac_database
 
@@ -212,6 +209,7 @@ public class BloodAlcoholContent {
         //Clean up
         readDb.close();
         writeDb.close();
+        dbHelper.close();
 
         System.out.println("return true;");
         return true;
