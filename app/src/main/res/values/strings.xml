@@ -281,5 +281,6 @@
     <string name="alc">ALC</string>
     <string name="next">Next</string>
     <string name="add_drink">Please add a drink in order to use statistics!</string>
+    <string name="previous">Previous</string>
 
 </resources>

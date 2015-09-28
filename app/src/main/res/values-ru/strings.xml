@@ -46,7 +46,7 @@
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_list_drinks">ListDrinksActivity</string>
+    <string name="title_activity_list_drinks">Список напитков</string>
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Дисклэймер</string>
@@ -83,7 +83,7 @@
     <string name="calories">Калорий/и</string>
 
     <!--> miscellaneous <-->
-    <string name="current_BAC">Нынешнее количество алкаголя в крови:\n</string>
+    <string name="current_BAC">Aлкаголя в крови:\n</string>
     <string name="current_BAC_level">Нынешний уровень алкаголя в крови:</string>
     <string name="preset_drinks">Установленные напитки</string>
     <string name="custom_drinks">Свои напитки</string>
@@ -114,13 +114,12 @@
     <string name="foot_and">футы и</string>
     <string name="inches">дюймы</string>
     <string name="pounds">фунты</string>
-    <string name="pref_key_editGender" translatable="false"></string>
     <string name="warning">Внимание!</string>
     <string name="oz">унции</string>
     <string name="ok">OK</string>
     <string name="notice">Сколько Выпил?</string>
     <string name="plugins">Плагины</string>
-    <string name="plugins_body">App Intro\nby PaoloRotolo\n\nFloatingActionButton\nот Clans\n\nJoda-Time-Android\nот dlew\n\nHelloCharts для Android\nот lecho</string>
+    <string name="plugins_body">App Intro\nby PaoloRotolo\n\nFloatingActionButton\nот Clans\n\nJoda-Time-Android\nот dlew\n\nHelloCharts for Android\nот lecho</string>
     <string name="warning1">Вы почти пьяны, возможно пейте помедленнее если вы чувствуете сеья опъяневшим.</string>
     <string name="warning2">Вы пьяны, пожалуйста будьте осторожны и не потеряйте свои вещи.</string>
     <string name="warning3">Вы очень пьяны и можете ожидать похмелье завтрашним утром.</string>
@@ -245,34 +244,35 @@
     <string name="q_double">Двойной/ая</string>
     <string name="q_triple">Тройной/ая</string>
 
-    <string name="what_are_you_waiting_for">What are you waiting for?</string>
-    <string name="give_drink_tracker_a_go">Give DrinkTracker a go today and make lifestyle changes in realtime that last a lifetime</string>
-    <string name="sober_friend">Your Sober Mobile Friend</string>
-    <string name="warning_beforehand">Be warned beforehand when things are going overboard and prevent over-drinking and ruined nights out</string>
-    <string name="track_drinking">Track Your Drinking</string>
-    <string name="know_exactly">Know exactly how much is too much and educate yourself on alcohol limits</string>
+    <string name="what_are_you_waiting_for">Чего же ты ждешь?</string>
+    <string name="give_drink_tracker_a_go">Попробуйте "Сколько Выпил?" сегодня и сделать изменения в образе жизни в реальном времени</string>
+    <string name="sober_friend">Ваш Друг Трезвый</string>
+    <string name="warning_beforehand">Будьте в курсе, когда вы пьете слишком много. Предотвращение пить слишком много и губит ночей</string>
+    <string name="track_drinking">Отслеживать Aлкоголя</string>
+    <string name="know_exactly">Вы точно знаете, сколько это слишком много. Обучать себя на допустимого уровня содержания алкоголя</string>
 
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="units_title">Units</string>
-    <string name="gender_title">Gender</string>
-    <string name="input_info">Input\nInformation</string>
-    <string name="imperial">Imperial</string>
-    <string name="weight">Weight</string>
-    <string name="metric">Metric</string>
-    <string name="kg">kg</string>
-    <string name="height">Height</string>
-    <string name="cm">cm</string>
-    <string name="feet">Feet:</string>
-    <string name="inches_title">Inches:</string>
-    <string name="continue_button">Continue</string>
+    <string name="male">Мужской</string>
+    <string name="female">Женский</string>
+    <string name="units_title">Единицу</string>
+    <string name="gender_title">Пол</string>
+    <string name="input_info">Входная\nинформация</string>
+    <string name="imperial">Имперский</string>
+    <string name="weight">Вес</string>
+    <string name="metric">Метрический</string>
+    <string name="kg">кг</string>
+    <string name="height">Высота</string>
+    <string name="cm">см</string>
+    <string name="feet">Футов:</string>
+    <string name="inches_title">Дюйма:</string>
+    <string name="continue_button">Продолжать</string>
 
-    <string name="remove_selected">Remove Selected</string>
-    <string name="display_drinks">Display drinks:</string>
-    <string name="date">DATE</string>
-    <string name="title">TITLE</string>
-    <string name="vol">VOL</string>
-    <string name="alc">ALC</string>
-    <string name="next">Next</string>
-    <string name="add_drink">Please add a drink in order to use statistics!</string>
+    <string name="remove_selected">Удалить</string>
+    <string name="display_drinks">Показать:</string>
+    <string name="date">Дата</string>
+    <string name="title">Заглавие</string>
+    <string name="vol">Oбъем</string>
+    <string name="alc">Алк</string>
+    <string name="next">След.</string>
+    <string name="add_drink">Пожалуйста, добавьте по крайней мере один напиток для того, чтобы использовать статистику!</string>
+    <string name="previous">Пред.</string>
 </resources>

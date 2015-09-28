@@ -81,7 +81,7 @@
         android:id="@+id/drinks_list_prev_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Previous"
+        android:text="@string/previous"
         android:layout_below="@id/drinks_list_table"
         android:layout_alignParentLeft="true"
         android:onClick="prevPage"
