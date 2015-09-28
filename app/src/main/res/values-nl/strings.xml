@@ -250,4 +250,12 @@
     <string name="feet">Feet:</string>
     <string name="inches_title">Inches:</string>
     <string name="continue_button">Continue</string>
+
+    <string name="remove_selected">Remove Selected</string>
+    <string name="display_drinks">Display drinks:</string>
+    <string name="date">DATE</string>
+    <string name="title">TITLE</string>
+    <string name="vol">VOL</string>
+    <string name="alc">ALC</string>
+    <string name="next">Next</string>
 </resources>
