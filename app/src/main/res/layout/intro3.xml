@@ -17,7 +17,7 @@
         android:textColor="#ffffff"
         android:paddingRight="32dp"
         android:textSize="28sp"
-        android:text="What are you waiting for?"/>
+        android:text="@string/what_are_you_waiting_for"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -32,7 +32,7 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/glassbyte"/>
+            android:src="@drawable/promo"/>
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
         android:textSize="16sp"
-        android:text="Give DrinkTracker a go today and make lifestyle changes in realtime that last a lifetime"/>
+        android:text="@string/give_drink_tracker_a_go"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="64dp" />

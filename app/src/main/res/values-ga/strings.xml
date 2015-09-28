@@ -234,4 +234,12 @@
     <string name="q_single">Single</string>
     <string name="q_double">Double</string>
     <string name="q_triple">Triple</string>
+
+    <string name="what_are_you_waiting_for">What are you waiting for?</string>
+    <string name="give_drink_tracker_a_go">Give DrinkTracker a go today and make lifestyle changes in realtime that last a lifetime</string>
+    <string name="sober_friend">Your Sober Mobile Friend</string>
+    <string name="warning_beforehand">Be warned beforehand when things are going overboard and prevent over-drinking and ruined nights out</string>
+    <string name="track_drinking">Track Your Drinking</string>
+    <string name="know_exactly">Know exactly how much is too much and educate yourself on alcohol limits</string>
+
 </resources>
