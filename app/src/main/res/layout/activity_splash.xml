@@ -19,9 +19,8 @@
             android:maxHeight="200dp"
             android:scaleType="fitCenter"
             android:src="@drawable/glassbyte"
-            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="123dp" />
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,13 +28,11 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
             android:textSize="30sp"
-            android:text="GlassByte"
+            android:text="GlassByte Limited"
             android:layout_marginTop="30dp"
             android:id="@+id/logotext"
             android:textColor="@color/black"
             android:layout_below="@+id/image_view"
             android:layout_centerHorizontal="true" />
-
-
     </RelativeLayout>
 </ScrollView>
