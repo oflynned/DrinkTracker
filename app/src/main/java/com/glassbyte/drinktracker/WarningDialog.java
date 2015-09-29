@@ -6,6 +6,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -36,6 +39,10 @@ public class WarningDialog {
 
     public WarningDialog(Context context) {
         this.context = context;
+    }
+
+    public static Bitmap getLargeIcon(Context context) {
+        return BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_beer);
     }
 
     public void displayWarning(String warningTier) {
@@ -138,6 +145,7 @@ public class WarningDialog {
                     .setContentTitle(title)
                     .setContentText(text)
                     .setSmallIcon(icon)
+                    .setLargeIcon(getLargeIcon(context))
                     .setAutoCancel(true)
                     .build();
             NotificationManager notificationManager =
@@ -148,6 +156,7 @@ public class WarningDialog {
                     .setContentTitle(title)
                     .setContentText(text)
                     .setSmallIcon(icon)
+                    .setLargeIcon(getLargeIcon(context))
                     .setAutoCancel(true)
                     .setVisibility(visibility)
                     .build();
