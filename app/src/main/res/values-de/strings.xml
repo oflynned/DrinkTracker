@@ -101,6 +101,10 @@
     <string name="language_options">Sprachoptionen</string>
     <string name="irish_language_option">Irische Sprachoption</string>
     <string name="summer_irish">Wählen Sie diese Option, wenn Sie Irisch als Sprachoption benutzen möchten</string>
+
+    <string name="nds_language_option">Plattdeutsch Sprachoption</string>
+    <string name="summer_nds">Wählen Sie diese Option, wenn Sie Plattdeutsch als Sprachoption benutzen möchten</string>
+
     <string name="more_from_glassbyte">Mehr von GlassByte</string>
     <string name="visit_website">Besuchen Sie uns auf unserer Webseite!</string>
     <string name="summer_glassbyte">Klicken Sie hier, um weitere Produkte und Nachrichten von GlassByte anzusehen</string>

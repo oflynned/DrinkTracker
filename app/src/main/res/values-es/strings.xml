@@ -101,6 +101,10 @@
     <string name="language_options">Opciones de idioma</string>
     <string name="irish_language_option">Opción lengua irlandesa</string>
     <string name="summer_irish">Seleccione esta opción si desea utilizar el gaélico irlandés como una opción de idioma</string>
+
+    <string name="nds_language_option">Opción lengua irlandesa</string>
+    <string name="summer_nds">Seleccione esta opción si desea utilizar el gaélico irlandés como una opción de idioma</string>
+
     <string name="more_from_glassbyte">Más de Glassbyte</string>
     <string name="visit_website">¡Visítenos en nuestra página web !</string>
     <string name="summer_glassbyte">Haga clic aquí para ver nuestro sitio web para más productos y noticias de GlassByte</string>

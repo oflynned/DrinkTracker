@@ -99,8 +99,13 @@
 
     <!--> Settings <-->
     <string name="language_options">Roghanna Teanga</string>
-    <string name="irish_language_option">Rogha Gaeilge</string>
-    <string name="summer_irish">Roghnaigh an rogha seo más mian leat an aip a úsáid as Gaeilge</string>
+
+    <string name="irish_language_option">Rogha Ghaeilge</string>
+    <string name="summer_irish">Roghnaigh an rogha seo má tá sé uait an Ghaeilge a úsáid mar phríomhtheanga na h-aipe ar athláinseáil.</string>
+
+    <string name="nds_language_option">Rogha Ghearmáinise Íochtaraí</string>
+    <string name="summer_nds">Roghnaigh an rogha seo má tá sé uait an Ghearmáinis Íochtarach a úsáid mar phríomhtheanga na h-aipe ar athláinseáil.</string>
+
     <string name="more_from_glassbyte">Tuilleadh ó Glassbyte</string>
     <string name="visit_website">Tabhair cuairt dúinn d\'ár suíomh!</string>
     <string name="summer_glassbyte">Gliogáil anseo chun ár suíomh a fheiceáil ar son tuilleadh táirgí agus nuachta ó GlassByte</string>

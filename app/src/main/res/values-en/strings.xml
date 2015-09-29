@@ -87,7 +87,11 @@
     <!--> Settings <-->
     <string name="language_options">Language Options</string>
     <string name="irish_language_option">Irish Language Option</string>
-    <string name="summer_irish">Select this option if you wish to use Irish Gaelic as a language option</string>
+    <string name="summer_irish">Select this option if you wish to use Irish Gaelic as a language option on relaunching the app.</string>
+
+    <string name="nds_language_option">Low German Language Option</string>
+    <string name="summer_nds">Select this option if you wish to use Low German as a language option on relaunching the app.</string>
+
     <string name="more_from_glassbyte">More from GlassByte</string>
     <string name="visit_website">Visit us at our website!</string>
     <string name="summer_glassbyte">Click here to view our website for more products and news from GlassByte</string>
