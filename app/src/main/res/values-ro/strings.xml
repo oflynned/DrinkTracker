@@ -233,9 +233,9 @@
     <string name="jager_spirit">Jäger</string>
 
     <!--> Shot quantities <-->
-    <string name="q_single">Single</string>
-    <string name="q_double">Double</string>
-    <string name="q_triple">Triple</string>
+    <string name="q_single">Simplu</string>
+    <string name="q_double">Dublu</string>
+    <string name="q_triple">Triplu</string>
 
     <string name="what_are_you_waiting_for">Ce mai astepti?</string>
     <string name="give_drink_tracker_a_go">Fa o schimbare in viata ta!</string>
