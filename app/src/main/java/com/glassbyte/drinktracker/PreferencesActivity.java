@@ -33,7 +33,6 @@ public class PreferencesActivity extends PreferenceActivity {
         SharedPreferences sp;
         Activity thisActivity;
         PreferenceScreen preferenceScreen;
-        PreferenceCategory profileDetailsCategory;
         Preference editHeightPref, editWeightPref, editGenderPref, editUnitsPref;
 
         @Override
@@ -172,8 +171,14 @@ public class PreferencesActivity extends PreferenceActivity {
             irishLanguage.setSummary(R.string.summer_irish);
             irishLanguage.setKey(getString(R.string.pref_key_irish));
             irishLanguage.setDefaultValue(false);
-
             languageCategory.addPreference(irishLanguage);
+
+            CheckBoxPreference ndsLanguage = new CheckBoxPreference(this.getActivity());
+            ndsLanguage.setTitle(R.string.nds_language_option);
+            ndsLanguage.setSummary(R.string.summer_nds);
+            ndsLanguage.setKey(getString(R.string.pref_key_nds));
+            ndsLanguage.setDefaultValue(false);
+            languageCategory.addPreference(ndsLanguage);
 
             setPreferenceScreen(preferenceScreen);
             //End of Set up the components of the preference Scree
@@ -259,6 +264,14 @@ public class PreferencesActivity extends PreferenceActivity {
             });
 
             irishLanguage.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object o) {
+                    preference.setSummary(String.valueOf(o));
+                    return true;
+                }
+            });
+
+            ndsLanguage.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object o) {
                     preference.setSummary(String.valueOf(o));

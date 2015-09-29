@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 
 import java.util.Locale;
 
-
 public class MainActivity extends AppCompatActivity {
     public final static String ON_BACK_PRESSED_EVENT = "on_back_pressed_event";
     private UpdateCurrentBACAlarmReceiver currentBACAlarm = new UpdateCurrentBACAlarmReceiver();
@@ -53,10 +52,15 @@ public class MainActivity extends AppCompatActivity {
 
         //set irish if the checkbox is checked in settings
         boolean irish = false;
+        boolean nds = false;
         boolean irishChosen = sp.getBoolean(getResources().getString(R.string.pref_key_irish), irish);
+        boolean ndsChosen = sp.getBoolean(getResources().getString(R.string.pref_key_nds), nds);
 
-        if(irishChosen){
+        if(irishChosen) {
             setLocale("ga");
+        }
+        else if(ndsChosen) {
+            setLocale("nds");
         }
 
         run = (sp.getString(getResources().getString(R.string.pref_key_run),""));

@@ -1,0 +1,276 @@
+<resources>
+    <string name="app_name">DrinkTracker</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Instellen</string>
+    <string name="action_aboutus">Över us</string>
+    <string name="action_listDrinks">Drunkliest</string>
+    <string name="action_stats">Statistick</string>
+    <string name="action_removeads">Warv wegmaken</string>
+
+    <!-- Intro Screen -->
+
+    <!-- Preferences -->
+
+    <!-- End of Preferences -->
+
+    <!--Custom Drinks Titles-->
+    <string name="shot_glass_title">Köömglas</string>
+    <string name="water_glass_title">Glas</string>
+    <string name="pint_glass_title">Beerglas 0,5l</string>
+    <string name="wine_glass_title">Wienglas</string>
+    <!-- End of Custom Drinks Titles -->
+
+    <!--Custom Drinks SetPercentage Dialog-->
+    <string name="setPercentage_dialog_title">Perzent fastleggen</string>
+    <string name="setVolume_dialog_title">Mengde fastleggen</string>
+    <string name="cancel">Afbreken</string>
+    <string name="done">Klaar</string>
+    <!--End of Custom Drinks SetPercentage Dialog-->
+
+    <string-array name="optgender">
+        <item>Männlich</item>
+        <item>Wievlich</item>
+    </string-array>
+
+    <string-array name="optunits">
+        <item>Düütsche Eenheiden</item>
+        <item>Amerikaansche Eenheiden</item>
+    </string-array>
+
+    <!-->types of drinks<-->
+    <string-array name="period">
+        <item>Tiedruum opstuuns</item>
+        <item>Verleden Week</item>
+        <item>Verleden Maand</item>
+    </string-array>
+
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_list_drinks">Drunkliest</string>
+
+    <!--> disclaimer <-->
+    <string name="disclaimertitle">Uutslöötklausel</string>
+    <string name="disclaimerbody">Wi beed Jem: Dinkt Se daaran, dat DrinkTracker bloot een Schätten vun de Alkohoolkunzentratschoon in\'t Blood (BAK) weddergifft. Dat is nich liektosetten mit een orrenlich maakte Bestimmen vun de Alkohoolkunzentratschoon in\'t Blood. GlassByte övernimmt vundeswegen keen Verantwoorden un steit in keen Fall för Daten in, de maakt warrt ünner Alkohoolinwark. Wi beed Jem: Verhollt Se sik mit Verantwoorden un gewetenhaftig, wenn Se Alkohool drunken hebbt. Döör den Bruuk vun düsse App, stimmt Se to, sik an düsse Waarschoon to hollen.</string>
+    <string name="agree">Ik stimm to</string>
+    <string name="disagree">Ik stimm nich to</string>
+
+    <!--> dialog warnings <-->
+    <string name="tier0">Nüchtern.</string>
+    <string name="tier1">Licht uutspannt un keen Verlust vun de Koordinatschoon.</string>
+    <string name="tier2">Lichte Belämmern, weniger hemmt or töörnt, weniger Vöörsicht, Stiegern vun\'t Verhollen.</string>
+    <string name="tier3">Lichte Belämmern vun\'t Liekgewicht, vun\'t Spreken, vun\'t Kieken un vun de Reakschoonstied.</string>
+    <string name="tier4">Signifikante Belämmern vun de Koordinatschoon, Verlust vun de Oordeelsdüchtigkeid un euphoorsche Fölen.</string>
+    <string name="tier5">De Kuntrull över\'t Liev feelt, Verlust vun\'t Liekgewicht, bleisterige un undüüdliche Sicht. Reduzeerte Euphorie un stiegerte Dysphorie. Starke Belämmern vun de Waarnemen un vun de Oordeelsdüchtigkeid.</string>
+    <string name="tier6">Verstärken vun de Dysphorie, vermeert Övelkeidsfööl, een lett &quot;teemlich tapsig un unbehölpsch&quot;.</string>
+    <string name="tier7">Benamenheid un Biesterigkeid, Desorienteren. Een föölt villicht keen Pien, wenn he/se seert is. Övelkeid un sik breken köönt bi dit Niveau passeren. Wörgreflex mag belämmert ween. Bewusstlosigkeid is mööglich vun düssen Punkt af an.</string>
+    <string name="tier8">Eernste Belämmern vun de sensoorschen, lievlichen un geestigen Funkschonen. Grötter Risiko, to sticken or seert to warrn.</string>
+    <string name="tier9">Afsluut Alkohoolduuntje - een weet nich meer, wo he/se is. Bewusstlosigkeid un Swarigkeiden bi\'t Opwecken sünd bannig waarschienlich.</string>
+    <string name="tier10">Liekbedüden mit een chirurgsche Anästhesie.</string>
+    <string name="tier11">Beginn vun\'t Koma un mööglichen Dood döör Atenstillstand.</string>
+
+    <!--> unit warnings <-->
+    <string name="pollunits">Tall vun de drunken Eenheiden in düsse Week alltohoop:</string>
+    <string name="units">Eenheiden</string>
+    <string name="belowlimit">Ünner de anraden Wekengrents.</string>
+    <string name="abovelimit">Övermatigen Alkohoolbruuk!</string>
+
+    <!--> detailed stats <-->
+    <string name="detailed_stats_title">Detailleerte Statistick</string>
+    <string name="avg_drink_strength">Döörsniddliche Stärkde vun de Drunks:</string>
+    <string name="avg_drink_volume">Döörsniddlich Volumen vun de Drunks:</string>
+    <string name="avg_calories">Kalorien vun\'n Alkohool in düsse Week:</string>
+    <string name="max_bac">Maximale BAK beriekt:</string>
+    <string name="calories">Kalorien</string>
+
+    <!--> miscellaneous <-->
+    <string name="current_BAC">Aktuelle\nBAK:\n</string>
+    <string name="current_BAC_level">Aktuellen BAK-Spegel:</string>
+    <string name="preset_drinks">VÖÖRINSTELLTE DRUNKS</string>
+    <string name="custom_drinks">BRUKERDEFINEERTE DRUNKS</string>
+    <string name="time">Tied</string>
+    <string name="BAC">BAK</string>
+
+    <!--> presets <-->
+    <string name="drink_added">Dit Drunk worr mit Spood toföögt</string>
+    <string name="please_choose_drink">Wäält Se een Drunk:</string>
+    <string name="set_percentage">Perzent fastleggen</string>
+    <string name="set_volume">Volumen fastleggen</string>
+    <string name="drink">Nich lang snacken!</string>
+
+    <!--> Settings <-->
+    <string name="language_options">Spraakoptschonen</string>
+    <string name="irish_language_option">Iersche Spraakoptschoon</string>
+    <string name="summer_irish">Wäält Se düsse Optschoon, wenn Se Iersch as Spraakoptschoon bruken wüllt</string>
+
+    <string name="nds_language_option">Platdüütsch Spraakoptschoon</string>
+    <string name="summer_nds">Wäält Se düsse Optschoon, wenn Se Plattdüütsch as Spraakoptschoon bruken wüllt</string>
+
+    <string name="more_from_glassbyte">Meer vun GlassByte</string>
+    <string name="visit_website">Besöökt Se us op us Websteed!</string>
+    <string name="summer_glassbyte">Klickt Se hier, wenn Se wiedere Produkten un Narichten vun GlassByte ansehen wüllt</string>
+    <string name="remove_ads">Maakt Se de Warv weg un stöönt Se us</string>
+    <string name="summary_ads">Klickt Se hier, üm de warvfre\'e Verschoon op Google-Play to kopen</string>
+    <string name="modify_details">Details ännern</string>
+    <string name="modify_gender">Geslecht ännern</string>
+    <string name="modify_units">Eenheiden ännern</string>
+    <string name="modify_height">Grött ännern</string>
+    <string name="modify_weight">Gewicht ännern</string>
+    <string name="foot_and">Foot un</string>
+    <string name="inches">Toll</string>
+    <string name="pounds">Pund</string>
+    <string name="ok">OK</string>
+    <string name="warning">Waarscho!</string>
+    <string name="ml">ml</string>
+    <string name="oz">oz</string>
+
+    <string name="notice">DrinkTracker</string>
+
+    <string name="plugins">Bruukt Se Plugins</string>
+    <string name="plugins_body">App Intro\nvun PaoloRotolo\n\nFloatingActionButton\nvun Clans\n\nJoda-Time-Android\nvun dlew\n\nHelloCharts for Android\nvun lecho</string>
+    <string name="warning1">Se sünd direktemang daarbi, duun to warrn. Villicht hollt Se sik nu een beten wat torüch, wenn Se sik al licht duun föölt.</string>
+    <string name="warning2">Se sünd nu an een Level, wo Se orrenlich duun sünd. Passt Se op sik op, un weest Se seker, dat Se Jemeer Weertgegenstänn nich verleren doot.</string>
+    <string name="warning3">Se sünd nu bannig besöpen un schullen morrn een legen Kater un Dööst hebben.</string>
+    <string name="warning4">Se sünd nu höllsch un utermaten besöpen. Wenn Se meer drinken doot, bringt Se sik in Gefaar. Geevt Se Acht op sik sülvst.</string>
+    <string name="libraries">Bruuk Programmbibliotheken</string>
+    <string name="libraries_summary">Hier gifft dat een Liest vun de Programmbibliotheken, de wi bi de Ruutwickeln vun düsse App bruukt hebbt.</string>
+    <string name="apache_summary">Informatschonen över de Lizenzen, de wi bruukt, üm düsse Weekwaar to verdelen.</string>
+    <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="apache">Apache-Lizenzen</string>
+    <string name="about_us">GlassByte is een Weekwaarruutwickelnsbedriev, de in Dublin grünnt worrn is un daar sien Höövdsitt hett. Us lütt un ambitschooneert Team streevt an, innovatieve un nüttliche Weekwaar för Reekner-Plattfoormen ruuttowickeln.</string>
+    <string name="about_us_more">För meer Apps or geschäppliche Anfragen, besöökt Se us Websteed!\nhttp://www.glassbyte.com/</string>
+
+    <!-- Preset Categories -->
+    <string name="beerCategory">Beer</string>
+    <string name="wineCategory">Wien</string>
+    <string name="spiritsCategory">Spriet</string>
+    <string name="cocktailsCategory">Mixdrunks</string>
+
+    <!--> Cocktails - The Unforgettables <-->
+    <string name="alexander">Alexander</string>
+    <string name="americano">Americano</string>
+    <string name="angel_face">Angel Face</string>
+    <string name="aviation">Aviation</string>
+    <string name="bacardi">Bacardi</string>
+    <string name="between_the_sheets">Between the Sheets</string>
+    <string name="casino">Casino</string>
+    <string name="clover_club">Clover Club</string>
+    <string name="daiquiri">Daiquiri</string>
+    <string name="derby">Derby</string>
+    <string name="dry_martini">Dry Martini</string>
+    <string name="gin_fizz">Gin Fizz</string>
+    <string name="john_collins">John Collins</string>
+    <string name="manhattan">Manhattan</string>
+    <string name="mary_pickford">Mary Pickford</string>
+    <string name="monkey_gland">Monkey Gland</string>
+    <string name="negroni">Negroni</string>
+    <string name="old_fashioned">Old Fashioned</string>
+    <string name="paradise">Paradise</string>
+    <string name="planters_punch">Planter\'s Punch</string>
+    <string name="porto_flip">Port Flip</string>
+    <string name="ramos_fizz">Ramos Fizz</string>
+    <string name="rusty_nail">Rusty Nail</string>
+    <string name="sazerac">Sazerac</string>
+    <string name="screwdriver">Screwdriver</string>
+    <string name="sidecar">Sidecar</string>
+    <string name="stinger">Stinger</string>
+    <string name="tuxedo">Tuxedo</string>
+    <string name="whiskey_sour">Whiskey Sour</string>
+    <string name="white_lady">White Lady</string>
+
+    <!--> Cocktails - Contemporary Classics <-->
+    <string name="bellini_cocktail">Bellini</string>
+    <string name="black_russian_cocktail">Black Russian</string>
+    <string name="bloody_mary_cocktail">Bloody Mary</string>
+    <string name="caipirinha_cocktail">Caipirinha</string>
+    <string name="champagne_cocktail">Champagne Cocktail</string>
+    <string name="cosmopolitan_cocktail">Cosmopolitan</string>
+    <string name="cuba_libre_cocktail">Cuba Libre</string>
+    <string name="french_connection_cocktail">French Connection</string>
+    <string name="god_father_cocktail">God Father</string>
+    <string name="god_mother_cocktail">God Mother</string>
+    <string name="golden_dream_cocktail">Golden Dream</string>
+    <string name="grasshopper_cocktail">Grasshopper</string>
+    <string name="french_75_cocktail">French 75</string>
+    <string name="harvey_wallbanger_cocktail">Harvey Wallbanger</string>
+    <string name="horses_neck_cocktail">Horse\'s Neck</string>
+    <string name="irish_coffee_cocktail">Irish Coffee</string>
+    <string name="kir_cocktail">Kir</string>
+    <string name="long_island_iced_tea_cocktail">Long Island Iced Tea</string>
+    <string name="mai_tai_cocktail">Mai Tai</string>
+    <string name="margarita_cocktail">Margarita</string>
+    <string name="mimosa_cocktail">Mimosa</string>
+    <string name="mint_julep_cocktail">Mint Julep</string>
+    <string name="mojito_cocktail">Mojito</string>
+    <string name="moscow_mule_cocktail">Moscow Mule</string>
+    <string name="pina_colada_cocktail">Pina Colada</string>
+    <string name="rose_cocktail">Rose</string>
+    <string name="sea_breeze_cocktail">Sea Breeze</string>
+    <string name="sex_on_the_beach_cocktail">Sex on the Beach</string>
+    <string name="singapore_sling_cocktail">Singapore Sling</string>
+    <string name="tequila_sunrise_cocktail">Tequila Sunrise</string>
+
+    <!--> Cocktail Glasses <-->
+    <string name="cocktail_glass">Cocktailglas</string>
+    <string name="highball_glass">Longdrinkglas</string>
+    <string name="collins_glass">Collins-Glas</string>
+    <string name="lowball_glass">Whiskeyglas</string>
+    <string name="champagne_flute">Sektglas</string>
+    <string name="mug">Köppke</string>
+    <string name="wine_glass">Wienglas</string>
+    <string name="margarita_glass">Margaritaglas</string>
+    <string name="poco_grande_glass">Poco-Grande-Glas</string>
+
+    <!--> Wine volumes <-->
+    <string name="quarter_wine_glass">Veerdel Glas</string>
+    <string name="half_wine_glass">Halv Glas</string>
+    <string name="three_quarter_wine_glass">Dreeveerdel Glas</string>
+
+    <!--> Shot bases <-->
+    <string name="absinthe_spirit">Absinth</string>
+    <string name="sambuca_spirit">Sambuca</string>
+    <string name="vodka_spirit">Wodka</string>
+    <string name="tequila_spirit">Tequila</string>
+    <string name="gin_spirit">Gin</string>
+    <string name="rum_spirit">Rum</string>
+    <string name="whiskey_spirit">Whiskey</string>
+    <string name="brandy_spirit">Brandy</string>
+    <string name="jager_spirit">Jägermeister</string>
+
+    <!--> Shot quantities <-->
+    <string name="q_single">Enkelten</string>
+    <string name="q_double">Dübbelten</string>
+    <string name="q_triple">Dreedübbelten</string>
+
+    <string name="what_are_you_waiting_for">Waarop töövst Se noch?</string>
+    <string name="give_drink_tracker_a_go">Probeert Se noch vundaag DrinkTracker uut un ännert Se Jemeer Lifestyle in Echttied för Leevdaag.</string>
+    <string name="sober_friend">Dien nüchternen Plietschfoonfründ</string>
+    <string name="warning_beforehand">Weest Se rechttiedig waarschoot, wenn Saken Överhand neemt, un laat Se övermatig Drinken un ruineerte Fiernachten nu nich meer op sik kamen</string>
+    <string name="track_drinking">Tekent Se Jemeer Alkohoolbruuk op</string>
+    <string name="know_exactly">Finnt Se nipp un nau ruut, wo veel to veel is, un leert Se Jemeer Alkohoolgrents kennen</string>
+
+
+    <string name="male">Männlich</string>
+    <string name="female">Wievlich</string>
+    <string name="units_title">Eenheiden</string>
+    <string name="gender_title">Geslecht</string>
+    <string name="input_info">Input\nInformatschoon</string>
+    <string name="imperial">Amerikaansche Eenheiden</string>
+    <string name="weight">Gewicht</string>
+    <string name="metric">Düütsche Eenheiden</string>
+    <string name="kg">kg</string>
+    <string name="height">Grött</string>
+    <string name="cm">cm</string>
+    <string name="feet">Foot:</string>
+    <string name="inches_title">Toll:</string>
+    <string name="continue_button">Wieder</string>
+
+    <string name="remove_selected">Uutwäälte wegmaken</string>
+    <string name="display_drinks">Drunks wiesen:</string>
+    <string name="date">DATUM</string>
+    <string name="title">TITEL</string>
+    <string name="vol">VOL</string>
+    <string name="alc">ALC</string>
+    <string name="next">Wieder</string>
+    <string name="add_drink">Föögt Se een Drunk to, üm de Statistick to bruken!</string>
+    <string name="previous">Torüch</string>
+</resources>
