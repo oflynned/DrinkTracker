@@ -236,18 +236,18 @@
     <string name="q_double">Double</string>
     <string name="q_triple">Triple</string>
 
-    <string name="what_are_you_waiting_for">Qu'est-ce que tu attends?</string>
-    <string name="give_drink_tracker_a_go">Donnez DrinkTracker un aller aujourd'hui et faire des changements de mode de vie en temps réel qui durent toute une vie</string>
+    <string name="what_are_you_waiting_for">Qu\'est-ce que tu attends?</string>
+    <string name="give_drink_tracker_a_go">Donnez DrinkTracker un aller aujourd\'hui et faire des changements de mode de vie en temps réel qui durent toute une vie</string>
     <string name="sober_friend">Votre Sober mobile ami</string>
-    <string name="warning_beforehand">Soyez averti à l'avance quand les choses vont trop loin et éviter une sur- consommation d'alcool et ruiné nuits dehors</string>
-    <string name="track_drinking">Suivre votre consommation d'alcool</string>
-    <string name="know_exactly">Sachez exactement combien est trop et renseignez-vous sur les limites de l'alcool</string>
+    <string name="warning_beforehand">Soyez averti à l\'avance quand les choses vont trop loin et éviter une sur- consommation d\'alcool et ruiné nuits dehors</string>
+    <string name="track_drinking">Suivre votre consommation d\'alcool</string>
+    <string name="know_exactly">Sachez exactement combien est trop et renseignez-vous sur les limites de l\'alcool</string>
 
     <string name="male">Mâle</string>
     <string name="female">Femelle</string>
     <string name="units_title">Units</string>
     <string name="gender_title">Sexe</string>
-    <string name="input_info">Les Informations\n d'Entréen</string>
+    <string name="input_info">Les Informations\n d\'Entréen</string>
     <string name="imperial">Imperial</string>
     <string name="weight">Poids</string>
     <string name="metric">Metric</string>
@@ -265,7 +265,7 @@
     <string name="vol">VOL</string>
     <string name="alc">ALC</string>
     <string name="next">Suivant</string>
-    <string name="add_drink">S'il vous plaît ajouter un verre afin d'utiliser les statistiques !</string>
+    <string name="add_drink">S\'il vous plaît ajouter un verre afin d\'utiliser les statistiques !</string>
     <string name="previous">Antérieur</string>
     <string name="credits">Crédits</string>
 </resources>
