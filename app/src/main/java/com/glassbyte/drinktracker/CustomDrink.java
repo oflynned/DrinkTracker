@@ -471,8 +471,6 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                 if(super.isChosen())
                     setPreviousTouchY(motionEvent.getRawY());
-                Vibrator vb = (Vibrator) thisActivity.getSystemService(Context.VIBRATOR_SERVICE);
-                vb.vibrate(100);
                 return true;
             }
             else if(motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
@@ -495,6 +493,7 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
             }
             return false;
         }
+
 
         public int getCurrentDrinkVolume(){
             return (int)(((drinkBottomEdgeY - drinkTopEdgeY)/super.getMaxDrinkHeight())*(super.getMlSize()+1));
@@ -634,8 +633,6 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                 if(super.isMainView())
                     setPreviousTouchY(motionEvent.getRawY());
-                Vibrator vb = (Vibrator) thisActivity.getSystemService(Context.VIBRATOR_SERVICE);
-                vb.vibrate(100);
                 return true;
             }
             else if(motionEvent.getAction() == MotionEvent.ACTION_MOVE) {

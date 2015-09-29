@@ -46,7 +46,7 @@
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_list_drinks">ListDrinksActivity</string>
+    <string name="title_activity_list_drinks">Liste Getränke</string>
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Ausschlussklausel</string>
@@ -136,10 +136,10 @@
     <string name="about_us_more">Für mehr Apps oder geschäftliche Anfragen, besuchen Sie unsere Webseite!\nhttp://www.glassbyte.com/</string>
 
     <!-- Preset Categories -->
-    <string name="beerCategory">Beer</string>
-    <string name="wineCategory">Wine</string>
-    <string name="spiritsCategory">Spirits</string>
-    <string name="cocktailsCategory">Cocktails</string>
+    <string name="beerCategory">Bier</string>
+    <string name="wineCategory">Wein</string>
+    <string name="spiritsCategory">Branntwein</string>
+    <string name="cocktailsCategory">Mischgetränke</string>
 
     <!--> Cocktails - The Unforgettables <-->
     <string name="alexander">Alexander</string>
@@ -233,40 +233,40 @@
     <string name="jager_spirit">Jäger</string>
 
     <!--> Shot quantities <-->
-    <string name="q_single">Single</string>
-    <string name="q_double">Double</string>
-    <string name="q_triple">Triple</string>
+    <string name="q_single">Einzel</string>
+    <string name="q_double">Doppel</string>
+    <string name="q_triple">Dreifach</string>
 
-    <string name="what_are_you_waiting_for">What are you waiting for?</string>
-    <string name="give_drink_tracker_a_go">Give DrinkTracker a go today and make lifestyle changes in realtime that last a lifetime</string>
-    <string name="sober_friend">Your Sober Mobile Friend</string>
+    <string name="what_are_you_waiting_for">Worauf warten Sie noch?</string>
+    <string name="give_drink_tracker_a_go">Probieren Sie mal heute DrinkTracker, und gereichen Sie zur Abwechslung dein Leben in echter Zeit, lebenlang.</string>
+    <string name="sober_friend">Dein Schlichter Mobilfreund</string>
     <string name="warning_beforehand">Be warned beforehand when things are going overboard and prevent over-drinking and ruined nights out</string>
-    <string name="track_drinking">Track Your Drinking</string>
-    <string name="know_exactly">Know exactly how much is too much and educate yourself on alcohol limits</string>
+    <string name="track_drinking">Verfolgen Sie Dein Alkohol</string>
+    <string name="know_exactly">Erfahren Sie genau wie viel ist zuviel, und begreifen Sie Alkoholgrenze</string>
 
 
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="units_title">Units</string>
-    <string name="gender_title">Gender</string>
+    <string name="male">Männlich</string>
+    <string name="female">Weiblich</string>
+    <string name="units_title">Einheiten</string>
+    <string name="gender_title">Geschlecht</string>
     <string name="input_info">Input\nInformation</string>
-    <string name="imperial">Imperial</string>
-    <string name="weight">Weight</string>
-    <string name="metric">Metric</string>
+    <string name="imperial">Kaiserlich</string>
+    <string name="weight">Gewicht</string>
+    <string name="metric">Metrisch</string>
     <string name="kg">kg</string>
-    <string name="height">Height</string>
+    <string name="height">Größe</string>
     <string name="cm">cm</string>
     <string name="feet">Feet:</string>
     <string name="inches_title">Inches:</string>
     <string name="continue_button">Continue</string>
 
-    <string name="remove_selected">Remove Selected</string>
-    <string name="display_drinks">Display drinks:</string>
-    <string name="date">DATE</string>
-    <string name="title">TITLE</string>
+    <string name="remove_selected">Entfernen</string>
+    <string name="display_drinks">Anzeigen:</string>
+    <string name="date">DATUM</string>
+    <string name="title">TITEL</string>
     <string name="vol">VOL</string>
-    <string name="alc">ALC</string>
-    <string name="next">Next</string>
-    <string name="add_drink">Please add a drink in order to use statistics!</string>
-    <string name="previous">Previous</string>
+    <string name="alc">ALK</string>
+    <string name="next">Weiter</string>
+    <string name="add_drink">Bitte fügen Sie ein Getränk hinzu, um Statistik zu benutzen!</string>
+    <string name="previous">Früher</string>
 </resources>
