@@ -35,10 +35,14 @@ public class PresetDrink extends Fragment {
     Preset[] beerStageTwoPresets;
     Preset[] wineStageOnePresets;
     Preset[] cocktailsPresets;
+    DrinkTrackerDbHelper dtDb;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dtDb = new DrinkTrackerDbHelper(this.getContext());
 
         LocalBroadcastManager.getInstance(this.getContext()).registerReceiver(onBackPressedBroadcastReceiver,
                 new IntentFilter(MainActivity.ON_BACK_PRESSED_EVENT));
@@ -296,6 +300,7 @@ public class PresetDrink extends Fragment {
                             currentChosenVolume = currentPresets[position].getVolume();
                         }
 
+                        dtDb.insertNewDrink("Cocktail", currentChosenVolume, currentChosenPecentage);
                         Toast.makeText(PresetDrink.this.getContext(), "Drink added!\nPercent: " +
                                         currentChosenPecentage + "\nVolume: " + currentChosenVolume,
                                 Toast.LENGTH_SHORT).show();
@@ -309,6 +314,7 @@ public class PresetDrink extends Fragment {
                             currentChosenVolume = currentPresets[position].getVolume();
                         }
 
+                        dtDb.insertNewDrink("Wine", currentChosenVolume, currentChosenPecentage);
                         Toast.makeText(PresetDrink.this.getContext(), "Drink added!\nPercent: " +
                                         currentChosenPecentage + "\nVolume: " + currentChosenVolume,
                                 Toast.LENGTH_SHORT).show();
@@ -324,6 +330,7 @@ public class PresetDrink extends Fragment {
                             currentChosenVolume = currentPresets[position].getVolume();
                         }
 
+                        dtDb.insertNewDrink("Beer", currentChosenVolume, currentChosenPecentage);
                         Toast.makeText(PresetDrink.this.getContext(), "Drink added!\nPercent: " +
                                         currentChosenPecentage + "\nVolume: " + currentChosenVolume,
                                 Toast.LENGTH_SHORT).show();
@@ -337,6 +344,7 @@ public class PresetDrink extends Fragment {
                             currentChosenVolume = currentPresets[position].getVolume();
                         }
 
+                        dtDb.insertNewDrink("Spirit", currentChosenVolume, currentChosenPecentage);
                         Toast.makeText(PresetDrink.this.getContext(), "Drink added!\nPercent: " +
                                         currentChosenPecentage + "\nVolume: " + currentChosenVolume,
                                 Toast.LENGTH_SHORT).show();
@@ -357,6 +365,21 @@ public class PresetDrink extends Fragment {
         });
 
         return v;
+    }
+
+    public void onPause(){
+        dtDb.close();
+        super.onPause();
+    }
+
+    public void onResume(){
+        dtDb = new DrinkTrackerDbHelper(this.getContext());
+        super.onResume();
+    }
+
+    public void onDestroy(){
+        dtDb.close();
+        super.onDestroy();
     }
 
     public static int getCurrentStage(){return stage;}
