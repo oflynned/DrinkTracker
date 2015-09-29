@@ -40,7 +40,7 @@
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_list_drinks">ListDrinksActivity</string>
+    <string name="title_activity_list_drinks">List Drinks</string>
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Disclaimer</string>

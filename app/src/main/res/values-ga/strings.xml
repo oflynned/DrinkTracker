@@ -4,7 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Socruithe</string>
     <string name="action_aboutus">Fúinn</string>
-    <string name="action_listDrinks">Liostáil Deochanna</string>
+    <string name="action_listDrinks">Liosta Deochanna</string>
     <string name="action_stats">Staitisticí</string>
     <string name="action_removeads">Bain Fógraí De</string>
 
@@ -46,7 +46,7 @@
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_list_drinks">ListDrinksActivity</string>
+    <string name="title_activity_list_drinks">Liosta Deochanna</string>
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Séanadh</string>
