@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
@@ -137,7 +138,10 @@ public class WarningDialog {
     }
 
     public void notify(int visibility, int icon, String title, String text) {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Creates an explicit intent for an ResultActivity to receive.
+
             Notification notification = new NotificationCompat.Builder(context)
                     .setCategory(Notification.CATEGORY_EVENT)
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -145,6 +149,7 @@ public class WarningDialog {
                     .setContentTitle(title)
                     .setContentText(text)
                     .setSmallIcon(icon)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
                     .setLargeIcon(getLargeIcon(context))
                     .setAutoCancel(true)
                     .build();
@@ -158,6 +163,7 @@ public class WarningDialog {
                     .setSmallIcon(icon)
                     .setLargeIcon(getLargeIcon(context))
                     .setAutoCancel(true)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
                     .setVisibility(visibility)
                     .build();
             NotificationManager notificationManager =
