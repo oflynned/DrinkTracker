@@ -249,7 +249,7 @@
     <string name="female">Weiblich</string>
     <string name="units_title">Einheiten</string>
     <string name="gender_title">Geschlecht</string>
-    <string name="input_info">Input\nInformation</string>
+    <string name="input_info">Informationen\nEingeben</string>
     <string name="imperial">Amerikanische Einheiten</string>
     <string name="weight">Gewicht</string>
     <string name="metric">Deutsche Einheiten</string>
