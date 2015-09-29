@@ -50,7 +50,7 @@ import java.util.Calendar;
 public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private SelectionSideBar leftSideBar, rightSideBar;
-    private TextView bacDisplay, pbBAC, warningText;
+    private TextView bacDisplay, pbBAC;
     private final int BAC_DECIMAL_PLACES = 4;
     private final int PROGESS_BAR_RATIO = 300;
     private BloodAlcoholContent bloodAlcoholContent;
@@ -59,19 +59,14 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     String spGender, spUnits, units;
 
     double totUnits, maxBAC, avgABV, avgVol, currBAC;
-    int calories;
-
-    //mock id for testing
-    private final static String AD_ID = "ca-app-pub-3940256099942544/6300978111";
-    int progress;
+    int calories, progress;
 
     WarningDialog warningDialog;
     DrinkTrackerDbHelper drinkTrackerDbHelper;
     CustomProgressBar customProgressBar;
     private AdView adView;
 
-    FloatingActionButton fab1;
-    FloatingActionButton fab2;
+    FloatingActionButton fab1, fab2;
 
     Dialog dialog;
     Runnable warningSystem;
@@ -83,7 +78,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     public static int SCREEN_WIDTH;
     public static float RATIO_TAB_WIDTH = 0.185f;
     public int SIDE_BAR_WIDTH;
-
 
     private int BAC_FONT_SIZE;
     private int BAC_FONT_SIZE_SMALL;
@@ -280,8 +274,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         adView.setLayoutParams(paramsAds);
         adView.setId(View.generateViewId());
         adView.setAdSize(AdSize.SMART_BANNER);
-        adView.setAdUnitId(AD_ID);
-
+        adView.setAdUnitId(getResources().getString(R.string.banner_ad_unit_id));
 
         //request ads to target emulated device
         AdRequest.Builder adRequestBuilder = new AdRequest.Builder();

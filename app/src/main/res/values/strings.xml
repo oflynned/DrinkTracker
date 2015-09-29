@@ -128,6 +128,8 @@
 
     <!--> Mock Banner Ad Key <-->
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+
     <string name="warning">Warning</string>
     <string name="ok">OK</string>
     <string name="warning1">You\'re enroute to getting drunk, maybe take it easy if you\'re feeling a bit intoxicated.</string>

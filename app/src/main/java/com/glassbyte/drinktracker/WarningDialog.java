@@ -52,7 +52,7 @@ public class WarningDialog {
         Vibrator v;
 
         mInterstitialAd = new InterstitialAd(context);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId(context.getResources().getString(R.string.interstitial_ad_unit_id));
 
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
