@@ -214,27 +214,27 @@
     <string name="three_quarter_wine_glass">Three-Quarter Glass</string>
 
     <!--> Shot bases <-->
-    <string name="absinthe_spirit">Absinthe</string>
+    <string name="absinthe_spirit">Absint</string>
     <string name="sambuca_spirit">Sambuca</string>
-    <string name="vodka_spirit">Vodka</string>
+    <string name="vodka_spirit">Wodka</string>
     <string name="tequila_spirit">Tequila</string>
     <string name="gin_spirit">Gin</string>
     <string name="rum_spirit">Rum</string>
-    <string name="whiskey_spirit">Whiskey</string>
-    <string name="brandy_spirit">Brandy</string>
+    <string name="whiskey_spirit">Whisky</string>
+    <string name="brandy_spirit">Brandewijn</string>
     <string name="jager_spirit">Jäger</string>
 
     <!--> Shot quantities <-->
     <string name="q_single">Single</string>
-    <string name="q_double">Double</string>
-    <string name="q_triple">Triple</string>
+    <string name="q_double">Dubbele</string>
+    <string name="q_triple">Drievoudig</string>
 
-    <string name="what_are_you_waiting_for">What are you waiting for?</string>
+    <string name="what_are_you_waiting_for">Waar wacht je nog op?</string>
     <string name="give_drink_tracker_a_go">Give DrinkTracker a go today and make lifestyle changes in realtime that last a lifetime</string>
-    <string name="sober_friend">Your Sober Mobile Friend</string>
+    <string name="sober_friend">Uw Sober Vriend</string>
     <string name="warning_beforehand">Be warned beforehand when things are going overboard and prevent over-drinking and ruined nights out</string>
-    <string name="track_drinking">Track Your Drinking</string>
-    <string name="know_exactly">Know exactly how much is too much and educate yourself on alcohol limits</string>
+    <string name="track_drinking">Volg Uw Drinken</string>
+    <string name="know_exactly">Weet precies hoeveel is te veel, en onderwijt jezelf op alcohol grenzen</string>
 
     <string name="male">Male</string>
     <string name="female">Female</string>

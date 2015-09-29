@@ -4,9 +4,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_aboutus">Über uns</string>
-    <string name="action_listDrinks">Liste Getränke</string>
+    <string name="action_listDrinks">Getränkeliste</string>
     <string name="action_stats">Statistik</string>
-    <string name="action_removeads">Anzeigen entfernen</string>
+    <string name="action_removeads">Werbung entfernen</string>
 
     <!-- Intro Screen -->
 
@@ -17,13 +17,13 @@
     <!--Custom Drinks Titles-->
     <string name="shot_glass_title">Schnapsglas</string>
     <string name="water_glass_title">Glas</string>
-    <string name="pint_glass_title">Pintglas</string>
+    <string name="pint_glass_title">Bierglas 0,5l</string>
     <string name="wine_glass_title">Weinglas</string>
     <!-- End of Custom Drinks Titles -->
 
     <!--Custom Drinks SetPercentage Dialog-->
     <string name="setPercentage_dialog_title">Prozent festlegen</string>
-    <string name="setVolume_dialog_title">Volumen festlegen</string>
+    <string name="setVolume_dialog_title">Menge festlegen</string>
     <string name="cancel">Abbrechen</string>
     <string name="done">Fertig</string>
     <!--End of Custom Drinks SetPercentage Dialog-->
@@ -34,8 +34,8 @@
     </string-array>
 
     <string-array name="optunits">
-        <item>Metrisch</item>
-        <item>Imperial</item>
+        <item>Deutsche Einheiten</item>
+        <item>Amerikanische Einheiten</item>
     </string-array>
 
     <!-->types of drinks<-->
@@ -46,27 +46,27 @@
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_list_drinks">Liste Getränke</string>
+    <string name="title_activity_list_drinks">Getränkeliste</string>
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Ausschlussklausel</string>
-    <string name="disclaimerbody">Bitte erinneren Sie sich, dass DrinkTracker nur eine Näherung der Hohe von Alkohol in der Blut (AB), und ist deswegen kein Ersatz in Vergleicht mit einer Alkoholmessgerätprüfung. GlassByte wird in keiner Weise für die Handlungen verantwortlich, die unter der Vergiftung Alkohols durchgeführt. Bitte fahren Sie verantwortlich, und bleiben Sie sicher unter der Vergiftung Alkohols. Durch die benutzung dieser App, Sie stimmen zu, mit dieser Vorwarnung zu bleiben.</string>
+    <string name="disclaimerbody">Bitte denken Sie daran, dass DrinkTracker nur eine Schätzung des Alkoholgehalts im Blut (BAK) wiedergibt. Es ersetzt deswegen keine korrekt durchgeführte Bestimmung des Alkoholgehalts im Blut. GlassByte übernimmt daher in keiner Weise Verantwortung für Handlungen, die unter Alkoholeinfluss erfolgen. Bitte verhalten Sie sich verantwortungsvoll und gewissenhaft unter Alkoholeinfluss. Durch die Benutzung dieser App, stimmen Sie zu, sich an diese Warnung zu halten.</string>
     <string name="agree">Ich stimme zu</string>
-    <string name="disagree">Ich spreche wider</string>
+    <string name="disagree">Ich stimme nicht zu</string>
 
     <!--> dialog warnings <-->
     <string name="tier0">Nüchtern.</string>
-    <string name="tier1">Schwachentspannt und kein Verlust der Koordination.</string>
-    <string name="tier2">Leichte Beeinträchtigung, senkte Hemmungen, senkte Vorsicht, Übertreibung des Verhaltens.</string>
-    <string name="tier3">Schwache Beeinträchtigung der Balance, des Sprechens, des Sehens und der Reaktionszeit.</string>
-    <string name="tier4">Signifikante Beeinträchtigung der Koordination. Es gibt mehr Beurteilungsfehler, und auch ein Gefühl der Euphorie.</string>
-    <string name="tier5">Mangelnde körperliche Kontrolle. Es gibt Verlust des Gleichgewichts und auch verschwommenes Sehen. Euphorie wird reduziert, und Dysphorie wird ab jetzt erhöht. Schwere Beeinträchtigung der Wahrnehmung und Urteil.</string>
-    <string name="tier6">Es gibt eine intensivierung der Dysphorie, eine Erhöhung der Brechreiz, man sieht &quot;mehr schlampig&quot; aus.</string>
-    <string name="tier7">Große Verwirrtheit und Desorientiertheit. Man könnte vielleicht keinen Schmerz empfinden, wenn verletzt. Übelkeit und Erbrechen erlebt auf diesem Niveau. Würgereflex könnte beeinträchtigt werden. In Ohnmacht fallen wird eher von diesem Punkt.</string>
-    <string name="tier8">Schwere Beeinträchtigung aller sensorischen, körperlichen und geistigen Funktionen. Es gibt ein erhöhtes Risiko des Erstickens durchs Erbrechen und Verletzen.</string>
-    <string name="tier9">Vollrausch - man hat wenig Verständnis, wo man steht. In Ohnmächtig fallen und Schwierigkeit beim geweckt werden, wird sehr wahrscheinlich.</string>
-    <string name="tier10">Gleichwertig der chirurgischen Ebene der Anästhesie.</string>
-    <string name="tier11">Beginn der Koma und eine Chance des Todes durch Atemstillstand.</string>
+    <string name="tier1">Leicht entspannt und kein Verlust der Koordination.</string>
+    <string name="tier2">Leichte Beeinträchtigung, verringerte Hemmungen, verringerte Vorsicht, Steigerung des Verhaltens.</string>
+    <string name="tier3">Leichte Beeinträchtigung des Gleichgewichts, des Sprechens, des Sehens und der Reaktionszeit.</string>
+    <string name="tier4">Signifikante Beeinträchtigung der Koordination, Verlust des Urteilsvermögens und euphorische Gefühle.</string>
+    <string name="tier5">Fehlende Kontrolle über den Körper, Verlust des Gleichgewichts und verschwommene Sicht. Reduzierte Euphorie und gesteigerte Dysphorie. Starke Beeinträchtigung der Wahrnehmung und des Urteilsvermögens.</string>
+    <string name="tier6">Verstärkung der Dysphorie, vermehrte Übelkeit, man erscheint &quot;sehr unbeholfen&quot;.</string>
+    <string name="tier7">Benommen- und Verwirrtheit, Desorientierung. Man fühlt wohlmöglich keinen Schmerz, wenn man verletzt ist. Übelkeit und Erbrechen treten bei diesem Niveau auf. Würgreflex könnte beeinträchtigt werden. Bewusstlosigkeit möglich ab diesem Punkt.</string>
+    <string name="tier8">Ernste Beeinträchtigung der sensorischen, körperlichen und geistigen Funktionen. Erhöhtes Risiko des Erstickens durch Erbrechen und Verletzung.</string>
+    <string name="tier9">Alkoholrausch - man begreift nicht, wo man sich befindet. Bewusstlosigkeit und Schwierigkeiten geweckt zu werden sind sehr wahrscheinlich.</string>
+    <string name="tier10">Gleichbedeutend mit chirurgischer Anästhesie.</string>
+    <string name="tier11">Beginn des Komas und möglicher Tod durch Atemstillstand.</string>
 
     <!--> unit warnings <-->
     <string name="pollunits">Gesamtzahl der getrunkenen Einheiten in dieser Woche:</string>
@@ -75,42 +75,42 @@
     <string name="abovelimit">Übermäßiger Alkoholkonsum!</string>
 
     <!--> detailed stats <-->
-    <string name="detailed_stats_title">Detaillierte Statistiken</string>
+    <string name="detailed_stats_title">Detaillierte Statistik</string>
     <string name="avg_drink_strength">Durchschnittliche Stärke der Getränke:</string>
-    <string name="avg_drink_volume">Durchschnittliche Volumen der Getränke:</string>
-    <string name="avg_calories">Alkoholkalorien in dieser Woche:</string>
-    <string name="max_bac">Maximaler AB erreicht:</string>
+    <string name="avg_drink_volume">Durchschnittliches Volumen der Getränke:</string>
+    <string name="avg_calories">Kalorien des Alkohols in dieser Woche:</string>
+    <string name="max_bac">Maximaler BAK erreicht:</string>
     <string name="calories">Kalorien</string>
 
     <!--> miscellaneous <-->
-    <string name="current_BAC">Aktueller\nAB:\n</string>
-    <string name="current_BAC_level">Aktuelles AB-Niveau:</string>
+    <string name="current_BAC">Aktueller\nBAK:\n</string>
+    <string name="current_BAC_level">Aktueller BAK-Spiegel:</string>
     <string name="preset_drinks">VOREINGESTELLTE GETRÄNKE</string>
     <string name="custom_drinks">BENUTZERDEFINIERTE GETRÄNKE</string>
     <string name="time">Zeit</string>
-    <string name="BAC">AB</string>
+    <string name="BAC">BAK</string>
 
     <!--> presets <-->
     <string name="drink_added">Dieses Getränk wurde erfolgreich hinzugefügt</string>
     <string name="please_choose_drink">Bitte wählen Sie ein Getränk:</string>
     <string name="set_percentage">Prozent festlegen</string>
     <string name="set_volume">Volumen festlegen</string>
-    <string name="drink">Trinke!</string>
+    <string name="drink">Trink!</string>
 
     <!--> Settings <-->
     <string name="language_options">Sprachoptionen</string>
-    <string name="irish_language_option">Irische Sprachwahl</string>
-    <string name="summer_irish">Wählen Sie diese Option, wenn Sie Gälisch als Sprachoption benutzen möchten</string>
+    <string name="irish_language_option">Irische Sprachoption</string>
+    <string name="summer_irish">Wählen Sie diese Option, wenn Sie Irisch als Sprachoption benutzen möchten</string>
     <string name="more_from_glassbyte">Mehr von GlassByte</string>
     <string name="visit_website">Besuchen Sie uns auf unserer Webseite!</string>
     <string name="summer_glassbyte">Klicken Sie hier, um weitere Produkte und Nachrichten von GlassByte anzusehen</string>
-    <string name="remove_ads">Helfen Sie uns durch Anzeigen entfernen</string>
-    <string name="summary_ads">Klicken Sie hier, um die werbefreie Version von Google-Play zu kaufen</string>
-    <string name="modify_details">Ändere Einzelheiten</string>
-    <string name="modify_gender">Ändere Geschlecht</string>
-    <string name="modify_units">Ändere Einheiten</string>
-    <string name="modify_height">Ändere Größe</string>
-    <string name="modify_weight">Ändere Gewicht</string>
+    <string name="remove_ads">Entfernen Sie die Werbung und unterstützen Sie uns</string>
+    <string name="summary_ads">Klicken Sie hier, um die werbefreie Version auf Google-Play zu kaufen</string>
+    <string name="modify_details">Details ändern</string>
+    <string name="modify_gender">Geschlecht ändern</string>
+    <string name="modify_units">Einheiten ändern</string>
+    <string name="modify_height">Größe ändern</string>
+    <string name="modify_weight">Gewicht ändern</string>
     <string name="foot_and">Fuß und</string>
     <string name="inches">Zoll</string>
     <string name="pounds">Pfund</string>
@@ -121,24 +121,24 @@
 
     <string name="notice">DrinkTracker</string>
 
-    <string name="plugins">Benutzte Plugins</string>
+    <string name="plugins">Benutzten Sie Plugins</string>
     <string name="plugins_body">App Intro\nvon PaoloRotolo\n\nFloatingActionButton\nvon Clans\n\nJoda-Time-Android\nvon dlew\n\nHelloCharts for Android\nvon lecho</string>
-    <string name="warning1">Unterwegs betrunken, vielleicht nehmen Sie es leicht, wenn Sie sich ein bisschen betrunken fühlen.</string>
-    <string name="warning2">Sie haben ein ziemliches betrunkenes Niveau erreicht, passen Sie auf sich auf, und seien Sie sicher, dass Sie keine persönliche Gegenstände verlieren.</string>
-    <string name="warning3">Sie sind echt betrunken, und sollten einen großen Kater im Morgen erfahren.</string>
-    <string name="warning4">Sie sind extrem-betrunken. Wenn Sie irgendwas mehr trinken, sollten Sie wissen, dass Sie sich selbst gefährden. Passen Sie auf sich auf.</string>
-    <string name="libraries">Benutzte Programmbibliotheke</string>
-    <string name="libraries_summary">Hier gibts eine Liste der Programmbibliotheke, die wir bei der Entwicklung dieser App benutzt haben.</string>
-    <string name="apache_summary">Informationen über die Bewilligungen, die wir benutzen, um diese Software zu verteilen.</string>
+    <string name="warning1">Sie sind dabei, betrunken zu werden. Vielleicht halten Sie sich etwas zurück, wenn sie sich bereits leicht betrunken fühlen.</string>
+    <string name="warning2">Sie haben ein Level erreicht, an dem Sie ziemlich betrunken sind. Passen Sie auf sich auf, und gehen Sie sicher, dass Sie keine persönliche Wertgegenstände verlieren.</string>
+    <string name="warning3">Sie sind sehr betrunken und sollten morgen einen schlimmen Kater im Morgen erleben.</string>
+    <string name="warning4">Sie sind extrem betrunken. Wenn Sie mehr trinken, gefährden Sie sich selbst. Passen Sie auf sich auf.</string>
+    <string name="libraries">Benutzte Programmbibliotheken</string>
+    <string name="libraries_summary">Hier gibts eine Liste der Programmbibliotheken, die wir bei der Entwicklung dieser App benutzt haben.</string>
+    <string name="apache_summary">Informationen über die Lizenzen, die wir benutzen, um diese Software zu verteilen.</string>
     <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
-    <string name="apache">Apache-Bewilligung</string>
-    <string name="about_us">GlassByte ist eine Softwareentwicklungsfirma, die in Dublin begründet wurde, und da Hauptsitz haben. Unseres kleines, ambitionierties Team trachtet nach innovativer und nützlicher Software auf Computer-Plattformen.</string>
+    <string name="apache">Apache-Lizenzen</string>
+    <string name="about_us">GlassByte ist eine Softwareentwicklungsfirma, die in Dublin gegründet wurde und dort ihren Hauptsitz hat. Unser kleines, ambitioniertes Team strebt an, innovative und nützliche Software für Computer-Plattformen zu entwickeln.</string>
     <string name="about_us_more">Für mehr Apps oder geschäftliche Anfragen, besuchen Sie unsere Webseite!\nhttp://www.glassbyte.com/</string>
 
     <!-- Preset Categories -->
     <string name="beerCategory">Bier</string>
     <string name="wineCategory">Wein</string>
-    <string name="spiritsCategory">Branntwein</string>
+    <string name="spiritsCategory">Spirituosen</string>
     <string name="cocktailsCategory">Mischgetränke</string>
 
     <!--> Cocktails - The Unforgettables <-->
@@ -207,9 +207,9 @@
 
     <!--> Cocktail Glasses <-->
     <string name="cocktail_glass">Cocktailglas</string>
-    <string name="highball_glass">Highballglas</string>
-    <string name="collins_glass">Collinsglas</string>
-    <string name="lowball_glass">Lowballglas</string>
+    <string name="highball_glass">Longdrinkglas</string>
+    <string name="collins_glass">Collins-Glas</string>
+    <string name="lowball_glass">Whiskeyglas</string>
     <string name="champagne_flute">Sektglas</string>
     <string name="mug">Tasse</string>
     <string name="wine_glass">Weinglas</string>
@@ -217,9 +217,9 @@
     <string name="poco_grande_glass">Poco-Grande-Glas</string>
 
     <!--> Wine volumes <-->
-    <string name="quarter_wine_glass">Viertelglas</string>
-    <string name="half_wine_glass">Halbglas</string>
-    <string name="three_quarter_wine_glass">Dreiviertelglas</string>
+    <string name="quarter_wine_glass">Viertel Glas</string>
+    <string name="half_wine_glass">Halbes Glas</string>
+    <string name="three_quarter_wine_glass">Dreiviertel Glas</string>
 
     <!--> Shot bases <-->
     <string name="absinthe_spirit">Absinth</string>
@@ -230,19 +230,19 @@
     <string name="rum_spirit">Rum</string>
     <string name="whiskey_spirit">Whiskey</string>
     <string name="brandy_spirit">Brandy</string>
-    <string name="jager_spirit">Jäger</string>
+    <string name="jager_spirit">Jägermeister</string>
 
     <!--> Shot quantities <-->
-    <string name="q_single">Einzel</string>
-    <string name="q_double">Doppel</string>
-    <string name="q_triple">Dreifach</string>
+    <string name="q_single">Einzelner</string>
+    <string name="q_double">Doppelter</string>
+    <string name="q_triple">Dreifacher</string>
 
     <string name="what_are_you_waiting_for">Worauf warten Sie noch?</string>
-    <string name="give_drink_tracker_a_go">Probieren Sie mal heute DrinkTracker, und gereichen Sie zur Abwechslung dein Leben in echter Zeit, lebenslang.</string>
-    <string name="sober_friend">Dein Schlichter Mobilfreund</string>
-    <string name="warning_beforehand">Be warned beforehand when things are going overboard and prevent over-drinking and ruined nights out</string>
-    <string name="track_drinking">Verfolgen Sie Dein Alkohol</string>
-    <string name="know_exactly">Erfahren Sie genau wie viel ist zuviel, und begreifen Sie Alkoholgrenze</string>
+    <string name="give_drink_tracker_a_go">Probieren Sie noch heute DrinkTracker und ändern Sie ihren Lifestyle in Echtzeit auf Lebenszeit.</string>
+    <string name="sober_friend">Dein nüchtener Handyfreund</string>
+    <string name="warning_beforehand">Seien Sie rechtzeitig gewarnt, wenn Dinge ausarten, und verhindern Sie übermäßiges Trinken und ruinierte Feiernächte</string>
+    <string name="track_drinking">Zeichnen Sie Ihren Alkoholkonsum auf</string>
+    <string name="know_exactly">Finden Sie genau heraus, wie viel zu viel ist, und lernen Sie Ihre Alkoholgrenze kennen</string>
 
 
     <string name="male">Männlich</string>
@@ -250,23 +250,23 @@
     <string name="units_title">Einheiten</string>
     <string name="gender_title">Geschlecht</string>
     <string name="input_info">Input\nInformation</string>
-    <string name="imperial">Kaiserlich</string>
+    <string name="imperial">Amerikanische Einheiten</string>
     <string name="weight">Gewicht</string>
-    <string name="metric">Metrisch</string>
+    <string name="metric">Deutsche Einheiten</string>
     <string name="kg">kg</string>
     <string name="height">Größe</string>
     <string name="cm">cm</string>
-    <string name="feet">Füße:</string>
-    <string name="inches_title">Zolle:</string>
+    <string name="feet">Fuß:</string>
+    <string name="inches_title">Zoll:</string>
     <string name="continue_button">Weiter</string>
 
-    <string name="remove_selected">Entfernen</string>
-    <string name="display_drinks">Anzeigen:</string>
+    <string name="remove_selected">Ausgewählte entfernen</string>
+    <string name="display_drinks">Drinks anzeigen:</string>
     <string name="date">DATUM</string>
     <string name="title">TITEL</string>
     <string name="vol">VOL</string>
-    <string name="alc">ALK</string>
+    <string name="alc">ALC</string>
     <string name="next">Weiter</string>
-    <string name="add_drink">Bitte fügen Sie ein Getränk hinzu, um Statistik zu benutzen!</string>
-    <string name="previous">Früher</string>
+    <string name="add_drink">Bitte fügen Sie ein Getränk hinzu, um die Statistik zu benutzen!</string>
+    <string name="previous">Zurück</string>
 </resources>

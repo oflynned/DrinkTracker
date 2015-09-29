@@ -122,11 +122,11 @@
     <string name="plugins">Plugins Used</string>
     <string name="plugins_body">App Intro\nó PaoloRotolo\n\nFloatingActionButton\nó Clans\n\nGraph View\nó jjoe64</string>
     <string name="warning1">Tá tú ar an tslí le h-éirí ólta, b\'fhéidir tóg go bog é má tá tú ag mothú saghas faoi thionchar an óil.</string>
-    <string name="warning2">Tú céim sroichte agat a chiallaíonn go bhfuil tú sách ólta, bíodh ar d'aire agus bíodh cinnte go bhfuil do ghiúirléidí uile agat.</string>
+    <string name="warning2">Tú céim sroichte agat a chiallaíonn go bhfuil tú sách ólta, bíodh ar d\'aire agus bíodh cinnte go bhfuil do ghiúirléidí uile agat.</string>
     <string name="warning3">Tá tú an-mheisciúil, agus beidh póit mhór ort amárach.</string>
     <string name="warning4">Tá tú ólta tríd is tríd. Má ólann tú tuilleadh, cuireann tú do shaol i mbaol!</string>
     <string name="libraries">Ríomhleabharlainne Úsáidte</string>
-    <string name="libraries_summary">Seo liosta de na ríomhleabharlainne a d'úsáideamar i gcruthú na h-aipe seo.</string>
+    <string name="libraries_summary">Seo liosta de na ríomhleabharlainne a d\'úsáideamar i gcruthú na h-aipe seo.</string>
     <string name="apache_summary">Eolas faoi cheadúnais a úsáidimid chun bogearraí a dháileadh</string>
     <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
     <string name="apache">Ceadúnas Apache</string>
@@ -239,7 +239,7 @@
     <string name="give_drink_tracker_a_go">Bain triail as DrinkTracker inniu agus athraigh do stíl mhaireachtála i bhfíor-am, go deo</string>
     <string name="sober_friend">Do Phoca-chara Móibíleach</string>
     <string name="warning_beforehand">Féach rabhadh sular théann nithe thar fóir, cuir bac ar an-iomarca óil agus oícheanta millte</string>
-    <string name="track_drinking">Amharc D'Alcól</string>
+    <string name="track_drinking">Amharc D\'Alcól</string>
     <string name="know_exactly">Bí ar an eolas cé mhéad is ea an-iomarca, agus foghlaim teorainn alcóil</string>
 
     <string name="male">Firinscneach</string>
@@ -264,6 +264,6 @@
     <string name="vol">TOI</string>
     <string name="alc">ALC</string>
     <string name="next">Ar Agh</string>
-    <string name="add_drink">Cuir deoch leis led' thoil chun staisticí a úsáid!</string>
+    <string name="add_drink">Cuir deoch leis led\' thoil chun staisticí a úsáid!</string>
     <string name="previous">Siar</string>
 </resources>
