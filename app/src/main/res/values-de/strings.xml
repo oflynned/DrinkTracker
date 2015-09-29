@@ -206,25 +206,25 @@
     <string name="tequila_sunrise_cocktail">Tequila Sunrise</string>
 
     <!--> Cocktail Glasses <-->
-    <string name="cocktail_glass">Cocktail Glass</string>
-    <string name="highball_glass">Highball Glass</string>
-    <string name="collins_glass">Collins Glass</string>
-    <string name="lowball_glass">Lowball Glass</string>
-    <string name="champagne_flute">Champagne Glass</string>
-    <string name="mug">Mug</string>
-    <string name="wine_glass">Wine Glass</string>
-    <string name="margarita_glass">Margarita Glass</string>
-    <string name="poco_grande_glass">Poco Grande Glass</string>
+    <string name="cocktail_glass">Cocktailglas</string>
+    <string name="highball_glass">Highballglas</string>
+    <string name="collins_glass">Collinsglas</string>
+    <string name="lowball_glass">Lowballglas</string>
+    <string name="champagne_flute">Sektglas</string>
+    <string name="mug">Tasse</string>
+    <string name="wine_glass">Weinglas</string>
+    <string name="margarita_glass">Margaritaglas</string>
+    <string name="poco_grande_glass">Poco-Grande-Glas</string>
 
     <!--> Wine volumes <-->
-    <string name="quarter_wine_glass">Quarter Glass</string>
-    <string name="half_wine_glass">Half Glass</string>
-    <string name="three_quarter_wine_glass">Three-Quarter Glass</string>
+    <string name="quarter_wine_glass">Viertelglas</string>
+    <string name="half_wine_glass">Halbglas</string>
+    <string name="three_quarter_wine_glass">Dreiviertelglas</string>
 
     <!--> Shot bases <-->
-    <string name="absinthe_spirit">Absinthe</string>
+    <string name="absinthe_spirit">Absinth</string>
     <string name="sambuca_spirit">Sambuca</string>
-    <string name="vodka_spirit">Vodka</string>
+    <string name="vodka_spirit">Wodka</string>
     <string name="tequila_spirit">Tequila</string>
     <string name="gin_spirit">Gin</string>
     <string name="rum_spirit">Rum</string>
@@ -256,9 +256,9 @@
     <string name="kg">kg</string>
     <string name="height">Größe</string>
     <string name="cm">cm</string>
-    <string name="feet">Feet:</string>
-    <string name="inches_title">Inches:</string>
-    <string name="continue_button">Continue</string>
+    <string name="feet">Füße:</string>
+    <string name="inches_title">Zolle:</string>
+    <string name="continue_button">Weiter</string>
 
     <string name="remove_selected">Entfernen</string>
     <string name="display_drinks">Anzeigen:</string>
