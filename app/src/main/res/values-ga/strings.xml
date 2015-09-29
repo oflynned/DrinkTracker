@@ -84,7 +84,7 @@
 
     <!--> miscellaneous <-->
     <string name="current_BAC">CAF\nReatha:\n</string>
-    <string name="current_BAC_level">Céim ChAF Reatha: </string>
+    <string name="current_BAC_level">Céim CAF Reatha: </string>
     <string name="preset_drinks">DEOCHANNA RÉAMHSHOCRAITHE</string>
     <string name="custom_drinks">DEOCHANNA SAINCHEAPTHA</string>
     <string name="time">Am</string>
