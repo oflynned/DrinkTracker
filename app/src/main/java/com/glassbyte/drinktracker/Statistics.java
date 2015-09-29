@@ -99,31 +99,21 @@ public class Statistics extends Activity implements
                 switch (selected) {
                     //current
                     case "0":
-                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
-                        series = new LineGraphSeries<>(getBACTuple());
+                        graph.removeAllSeries();
+                        series = new LineGraphSeries<>(getBACTupleCurrent());
                         graph.addSeries(series);
-                        styleAxes();
                         break;
                     //weekly
                     case "1":
-                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
-                        series = new LineGraphSeries<>(getBACTuple());
+                        graph.removeAllSeries();
+                        series = new LineGraphSeries<>(getBACTuplePastWeek());
                         graph.addSeries(series);
-                        styleAxes();
                         break;
                     //monthly
                     case "2":
-                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
-                        series = new LineGraphSeries<>(getBACTuple());
+                        graph.removeAllSeries();
+                        series = new LineGraphSeries<>(getBACTuplePastMonth());
                         graph.addSeries(series);
-                        styleAxes();
-                        break;
-                    //if nothing is selected, show default as current session
-                    default:
-                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
-                        series = new LineGraphSeries<>(getBACTuple());
-                        graph.addSeries(series);
-                        styleAxes();
                         break;
                 }
 
@@ -135,58 +125,124 @@ public class Statistics extends Activity implements
         });
     }
 
-    private void styleAxes(){
-        graph.setTitle("Alcohol Consumption");
-        graph.setTitleColor(R.color.red700);
+    @Override
+    public void onPause(){
+        drinkTrackerDbHelper.close();
+        super.onPause();
     }
 
-    private DataPoint[] getBACTuple() {
+    public void onResume(){
+        drinkTrackerDbHelper = new DrinkTrackerDbHelper(this);
+        super.onResume();
+    }
+
+    public void onDestroy(){
+        drinkTrackerDbHelper.close();
+        super.onDestroy();
+    }
+
+    private DataPoint[] getBACTupleCurrent() {
+
         // select the prior time where BAC was at 0 the previous time and 
         // set this as a start point to traverse drinks and graph appropriately
         drinkTrackerDbHelper.printTableContents(DrinkTrackerDatabase.BacTable.TABLE_NAME);
-        String countQuery =
+
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        String count = "SELECT count(*) FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+        Cursor countCursor = db.rawQuery(count, null);
+        countCursor.moveToFirst();
+        int mCount = countCursor.getInt(0);
+
+        DataPoint[] values = new DataPoint[0];
+
+        if(mCount>0){
+            String countQuery =
                 "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME +
                         " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME +
                         "=(SELECT MAX(" + DrinkTrackerDatabase.BacTable.DATE_TIME + ")" +
                         " FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME +
                         " WHERE " + DrinkTrackerDatabase.BacTable.BAC + "=0)";
-        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
-        System.out.println(countQuery);
-        Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.moveToFirst();
-        DataPoint[] values = new DataPoint[cursor.getCount()];
-        long lastZeroBACDate;
-
-        maxBAC = 0;
-        maxTime = 0;
-
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        TimeZone timeZone = gregorianCalendar.getTimeZone();
-
-        //given the case that no drinks have been added and BAC was always 0
-        if(cursor.getCount() == 0){
-            countQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
-            cursor = db.rawQuery(countQuery, null);
+            Cursor cursor = db.rawQuery(countQuery, null);
             cursor.moveToFirst();
-
             values = new DataPoint[cursor.getCount()];
-            counter = 0;
-            minTime = cursor.getLong(1);
 
-            //continue the query as there is a populated table with decays and BAC updated
-            //as we need to return the value at a certain count, we need the counter value to offset
-            do {
-                if(counter < cursor.getCount()){
-                    cursor.moveToFirst();
+            long lastZeroBACDate;
+
+            maxBAC = 0;
+            maxTime = 0;
+
+            GregorianCalendar gregorianCalendar = new GregorianCalendar();
+            TimeZone timeZone = gregorianCalendar.getTimeZone();
+
+            //given empty table
+
+            //given the case that no drinks have been added and BAC was always 0
+            if(cursor.getCount() == 0){
+
+                countQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+                cursor = db.rawQuery(countQuery, null);
+                cursor.moveToFirst();
+                int exists = cursor.getInt(0);
+
+                if(exists > 0){
+                    minTime = cursor.getLong(1);
+                    values = new DataPoint[cursor.getCount()];
+                    counter = 0;
+
+                    //continue the query as there is a populated table with decays and BAC updated
+                    //as we need to return the value at a certain count, we need the counter value to offset
+                    do {
+                        if(counter < cursor.getCount()){
+                            cursor.moveToFirst();
+                            cursor.move(counter);
+                            //store and return appropriate BAC within row
+                            BAC = cursor.getDouble(2);
+                            //get BAC and convert to an hour as a double
+                            BACTime = cursor.getLong(1);
+
+                            int xAxisValueHours = (int) (BACTime / (1000*60*60) % 24)
+                                    + (timeZone.getDSTSavings() / (1000*60*60) % 24);
+                            int xAxisValueMins = (int) (((BACTime / (1000*60)) % 60) / 0.6);
+                            String xAxisValueConcat = Integer.parseInt(Integer.toString(xAxisValueHours))
+                                    + "." + Integer.parseInt(Integer.toString(xAxisValueMins));
+                            double xAxisValue = Double.parseDouble(xAxisValueConcat);
+
+                            DataPoint v = new DataPoint(xAxisValue, BAC);
+                            values[counter] = v;
+
+                            if(BAC > maxBAC){
+                                maxBAC = BAC;
+                            }
+                            counter++;
+                        }
+                    } while (!cursor.isAfterLast() && cursor.moveToNext());
+                }
+            }
+            else if (cursor.getCount() > 0) {
+                //get first value of time
+                //a time of 0 is not possible, so if this exists
+                //we go into the other loop and terminate
+                cursor.moveToFirst();
+                lastZeroBACDate = cursor.getLong(1);
+                countQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME +
+                        " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + ">" + lastZeroBACDate;
+                cursor = db.rawQuery(countQuery, null);
+                cursor.moveToFirst();
+
+                values = new DataPoint[cursor.getCount()];
+                counter = 0;
+                minTime = cursor.getLong(1);
+
+                //continue the query as there is a populated table with decays and BAC updated
+                //as we need to return the value at a certain count, we need the counter value to offset
+                do {
                     cursor.move(counter);
                     //store and return appropriate BAC within row
                     BAC = cursor.getDouble(2);
-                    //get BAC and convert to an hour as a double
                     BACTime = cursor.getLong(1);
-
                     int xAxisValueHours = (int) (BACTime / (1000*60*60) % 24)
                             + (timeZone.getDSTSavings() / (1000*60*60) % 24);
-                    int xAxisValueMins = (int) (((BACTime / (1000*60)) % 60) / 0.6);
+                    int xAxisValueMins = (int) ((BACTime / (1000*60)) / (0.6));
                     String xAxisValueConcat = Integer.parseInt(Integer.toString(xAxisValueHours))
                             + "." + Integer.parseInt(Integer.toString(xAxisValueMins));
                     double xAxisValue = Double.parseDouble(xAxisValueConcat);
@@ -198,50 +254,185 @@ public class Statistics extends Activity implements
                         maxBAC = BAC;
                     }
                     counter++;
-                }
-            } while (!cursor.isAfterLast() && cursor.moveToNext());
+                } while (!cursor.isAfterLast());
+            }
+            maxTime = BACTime;
+            db.close();
+            cursor.close();
         }
-        else if (cursor.getCount() > 0) {
-            //get first value of time
-            //a time of 0 is not possible, so if this exists
-            //we go into the other loop and terminate
-            cursor.moveToFirst();
-            lastZeroBACDate = cursor.getLong(1);
-            countQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME +
-                    " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + ">" + lastZeroBACDate;
-            cursor = db.rawQuery(countQuery, null);
-            cursor.moveToFirst();
+        else{
+            Toast.makeText(getBaseContext(),getResources().getString(R.string.add_drink),Toast.LENGTH_SHORT).show();
+        }
 
+        return values;
+    }
+
+    private DataPoint[] getBACTuplePastMonth() {
+
+        // select the prior time where BAC was at 0 the previous time and
+        // set this as a start point to traverse drinks and graph appropriately
+        drinkTrackerDbHelper.printTableContents(DrinkTrackerDatabase.BacTable.TABLE_NAME);
+
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        String count = "SELECT count(*) FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+        Cursor countCursor = db.rawQuery(count, null);
+        countCursor.moveToFirst();
+        int mCount = countCursor.getInt(0);
+
+        DataPoint[] values = new DataPoint[0];
+
+        if(mCount>0){
+            Calendar calendar = Calendar.getInstance();
+            String countQuery =
+                    "SELECT * FROM "+ DrinkTrackerDatabase.DrinksTable.TABLE_NAME +
+                            " WHERE " + calendar.getTimeInMillis() +" >= date('now','localtime', '-30 day')";
+
+            Cursor cursor = db.rawQuery(countQuery, null);
+            cursor.moveToFirst();
             values = new DataPoint[cursor.getCount()];
-            counter = 0;
-            minTime = cursor.getLong(1);
 
-            //continue the query as there is a populated table with decays and BAC updated
-            //as we need to return the value at a certain count, we need the counter value to offset
-            do {
-                cursor.move(counter);
-                //store and return appropriate BAC within row
-                BAC = cursor.getDouble(2);
-                BACTime = cursor.getLong(1);
-                int xAxisValueHours = (int) (BACTime / (1000*60*60) % 24)
-                        + (timeZone.getDSTSavings() / (1000*60*60) % 24);
-                int xAxisValueMins = (int) ((BACTime / (1000*60)) / (0.6));
-                String xAxisValueConcat = Integer.parseInt(Integer.toString(xAxisValueHours))
-                        + "." + Integer.parseInt(Integer.toString(xAxisValueMins));
-                double xAxisValue = Double.parseDouble(xAxisValueConcat);
+            maxBAC = 0;
+            maxTime = 0;
 
-                DataPoint v = new DataPoint(xAxisValue, BAC);
-                values[counter] = v;
+            GregorianCalendar gregorianCalendar = new GregorianCalendar();
+            TimeZone timeZone = gregorianCalendar.getTimeZone();
 
-                if(BAC > maxBAC){
-                    maxBAC = BAC;
+            //given empty table
+
+            //given the case that no drinks have been added and BAC was always 0
+            if(cursor.getCount() == 0){
+
+                countQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+                cursor = db.rawQuery(countQuery, null);
+                cursor.moveToFirst();
+                int exists = cursor.getInt(0);
+
+                if(exists > 0){
+                    minTime = cursor.getLong(1);
+                    values = new DataPoint[cursor.getCount()];
+                    counter = 0;
+
+                    //continue the query as there is a populated table with decays and BAC updated
+                    //as we need to return the value at a certain count, we need the counter value to offset
+                    do {
+                        if(counter < cursor.getCount()){
+                            cursor.moveToFirst();
+                            cursor.move(counter);
+                            //store and return appropriate BAC within row
+                            BAC = cursor.getDouble(2);
+                            //get BAC and convert to an hour as a double
+                            BACTime = cursor.getLong(1);
+
+                            int xAxisValueHours = (int) (BACTime / (1000*60*60) % 24)
+                                    + (timeZone.getDSTSavings() / (1000*60*60) % 24);
+                            int xAxisValueMins = (int) (((BACTime / (1000*60)) % 60) / 0.6);
+                            String xAxisValueConcat = Integer.parseInt(Integer.toString(xAxisValueHours))
+                                    + "." + Integer.parseInt(Integer.toString(xAxisValueMins));
+                            double xAxisValue = Double.parseDouble(xAxisValueConcat);
+
+                            DataPoint v = new DataPoint(xAxisValue, BAC);
+                            values[counter] = v;
+
+                            if(BAC > maxBAC){
+                                maxBAC = BAC;
+                            }
+                            counter++;
+                        }
+                    } while (!cursor.isAfterLast() && cursor.moveToNext());
                 }
-                counter++;
-            } while (!cursor.isAfterLast());
+            }
+            maxTime = BACTime;
+            db.close();
+            cursor.close();
         }
-        maxTime = BACTime;
-        db.close();
-        cursor.close();
+        else{
+            Toast.makeText(getBaseContext(),getResources().getString(R.string.add_drink),Toast.LENGTH_SHORT).show();
+        }
+
+        return values;
+    }
+
+    private DataPoint[] getBACTuplePastWeek() {
+
+        // select the prior time where BAC was at 0 the previous time and
+        // set this as a start point to traverse drinks and graph appropriately
+        drinkTrackerDbHelper.printTableContents(DrinkTrackerDatabase.BacTable.TABLE_NAME);
+
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        String count = "SELECT count(*) FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+        Cursor countCursor = db.rawQuery(count, null);
+        countCursor.moveToFirst();
+        int mCount = countCursor.getInt(0);
+
+        DataPoint[] values = new DataPoint[0];
+
+        if(mCount>0){
+            Calendar calendar = Calendar.getInstance();
+            String countQuery =
+                    "SELECT * FROM "+ DrinkTrackerDatabase.DrinksTable.TABLE_NAME +
+                            " WHERE " + calendar.getTimeInMillis() +" >= date('now','localtime', '-7 day')";
+
+            Cursor cursor = db.rawQuery(countQuery, null);
+            cursor.moveToFirst();
+            values = new DataPoint[cursor.getCount()];
+
+            maxBAC = 0;
+            maxTime = 0;
+
+            GregorianCalendar gregorianCalendar = new GregorianCalendar();
+            TimeZone timeZone = gregorianCalendar.getTimeZone();
+
+            //given empty table
+
+            //given the case that no drinks have been added and BAC was always 0
+            if(cursor.getCount() == 0){
+
+                countQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+                cursor = db.rawQuery(countQuery, null);
+                cursor.moveToFirst();
+                int exists = cursor.getInt(0);
+
+                if(exists > 0){
+                    minTime = cursor.getLong(1);
+                    values = new DataPoint[cursor.getCount()];
+                    counter = 0;
+
+                    //continue the query as there is a populated table with decays and BAC updated
+                    //as we need to return the value at a certain count, we need the counter value to offset
+                    do {
+                        if(counter < cursor.getCount()){
+                            cursor.moveToFirst();
+                            cursor.move(counter);
+                            //store and return appropriate BAC within row
+                            BAC = cursor.getDouble(2);
+                            //get BAC and convert to an hour as a double
+                            BACTime = cursor.getLong(1);
+
+                            int xAxisValueHours = (int) (BACTime / (1000*60*60) % 24)
+                                    + (timeZone.getDSTSavings() / (1000*60*60) % 24);
+                            int xAxisValueMins = (int) (((BACTime / (1000*60)) % 60) / 0.6);
+                            String xAxisValueConcat = Integer.parseInt(Integer.toString(xAxisValueHours))
+                                    + "." + Integer.parseInt(Integer.toString(xAxisValueMins));
+                            double xAxisValue = Double.parseDouble(xAxisValueConcat);
+
+                            DataPoint v = new DataPoint(xAxisValue, BAC);
+                            values[counter] = v;
+
+                            if(BAC > maxBAC){
+                                maxBAC = BAC;
+                            }
+                            counter++;
+                        }
+                    } while (!cursor.isAfterLast() && cursor.moveToNext());
+                }
+            }
+            maxTime = BACTime;
+            db.close();
+            cursor.close();
+        }
+        else{
+            Toast.makeText(getBaseContext(),getResources().getString(R.string.add_drink),Toast.LENGTH_SHORT).show();
+        }
 
         return values;
     }

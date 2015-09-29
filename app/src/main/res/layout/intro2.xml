@@ -16,7 +16,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:text="Your Sober Mobile Friend"
+        android:text="@string/sober_friend"
         android:textColor="#ffffff"
         android:textSize="28sp" />
 
@@ -62,7 +62,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Be warned beforehand when things are going overboard and prevent over-drinking and ruined nights out"
+        android:text="@string/warning_beforehand"
         android:textColor="#ffffff"
         android:textSize="16sp" />
 

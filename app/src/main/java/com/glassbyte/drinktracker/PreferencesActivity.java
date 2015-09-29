@@ -169,9 +169,9 @@ public class PreferencesActivity extends PreferenceActivity {
 
             CheckBoxPreference irishLanguage = new CheckBoxPreference(this.getActivity());
             irishLanguage.setTitle(R.string.irish_language_option);
-            irishLanguage.setDefaultValue(false);
             irishLanguage.setSummary(R.string.summer_irish);
             irishLanguage.setKey(getString(R.string.pref_key_irish));
+            irishLanguage.setDefaultValue(false);
 
             languageCategory.addPreference(irishLanguage);
 

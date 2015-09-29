@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">DrinkTracker</string>
+    <string name="app_name">Сколько Выпил?</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_aboutus">About Us</string>
-    <string name="action_listDrinks">List Drinks</string>
-    <string name="action_stats">Statistics</string>
-    <string name="action_removeads">Remove Ads</string>
+    <string name="hello_world">Привет Мир!</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_aboutus">О нас</string>
+    <string name="action_listDrinks">Список напитков</string>
+    <string name="action_stats">Статистики</string>
+    <string name="action_removeads">Убрать рекламу</string>
 
     <!-- Intro Screen -->
 
@@ -15,224 +15,264 @@
     <!-- End of Preferences -->
 
     <!--Custom Drinks Titles-->
-    <string name="shot_glass_title">Shot Glass</string>
-    <string name="water_glass_title">Glass</string>
-    <string name="pint_glass_title">Pint Glass</string>
-    <string name="wine_glass_title">Wine Glass</string>
+    <string name="shot_glass_title">Рюмка</string>
+    <string name="water_glass_title">Стакан</string> 
+    <string name="pint_glass_title">Пинта</string>
+    <string name="wine_glass_title">Бокал</string>
     <!-- End of Custom Drinks Titles -->
 
     <!--Custom Drinks SetPercentage Dialog-->
-    <string name="setPercentage_dialog_title">Set Percentage</string>
-    <string name="setVolume_dialog_title">Set Volume</string>
-    <string name="cancel">Cancel</string>
-    <string name="done">Done</string>
+    <string name="setPercentage_dialog_title">Поменять градус</string>
+    <string name="setVolume_dialog_title">Поменять объём</string>
+    <string name="cancel">Отменить</string>
+    <string name="done">Принять</string>
     <!--End of Custom Drinks SetPercentage Dialog-->
 
     <string-array name="optgender">
-        <item>Male</item>
-        <item>Female</item>
+        <item>Мужчина</item>
+        <item>Женщина</item>
     </string-array>
 
     <string-array name="optunits">
-        <item>Metric</item>
-        <item>Imperial</item>
+        <item>Метрическая мерка</item>
+        <item>Имперская мерка</item>
     </string-array>
 
     <!-->types of drinks<-->
     <string-array name="period">
-        <item>Current session</item>
-        <item>Last week</item>
-        <item>Last month</item>
+        <item>Сейчас</item>
+        <item>Прошлая неделя</item>
+        <item>Прошлый месяц</item>
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_list_drinks">ListDrinksActivity</string>
+    <string name="title_activity_list_drinks">Список напитков</string>
 
     <!--> disclaimer <-->
-    <string name="disclaimertitle">Disclaimer</string>
-    <string name="disclaimerbody">Please remember that DrinkTracker is only an approximation of your blood alcohol content (BAC), and not a substitute for a breathalyser examination. GlassByte is in no way responsible for any actions carried out under intoxication. Please drive responsibly and stay safe under the influence of alcohol. By using this app, you agree to abide by this forewarning.</string>
-    <string name="agree">I agree</string>
-    <string name="disagree">I disagree</string>
+    <string name="disclaimertitle">Дисклэймер</string>
+    <string name="disclaimerbody">Пожалуйста помните, что данное приложение показывает только приблизительное количество алкоголя в крови, и не является заменой для алкотестера. Компания GlassByte не будет ответсвенна за любые действия в состоянии алкогольного опьянения. Пожалуйста, будьте ответсвенны на дорогах и будьте осторожны находясь под влиянием алкоголя. Используя данное приложение вы согласны с этим заявлением.</string>
+    <string name="agree">Я согласен</string>
+    <string name="disagree">Я не согласен</string>
 
     <!--> dialog warnings <-->
-    <string name="tier0">Sober.</string>
-    <string name="tier1">Mildly relaxed and no loss of coordination.</string>
-    <string name="tier2">Slight impairment, lowered inhibitions, lowered caution, exaggeration of behaviour.</string>
-    <string name="tier3">Mild impairment of balance, speech, vision and reaction time.</string>
-    <string name="tier4">Significant impairment of coordination, loss of judgement, and feeling of euphoria.</string>
-    <string name="tier5">Lack of physical control, loss of balance, and blurring of vision. Reduced euphoria and increased dysphoria. Severe impairment of perception and judgement.</string>
-    <string name="tier6">Intensifying of dysphoria, increase in nausea, appears &quot;more sloppy&quot;.</string>
-    <string name="tier7">Dazed, confusion, disorientation. May not feel pain if injured. Nausea and vomiting experienced around this level. Gag reflex may be impaired. Blackouts are more likely from this point.</string>
-    <string name="tier8">Severe impairment of all sensory, physical and mental functions. Increased risk of asphyxiation by vomiting and injury.</string>
-    <string name="tier9">Drunken stupor - you have little comprehension of where you are. Passing out and difficulty to be awoken is very likely.</string>
-    <string name="tier10">Equivalent to surgical level anaesthesia.</string>
-    <string name="tier11">Onset of coma and possible death due to respiratory arrest.</string>
+    <string name="tier0">Трезв</string>
+    <string name="tier1">Разслабленность без потери координации движений</string>
+    <string name="tier2">Слабое ухудшение бдительности, легкая задержка движений, пониженная осторожность, более открытое поведение.</string>
+    <string name="tier3">Умеренное ухудшение баланса, разговора, зрения и рекации.</string>
+    <string name="tier4">Значительное ухудшение координации, потеря бдительности и чувство ифории.</string>
+    <string name="tier5">Нехватка контроля над движениями, потеря баланса и мутность зрения. Проходящее чувство ифории и увеличение чувства дисфории. Значительное ухудщение зрения и бдительности.</string>
+    <string name="tier6">Интенсивная дисфория, чувство тошноты, развязанность движений.</string>
+    <string name="tier7">Потеря ориентации и смятение. Возможно отсутсвие боли при травме. Тошнота и рвота часто очевидна на этом этапе. Ухудшение рвотного рефлекса. Шансы потери сознания возвышены.</string>
+    <string name="tier8">Сильное ухудшение всех сенсорных, физических и умственных функций. Повышенный риск асфиксии путем рвоты и травмы.</string>
+    <string name="tier9">Ступор - окружение слабо воспринимается мозгом. Сильная вероятность потери сознания и трудность пробуждения.</string>
+    <string name="tier10">Состояние равноценно общей анастезии.</string>
+    <string name="tier11">Начальная стадия комы и высокая вероятность наступления смерти следуя остоновки дыхания.</string>
 
     <!--> unit warnings <-->
-    <string name="pollunits">Total units drunk this week:</string>
-    <string name="units">units</string>
-    <string name="belowlimit">Below recommended weekly limit.</string>
-    <string name="abovelimit">Excessive drinking!</string>
+    <string name="pollunits">Количество единиц выпитых за неделю:</string>
+    <string name="units">Единиц/у/ы</string>
+    <string name="belowlimit">Ниже рекомендуемой еженедельной нормы.</string>
+    <string name="abovelimit">Выше рекомендуемой еженедельной нормы!</string>
 
     <!--> detailed stats <-->
-    <string name="detailed_stats_title">Detailed Statistics</string>
-    <string name="avg_drink_strength">Average strength of drinks:</string>
-    <string name="avg_drink_volume">Average volume of drinks:</string>
-    <string name="avg_calories">Alcohol calories this week:</string>
-    <string name="max_bac">Maximum BAC achieved:</string>
-    <string name="calories">calories</string>
+    <string name="detailed_stats_title">Статистика</string>
+    <string name="avg_drink_strength">Средний градус напитков:</string>
+    <string name="avg_drink_volume">Среднеий объём напитков:</string>
+    <string name="avg_calories">Калорий от алкоголя за неделю:</string>
+    <string name="max_bac">Высшая концентрация алкоголя в крови достигнута:</string>
+    <string name="calories">Калорий/и</string>
 
     <!--> miscellaneous <-->
-    <string name="current_BAC">Current\nBAC:\n</string>
-    <string name="current_BAC_level">Current BAC level:</string>
-    <string name="preset_drinks">PRESET DRINKS</string>
-    <string name="custom_drinks">CUSTOM DRINKS</string>
-    <string name="time">Time</string>
-    <string name="BAC">BAC</string>
+    <string name="current_BAC">Aлкаголя в крови:\n</string>
+    <string name="current_BAC_level">Нынешний уровень алкаголя в крови:</string>
+    <string name="preset_drinks">Установленные напитки</string>
+    <string name="custom_drinks">Свои напитки</string>
+    <string name="time">Время</string>
+    <string name="BAC">Алкоголь в крови</string>
 
     <!--> presets <-->
-    <string name="drink_added">Drink added successfully</string>
-    <string name="please_choose_drink">Please choose a drink:</string>
-    <string name="set_percentage">Set Percentage</string>
-    <string name="set_volume">Set Volume</string>
-    <string name="drink">Drink</string>
+    <string name="drink_added">Напиток успешно добавлен</string>
+    <string name="please_choose_drink">Выберите напиток:</string>
+    <string name="set_percentage">Поменять градус</string>
+    <string name="set_volume">Поменять объём</string>
+    <string name="drink">Напиток</string>
 
     <!--> Settings <-->
-    <string name="language_options">Language Options</string>
-    <string name="irish_language_option">Irish Language Option</string>
-    <string name="summer_irish">Select this option if you wish to use Irish Gaelic as a language option</string>
-    <string name="more_from_glassbyte">More from Glassbyte</string>
-    <string name="visit_website">Visit us at our website!</string>
-    <string name="summer_glassbyte">Click here to view our website for more products and news from GlassByte</string>
-    <string name="remove_ads">Remove ads and help support us</string>
-    <string name="summary_ads">Click here to purchase the ad-free version from Google Play</string>
-    <string name="modify_details">Modify Details</string>
-    <string name="modify_gender">Edit Gender</string>
-    <string name="modify_units">Edit Units</string>
-    <string name="modify_height">Edit Height</string>
-    <string name="modify_weight">Edit Weight</string>
-    <string name="foot_and">foot and</string>
-    <string name="inches">inches</string>
-    <string name="pounds">pounds</string>
-    <string name="pref_key_editGender" translatable="false"></string>
+    <string name="language_options">Настройки языка</string>
+    <string name="irish_language_option">Ирландский язык</string>
+    <string name="summer_irish">Для использования Ирландского языка, нажмите сюда</string>
+    <string name="more_from_glassbyte">Другие приложения от Glassbyte</string>
+    <string name="visit_website">Зайти на наш сайт!</string>
+    <string name="summer_glassbyte">Нажмите чтобы зайти на наш сайт для других продуктов и новостей от GlassByte</string>
+    <string name="remove_ads">Убрать рекламу и поддержать нас</string>
+    <string name="summary_ads">Нажмите для покупки версии без рекламы от Google Play</string>
+    <string name="modify_details">Поменять детали</string>
+    <string name="modify_gender">Поменять пол</string>
+    <string name="modify_units">Поменять единицы</string>
+    <string name="modify_height">Поменять рост</string>
+    <string name="modify_weight">Поменять вес</string>
+    <string name="foot_and">футы и</string>
+    <string name="inches">дюймы</string>
+    <string name="pounds">фунты</string>
     <string name="warning">Внимание!</string>
-    <string name="oz">oz</string>
+    <string name="oz">унции</string>
     <string name="ok">OK</string>
-    <string name="notice">DrinkTracker</string>
-    <string name="plugins">Plugins Used</string>
-    <string name="plugins_body">App Intro\nby PaoloRotolo\n\nFloatingActionButton\nby Clans\n\nJoda-Time-Android\nby dlew\n\nHelloCharts for Android\nby lecho</string>
-    <string name="warning1">You\'re enroute to getting drunk, maybe take it easy if you\'re feeling a bit intoxicated.</string>
-    <string name="warning2">You\'ve reached quite a drunk stage, watch yourself and make sure you don\'t lose personal belongings.</string>
-    <string name="warning3">You\'re very drunk and should expect a bad hangover tomorrow morning.</string>
-    <string name="warning4">You\'re extremely drunk, drink any more and you\'re endangering yourself!</string>
-    <string name="libraries">Libraries Used</string>
-    <string name="libraries_summary">Here is a list of the libraries we used in the creation of this app</string>
-    <string name="ml">ml</string>
-    <string name="apache_summary">Info about the licences we use to distribute software</string>
+    <string name="notice">Сколько Выпил?</string>
+    <string name="plugins">Плагины</string>
+    <string name="plugins_body">App Intro\nby PaoloRotolo\n\nFloatingActionButton\nот Clans\n\nJoda-Time-Android\nот dlew\n\nHelloCharts for Android\nот lecho</string>
+    <string name="warning1">Вы почти пьяны, возможно пейте помедленнее если вы чувствуете сеья опъяневшим.</string>
+    <string name="warning2">Вы пьяны, пожалуйста будьте осторожны и не потеряйте свои вещи.</string>
+    <string name="warning3">Вы очень пьяны и можете ожидать похмелье завтрашним утром.</string>
+    <string name="warning4">Вы находитесь в сильном алкогольном опъянение! Если вы продолжите выпивать, вы можете нанести вред вашему здоровью!</string>
+    <string name="libraries">Библиотеки</string>
+    <string name="libraries_summary">Здесь вы можете найти список библиотек использованных для создания этого приложения</string>
+    <string name="ml">мл</string>
+    <string name="apache_summary">Информация о лицензиях для разпростронения програмного обеспечения</string>
     <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
     <string name="apache">Apache Licence</string>
-    <string name="about_us">GlassByte is a software development start-up company headquartered in Dublin, Ireland. Our small, ambitious team strives to create innovative and useful software for computing platforms.</string>
-    <string name="about_us_more">For more apps or business enquiries, visit our website!\nhttp://www.glassbyte.com/</string>
+    <string name="about_us">GlassByte - компания созданная с целью разрабатывать системные приложения, находящаяся в столице Ирландии - Дублине. Наша маленькая но амбициозная команда стремится создать иновационные решения для разных компьютерных платформ.</string>
+    <string name="about_us_more">Для других приложений или вопросов связвнных с компанией зайдите на наш сайт на:\nhttp://www.glassbyte.com/</string>
 
     <!-- Preset Categories -->
-    <string name="beerCategory">Beer</string>
-    <string name="wineCategory">Wine</string>
-    <string name="spiritsCategory">Spirits</string>
-    <string name="cocktailsCategory">Cocktails</string>
-
+    <string name="beerCategory">Пиво</string>
+    <string name="wineCategory">Вина</string>
+    <string name="spiritsCategory">Спиртные напитки</string>
+    <string name="cocktailsCategory">Коктейли</string>
+    
     <!--> Cocktails - The Unforgettables <-->
-    <string name="alexander">Alexander</string>
-    <string name="americano">Americano</string>
-    <string name="angel_face">Angel Face</string>
-    <string name="aviation">Aviation</string>
-    <string name="bacardi">Bacardi</string>
-    <string name="between_the_sheets">Between the Sheets</string>
-    <string name="casino">Casino</string>
-    <string name="clover_club">Clover Club</string>
-    <string name="daiquiri">Daiquiri</string>
-    <string name="derby">Derby</string>
-    <string name="dry_martini">Dry Martini</string>
-    <string name="gin_fizz">Gin Fizz</string>
-    <string name="john_collins">John Collins</string>
-    <string name="manhattan">Manhattan</string>
-    <string name="mary_pickford">Mary Pickford</string>
-    <string name="monkey_gland">Monkey Gland</string>
-    <string name="negroni">Negroni</string>
-    <string name="old_fashioned">Old Fashioned</string>
-    <string name="paradise">Paradise</string>
-    <string name="planters_punch">Planter\'s Punch</string>
-    <string name="porto_flip">Port Flip</string>
-    <string name="ramos_fizz">Ramos Fizz</string>
-    <string name="rusty_nail">Rusty Nail</string>
-    <string name="sazerac">Sazerac</string>
-    <string name="screwdriver">Screwdriver</string>
-    <string name="sidecar">Sidecar</string>
-    <string name="stinger">Stinger</string>
-    <string name="tuxedo">Tuxedo</string>
-    <string name="whiskey_sour">Whiskey Sour</string>
-    <string name="white_lady">White Lady</string>
+    <string name="alexander">Александр</string>
+    <string name="americano">Американо</string>
+    <string name="angel_face">Лицо ангела</string>
+    <string name="aviation">Авиация</string>
+    <string name="bacardi">Бакарди</string>
+    <string name="between_the_sheets">В постели</string>
+    <string name="casino">Казино</string>
+    <string name="clover_club">Кловер Клаб</string>
+    <string name="daiquiri">Дайкири</string>
+    <string name="derby">Дерби</string>
+    <string name="dry_martini">Мартини</string>
+    <string name="gin_fizz">Джин Физ</string>
+    <string name="john_collins">Джон Коллинз</string>
+    <string name="manhattan">Манхэттен</string>
+    <string name="mary_pickford">Мэри Пикфорд</string>
+    <string name="monkey_gland">Обезьяньи гланды</string>
+    <string name="negroni">Негрони</string>
+    <string name="old_fashioned">Олд фешен</string>
+    <string name="paradise">Рай</string>
+    <string name="planters_punch">Плантаторский пунш</string>
+    <string name="porto_flip">Порто-флип</string>
+    <string name="ramos_fizz">Рамос физз</string>
+    <string name="rusty_nail">Ржавый гвоздь</string>
+    <string name="sazerac">Сазерак</string>
+    <string name="screwdriver">Отвёртка</string>
+    <string name="sidecar">Сайдкар</string>
+    <string name="stinger">Стингер</string>
+    <string name="tuxedo">Смокинг</string>
+    <string name="whiskey_sour">Виски сауэр</string>
+    <string name="white_lady">Белая леди</string>
 
     <!--> Cocktails - Contemporary Classics <-->
-    <string name="bellini_cocktail">Bellini</string>
-    <string name="black_russian_cocktail">Black Russian</string>
-    <string name="bloody_mary_cocktail">Bloody Mary</string>
-    <string name="caipirinha_cocktail">Caipirinha</string>
-    <string name="champagne_cocktail">Champagne Cocktail</string>
-    <string name="cosmopolitan_cocktail">Cosmopolitan</string>
-    <string name="cuba_libre_cocktail">Cuba Libre</string>
-    <string name="french_connection_cocktail">French Connection</string>
-    <string name="god_father_cocktail">God Father</string>
-    <string name="god_mother_cocktail">God Mother</string>
-    <string name="golden_dream_cocktail">Golden Dream</string>
-    <string name="grasshopper_cocktail">Grasshopper</string>
-    <string name="french_75_cocktail">French 75</string>
-    <string name="harvey_wallbanger_cocktail">Harvey Wallbanger</string>
-    <string name="horses_neck_cocktail">Horse\'s Neck</string>
-    <string name="irish_coffee_cocktail">Irish Coffee</string>
-    <string name="kir_cocktail">Kir</string>
-    <string name="long_island_iced_tea_cocktail">Long Island Iced Tea</string>
-    <string name="mai_tai_cocktail">Mai Tai</string>
-    <string name="margarita_cocktail">Margarita</string>
-    <string name="mimosa_cocktail">Mimosa</string>
-    <string name="mint_julep_cocktail">Mint Julep</string>
-    <string name="mojito_cocktail">Mojito</string>
-    <string name="moscow_mule_cocktail">Moscow Mule</string>
-    <string name="pina_colada_cocktail">Pina Colada</string>
-    <string name="rose_cocktail">Rose</string>
-    <string name="sea_breeze_cocktail">Sea Breeze</string>
-    <string name="sex_on_the_beach_cocktail">Sex on the Beach</string>
-    <string name="singapore_sling_cocktail">Singapore Sling</string>
-    <string name="tequila_sunrise_cocktail">Tequila Sunrise</string>
+    <string name="bellini_cocktail">Беллини</string>
+    <string name="black_russian_cocktail">Чёрный русский</string>
+    <string name="bloody_mary_cocktail">Кровавая Мэри</string>
+    <string name="caipirinha_cocktail">Кайпиринья</string>
+    <string name="champagne_cocktail">Шампань</string>
+    <string name="cosmopolitan_cocktail">Космополитен</string>
+    <string name="cuba_libre_cocktail">Куба либре</string>
+    <string name="french_connection_cocktail">Французский связной</string>
+    <string name="god_father_cocktail">Крёстный отец</string>
+    <string name="god_mother_cocktail">Крёстная мать</string>
+    <string name="golden_dream_cocktail">Золотая Мечта</string>
+    <string name="grasshopper_cocktail">Кузнечик</string>
+    <string name="french_75_cocktail">Френч 75</string>
+    <string name="harvey_wallbanger_cocktail">Харви Волбенгер</string>
+    <!-- <string name="hamingway_special_cocktail">Хемингуэй спешл</string>  if you got the list from wiki you missed this one -->
+    <string name="horses_neck_cocktail">Лошадиная шея</string>
+    <string name="irish_coffee_cocktail">Кофе по-ирландски</string>
+    <string name="kir_cocktail">Кир</string>
+    <string name="long_island_iced_tea_cocktail">Лонг-Айленд</string>
+    <string name="mai_tai_cocktail">Маи Таи</string>
+    <string name="margarita_cocktail">Маргарита</string>
+    <string name="mimosa_cocktail">Мимоза</string>
+    <string name="mint_julep_cocktail">Мятный джулеп</string>
+    <string name="mojito_cocktail">Мохито</string>
+    <string name="moscow_mule_cocktail">Московский мул</string>
+    <string name="pina_colada_cocktail">Пина колада</string>
+    <string name="rose_cocktail">Роза</string>
+    <string name="sea_breeze_cocktail">Морской бриз</string>
+    <string name="sex_on_the_beach_cocktail">Секс на пляже</string>
+    <string name="singapore_sling_cocktail">Сингапурский слинг</string>
+    <string name="tequila_sunrise_cocktail">Текила-санрайз</string>
 
     <!--> Cocktail Glasses <-->
-    <string name="cocktail_glass">Cocktail Glass</string>
-    <string name="highball_glass">Highball Glass</string>
-    <string name="collins_glass">Collins Glass</string>
-    <string name="lowball_glass">Lowball Glass</string>
-    <string name="champagne_flute">Champagne Glass</string>
-    <string name="mug">Mug</string>
-    <string name="wine_glass">Wine Glass</string>
-    <string name="margarita_glass">Margarita Glass</string>
-    <string name="poco_grande_glass">Poco Grande Glass</string>
+    <string name="cocktail_glass">Бокал для коктейля</string>
+    <string name="highball_glass">Хайбол</string>
+    <string name="collins_glass">Коллинз</string>
+    <string name="lowball_glass">Лоубол</string>
+    <string name="champagne_flute">Фужер</string>
+    <string name="mug">Кружка</string>
+    <string name="wine_glass">Винный бокал</string>
+    <string name="margarita_glass">Бокал для маргариты</string>
+    <string name="poco_grande_glass">Бокал "Ураган"</string>
 
     <!--> Wine volumes <-->
-    <string name="quarter_wine_glass">Quarter Glass</string>
-    <string name="half_wine_glass">Half Glass</string>
-    <string name="three_quarter_wine_glass">Three-Quarter Glass</string>
+    <string name="quarter_wine_glass">Четверть бокала</string>
+    <string name="half_wine_glass">Половина бокала</string>
+    <string name="three_quarter_wine_glass">Три-Четверти бокала</string>
 
     <!--> Shot bases <-->
-    <string name="absinthe_spirit">Absinthe</string>
-    <string name="sambuca_spirit">Sambuca</string>
-    <string name="vodka_spirit">Vodka</string>
-    <string name="tequila_spirit">Tequila</string>
-    <string name="gin_spirit">Gin</string>
-    <string name="rum_spirit">Rum</string>
-    <string name="whiskey_spirit">Whiskey</string>
-    <string name="brandy_spirit">Brandy</string>
-    <string name="jager_spirit">Jäger</string>
+    <string name="absinthe_spirit">Абсент</string>
+    <string name="sambuca_spirit">Самбука</string>
+    <string name="vodka_spirit">Водка</string>
+    <string name="tequila_spirit">Текила</string>
+    <string name="gin_spirit">Джин</string>
+    <string name="rum_spirit">Ром</string>
+    <string name="whiskey_spirit">Виски</string>
+    <string name="brandy_spirit">Бренди</string>
+    <string name="jager_spirit">Ягер</string>
+    <!-- Some more shot based drinks 
+
+    <string name="cognac_spirit">Коньяк</string>
+    <string name="curacao_spirit">Курасао</string>
+    <string name="cointreau_spirit">Куантро</string>
+    <string name="kalua_spirit">Калуа</string> 
+
+    -->
 
     <!--> Shot quantities <-->
-    <string name="q_single">Single</string>
-    <string name="q_double">Double</string>
-    <string name="q_triple">Triple</string>
+    <string name="q_single">Одинарный/ая</string>
+    <string name="q_double">Двойной/ая</string>
+    <string name="q_triple">Тройной/ая</string>
+
+    <string name="what_are_you_waiting_for">Чего же ты ждешь?</string>
+    <string name="give_drink_tracker_a_go">Попробуйте "Сколько Выпил?" сегодня и сделать изменения в образе жизни в реальном времени</string>
+    <string name="sober_friend">Ваш Друг Трезвый</string>
+    <string name="warning_beforehand">Будьте в курсе, когда вы пьете слишком много. Предотвращение пить слишком много и губит ночей</string>
+    <string name="track_drinking">Отслеживать Aлкоголя</string>
+    <string name="know_exactly">Вы точно знаете, сколько это слишком много. Обучать себя на допустимого уровня содержания алкоголя</string>
+
+    <string name="male">Мужской</string>
+    <string name="female">Женский</string>
+    <string name="units_title">Единицу</string>
+    <string name="gender_title">Пол</string>
+    <string name="input_info">Входная\nинформация</string>
+    <string name="imperial">Имперский</string>
+    <string name="weight">Вес</string>
+    <string name="metric">Метрический</string>
+    <string name="kg">кг</string>
+    <string name="height">Высота</string>
+    <string name="cm">см</string>
+    <string name="feet">Футов:</string>
+    <string name="inches_title">Дюйма:</string>
+    <string name="continue_button">Продолжать</string>
+
+    <string name="remove_selected">Удалить</string>
+    <string name="display_drinks">Показать:</string>
+    <string name="date">Дата</string>
+    <string name="title">Заглавие</string>
+    <string name="vol">Oбъем</string>
+    <string name="alc">Алк</string>
+    <string name="next">След.</string>
+    <string name="add_drink">Пожалуйста, добавьте по крайней мере один напиток для того, чтобы использовать статистику!</string>
+    <string name="previous">Пред.</string>
 </resources>

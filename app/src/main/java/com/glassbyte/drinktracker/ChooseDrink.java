@@ -589,6 +589,8 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         super.onResume();
         isPaused = false;
         adView.resume();
+
+        drinkTrackerDbHelper = new DrinkTrackerDbHelper(this.getContext());
     }
 
     @Override
@@ -598,12 +600,15 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         if (warningDialog.alertDialog != null) {
             warningDialog.alertDialog.dismiss();
         }
+
+        drinkTrackerDbHelper.close();
         super.onPause();
     }
 
     @Override
     public void onDestroy() {
         adView.destroy();
+        drinkTrackerDbHelper.close();
         super.onDestroy();
     }
 
@@ -732,6 +737,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
             paramCanvas.restore();
         }
     }
+
 
     private class ProgressBarAnimation extends Animation {
         private float from;
