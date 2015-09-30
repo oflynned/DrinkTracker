@@ -40,7 +40,15 @@ public class PresetDrink extends Fragment {
     DrinkTrackerDbHelper dtDb;
     Drawable beerBottleImageDrawable,
             wineGlassImageDrawable,
-            shotGlassIamgeDrawable;
+            shotGlassImageDrawable, 
+            cocktailGlassImageDrawable, 
+            highballGlassImageDrawable, 
+            lowballImageDrawable, 
+            collinsImageDrawable, 
+            fluteImageDrawable, 
+            margaritaImageDrawable, 
+            pocograndeImageDrawable,
+            irishcoffeeVectorised;
 
 
     @Override
@@ -54,7 +62,15 @@ public class PresetDrink extends Fragment {
 
         beerBottleImageDrawable = this.getContext().getDrawable(R.drawable.bottle);
         wineGlassImageDrawable = this.getContext().getDrawable(R.drawable.wine);
-        shotGlassIamgeDrawable = this.getContext().getDrawable(R.drawable.shot);
+        shotGlassImageDrawable = this.getContext().getDrawable(R.drawable.shot);
+        cocktailGlassImageDrawable = this.getContext().getDrawable(R.drawable.cocktail_vectorised);
+        highballGlassImageDrawable = this.getContext().getDrawable(R.drawable.highball_vectorized);
+        lowballImageDrawable = this.getContext().getDrawable(R.drawable.lowball_vectorized);
+        collinsImageDrawable = this.getContext().getDrawable(R.drawable.collins_vectorized);
+        fluteImageDrawable = this.getContext().getDrawable(R.drawable.flute_vectorised);
+        margaritaImageDrawable = this.getContext().getDrawable(R.drawable.margarita_vectorized);
+        pocograndeImageDrawable = this.getContext().getDrawable(R.drawable.poco_grande_vectorized);
+        irishcoffeeVectorised = this.getContext().getDrawable(R.drawable.irish_coffee_vectorized);
 
         categoryPresets = new Preset[4];
         categoryPresets[0] =
@@ -62,37 +78,37 @@ public class PresetDrink extends Fragment {
         categoryPresets[1] =
                 new Preset(wineGlassImageDrawable, getString(R.string.wineCategory), 17f);
         categoryPresets[2] =
-                new Preset(shotGlassIamgeDrawable, getString(R.string.spiritsCategory));
+                new Preset(shotGlassImageDrawable, getString(R.string.spiritsCategory));
         categoryPresets[3] =
                 new Preset(wineGlassImageDrawable, getString(R.string.cocktailsCategory));
 
         spiritStageOnePresets = new Preset[9];
         spiritStageOnePresets[0] =
-            new Preset(shotGlassIamgeDrawable, getString(R.string.absinthe_spirit), 70f);
+            new Preset(shotGlassImageDrawable, getString(R.string.absinthe_spirit), 70f);
         spiritStageOnePresets[1] =
-            new Preset(shotGlassIamgeDrawable, getString(R.string.brandy_spirit), 40f);
+            new Preset(shotGlassImageDrawable, getString(R.string.brandy_spirit), 40f);
         spiritStageOnePresets[2] =
-            new Preset(shotGlassIamgeDrawable, getString(R.string.gin_spirit), 40f);
+            new Preset(shotGlassImageDrawable, getString(R.string.gin_spirit), 40f);
         spiritStageOnePresets[3] =
-            new Preset(shotGlassIamgeDrawable, getString(R.string.jager_spirit), 35f);
+            new Preset(shotGlassImageDrawable, getString(R.string.jager_spirit), 35f);
         spiritStageOnePresets[4] =
-            new Preset(shotGlassIamgeDrawable, getString(R.string.rum_spirit), 40f);
+            new Preset(shotGlassImageDrawable, getString(R.string.rum_spirit), 40f);
         spiritStageOnePresets[5] =
-            new Preset(shotGlassIamgeDrawable, getString(R.string.sambuca_spirit), 42f);
+            new Preset(shotGlassImageDrawable, getString(R.string.sambuca_spirit), 42f);
         spiritStageOnePresets[6] =
-            new Preset(shotGlassIamgeDrawable, getString(R.string.tequila_spirit), 40f);
+            new Preset(shotGlassImageDrawable, getString(R.string.tequila_spirit), 40f);
         spiritStageOnePresets[7] =
-            new Preset(shotGlassIamgeDrawable, getString(R.string.vodka_spirit), 40f);
+            new Preset(shotGlassImageDrawable, getString(R.string.vodka_spirit), 40f);
         spiritStageOnePresets[8] =
-            new Preset(shotGlassIamgeDrawable, getString(R.string.whiskey_spirit), 40f);
+            new Preset(shotGlassImageDrawable, getString(R.string.whiskey_spirit), 40f);
 
         spiritStageTwoPresets = new Preset[3];
         spiritStageTwoPresets[0] =
-                new Preset(shotGlassIamgeDrawable, getString(R.string.q_single), (int)35);
+                new Preset(shotGlassImageDrawable, getString(R.string.q_single), (int)35);
         spiritStageTwoPresets[1] =
-                new Preset(shotGlassIamgeDrawable, getString(R.string.q_double), (int)70);
+                new Preset(shotGlassImageDrawable, getString(R.string.q_double), (int)70);
         spiritStageTwoPresets[2] =
-                new Preset(shotGlassIamgeDrawable, getString(R.string.q_triple), (int)105);
+                new Preset(shotGlassImageDrawable, getString(R.string.q_triple), (int)105);
 
         beerStageOnePresets = new Preset[12];
         beerStageOnePresets[0] =
@@ -139,94 +155,94 @@ public class PresetDrink extends Fragment {
                 new Preset(wineGlassImageDrawable, getString(R.string.three_quarter_wine_glass),(int)(215/4*3));
 
         cocktailsPresets = new Preset[30];
-        cocktailsPresets[0] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[0] = new Preset(cocktailGlassImageDrawable,
                 getString(R.string.bellini_cocktail),
                 0.4f, 300);
-        cocktailsPresets[1] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[1] = new Preset(lowballImageDrawable,
                 getString(R.string.black_russian_cocktail),
                 8f, 300);
-        cocktailsPresets[2] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[2] = new Preset(highballGlassImageDrawable,
                 getString(R.string.bloody_mary_cocktail),
                 6f, 300);
-        cocktailsPresets[3] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[3] = new Preset(lowballImageDrawable,
                 getString(R.string.caipirinha_cocktail),
                 6.7f, 300);
-        cocktailsPresets[4] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[4] = new Preset(fluteImageDrawable,
                 getString(R.string.champagne_cocktail),
                 7.9f, 300);
-        cocktailsPresets[5] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[5] = new Preset(cocktailGlassImageDrawable,
                 getString(R.string.cosmopolitan_cocktail),
                 17.3f, 130);
-        cocktailsPresets[6] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[6] = new Preset(collinsImageDrawable,
                 getString(R.string.cuba_libre_cocktail),
                 15.4f, 130);
-        cocktailsPresets[7] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[7] = new Preset(fluteImageDrawable,
                 getString(R.string.french_75_cocktail),
                 6.4f, 300);
-        cocktailsPresets[8] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[8] = new Preset(lowballImageDrawable,
                 getString(R.string.french_connection_cocktail),
                 8f, 300);
-        cocktailsPresets[9] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[9] = new Preset(lowballImageDrawable,
                 getString(R.string.god_father_cocktail),
                 8f, 300);
-        cocktailsPresets[10] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[10] = new Preset(lowballImageDrawable,
                 getString(R.string.god_mother_cocktail),
                 8f, 300);
-        cocktailsPresets[11] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[11] = new Preset(cocktailGlassImageDrawable,
                 getString(R.string.golden_dream_cocktail),
                 9.6f, 130);
-        cocktailsPresets[12] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[12] = new Preset(cocktailGlassImageDrawable,
                 getString(R.string.grasshopper_cocktail),
                 11.5f, 130);
-        cocktailsPresets[13] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[13] = new Preset(highballGlassImageDrawable,
                 getString(R.string.harvey_wallbanger_cocktail),
                 8.1f, 300);
-        cocktailsPresets[14] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[14] = new Preset(highballGlassImageDrawable,
                 getString(R.string.horses_neck_cocktail),
                 6.8f, 300);
-        cocktailsPresets[15] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[15] = new Preset(irishcoffeeVectorised,
                 getString(R.string.irish_coffee_cocktail),
                 6.8f, 350);
         cocktailsPresets[16] = new Preset(wineGlassImageDrawable,
                 getString(R.string.kir_cocktail),
                 6.6f, 215);
-        cocktailsPresets[17] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[17] = new Preset(highballGlassImageDrawable,
                 getString(R.string.long_island_iced_tea_cocktail),
                 9f, 300);
-        cocktailsPresets[18] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[18] = new Preset(highballGlassImageDrawable,
                 getString(R.string.mai_tai_cocktail),
                 9.5f, 300);
-        cocktailsPresets[19] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[19] = new Preset(margaritaImageDrawable,
                 getString(R.string.margarita_cocktail),
                 6.3f, 350);
-        cocktailsPresets[20] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[20] = new Preset(fluteImageDrawable,
                 getString(R.string.mimosa_cocktail),
                 3.3f, 300);
-        cocktailsPresets[21] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[21] = new Preset(highballGlassImageDrawable,
                 getString(R.string.mint_julep_cocktail),
                 8f, 300);
-        cocktailsPresets[22] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[22] = new Preset(collinsImageDrawable,
                 getString(R.string.mojito_cocktail),
                 4f, 400);
-        cocktailsPresets[23] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[23] = new Preset(irishcoffeeVectorised,
                 getString(R.string.moscow_mule_cocktail),
                 5.1f, 350);
-        cocktailsPresets[24] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[24] = new Preset(pocograndeImageDrawable,
                 getString(R.string.pina_colada_cocktail),
                 4f, 300);
-        cocktailsPresets[25] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[25] = new Preset(cocktailGlassImageDrawable,
                 getString(R.string.rose_cocktail),
                 13.1f, 130);
-        cocktailsPresets[26] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[26] = new Preset(highballGlassImageDrawable,
                 getString(R.string.sea_breeze_cocktail),
                 5.3f, 300);
-        cocktailsPresets[27] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[27] = new Preset(highballGlassImageDrawable,
                 getString(R.string.sex_on_the_beach_cocktail),
                 6.3f, 300);
-        cocktailsPresets[28] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[28] = new Preset(highballGlassImageDrawable,
                 getString(R.string.singapore_sling_cocktail),
                 8.3f, 300);
-        cocktailsPresets[29] = new Preset(wineGlassImageDrawable,
+        cocktailsPresets[29] = new Preset(collinsImageDrawable,
                 getString(R.string.tequila_sunrise_cocktail),
                 4.6f, 400);
     }

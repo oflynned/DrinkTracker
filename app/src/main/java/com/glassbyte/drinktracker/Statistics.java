@@ -2,12 +2,15 @@ package com.glassbyte.drinktracker;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +30,7 @@ import com.jjoe64.graphview.series.Series;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 
@@ -36,6 +40,9 @@ import java.util.TimeZone;
 public class Statistics extends Activity implements
         SharedPreferences.OnSharedPreferenceChangeListener,
         OnDataPointTapListener {
+
+    Locale locale;
+    String language;
 
     int orange, counter;
     double totUnits, maxUnits, BAC, maxBAC;
@@ -50,7 +57,6 @@ public class Statistics extends Activity implements
     DrinkTrackerDbHelper drinkTrackerDbHelper;
 
     ChooseDrink chooseDrink;
-
     String spGender;
 
     @Override
@@ -59,6 +65,19 @@ public class Statistics extends Activity implements
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         sp.registerOnSharedPreferenceChangeListener(this);
         spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender), ""));
+
+        //set irish if the checkbox is checked in settings
+        boolean irish = false;
+        boolean nds = false;
+        boolean irishChosen = sp.getBoolean(getResources().getString(R.string.pref_key_irish), irish);
+        boolean ndsChosen = sp.getBoolean(getResources().getString(R.string.pref_key_nds), nds);
+
+        if(irishChosen) {
+            setLocale("ga");
+        }
+        else if(ndsChosen) {
+            setLocale("nds");
+        }
 
         drinkTrackerDbHelper = new DrinkTrackerDbHelper(this);
 
@@ -102,21 +121,21 @@ public class Statistics extends Activity implements
                         graph.removeAllSeries();
                         series = new LineGraphSeries<>(getBACTupleCurrent());
                         graph.addSeries(series);
-                        axesCurrent();
+                        //axesCurrent();
                         break;
                     //weekly
                     case "1":
                         graph.removeAllSeries();
                         series = new LineGraphSeries<>(getBACTuplePastWeek());
                         graph.addSeries(series);
-                        axesWeekly();
+                        //axesWeekly();
                         break;
                     //monthly
                     case "2":
                         graph.removeAllSeries();
                         series = new LineGraphSeries<>(getBACTuplePastMonth());
                         graph.addSeries(series);
-                        axesMonthly();
+                        //axesMonthly();
                         break;
                 }
 
@@ -637,5 +656,15 @@ public class Statistics extends Activity implements
     @Override
     public void onTap(Series series, DataPointInterface dataPointInterface) {
 
+    }
+
+    public void setLocale(String language){
+        this.language = language;
+        locale = new Locale(language);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = locale;
+        res.updateConfiguration(conf, dm);
     }
 }
