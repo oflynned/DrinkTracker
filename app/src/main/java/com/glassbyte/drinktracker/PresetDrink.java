@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by Maciej on 27/05/15.
  */
@@ -446,6 +448,7 @@ public class PresetDrink extends Fragment {
 
                 String title = "";
                 ImageView presetIV = (ImageView)view.findViewById(R.id.presetTileImage);
+                TextView presetTV = (TextView)view.findViewById(R.id.presetTileTitle);
                 switch (stage) {
                     case 0:
                         title = categoryPresets[i].getTitle();
@@ -460,6 +463,7 @@ public class PresetDrink extends Fragment {
                             presetIV.setImageDrawable(spiritStageOnePresets[i].getImageDrawable());
                         } else if (currentCategory == PresetCategory.COCKTAILS) {
                             title = cocktailsPresets[i].getTitle();
+                            System.out.println(title);
                             presetIV.setImageDrawable(cocktailsPresets[i].getImageDrawable());
                         } else if (currentCategory == PresetCategory.WINE) {
                             title = wineStageOnePresets[i].getTitle();
@@ -473,11 +477,35 @@ public class PresetDrink extends Fragment {
                         } else if (currentCategory == PresetCategory.SPIRITS) {
                             title = spiritStageTwoPresets[i].getTitle();
                             presetIV.setImageDrawable(spiritStageTwoPresets[i].getImageDrawable());
+                        }
+                        break;
+                }
+                presetTV.setText(title);
+            } else {
+                TextView titleTV = (TextView)view.findViewById(R.id.presetTileTitle);
+
+                switch (stage) {
+                    case 0:
+                        titleTV.setText(categoryPresets[i].getTitle());
+                        break;
+                    case 1:
+                        if (currentCategory == PresetCategory.BEER) {
+                            titleTV.setText(beerStageOnePresets[i].getTitle());
+                        } else if (currentCategory == PresetCategory.SPIRITS) {
+                            titleTV.setText(spiritStageOnePresets[i].getTitle());
+                        } else if (currentCategory == PresetCategory.COCKTAILS) {
+                            titleTV.setText(cocktailsPresets[i].getTitle());
+                        } else if (currentCategory == PresetCategory.WINE) {
+                            titleTV.setText(wineStageOnePresets[i].getTitle());
+                        }
+                        break;
+                    case 2:
+                        if (currentCategory == PresetCategory.BEER) {
+                            titleTV.setText(beerStageTwoPresets[i].getTitle());
+                        } else if (currentCategory == PresetCategory.SPIRITS) {
+                            titleTV.setText(spiritStageTwoPresets[i].getTitle());
                         }break;
                 }
-
-                TextView titleTV = (TextView)view.findViewById(R.id.presetTileTitle);
-                titleTV.setText(title);
             }
 
             return view;
