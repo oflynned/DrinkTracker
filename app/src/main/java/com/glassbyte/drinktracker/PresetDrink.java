@@ -48,10 +48,6 @@ public class PresetDrink extends Fragment implements SharedPreferences.OnSharedP
     DrinkTrackerDbHelper dtDb;
     Drawable beerBottleImageDrawable,
             wineGlassImageDrawable,
-<<<<<<< HEAD
-            shotGlassIamgeDrawable;
-    boolean isImperial = false;
-=======
             shotGlassImageDrawable, 
             cocktailGlassImageDrawable, 
             highballGlassImageDrawable, 
@@ -61,7 +57,7 @@ public class PresetDrink extends Fragment implements SharedPreferences.OnSharedP
             margaritaImageDrawable, 
             pocograndeImageDrawable,
             irishcoffeeVectorised;
->>>>>>> a32b447714f0fca55527b9edbfd53c92ed1d44ca
+    boolean isImperial = false;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
