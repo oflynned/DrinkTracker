@@ -268,4 +268,5 @@
     <string name="add_drink">S\'il vous plaît ajouter un verre afin d\'utiliser les statistiques !</string>
     <string name="previous">Antérieur</string>
     <string name="credits">Crédits</string>
+    <string name="nds_language_option">Faible Option de langue allemande</string>
 </resources>

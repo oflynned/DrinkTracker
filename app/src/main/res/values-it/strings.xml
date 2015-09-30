@@ -270,4 +270,5 @@
     <string name="next">Il prossimo</string>
     <string name="add_drink">Si prega di aggiungere una bevanda al fine di utilizzare le statistiche !</string>
     <string name="previous">Precedente</string>
+    <string name="nds_language_option">Bassa Opzione Lingua Tedesco</string>
 </resources>
