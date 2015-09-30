@@ -441,7 +441,6 @@ public class PresetDrink extends Fragment {
                 view = inflater.inflate(R.layout.preset_tile_layout, null);
 
                 String title = "";
-                int imageId = 0;
                 ImageView presetIV = (ImageView)view.findViewById(R.id.presetTileImage);
                 switch (stage) {
                     case 0:
