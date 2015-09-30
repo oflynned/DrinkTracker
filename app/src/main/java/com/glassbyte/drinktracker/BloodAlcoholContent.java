@@ -184,12 +184,16 @@ public class BloodAlcoholContent {
 
                 cur.moveToNext();
                 //// FIXME: 17/09/2015 android.database.CursorIndexOutOfBoundsException: Index 1 requested, with a size of 1 
-                drinkBac = cur.getFloat(5);
+                if (cur.getPosition() < cur.getCount())
+                    drinkBac = cur.getFloat(5);
+                else
+                    break;
             }
-            if (dCurrentBAC > 0) {
+            if (dCurrentBAC > 0 && cur.getPosition() != cur.getCount()) {
                 affectedDrinksBac.add(dCurrentBAC);
                 affectedDrinksId.add(cur.getLong(0));
             }
+            // FIXME: CHECK THIS FROM THE LAST FIXME
             //End of store all the ids of the drinks which are being affected by the bac update and bac amt of how affected they are
 
             //Insert all of the relations between the drinks and the bac update into the relation table
