@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -36,6 +38,7 @@ public class PresetDrink extends Fragment {
     Preset[] wineStageOnePresets;
     Preset[] cocktailsPresets;
     DrinkTrackerDbHelper dtDb;
+    Drawable beerImageDrawable;
 
 
     @Override
@@ -47,177 +50,179 @@ public class PresetDrink extends Fragment {
         LocalBroadcastManager.getInstance(this.getContext()).registerReceiver(onBackPressedBroadcastReceiver,
                 new IntentFilter(MainActivity.ON_BACK_PRESSED_EVENT));
 
+        beerImageDrawable = this.getContext().getDrawable(R.drawable.ic_beer);
+        
         categoryPresets = new Preset[4];
         categoryPresets[0] =
-                new Preset(R.drawable.ic_beer, getString(R.string.beerCategory));
+                new Preset(beerImageDrawable, getString(R.string.beerCategory));
         categoryPresets[1] =
-                new Preset(R.drawable.ic_beer, getString(R.string.wineCategory), 17f);
+                new Preset(beerImageDrawable, getString(R.string.wineCategory), 17f);
         categoryPresets[2] =
-                new Preset(R.drawable.ic_beer, getString(R.string.spiritsCategory));
+                new Preset(beerImageDrawable, getString(R.string.spiritsCategory));
         categoryPresets[3] =
-                new Preset(R.drawable.ic_beer, getString(R.string.cocktailsCategory));
+                new Preset(beerImageDrawable, getString(R.string.cocktailsCategory));
 
         spiritStageOnePresets = new Preset[9];
         spiritStageOnePresets[0] =
-            new Preset(R.drawable.ic_beer, getString(R.string.absinthe_spirit), 70f);
+            new Preset(beerImageDrawable, getString(R.string.absinthe_spirit), 70f);
         spiritStageOnePresets[1] =
-            new Preset(R.drawable.ic_beer, getString(R.string.brandy_spirit), 40f);
+            new Preset(beerImageDrawable, getString(R.string.brandy_spirit), 40f);
         spiritStageOnePresets[2] =
-            new Preset(R.drawable.ic_beer, getString(R.string.gin_spirit), 40f);
+            new Preset(beerImageDrawable, getString(R.string.gin_spirit), 40f);
         spiritStageOnePresets[3] =
-            new Preset(R.drawable.ic_beer, getString(R.string.jager_spirit), 35f);
+            new Preset(beerImageDrawable, getString(R.string.jager_spirit), 35f);
         spiritStageOnePresets[4] =
-            new Preset(R.drawable.ic_beer, getString(R.string.rum_spirit), 40f);
+            new Preset(beerImageDrawable, getString(R.string.rum_spirit), 40f);
         spiritStageOnePresets[5] =
-            new Preset(R.drawable.ic_beer, getString(R.string.sambuca_spirit), 42f);
+            new Preset(beerImageDrawable, getString(R.string.sambuca_spirit), 42f);
         spiritStageOnePresets[6] =
-            new Preset(R.drawable.ic_beer, getString(R.string.tequila_spirit), 40f);
+            new Preset(beerImageDrawable, getString(R.string.tequila_spirit), 40f);
         spiritStageOnePresets[7] =
-            new Preset(R.drawable.ic_beer, getString(R.string.vodka_spirit), 40f);
+            new Preset(beerImageDrawable, getString(R.string.vodka_spirit), 40f);
         spiritStageOnePresets[8] =
-            new Preset(R.drawable.ic_beer, getString(R.string.whiskey_spirit), 40f);
+            new Preset(beerImageDrawable, getString(R.string.whiskey_spirit), 40f);
 
         spiritStageTwoPresets = new Preset[3];
         spiritStageTwoPresets[0] =
-                new Preset(R.drawable.ic_beer, getString(R.string.q_single), (int)35);
+                new Preset(beerImageDrawable, getString(R.string.q_single), (int)35);
         spiritStageTwoPresets[1] =
-                new Preset(R.drawable.ic_beer, getString(R.string.q_double), (int)70);
+                new Preset(beerImageDrawable, getString(R.string.q_double), (int)70);
         spiritStageTwoPresets[2] =
-                new Preset(R.drawable.ic_beer, getString(R.string.q_triple), (int)105);
+                new Preset(beerImageDrawable, getString(R.string.q_triple), (int)105);
 
         beerStageOnePresets = new Preset[12];
         beerStageOnePresets[0] =
-                new Preset(R.drawable.ic_beer, "1-2%", 1.5f);
+                new Preset(beerImageDrawable, "1-2%", 1.5f);
         beerStageOnePresets[1] =
-                new Preset(R.drawable.ic_beer, "2-3%", 2.5f);
+                new Preset(beerImageDrawable, "2-3%", 2.5f);
         beerStageOnePresets[2] =
-                new Preset(R.drawable.ic_beer, "3-4%", 3.5f);
+                new Preset(beerImageDrawable, "3-4%", 3.5f);
         beerStageOnePresets[3] =
-                new Preset(R.drawable.ic_beer, "4-5%", 4.5f);
+                new Preset(beerImageDrawable, "4-5%", 4.5f);
         beerStageOnePresets[4] =
-                new Preset(R.drawable.ic_beer, "5-6%", 5.5f);
+                new Preset(beerImageDrawable, "5-6%", 5.5f);
         beerStageOnePresets[5] =
-                new Preset(R.drawable.ic_beer, "6-7%", 6.5f);
+                new Preset(beerImageDrawable, "6-7%", 6.5f);
         beerStageOnePresets[6] =
-                new Preset(R.drawable.ic_beer, "7-8%", 7.5f);
+                new Preset(beerImageDrawable, "7-8%", 7.5f);
         beerStageOnePresets[7] =
-                new Preset(R.drawable.ic_beer, "8-9%", 8.5f);
+                new Preset(beerImageDrawable, "8-9%", 8.5f);
         beerStageOnePresets[8] =
-                new Preset(R.drawable.ic_beer, "9-10%", 9.5f);
+                new Preset(beerImageDrawable, "9-10%", 9.5f);
         beerStageOnePresets[9] =
-                new Preset(R.drawable.ic_beer, "10-11%", 10.5f);
+                new Preset(beerImageDrawable, "10-11%", 10.5f);
         beerStageOnePresets[10] =
-                new Preset(R.drawable.ic_beer, "11-12%", 11.5f);
+                new Preset(beerImageDrawable, "11-12%", 11.5f);
         beerStageOnePresets[11] =
-                new Preset(R.drawable.ic_beer, "12-13%", 12.5f);
+                new Preset(beerImageDrawable, "12-13%", 12.5f);
 
         beerStageTwoPresets = new Preset[4];
         beerStageTwoPresets[0] =
-                new Preset(R.drawable.ic_beer, "250ml", (int)250);
+                new Preset(beerImageDrawable, "250ml", (int)250);
         beerStageTwoPresets[1] =
-                new Preset(R.drawable.ic_beer, "330ml", (int)330);
+                new Preset(beerImageDrawable, "330ml", (int)330);
         beerStageTwoPresets[2] =
-                new Preset(R.drawable.ic_beer, "350ml", (int)330);
+                new Preset(beerImageDrawable, "350ml", (int)330);
         beerStageTwoPresets[3] =
-                new Preset(R.drawable.ic_beer, "500ml", (int)500);
+                new Preset(beerImageDrawable, "500ml", (int)500);
 
         wineStageOnePresets = new Preset[3];
         wineStageOnePresets[0] =
-                new Preset(R.drawable.ic_beer, getString(R.string.quarter_wine_glass),(int)(215/4));
+                new Preset(beerImageDrawable, getString(R.string.quarter_wine_glass),(int)(215/4));
         wineStageOnePresets[1] =
-                new Preset(R.drawable.ic_beer, getString(R.string.half_wine_glass),(int)(215/2));
+                new Preset(beerImageDrawable, getString(R.string.half_wine_glass),(int)(215/2));
         wineStageOnePresets[2] =
-                new Preset(R.drawable.ic_beer, getString(R.string.three_quarter_wine_glass),(int)(215/4*3));
+                new Preset(beerImageDrawable, getString(R.string.three_quarter_wine_glass),(int)(215/4*3));
 
         cocktailsPresets = new Preset[30];
-        cocktailsPresets[0] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[0] = new Preset(beerImageDrawable,
                 getString(R.string.bellini_cocktail),
                 0.4f, 300);
-        cocktailsPresets[1] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[1] = new Preset(beerImageDrawable,
                 getString(R.string.black_russian_cocktail),
                 8f, 300);
-        cocktailsPresets[2] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[2] = new Preset(beerImageDrawable,
                 getString(R.string.bloody_mary_cocktail),
                 6f, 300);
-        cocktailsPresets[3] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[3] = new Preset(beerImageDrawable,
                 getString(R.string.caipirinha_cocktail),
                 6.7f, 300);
-        cocktailsPresets[4] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[4] = new Preset(beerImageDrawable,
                 getString(R.string.champagne_cocktail),
                 7.9f, 300);
-        cocktailsPresets[5] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[5] = new Preset(beerImageDrawable,
                 getString(R.string.cosmopolitan_cocktail),
                 17.3f, 130);
-        cocktailsPresets[6] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[6] = new Preset(beerImageDrawable,
                 getString(R.string.cuba_libre_cocktail),
                 15.4f, 130);
-        cocktailsPresets[7] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[7] = new Preset(beerImageDrawable,
                 getString(R.string.french_75_cocktail),
                 6.4f, 300);
-        cocktailsPresets[8] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[8] = new Preset(beerImageDrawable,
                 getString(R.string.french_connection_cocktail),
                 8f, 300);
-        cocktailsPresets[9] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[9] = new Preset(beerImageDrawable,
                 getString(R.string.god_father_cocktail),
                 8f, 300);
-        cocktailsPresets[10] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[10] = new Preset(beerImageDrawable,
                 getString(R.string.god_mother_cocktail),
                 8f, 300);
-        cocktailsPresets[11] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[11] = new Preset(beerImageDrawable,
                 getString(R.string.golden_dream_cocktail),
                 9.6f, 130);
-        cocktailsPresets[12] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[12] = new Preset(beerImageDrawable,
                 getString(R.string.grasshopper_cocktail),
                 11.5f, 130);
-        cocktailsPresets[13] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[13] = new Preset(beerImageDrawable,
                 getString(R.string.harvey_wallbanger_cocktail),
                 8.1f, 300);
-        cocktailsPresets[14] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[14] = new Preset(beerImageDrawable,
                 getString(R.string.horses_neck_cocktail),
                 6.8f, 300);
-        cocktailsPresets[15] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[15] = new Preset(beerImageDrawable,
                 getString(R.string.irish_coffee_cocktail),
                 6.8f, 350);
-        cocktailsPresets[16] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[16] = new Preset(beerImageDrawable,
                 getString(R.string.kir_cocktail),
                 6.6f, 215);
-        cocktailsPresets[17] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[17] = new Preset(beerImageDrawable,
                 getString(R.string.long_island_iced_tea_cocktail),
                 9f, 300);
-        cocktailsPresets[18] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[18] = new Preset(beerImageDrawable,
                 getString(R.string.mai_tai_cocktail),
                 9.5f, 300);
-        cocktailsPresets[19] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[19] = new Preset(beerImageDrawable,
                 getString(R.string.margarita_cocktail),
                 6.3f, 350);
-        cocktailsPresets[20] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[20] = new Preset(beerImageDrawable,
                 getString(R.string.mimosa_cocktail),
                 3.3f, 300);
-        cocktailsPresets[21] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[21] = new Preset(beerImageDrawable,
                 getString(R.string.mint_julep_cocktail),
                 8f, 300);
-        cocktailsPresets[22] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[22] = new Preset(beerImageDrawable,
                 getString(R.string.mojito_cocktail),
                 4f, 400);
-        cocktailsPresets[23] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[23] = new Preset(beerImageDrawable,
                 getString(R.string.moscow_mule_cocktail),
                 5.1f, 350);
-        cocktailsPresets[24] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[24] = new Preset(beerImageDrawable,
                 getString(R.string.pina_colada_cocktail),
                 4f, 300);
-        cocktailsPresets[25] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[25] = new Preset(beerImageDrawable,
                 getString(R.string.rose_cocktail),
                 13.1f, 130);
-        cocktailsPresets[26] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[26] = new Preset(beerImageDrawable,
                 getString(R.string.sea_breeze_cocktail),
                 5.3f, 300);
-        cocktailsPresets[27] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[27] = new Preset(beerImageDrawable,
                 getString(R.string.sex_on_the_beach_cocktail),
                 6.3f, 300);
-        cocktailsPresets[28] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[28] = new Preset(beerImageDrawable,
                 getString(R.string.singapore_sling_cocktail),
                 8.3f, 300);
-        cocktailsPresets[29] = new Preset(R.drawable.ic_beer,
+        cocktailsPresets[29] = new Preset(beerImageDrawable,
                 getString(R.string.tequila_sunrise_cocktail),
                 4.6f, 400);
     }
@@ -437,42 +442,39 @@ public class PresetDrink extends Fragment {
 
                 String title = "";
                 int imageId = 0;
+                ImageView presetIV = (ImageView)view.findViewById(R.id.presetTileImage);
                 switch (stage) {
                     case 0:
                         title = categoryPresets[i].getTitle();
-                        imageId = categoryPresets[i].getImageResId();
+                        presetIV.setImageDrawable(beerStageOnePresets[i].getImageDrawable());
                         break;
                     case 1:
                         if (currentCategory == PresetCategory.BEER) {
                             title = beerStageOnePresets[i].getTitle();
-                            imageId = beerStageOnePresets[i].getImageResId();
+                            presetIV.setImageDrawable(beerStageOnePresets[i].getImageDrawable());
                         } else if (currentCategory == PresetCategory.SPIRITS) {
                             title = spiritStageOnePresets[i].getTitle();
-                            imageId = spiritStageOnePresets[i].getImageResId();
+                            presetIV.setImageDrawable(beerStageOnePresets[i].getImageDrawable());
                         } else if (currentCategory == PresetCategory.COCKTAILS) {
                             title = cocktailsPresets[i].getTitle();
-                            imageId = cocktailsPresets[i].getImageResId();
+                            presetIV.setImageDrawable(beerStageOnePresets[i].getImageDrawable());
                         } else if (currentCategory == PresetCategory.WINE) {
                             title = wineStageOnePresets[i].getTitle();
-                            imageId = wineStageOnePresets[i].getImageResId();
+                            presetIV.setImageDrawable(beerStageOnePresets[i].getImageDrawable());
                         }
                         break;
                     case 2:
                         if (currentCategory == PresetCategory.BEER) {
                             title = beerStageTwoPresets[i].getTitle();
-                            imageId = beerStageTwoPresets[i].getImageResId();
+                            presetIV.setImageDrawable(beerStageOnePresets[i].getImageDrawable());
                         } else if (currentCategory == PresetCategory.SPIRITS) {
                             title = spiritStageTwoPresets[i].getTitle();
-                            imageId = spiritStageTwoPresets[i].getImageResId();
+                            presetIV.setImageDrawable(beerStageOnePresets[i].getImageDrawable());
                         }break;
                 }
 
                 TextView titleTV = (TextView)view.findViewById(R.id.presetTileTitle);
                 titleTV.setText(title);
-
-                ImageView presetIV = (ImageView)view.findViewById(R.id.presetTileImage);
-                presetIV.setImageResource(imageId);
-
             }
 
             return view;
@@ -481,16 +483,16 @@ public class PresetDrink extends Fragment {
 
     public class Preset {
         private String title;
-        private int imageResId;
+        private Drawable img;
         private boolean percentageAssigned = false;
         private boolean volumeAssigned = false;
         private float percentage = 0;
         private int volume = 0;
 
-        public Preset(int imageResId, String title){this(imageResId, title, -1, -1);}
-        public Preset(int imageResId, String title, float percentage){this(imageResId, title, percentage, -1);}
-        public Preset(int imageResId, String title, int volume){this(imageResId, title, -1, volume);}
-        public Preset(int imageResId, String title, float percentage, int volume){
+        public Preset(Drawable img, String title){this(img, title, -1, -1);}
+        public Preset(Drawable img, String title, float percentage){this(img, title, percentage, -1);}
+        public Preset(Drawable img, String title, int volume){this(img, title, -1, volume);}
+        public Preset(Drawable img, String title, float percentage, int volume){
             if (percentage > 0f) {
                 percentageAssigned = true;
                 this.percentage = percentage;
@@ -502,11 +504,11 @@ public class PresetDrink extends Fragment {
             }
 
             this.title = title;
-            this.imageResId = imageResId;
+            this.img = img;
         }
 
         public String getTitle(){return title;}
-        public int getImageResId(){return imageResId;}
+        public Drawable getImageDrawable(){return img;}
 
         public boolean isVolumeAssigned(){return volumeAssigned;}
         public boolean isPercentageAssigned(){return percentageAssigned;}
