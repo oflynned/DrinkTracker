@@ -102,7 +102,7 @@
     <string name="irish_language_option">Opción lengua irlandesa</string>
     <string name="summer_irish">Seleccione esta opción si desea utilizar el gaélico irlandés como una opción de idioma</string>
 
-    <string name="nds_language_option">Opción lengua irlandesa</string>
+    <string name="nds_language_option">Baja Opción Idioma Alemán</string>
     <string name="summer_nds">Seleccione esta opción si desea utilizar el gaélico irlandés como una opción de idioma</string>
 
     <string name="more_from_glassbyte">Más de Glassbyte</string>
@@ -272,4 +272,5 @@
     <string name="add_drink">Por favor, añada una bebida con el fin de utilizar las estadísticas !</string>
     <string name="previous">Anterior</string>
     <string name="credits">Créditos</string>
+
 </resources>
