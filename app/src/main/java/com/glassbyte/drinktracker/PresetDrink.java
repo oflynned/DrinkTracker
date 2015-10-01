@@ -60,7 +60,6 @@ public class PresetDrink extends Fragment implements SharedPreferences.OnSharedP
             irishcoffeeVectorised;
     boolean isImperial = false;
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

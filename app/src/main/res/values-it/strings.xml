@@ -232,7 +232,7 @@
     <string name="rum_spirit">Rum</string>
     <string name="whiskey_spirit">Whiskey</string>
     <string name="brandy_spirit">Brandy</string>
-    <string name="jager_spirit">Jäger</string>
+    <string name="jager_spirit">Jägermeister</string>
 
     <!--> Shot quantities <-->
     <string name="q_single">Singolo</string>

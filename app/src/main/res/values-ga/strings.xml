@@ -127,7 +127,7 @@
     <string name="plugins">Plugins Used</string>
     <string name="plugins_body">App Intro\nó PaoloRotolo\n\nFloatingActionButton\nó Clans\n\nGraph View\nó jjoe64</string>
     <string name="warning1">Tá tú ar an tslí le h-éirí ólta, b\'fhéidir tóg go bog é má tá tú ag mothú saghas faoi thionchar an óil.</string>
-    <string name="warning2">Tú céim sroichte agat a chiallaíonn go bhfuil tú sách ólta, bíodh ar d\'aire agus bíodh cinnte go bhfuil do ghiúirléidí uile agat.</string>
+    <string name="warning2">Tá céim sroichte agat a chiallaíonn go bhfuil tú sách-ólta, bíodh ar d\'aire agus bíodh cinnte go bhfuil do ghiúirléidí uile agat.</string>
     <string name="warning3">Tá tú an-mheisciúil, agus beidh póit mhór ort amárach.</string>
     <string name="warning4">Tá tú ólta tríd is tríd. Má ólann tú tuilleadh, cuireann tú do shaol i mbaol!</string>
     <string name="libraries">Ríomhleabharlainne Úsáidte</string>
@@ -233,7 +233,7 @@
     <string name="rum_spirit">Rum</string>
     <string name="whiskey_spirit">Uisce Beatha</string>
     <string name="brandy_spirit">Branda</string>
-    <string name="jager_spirit">Jäger</string>
+    <string name="jager_spirit">Jägermeister</string>
 
     <!--> Shot quantities <-->
     <string name="q_single">Aonad</string>
