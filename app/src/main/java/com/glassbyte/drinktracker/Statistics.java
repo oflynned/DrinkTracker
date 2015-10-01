@@ -12,35 +12,27 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.TypedArrayUtils;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.db.chart.Tools;
 import com.db.chart.model.LineSet;
 import com.db.chart.view.AxisController;
-import com.db.chart.view.ChartView;
 import com.db.chart.view.LineChartView;
 import com.db.chart.view.animation.Animation;
 import com.db.chart.view.animation.style.DashAnimation;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.DataPointInterface;
-import com.jjoe64.graphview.series.LineGraphSeries;
-import com.jjoe64.graphview.series.Series;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.TimeZone;
 
 
 /**
@@ -53,16 +45,20 @@ public class Statistics extends Activity implements
     String language;
 
     private LineChartView lineChartView;
-    private boolean updateView;
-    private final String[] mLabelsOne= {"", "10-15", "", "15-20", "", "20-25", "", "25-30", "", "30-35", ""};
-    private final float[][] mValuesOne = {{3.5f, 4.7f, 4.3f, 8f, 6.5f, 10f, 7f, 8.3f, 7.0f, 7.3f, 5f},
-            {2.5f, 3.5f, 3.5f, 7f, 5.5f, 8.5f, 6f, 6.3f, 5.8f, 6.3f, 4.5f},
-            {1.5f, 2.5f, 2.5f, 4f, 2.5f, 5.5f, 5f, 5.3f, 4.8f, 5.3f, 3f}};
+    //we'll use an arraylist to dynamically set n amounts of values
+    //and then copy this list to an array of size n when onCreate() is called
+    private ArrayList<Float> BACLevelArray = new ArrayList<>();
+    private ArrayList<Date> BACTimeArray = new ArrayList<>();
+    private float[] BACvalues = null;
+    private String[] BACtime = null;
+
+    float[] yValues = null;
+    String[] xValues = null;
+
+    private final static int THIRTY_MINS_MILLIS = 30 * 60 * 1000;
 
     int orange, counter;
     double totUnits, maxUnits, BAC, maxBAC;
-    long BACTime, maxTime, minTime;
-    private LineGraphSeries<DataPoint> series;
 
     //Spinner spinner;
     TextView briefInfo, rating, BACinfo, BACrating;
@@ -77,6 +73,17 @@ public class Statistics extends Activity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //each vertical line depends on the array not being null
+
+        /* Chart gradiation
+         * Each vertical line for the viewport is determined by the array for labels
+          *
+          * -> try to set it to a scrollable horizontal viewport in order to allow nice spacing
+          * -> set value of new BAC to populated automatically and show on spacing
+          * -> the only two labels we need are start and end times
+          *
+          * -> start and end times are determined */
+
         dateTimeFormatter = DateFormat.getTimeFormat(this);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         sp.registerOnSharedPreferenceChangeListener(this);
@@ -88,10 +95,9 @@ public class Statistics extends Activity implements
         boolean irishChosen = sp.getBoolean(getResources().getString(R.string.pref_key_irish), irish);
         boolean ndsChosen = sp.getBoolean(getResources().getString(R.string.pref_key_nds), nds);
 
-        if(irishChosen) {
+        if (irishChosen) {
             setLocale("ga");
-        }
-        else if(ndsChosen) {
+        } else if (ndsChosen) {
             setLocale("nds");
         }
 
@@ -111,7 +117,6 @@ public class Statistics extends Activity implements
         rating = (TextView) findViewById(R.id.rating);
         BACinfo = (TextView) findViewById(R.id.briefInfoBAC);
         BACrating = (TextView) findViewById(R.id.ratingBAC);
-        //spinner = (Spinner) findViewById(R.id.periodSpinner);
 
         bloodAlcoholContent = new BloodAlcoholContent(this);
         setRecommendations();
@@ -123,119 +128,258 @@ public class Statistics extends Activity implements
 
         //chart
         lineChartView = (LineChartView) findViewById(R.id.linechart);
-        showChart(0, lineChartView);
+        showChart(lineChartView);
+    }
 
-        /*
-        //gets current spinner selection, removed for time being as lacking time
-        //get the selection from the spinner to display the correct time period
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void getBACTupleCurrent() {
+        // select the prior time where BAC was at 0 the previous time and
+        // set this as a start point to traverse drinks and graph appropriately
+        drinkTrackerDbHelper.printTableContents(DrinkTrackerDatabase.BacTable.TABLE_NAME);
 
-            public void onItemSelected(AdapterView<?> parent,
-                                       View view, int pos, long id) {
+        SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
+        String count = "SELECT count(*) FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+        Cursor countCursor = db.rawQuery(count, null);
+        countCursor.moveToFirst();
+        int mCount = countCursor.getInt(0);
 
-                //Get item from spinner and store in string
-                String selected = String.valueOf(parent.getSelectedItemPosition());
+        //if the table exists
+        if (mCount > 0) {
+            String countQuery =
+                    "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME +
+                            " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME +
+                            "=(SELECT MAX(" + DrinkTrackerDatabase.BacTable.DATE_TIME + ")" +
+                            " FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME +
+                            " WHERE " + DrinkTrackerDatabase.BacTable.BAC + "=0)";
+            Cursor cursor = db.rawQuery(countQuery, null);
+            cursor.moveToFirst();
+            long lastZeroBACDate;
 
-                switch (selected) {
-                    //current
-                    case "0":
+            //given the case that no drinks have been added and BAC was always 0
+            if (cursor.getCount() == 0) {
 
-                        break;
-                    //weekly
-                    case "1":
+                countQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+                cursor = db.rawQuery(countQuery, null);
+                cursor.moveToFirst();
+                int exists = cursor.getInt(0);
 
-                        break;
-                    //monthly
-                    case "2":
+                //given empty table where drinks have now been added
+                if (exists > 0) {
+                    //continue the query as there is a populated table with decays and BAC updated
+                    //as we need to return the value at a certain count, we need the counter value to offset
+                    cursor.moveToFirst();
+                    lastZeroBACDate = cursor.getLong(1);
+                    countQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME +
+                            " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + ">" + lastZeroBACDate;
+                    cursor = db.rawQuery(countQuery, null);
+                    cursor.moveToFirst();
 
-                        break;
+                    //initialise array to size of arraylist over 2 rows
+                    //where one row is bac value and the other is the date time value
+                    counter = cursor.getCount() + 1;
+                    BACvalues = new float[counter];
+                    BACtime = new String[counter];
+
+                    //continue the query as there is a populated table with decays and BAC updated
+                    //as we need to return the value at a certain count, we need the counter value to offset
+                    while (!cursor.isAfterLast() && cursor.moveToNext()) {
+                        //store and return appropriate BAC & time within row
+                        Date date = new Date(cursor.getLong(1));
+                        BACTimeArray.add(date);
+                        //traverse and return the value of the current float of the row
+                        BACLevelArray.add(cursor.getFloat(2));
+
+                        if (BAC > maxBAC) {
+                            maxBAC = BAC;
+                        }
+                        cursor.moveToNext();
+                    }
+                }
+            }
+            //else if the table has been populated before and needs to retrieve new values
+            else if (cursor.getCount() > 0) {
+
+                countQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+                cursor = db.rawQuery(countQuery, null);
+                cursor.moveToFirst();
+                int exists = cursor.getInt(0);
+
+                if (exists > 0) {
+                    //get first value of time
+                    //a time of 0 is not possible, so if this exists
+                    //we go into the other loop and terminate
+                    cursor.moveToFirst();
+                    lastZeroBACDate = cursor.getLong(1);
+                    countQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME +
+                            " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + ">" + lastZeroBACDate;
+                    cursor = db.rawQuery(countQuery, null);
+                    cursor.moveToFirst();
+
+                    //initialise array to size of arraylist over 2 rows
+                    //where one row is bac value and the other is the date time value
+                    counter = cursor.getCount() + 1;
+
+                    //continue the query as there is a populated table with decays and BAC updated
+                    //as we need to return the value at a certain count, we need the counter value to offset
+                    while (!cursor.isAfterLast() && cursor.moveToNext()) {
+                        //store and return appropriate BAC & time within row
+                        Date date = new Date(cursor.getLong(1));
+                        BACTimeArray.add(date);
+                        //traverse and return the value of the current float of the row
+                        BACLevelArray.add(cursor.getFloat(2));
+
+                        if (BAC > maxBAC) {
+                            maxBAC = BAC;
+                        }
+                        cursor.moveToNext();
+                    }
                 }
             }
 
-            public void onNothingSelected(AdapterView parent) {
-                //Do nothing
+            //initial value has to be set to BAC of 0 at the time of first drink added...
+            BACvalues = new float[1];
+            BACtime = new String[1];
+
+            System.out.println(BACvalues.length);
+            System.out.println(BACtime.length);
+
+            BACvalues[0] = 0;
+            BACtime[0] = String.valueOf(returnFirstNullValue());
+
+            float[] tempLevel = new float[BACLevelArray.size()];
+            String[] tempTime = new String[BACTimeArray.size()];
+
+            for (int i = 0; i < tempLevel.length; i++) {
+                tempLevel[i] = BACLevelArray.get(i);
+                tempTime[i] = String.valueOf(BACTimeArray.get(i));
             }
-        });*/
+
+            //now concatenate both initial and raw arrays
+            yValues = concatenateFloats(BACvalues, tempLevel);
+            xValues = concatenateStrings(BACtime, tempTime);
+
+            db.close();
+            cursor.close();
+        } else {
+            Toast.makeText(getBaseContext(),
+                    getResources().getString(R.string.add_drink),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void showChart(final int tag, final LineChartView chart){
-        Runnable action =  new Runnable() {
+    public static float[] concatenateFloats(float[] ... parms) {
+        // calculate size of target array
+        int size = 0;
+        for (float[] array : parms) {
+            size += array.length;
+        }
+
+        float[] result = new float[size];
+
+        int j = 0;
+        for (float[] array : parms) {
+            for (float s : array) {
+                result[j++] = s;
+            }
+        }
+        return result;
+    }
+
+    public static String[] concatenateStrings(String [] ... parms) {
+        // calculate size of target array
+        int size = 0;
+        for (String[] array : parms) {
+            size += array.length;
+        }
+
+        String[] result = new String[size];
+
+        int j = 0;
+        for (String[] array : parms) {
+            for (String s : array) {
+                result[j++] = s;
+            }
+        }
+        return result;
+    }
+
+    private Date returnFirstNullValue() {
+        //first time stored in array
+        return BACTimeArray.get(0);
+    }
+
+    private void showChart(final LineChartView chart) {
+        Runnable action = new Runnable() {
             @Override
             public void run() {
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
-                        updateChart(0, lineChartView);
+                        updateChart(lineChartView);
                     }
                 }, 500);
             }
         };
 
-        switch(tag){
-            case 0:
-                produce(chart, action); break;
-            default:
-        }
+        produce(chart, action);
     }
 
-    private void updateChart(final int tag, final LineChartView chart){
-
-        switch(tag){
-            case 0:
-                update(chart);
-                break;
-            default:
-        }
+    private void updateChart(final LineChartView chart) {
+        update(chart);
     }
 
-    public void produce(LineChartView chart, Runnable action){
+    public void produce(LineChartView chart, Runnable action) {
+        //retrieve BAC values from the table
+        getBACTupleCurrent();
+        //assign to base dataset for line of BAC and appropriately logged times
+        LineSet dataset = new LineSet(xValues, yValues);
 
-        LineSet dataset = new LineSet(mLabelsOne, mValuesOne[1]);
+        //modify
         dataset.setColor(getResources().getColor(R.color.orange500))
                 .setSmooth(true)
                 .setDashed(new float[]{20, 20});
         chart.addData(dataset);
 
+        //gridview using paint
         Paint gridPaint = new Paint();
         gridPaint.setColor(getResources().getColor(R.color.white));
         gridPaint.setStyle(Paint.Style.STROKE);
         gridPaint.setAntiAlias(true);
         gridPaint.setStrokeWidth(Tools.fromDpToPx(.75f));
 
+        //axes and styling
         chart.setTopSpacing(Tools.fromDpToPx(10))
                 .setBorderSpacing(Tools.fromDpToPx(0))
-                .setAxisBorderValues(0, 10, 1)
+                .setAxisBorderValues(0, 1, 1)
                 .setXLabels(AxisController.LabelPosition.OUTSIDE)
                 .setYLabels(AxisController.LabelPosition.OUTSIDE)
                 .setLabelsColor(getResources().getColor(R.color.white))
-                        .setXAxis(false)
-                        .setYAxis(false)
+                .setXAxis(false)
+                .setYAxis(false)
+                .setGrid(LineChartView.GridType.FULL, gridPaint)
+                .canScrollHorizontally(1);
 
-                .setGrid(LineChartView.GridType.FULL, gridPaint);
-
+        //initial animation and dashes continuous animation
         Animation anim = new Animation().setStartPoint(0, 0);
         chart.show(anim);
         chart.animateSet(0, new DashAnimation());
     }
 
-    public void update(LineChartView chart){
-        float[][] newValues = {{3.5f, 4.7f, 4.3f, 8f, 6.5f, 10f, 7f, 8.3f, 7.0f, 7.3f, 5f},
-                {1f, 2f, 2f, 3.5f, 2f, 5f, 4.5f, 4.8f, 4.3f, 4.8f, 2.5f}};
-        chart.updateValues(0, newValues[0]);
+    public void update(LineChartView chart) {
+        getBACTupleCurrent();
         chart.notifyDataUpdate();
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         drinkTrackerDbHelper.close();
         super.onPause();
     }
 
-    public void onResume(){
+    public void onResume() {
         drinkTrackerDbHelper = new DrinkTrackerDbHelper(this);
         super.onResume();
     }
 
-    public void onDestroy(){
+    public void onDestroy() {
         drinkTrackerDbHelper.close();
         super.onDestroy();
     }
@@ -410,7 +554,7 @@ public class Statistics extends Activity implements
 
     }
 
-    public void setLocale(String language){
+    public void setLocale(String language) {
         this.language = language;
         locale = new Locale(language);
         Resources res = getResources();
