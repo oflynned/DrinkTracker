@@ -122,12 +122,12 @@
     <string name="notice">轨道酒精</string>
     <string name="plugins">插件 - 我们已经用&#8230;</string>
     <string name="plugins_body">App Intro\n由 PaoloRotolo\nFloatingActionButton\n由 Clans\nGraphView\n由 jjoe64\n\n谢谢!\nAlexandru Sulea\n(法语，意大利语，葡萄牙语，罗马尼亚语，西班牙语)\nEdmond O\' Flynn\n(荷兰，爱尔兰，普通话)\nKevin Behrens\n(德语，低地德语)\nMaciej Grabowski\n(波兰语)\nPavel Tarasoff\n(俄语)\nYoung Suk Choi\n(韩语，日语)</string>
-    <string name="warning1">You\'re enroute to getting drunk, maybe take it easy if you\'re feeling a bit intoxicated.</string>
-    <string name="warning2">You\'ve reached quite a drunk stage, watch yourself and make sure you don\'t lose personal belongings.</string>
-    <string name="warning3">You\'re very drunk and should expect a bad hangover tomorrow morning.</string>
-    <string name="warning4">You\'re extremely drunk, drink any more and you\'re endangering yourself!</string>
+    <string name="warning1">你开始有点醉了，也许慢慢来，如果你感觉有点陶醉。</string>
+    <string name="warning2">你已经达到了一个相当醉酒阶段，观察自己，并确保您不会丢失个人物品。</string>
+    <string name="warning3">你很喝醉了，应该期待一个糟糕的宿醉明天早上。</string>
+    <string name="warning4">你感到非常醉了，如果你再喝酒，你将危及你自己！</string>
     <string name="libraries">Libraries - 我们已经用&#8230;</string>
-    <string name="libraries_summary">Here is a list of the libraries we used in the creation of this app</string>
+    <string name="libraries_summary">这是我们在创作这个应用程序中使用的列表</string>
     <string name="apache_summary">软件分发许可证信息</string>
     <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
     <string name="apache">阿帕奇执照</string>
@@ -205,15 +205,15 @@
     <string name="tequila_sunrise_cocktail">Tequila Sunrise</string>
 
     <!--> Cocktail Glasses <-->
-    <string name="cocktail_glass">Cocktail Glass</string>
-    <string name="highball_glass">Highball Glass</string>
-    <string name="collins_glass">Collins Glass</string>
-    <string name="lowball_glass">Lowball Glass</string>
-    <string name="champagne_flute">Champagne Glass</string>
-    <string name="mug">Mug</string>
-    <string name="wine_glass">Wine Glass</string>
-    <string name="margarita_glass">Margarita Glass</string>
-    <string name="poco_grande_glass">Poco Grande Glass</string>
+    <string name="cocktail_glass">鸡尾酒玻璃</string>
+    <string name="highball_glass">高球玻璃</string>
+    <string name="collins_glass">柯林斯玻璃</string>
+    <string name="lowball_glass">虚报低价玻璃</string>
+    <string name="champagne_flute">香槟酒杯</string>
+    <string name="mug">杯子</string>
+    <string name="wine_glass">红酒杯</string>
+    <string name="margarita_glass">玛格丽塔玻璃</string>
+    <string name="poco_grande_glass">小小大玻璃</string>
 
     <!--> Wine volumes <-->
     <string name="quarter_wine_glass">一季度玻璃</string>
@@ -237,11 +237,11 @@
     <string name="q_triple">三合一</string>
 
     <string name="what_are_you_waiting_for">你在等什么？</string>
-    <string name="give_drink_tracker_a_go">Give 轨道酒精 a go today and make lifestyle changes in realtime that last a lifetime</string>
+    <string name="give_drink_tracker_a_go">尝试轨道酒精今天 - 拿酒精控制</string>
     <string name="sober_friend">你清醒的朋友</string>
-    <string name="warning_beforehand">Be warned beforehand when things are going overboard and prevent over-drinking and ruined nights out</string>
+    <string name="warning_beforehand">获取预先警告，防止饮酒过量和破坏之夜</string>
     <string name="track_drinking">跟踪你的酒精</string>
-    <string name="know_exactly">Know exactly how much is too much and educate yourself on alcohol limits</string>
+    <string name="know_exactly">了解到底有多少是太多了，并且了解你的酒精含量限制</string>
 
     <string name="male">男人</string>
     <string name="female">女人</string>
