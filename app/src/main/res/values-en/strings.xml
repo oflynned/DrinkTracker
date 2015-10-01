@@ -8,27 +8,6 @@
     <string name="action_stats">Statistics</string>
     <string name="action_removeads">Remove Ads</string>
 
-    <!-- Intro Screen -->
-    <string name="pref_key_run" translatable="false">pref_key_run</string>
-
-    <!-- Preferences -->
-    <string name="pref_key_contact" translatable="false">pref_key_contact</string>
-    <string name="pref_key_editGender" translatable="false">pref_key_editGender</string>
-    <string name="pref_key_editWeight" translatable="false">pref_key_editWeight</string>
-    <string name="pref_key_editUnits" translatable="false">pref_key_editUnits</string>
-    <string name="pref_key_editHeight" translatable="false">pref_key_editHeight</string>
-    <string name="pref_key_dataCollection" translatable="false">pref_key_dataCollection</string>
-    <string name="pref_key_irish" translatable="false">pref_key_irish</string>
-    <string name="pref_key_nds" translatable="false">pref_key_nds</string>
-    <string name="pref_key_currentEbac" translatable="false">pref_key_currentEbac</string>
-    <string name="pref_key_storage_settings" translatable="false">pref_key_storage_settings</string>
-    <string name="pref_key_editFeet" translatable="false">pref_key_editFeet</string>
-    <string name="pref_key_editInches" translatable="false">pref_key_editInches</string>
-    <string name="pref_key_last_update_currentEbac" translatable="false">pref_key_last_update_currentEbac</string>
-    <string name="pref_key_maxBAC" translatable="false">pref_key_maxBAC</string>
-
-    <!-- End of Preferences -->
-
     <!--Custom Drinks Titles-->
     <string name="shot_glass_title">Shot Glass</string>
     <string name="water_glass_title">Glass</string>
@@ -132,10 +111,6 @@
     <string name="inches">inches</string>
     <string name="pounds">pounds</string>
 
-    <!--> Mock Banner Ad Key <-->
-    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-
     <string name="warning">Warning</string>
     <string name="ok">OK</string>
     <string name="warning1">You\'re enroute to getting drunk, maybe take it easy if you\'re feeling a bit intoxicated.</string>
@@ -146,7 +121,6 @@
     <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
     <string name="plugins">Plugins Used</string>
     <string name="plugins_body">App Intro\nby PaoloRotolo\nFloatingActionButton\nby Clans\nGraphView\nby jjoe64\n\nThanks to:\nAlexandru Sulea\n(French, Italian, Portuguese, Romanian, Spanish)\nEdmond O\' Flynn\n(Dutch, Irish, Mandarin)\nKevin Behrens\n(German, Low German)\nMaciej Grabowski\n(Polish)\nPavel Tarasoff\n(Russian)\nYoung Suk Choi\n(Korean, Japanese)</string>
-    <string name="pref_key_dataCollectionPermission" translatable="false">pref_key_dataCollectionPermission</string>
     <string name="oz">oz</string>
     <string name="ml">ml</string>
 

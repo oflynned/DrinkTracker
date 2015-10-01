@@ -4,6 +4,7 @@ package com.glassbyte.drinktracker;
 * -change all the fonts and dimensions to be expressed in dp or dpi
 * */
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -86,298 +87,301 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
     private float FONT_RATIO_SMALL;
     private float CIRCLE_RATIO;
 
+    RelativeLayout rl;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        //poll for screen size of the device
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        SCREEN_WIDTH = size.x;
-        SCREEN_HEIGHT = size.y;
+        Activity activity = getActivity();
+        if(activity != null) {
+            //poll for screen size of the device
+            Display display = getActivity().getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            SCREEN_WIDTH = size.x;
+            SCREEN_HEIGHT = size.y;
 
-        //assign ratios for various screen sizes
-        if (SCREEN_WIDTH >= 1080){
-            BAC_FONT_SIZE = 40;
-            BAC_FONT_SIZE_SMALL = 30;
+            //assign ratios for various screen sizes
+            if (SCREEN_WIDTH >= 1080) {
+                BAC_FONT_SIZE = 40;
+                BAC_FONT_SIZE_SMALL = 30;
 
-            FONT_RATIO_XL = 1f;
-            FONT_RATIO_LARGE = 1f;
-            FONT_RATIO_SMALL = 1f;
+                FONT_RATIO_XL = 1f;
+                FONT_RATIO_LARGE = 1f;
+                FONT_RATIO_SMALL = 1f;
 
-            CIRCLE_RATIO = 1f;
-        }
-        else if (SCREEN_WIDTH >= 720 && SCREEN_WIDTH < 1080){
-            BAC_FONT_SIZE = 40;
-            BAC_FONT_SIZE_SMALL = 30;
+                CIRCLE_RATIO = 1f;
+            } else if (SCREEN_WIDTH >= 720 && SCREEN_WIDTH < 1080) {
+                BAC_FONT_SIZE = 40;
+                BAC_FONT_SIZE_SMALL = 30;
 
-            FONT_RATIO_XL = 0.7f;
-            FONT_RATIO_LARGE = 1.2f;
-            FONT_RATIO_SMALL = 1.5f;
+                FONT_RATIO_XL = 0.7f;
+                FONT_RATIO_LARGE = 1.2f;
+                FONT_RATIO_SMALL = 1.5f;
 
-            CIRCLE_RATIO = 0.8f;
-        }
-        else {
-            BAC_FONT_SIZE = 40;
-            BAC_FONT_SIZE_SMALL = 30;
+                CIRCLE_RATIO = 0.8f;
+            } else {
+                BAC_FONT_SIZE = 40;
+                BAC_FONT_SIZE_SMALL = 30;
 
-            FONT_RATIO_XL = 0.5f;
-            FONT_RATIO_LARGE = 0.6f;
-            FONT_RATIO_SMALL = 0.7f;
+                FONT_RATIO_XL = 0.5f;
+                FONT_RATIO_LARGE = 0.6f;
+                FONT_RATIO_SMALL = 0.7f;
 
-            CIRCLE_RATIO = 0.5f;
-        }
+                CIRCLE_RATIO = 0.5f;
+            }
 
-        SIDE_BAR_WIDTH = (int) (SCREEN_WIDTH * RATIO_TAB_WIDTH);
+            SIDE_BAR_WIDTH = (int) (SCREEN_WIDTH * RATIO_TAB_WIDTH);
 
-        isPaused = false;
+            isPaused = false;
         /*Register the sharepreferences listener so that it doesn't get garbage collected*/
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        sp.registerOnSharedPreferenceChangeListener(this);
-        spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender), ""));
-        spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits), ""));
-        setUnits(spUnits);
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+            sp.registerOnSharedPreferenceChangeListener(this);
+            spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender), ""));
+            spUnits = (sp.getString(getResources().getString(R.string.pref_key_editUnits), ""));
+            setUnits(spUnits);
 
         /*End Register the sharepreferences listener*/
 
         /*Set up the BloodAlcoholLevel object*/
-        bloodAlcoholContent = new BloodAlcoholContent(this.getActivity());
-        warningDialog = new WarningDialog(this.getActivity());
-        drinkTrackerDbHelper = new DrinkTrackerDbHelper(this.getActivity());
+            bloodAlcoholContent = new BloodAlcoholContent(this.getActivity());
+            warningDialog = new WarningDialog(this.getActivity());
+            drinkTrackerDbHelper = new DrinkTrackerDbHelper(this.getActivity());
 
-        //instantiate warning system by use of a thread
-        warningSystem = new Runnable() {
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-                        //constantly poll the bac on update via another thread
+            //instantiate warning system by use of a thread
+            warningSystem = new Runnable() {
+                public void run() {
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                            //constantly poll the bac on update via another thread
 
-                        //if the BAC goes below the first tier, we reset the warning system
-                        if (bloodAlcoholContent.getCurrentEbac() < 0.07) {
-                            warningDialog.setWarning1(false);
-                            warningDialog.setWarning2(false);
-                            warningDialog.setWarning3(false);
-                            warningDialog.setWarning4(false);
-                        } else if ((bloodAlcoholContent.getCurrentEbac() >= 0.07)
-                                && (bloodAlcoholContent.getCurrentEbac() < 0.13)
-                                && (!warningDialog.getWarning1())) {
-                            notificationManager.cancel(warningDialog.NOTIFICATION_ID);
-                            warningDialog.setWarning1(true);
-                            warningDialog.displayWarning("1");
-                        } else if (bloodAlcoholContent.getCurrentEbac() >= 0.13
-                                && (bloodAlcoholContent.getCurrentEbac() < 0.17)
-                                && (!warningDialog.getWarning2())) {
-                            notificationManager.cancel(warningDialog.NOTIFICATION_ID);
-                            warningDialog.setWarning2(true);
-                            warningDialog.displayWarning("2");
-                        } else if (bloodAlcoholContent.getCurrentEbac() >= 0.17
-                                && (bloodAlcoholContent.getCurrentEbac() < 0.22)
-                                && (!warningDialog.getWarning3())) {
-                            notificationManager.cancel(warningDialog.NOTIFICATION_ID);
-                            warningDialog.setWarning3(true);
-                            warningDialog.displayWarning("3");
-                        } else if (bloodAlcoholContent.getCurrentEbac() > 0.22
-                                && (!warningDialog.getWarning4())) {
-                            notificationManager.cancel(warningDialog.NOTIFICATION_ID);
-                            warningDialog.setWarning4(true);
-                            warningDialog.displayWarning("4");
-                        } else if (bloodAlcoholContent.getCurrentEbac() < 0.07
-                                && warningDialog.getWarning1()) {
-                            warningDialog.setWarning1(false);
-                        } else if (bloodAlcoholContent.getCurrentEbac() < 0.13
-                                && warningDialog.getWarning2()) {
-                            warningDialog.setWarning2(false);
-                        } else if (bloodAlcoholContent.getCurrentEbac() < 0.17
-                                && warningDialog.getWarning3()) {
-                            warningDialog.setWarning3(false);
-                        } else if (bloodAlcoholContent.getCurrentEbac() < 0.22
-                                && warningDialog.getWarning4()) {
-                            warningDialog.setWarning4(false);
+                            //if the BAC goes below the first tier, we reset the warning system
+                            if (bloodAlcoholContent.getCurrentEbac() < 0.07) {
+                                warningDialog.setWarning1(false);
+                                warningDialog.setWarning2(false);
+                                warningDialog.setWarning3(false);
+                                warningDialog.setWarning4(false);
+                            } else if ((bloodAlcoholContent.getCurrentEbac() >= 0.07)
+                                    && (bloodAlcoholContent.getCurrentEbac() < 0.13)
+                                    && (!warningDialog.getWarning1())) {
+                                notificationManager.cancel(warningDialog.NOTIFICATION_ID);
+                                warningDialog.setWarning1(true);
+                                warningDialog.displayWarning("1");
+                            } else if (bloodAlcoholContent.getCurrentEbac() >= 0.13
+                                    && (bloodAlcoholContent.getCurrentEbac() < 0.17)
+                                    && (!warningDialog.getWarning2())) {
+                                notificationManager.cancel(warningDialog.NOTIFICATION_ID);
+                                warningDialog.setWarning2(true);
+                                warningDialog.displayWarning("2");
+                            } else if (bloodAlcoholContent.getCurrentEbac() >= 0.17
+                                    && (bloodAlcoholContent.getCurrentEbac() < 0.22)
+                                    && (!warningDialog.getWarning3())) {
+                                notificationManager.cancel(warningDialog.NOTIFICATION_ID);
+                                warningDialog.setWarning3(true);
+                                warningDialog.displayWarning("3");
+                            } else if (bloodAlcoholContent.getCurrentEbac() > 0.22
+                                    && (!warningDialog.getWarning4())) {
+                                notificationManager.cancel(warningDialog.NOTIFICATION_ID);
+                                warningDialog.setWarning4(true);
+                                warningDialog.displayWarning("4");
+                            } else if (bloodAlcoholContent.getCurrentEbac() < 0.07
+                                    && warningDialog.getWarning1()) {
+                                warningDialog.setWarning1(false);
+                            } else if (bloodAlcoholContent.getCurrentEbac() < 0.13
+                                    && warningDialog.getWarning2()) {
+                                warningDialog.setWarning2(false);
+                            } else if (bloodAlcoholContent.getCurrentEbac() < 0.17
+                                    && warningDialog.getWarning3()) {
+                                warningDialog.setWarning3(false);
+                            } else if (bloodAlcoholContent.getCurrentEbac() < 0.22
+                                    && warningDialog.getWarning4()) {
+                                warningDialog.setWarning4(false);
+                            }
+
+                            //also update the current stats
+                            setUpCalender();
+                            setTotalUnits(totUnits);
+                            //calories are units*7*8 as 1 unit = 8g where 1g = 7 calories therefore
+                            setCalories((int) (totUnits * 56));
+                            setAvgABV();
+                            setAvgVol();
+                            setMaxBAC();
                         }
+                    });
+                }
+            };
 
-                        //also update the current stats
-                        setUpCalender();
-                        setTotalUnits(totUnits);
-                        //calories are units*7*8 as 1 unit = 8g where 1g = 7 calories therefore
-                        setCalories((int) (totUnits * 56));
-                        setAvgABV();
-                        setAvgVol();
-                        setMaxBAC();
-                    }
-                });
-            }
-        };
-
-        if(!isPaused)
-            warningSystem.run();
+            if (!isPaused)
+                warningSystem.run();
 
         /*End of Set up the BloodAlcoholLevel object*/
 
-        final RelativeLayout rl = new RelativeLayout(this.getActivity());
-        rl.setBackgroundColor(getResources().getColor(R.color.orange100));
+            rl = new RelativeLayout(this.getActivity());
+            rl.setBackgroundColor(getResources().getColor(R.color.orange100));
 
-        leftSideBar = new SelectionSideBar(this.getActivity(), true);
-        rightSideBar = new SelectionSideBar(this.getActivity(), false);
+            leftSideBar = new SelectionSideBar(this.getActivity(), true);
+            rightSideBar = new SelectionSideBar(this.getActivity(), false);
 
-        RelativeLayout.LayoutParams leftSideBarParams = new RelativeLayout.LayoutParams(SIDE_BAR_WIDTH, RelativeLayout.LayoutParams.MATCH_PARENT);
-        leftSideBarParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        leftSideBar.setLayoutParams(leftSideBarParams);
-        leftSideBar.setId(View.generateViewId());
+            RelativeLayout.LayoutParams leftSideBarParams = new RelativeLayout.LayoutParams(SIDE_BAR_WIDTH, RelativeLayout.LayoutParams.MATCH_PARENT);
+            leftSideBarParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            leftSideBar.setLayoutParams(leftSideBarParams);
+            leftSideBar.setId(View.generateViewId());
 
-        RelativeLayout.LayoutParams rightSideBarParams = new RelativeLayout.LayoutParams(SIDE_BAR_WIDTH, RelativeLayout.LayoutParams.MATCH_PARENT);
-        rightSideBarParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        rightSideBar.setLayoutParams(rightSideBarParams);
-        rightSideBar.setId(View.generateViewId());
+            RelativeLayout.LayoutParams rightSideBarParams = new RelativeLayout.LayoutParams(SIDE_BAR_WIDTH, RelativeLayout.LayoutParams.MATCH_PARENT);
+            rightSideBarParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            rightSideBar.setLayoutParams(rightSideBarParams);
+            rightSideBar.setId(View.generateViewId());
 
-        customProgressBar = new CustomProgressBar(this.getActivity(), null, android.R.style.Widget_DeviceDefault_ProgressBar);
-        RelativeLayout.LayoutParams customProgressBarParam = new RelativeLayout.LayoutParams(500, 500);
-        customProgressBarParam.addRule(RelativeLayout.CENTER_IN_PARENT);
-        int progress = (int) (bloodAlcoholContent.getCurrentEbac() * 200);
-        customProgressBar.setProgress(progress);
-        customProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.progress_circle));
-        customProgressBar.setVisibility(View.VISIBLE);
-        customProgressBar.setLayoutParams(customProgressBarParam);
-        customProgressBar.setId(View.generateViewId());
-
-        bacDisplay = new TextView(this.getActivity());
-        bacDisplay.setTextSize(BAC_FONT_SIZE * FONT_RATIO_LARGE);
-        bacDisplay.setTextColor(Color.BLACK);
-        bacDisplay.setGravity(Gravity.CENTER);
-        bacDisplay.setText(getResources().getString(R.string.current_BAC));
-        RelativeLayout.LayoutParams bacDisplayParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        bacDisplayParams.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
-        bacDisplayParams.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
-        bacDisplayParams.addRule(RelativeLayout.ABOVE, customProgressBar.getId());
-        bacDisplayParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        bacDisplay.setLayoutParams(bacDisplayParams);
-        bacDisplay.setId(View.generateViewId());
-
-        pbBAC = new TextView(this.getActivity());
-        pbBAC.setTextSize(BAC_FONT_SIZE_SMALL * FONT_RATIO_SMALL);
-        pbBAC.setTextColor(Color.BLACK);
-        pbBAC.setGravity(Gravity.CENTER);
-        pbBAC.setText("" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
-        RelativeLayout.LayoutParams pbBACParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        pbBACParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-        pbBAC.setLayoutParams(pbBACParams);
-        pbBAC.setId(View.generateViewId());
-
-        fab1 = new FloatingActionButton(getContext());
-        fab2 = new FloatingActionButton(getContext());
-
-        //advert
-        adView = new AdView(getContext());
-        final RelativeLayout.LayoutParams paramsAds = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        paramsAds.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        paramsAds.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        adView.setLayoutParams(paramsAds);
-        adView.setId(View.generateViewId());
-        adView.setAdSize(AdSize.SMART_BANNER);
-        adView.setAdUnitId(getResources().getString(R.string.banner_ad_unit_id));
-
-        //request ads to target emulated device
-        AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
-        adRequestBuilder
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .setGender(getGender(spGender));
-
-        //fab1 fab
-        final RelativeLayout.LayoutParams paramsFAB1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        paramsFAB1.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
-        paramsFAB1.addRule(RelativeLayout.ALIGN_LEFT);
-        paramsFAB1.addRule(RelativeLayout.ABOVE, adView.getId());
-        fab1.setLayoutParams(paramsFAB1);
-
-        fab1.setButtonSize(FloatingActionButton.SIZE_NORMAL);
-        fab1.setImageResource(R.drawable.graphs);
-        fab1.setColorRipple(getResources().getColor(R.color.orange300));
-        fab1.setColorNormal(getResources().getColor(R.color.orange500));
-        fab1.setColorPressed(getResources().getColor(R.color.orange700));
-        fab1.setId(View.generateViewId());
-        fab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), Statistics.class));
-            }
-        });
-
-        //fab2 fab
-        final RelativeLayout.LayoutParams paramsFAB2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        paramsFAB2.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
-        paramsFAB2.addRule(RelativeLayout.ALIGN_RIGHT);
-        paramsFAB2.addRule(RelativeLayout.ABOVE, adView.getId());
-        fab2.setLayoutParams(paramsFAB2);
-
-        fab2.setButtonSize(FloatingActionButton.SIZE_NORMAL);
-        fab2.setImageResource(R.drawable.info);
-        fab2.setColorRipple(getResources().getColor(R.color.orange300));
-        fab2.setColorNormal(getResources().getColor(R.color.orange500));
-        fab2.setColorPressed(getResources().getColor(R.color.orange700));
-        fab2.setId(View.generateViewId());
-
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //open dialog of stats
-                dialog = new AlertDialog.Builder(getActivity())
-                        .setTitle(R.string.detailed_stats_title)
-                        .setMessage(
-                                getResources().getString(R.string.avg_drink_strength) + "\n" + getAvgABV() + "%" + "\n\n" +
-                                        getResources().getString(R.string.avg_drink_volume) + "\n" + getAvgVol() + getUnits() + "\n\n" +
-                                        getResources().getString(R.string.avg_calories) + "\n" + getCalories() + " " + getResources().getString(R.string.calories) + "\n\n" +
-                                        getResources().getString(R.string.max_bac) + "\n" + getMaxBAC()
-                        )
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        })
-                        .show();
-            }
-        });
-
-        rl.addView(leftSideBar);
-        rl.addView(rightSideBar);
-        rl.addView(bacDisplay);
-        rl.addView(customProgressBar);
-        rl.addView(pbBAC);
-        rl.addView(adView);
-        rl.addView(fab1);
-        rl.addView(fab2);
-
-        adView.loadAd(adRequestBuilder.build());
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                paramsAds.height = 0;
-                adView.setLayoutParams(paramsAds);
-                rl.invalidate();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                paramsAds.height = adView.getMeasuredHeightAndState();
-                adView.setLayoutParams(paramsAds);
-                rl.invalidate();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                paramsAds.height = 0;
-                adView.setLayoutParams(paramsAds);
-                rl.invalidate();
-            }
-        });
-
-        progress = (int) (bloodAlcoholContent.getCurrentEbac() * PROGESS_BAR_RATIO);
-        if (progress < 75) {
+            customProgressBar = new CustomProgressBar(this.getActivity(), null, android.R.style.Widget_DeviceDefault_ProgressBar);
+            RelativeLayout.LayoutParams customProgressBarParam = new RelativeLayout.LayoutParams(500, 500);
+            customProgressBarParam.addRule(RelativeLayout.CENTER_IN_PARENT);
+            int progress = (int) (bloodAlcoholContent.getCurrentEbac() * 200);
             customProgressBar.setProgress(progress);
-            startAnimation(progress);
-        } else {
-            progress = 75;
-            customProgressBar.setProgress(progress);
-            startAnimation(progress);
+            customProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.progress_circle));
+            customProgressBar.setVisibility(View.VISIBLE);
+            customProgressBar.setLayoutParams(customProgressBarParam);
+            customProgressBar.setId(View.generateViewId());
+
+            bacDisplay = new TextView(this.getActivity());
+            bacDisplay.setTextSize(BAC_FONT_SIZE * FONT_RATIO_LARGE);
+            bacDisplay.setTextColor(Color.BLACK);
+            bacDisplay.setGravity(Gravity.CENTER);
+            bacDisplay.setText(getResources().getString(R.string.current_BAC));
+            RelativeLayout.LayoutParams bacDisplayParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            bacDisplayParams.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
+            bacDisplayParams.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
+            bacDisplayParams.addRule(RelativeLayout.ABOVE, customProgressBar.getId());
+            bacDisplayParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            bacDisplay.setLayoutParams(bacDisplayParams);
+            bacDisplay.setId(View.generateViewId());
+
+            pbBAC = new TextView(this.getActivity());
+            pbBAC.setTextSize(BAC_FONT_SIZE_SMALL * FONT_RATIO_SMALL);
+            pbBAC.setTextColor(Color.BLACK);
+            pbBAC.setGravity(Gravity.CENTER);
+            pbBAC.setText("" + BloodAlcoholContent.round(bloodAlcoholContent.getCurrentEbac(), BAC_DECIMAL_PLACES));
+            RelativeLayout.LayoutParams pbBACParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            pbBACParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+            pbBAC.setLayoutParams(pbBACParams);
+            pbBAC.setId(View.generateViewId());
+
+            fab1 = new FloatingActionButton(getContext());
+            fab2 = new FloatingActionButton(getContext());
+
+            //advert
+            adView = new AdView(getContext());
+            final RelativeLayout.LayoutParams paramsAds = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            paramsAds.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            paramsAds.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            adView.setLayoutParams(paramsAds);
+            adView.setId(View.generateViewId());
+            adView.setAdSize(AdSize.SMART_BANNER);
+            adView.setAdUnitId(getResources().getString(R.string.banner_ad_unit_id));
+
+            //request ads to target emulated device
+            AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
+            adRequestBuilder
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .setGender(getGender(spGender));
+
+            //fab1 fab
+            final RelativeLayout.LayoutParams paramsFAB1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            paramsFAB1.addRule(RelativeLayout.RIGHT_OF, leftSideBar.getId());
+            paramsFAB1.addRule(RelativeLayout.ALIGN_LEFT);
+            paramsFAB1.addRule(RelativeLayout.ABOVE, adView.getId());
+            fab1.setLayoutParams(paramsFAB1);
+
+            fab1.setButtonSize(FloatingActionButton.SIZE_NORMAL);
+            fab1.setImageResource(R.drawable.graphs);
+            fab1.setColorRipple(getResources().getColor(R.color.orange300));
+            fab1.setColorNormal(getResources().getColor(R.color.orange500));
+            fab1.setColorPressed(getResources().getColor(R.color.orange700));
+            fab1.setId(View.generateViewId());
+            fab1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getActivity(), Statistics.class));
+                }
+            });
+
+            //fab2 fab
+            final RelativeLayout.LayoutParams paramsFAB2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            paramsFAB2.addRule(RelativeLayout.LEFT_OF, rightSideBar.getId());
+            paramsFAB2.addRule(RelativeLayout.ALIGN_RIGHT);
+            paramsFAB2.addRule(RelativeLayout.ABOVE, adView.getId());
+            fab2.setLayoutParams(paramsFAB2);
+
+            fab2.setButtonSize(FloatingActionButton.SIZE_NORMAL);
+            fab2.setImageResource(R.drawable.info);
+            fab2.setColorRipple(getResources().getColor(R.color.orange300));
+            fab2.setColorNormal(getResources().getColor(R.color.orange500));
+            fab2.setColorPressed(getResources().getColor(R.color.orange700));
+            fab2.setId(View.generateViewId());
+
+            fab2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //open dialog of stats
+                    dialog = new AlertDialog.Builder(getActivity())
+                            .setTitle(R.string.detailed_stats_title)
+                            .setMessage(
+                                    getResources().getString(R.string.avg_drink_strength) + "\n" + getAvgABV() + "%" + "\n\n" +
+                                            getResources().getString(R.string.avg_drink_volume) + "\n" + getAvgVol() + getUnits() + "\n\n" +
+                                            getResources().getString(R.string.avg_calories) + "\n" + getCalories() + " " + getResources().getString(R.string.calories) + "\n\n" +
+                                            getResources().getString(R.string.max_bac) + "\n" + getMaxBAC()
+                            )
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .show();
+                }
+            });
+
+            rl.addView(leftSideBar);
+            rl.addView(rightSideBar);
+            rl.addView(bacDisplay);
+            rl.addView(customProgressBar);
+            rl.addView(pbBAC);
+            rl.addView(adView);
+            rl.addView(fab1);
+            rl.addView(fab2);
+
+            adView.loadAd(adRequestBuilder.build());
+            adView.setAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    paramsAds.height = 0;
+                    adView.setLayoutParams(paramsAds);
+                    rl.invalidate();
+                }
+
+                @Override
+                public void onAdLoaded() {
+                    paramsAds.height = adView.getMeasuredHeightAndState();
+                    adView.setLayoutParams(paramsAds);
+                    rl.invalidate();
+                }
+
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
+                    paramsAds.height = 0;
+                    adView.setLayoutParams(paramsAds);
+                    rl.invalidate();
+                }
+            });
+
+            progress = (int) (bloodAlcoholContent.getCurrentEbac() * PROGESS_BAR_RATIO);
+            if (progress < 75) {
+                customProgressBar.setProgress(progress);
+                startAnimation(progress);
+            } else {
+                progress = 75;
+                customProgressBar.setProgress(progress);
+                startAnimation(progress);
+            }
         }
         return rl;
     }
