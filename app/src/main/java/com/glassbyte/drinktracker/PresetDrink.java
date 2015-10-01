@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Build;
@@ -98,7 +99,7 @@ public class PresetDrink extends Fragment implements SharedPreferences.OnSharedP
         categoryPresets[2] =
                 new Preset(shotGlassImageDrawable, getString(R.string.spiritsCategory));
         categoryPresets[3] =
-                new Preset(wineGlassImageDrawable, getString(R.string.cocktailsCategory));
+                new Preset(cocktailGlassImageDrawable, getString(R.string.cocktailsCategory));
 
         spiritStageOnePresets = new Preset[9];
         spiritStageOnePresets[0] =
@@ -530,7 +531,7 @@ public class PresetDrink extends Fragment implements SharedPreferences.OnSharedP
                             presetIV.setImageDrawable(cocktailsPresets[i].getImageDrawable());
                         } else if (currentCategory == PresetCategory.WINE) {
                             title = wineStageOnePresets[i].getTitle();
-                            presetIV.setImageDrawable(beerStageOnePresets[i].getImageDrawable());
+                            presetIV.setImageDrawable(wineStageOnePresets[i].getImageDrawable());
                         }
                         break;
                     case 2:
@@ -549,6 +550,7 @@ public class PresetDrink extends Fragment implements SharedPreferences.OnSharedP
                         break;
                 }
                 presetTV.setText(title);
+                presetTV.setTextColor(Color.BLACK);
             } else {
                 TextView titleTV = (TextView)view.findViewById(R.id.presetTileTitle);
 
@@ -577,6 +579,7 @@ public class PresetDrink extends Fragment implements SharedPreferences.OnSharedP
                             titleTV.setText(spiritStageTwoPresets[i].getTitle());
                         }break;
                 }
+                titleTV.setTextColor(Color.BLACK);
             }
 
             return view;
