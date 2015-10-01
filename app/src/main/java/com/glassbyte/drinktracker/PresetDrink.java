@@ -1,12 +1,17 @@
 package com.glassbyte.drinktracker;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
@@ -24,8 +29,9 @@ import org.w3c.dom.Text;
 /**
  * Created by Maciej on 27/05/15.
  */
-public class PresetDrink extends Fragment {
+public class PresetDrink extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
     private static int stage = 0;
+
     private enum PresetCategory {BEER, WINE, COCKTAILS, SPIRITS};
     private PresetCategory currentCategory;
     private BaseAdapter adapter;
@@ -36,7 +42,8 @@ public class PresetDrink extends Fragment {
     Preset[] spiritStageOnePresets;
     Preset[] spiritStageTwoPresets;
     Preset[] beerStageOnePresets;
-    Preset[] beerStageTwoPresets;
+    Preset[] beerStageTwoPresetsImperial;
+    Preset[] beerStageTwoPresetsMetric;
     Preset[] wineStageOnePresets;
     Preset[] cocktailsPresets;
     DrinkTrackerDbHelper dtDb;
@@ -51,13 +58,23 @@ public class PresetDrink extends Fragment {
             margaritaImageDrawable, 
             pocograndeImageDrawable,
             irishcoffeeVectorised;
+    boolean isImperial = false;
 
-
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         dtDb = new DrinkTrackerDbHelper(this.getContext());
+
+        //Get metric system preferences
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        sp.registerOnSharedPreferenceChangeListener(this);
+        String metricSystem = sp.getString(getString(R.string.pref_key_editUnits), "");
+        if (metricSystem.equalsIgnoreCase("metric"))
+            isImperial = false;
+        else
+            isImperial = true;
 
         LocalBroadcastManager.getInstance(this.getContext()).registerReceiver(onBackPressedBroadcastReceiver,
                 new IntentFilter(MainActivity.ON_BACK_PRESSED_EVENT));
@@ -96,7 +113,7 @@ public class PresetDrink extends Fragment {
         categoryPresets[2] =
                 new Preset(shotGlassImageDrawable, getString(R.string.spiritsCategory));
         categoryPresets[3] =
-                new Preset(wineGlassImageDrawable, getString(R.string.cocktailsCategory));
+                new Preset(cocktailGlassImageDrawable, getString(R.string.cocktailsCategory));
 
         spiritStageOnePresets = new Preset[9];
         spiritStageOnePresets[0] =
@@ -152,15 +169,25 @@ public class PresetDrink extends Fragment {
         beerStageOnePresets[11] =
                 new Preset(beerBottleImageDrawable, "12-13%", 12.5f);
 
-        beerStageTwoPresets = new Preset[4];
-        beerStageTwoPresets[0] =
+        beerStageTwoPresetsMetric = new Preset[4];
+        beerStageTwoPresetsMetric[0] =
                 new Preset(beerBottleImageDrawable, "250ml", (int)250);
-        beerStageTwoPresets[1] =
+        beerStageTwoPresetsMetric[1] =
                 new Preset(beerBottleImageDrawable, "330ml", (int)330);
-        beerStageTwoPresets[2] =
+        beerStageTwoPresetsMetric[2] =
                 new Preset(beerBottleImageDrawable, "350ml", (int)330);
-        beerStageTwoPresets[3] =
+        beerStageTwoPresetsMetric[3] =
                 new Preset(beerBottleImageDrawable, "500ml", (int)500);
+
+        beerStageTwoPresetsImperial= new Preset[4];
+        beerStageTwoPresetsImperial[0] =
+                new Preset(beerBottleImageDrawable, "8oz", (int)250);
+        beerStageTwoPresetsImperial[1] =
+                new Preset(beerBottleImageDrawable, "11oz", (int)330);
+        beerStageTwoPresetsImperial[2] =
+                new Preset(beerBottleImageDrawable, "12oz", (int)330);
+        beerStageTwoPresetsImperial[3] =
+                new Preset(beerBottleImageDrawable, "17oz", (int)500);
 
         wineStageOnePresets = new Preset[3];
         wineStageOnePresets[0] =
@@ -263,6 +290,20 @@ public class PresetDrink extends Fragment {
                 4.6f, 400);
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key == getString(R.string.pref_key_editUnits)) {
+            String metricSystem = sharedPreferences.getString(key, "");
+
+            if (metricSystem.equalsIgnoreCase("metric"))
+                isImperial = false;
+            else
+                isImperial = true;
+
+            gridView.setAdapter(adapter);
+        }
+    }
+
     private BroadcastReceiver onBackPressedBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -338,7 +379,7 @@ public class PresetDrink extends Fragment {
                             currentChosenPecentage = currentPresets[position].getPercentage();
                         }
                         if (currentPresets[position].isVolumeAssigned()){
-                            currentChosenVolume = currentPresets[position].getVolume();
+                            currentChosenVolume = currentPresets[position].getVolumeInMl();
                         }
 
                         dtDb.insertNewDrink(
@@ -357,7 +398,7 @@ public class PresetDrink extends Fragment {
                             currentChosenPecentage = currentPresets[position].getPercentage();
                         }
                         if (currentPresets[position].isVolumeAssigned()){
-                            currentChosenVolume = currentPresets[position].getVolume();
+                            currentChosenVolume = currentPresets[position].getVolumeInMl();
                         }
 
                         dtDb.insertNewDrink(getResources().getString(R.string.wineCategory),
@@ -372,12 +413,16 @@ public class PresetDrink extends Fragment {
                     }
                 } else if (stage == 2) {
                     if (currentCategory == PresetCategory.BEER) {
-                        currentPresets = beerStageTwoPresets;
+                        if (isImperial)
+                            currentPresets = beerStageTwoPresetsImperial;
+                        else
+                            currentPresets = beerStageTwoPresetsMetric;
+
                         if (currentPresets[position].isPercentageAssigned()){
                             currentChosenPecentage = currentPresets[position].getPercentage();
                         }
                         if (currentPresets[position].isVolumeAssigned()){
-                            currentChosenVolume = currentPresets[position].getVolume();
+                            currentChosenVolume = currentPresets[position].getVolumeInMl();
                         }
 
                         dtDb.insertNewDrink(getResources().getString(R.string.beerCategory),
@@ -395,7 +440,7 @@ public class PresetDrink extends Fragment {
                             currentChosenPecentage = currentPresets[position].getPercentage();
                         }
                         if (currentPresets[position].isVolumeAssigned()){
-                            currentChosenVolume = currentPresets[position].getVolume();
+                            currentChosenVolume = currentPresets[position].getVolumeInMl();
                         }
 
                         dtDb.insertNewDrink(getResources().getString(R.string.spiritsCategory),
@@ -416,7 +461,7 @@ public class PresetDrink extends Fragment {
                     }
 
                     if (currentPresets[position].isVolumeAssigned()){
-                        currentChosenVolume = currentPresets[position].getVolume();
+                        currentChosenVolume = currentPresets[position].getVolumeInMl();
                     }
                 }
             }
@@ -468,7 +513,10 @@ public class PresetDrink extends Fragment {
                     count = cocktailsPresets.length;
             } else if (stage == 2) {
                 if (currentCategory == PresetCategory.BEER)
-                    count = beerStageTwoPresets.length;
+                    if(isImperial)
+                        count = beerStageTwoPresetsImperial.length;
+                    else
+                        count = beerStageTwoPresetsMetric.length;
                 else if (currentCategory == PresetCategory.SPIRITS)
                     count = spiritStageTwoPresets.length;
             }
@@ -514,13 +562,18 @@ public class PresetDrink extends Fragment {
                             presetIV.setImageDrawable(cocktailsPresets[i].getImageDrawable());
                         } else if (currentCategory == PresetCategory.WINE) {
                             title = wineStageOnePresets[i].getTitle();
-                            presetIV.setImageDrawable(beerStageOnePresets[i].getImageDrawable());
+                            presetIV.setImageDrawable(wineStageOnePresets[i].getImageDrawable());
                         }
                         break;
                     case 2:
                         if (currentCategory == PresetCategory.BEER) {
-                            title = beerStageTwoPresets[i].getTitle();
-                            presetIV.setImageDrawable(beerStageTwoPresets[i].getImageDrawable());
+                            if (isImperial) {
+                                title = beerStageTwoPresetsImperial[i].getTitle();
+                                presetIV.setImageDrawable(beerStageTwoPresetsImperial[i].getImageDrawable());
+                            } else {
+                                title = beerStageTwoPresetsMetric[i].getTitle();
+                                presetIV.setImageDrawable(beerStageTwoPresetsMetric[i].getImageDrawable());
+                            }
                         } else if (currentCategory == PresetCategory.SPIRITS) {
                             title = spiritStageTwoPresets[i].getTitle();
                             presetIV.setImageDrawable(spiritStageTwoPresets[i].getImageDrawable());
@@ -528,6 +581,7 @@ public class PresetDrink extends Fragment {
                         break;
                 }
                 presetTV.setText(title);
+                presetTV.setTextColor(Color.BLACK);
             } else {
                 TextView titleTV = (TextView)view.findViewById(R.id.presetTileTitle);
 
@@ -548,11 +602,15 @@ public class PresetDrink extends Fragment {
                         break;
                     case 2:
                         if (currentCategory == PresetCategory.BEER) {
-                            titleTV.setText(beerStageTwoPresets[i].getTitle());
+                            if (isImperial)
+                                titleTV.setText(beerStageTwoPresetsImperial[i].getTitle());
+                            else
+                                titleTV.setText(beerStageTwoPresetsMetric[i].getTitle());
                         } else if (currentCategory == PresetCategory.SPIRITS) {
                             titleTV.setText(spiritStageTwoPresets[i].getTitle());
                         }break;
                 }
+                titleTV.setTextColor(Color.BLACK);
             }
 
             return view;
@@ -591,7 +649,8 @@ public class PresetDrink extends Fragment {
         public boolean isVolumeAssigned(){return volumeAssigned;}
         public boolean isPercentageAssigned(){return percentageAssigned;}
 
-        public int getVolume(){return volume;}
+        public int getVolumeInMl(){return volume;}
+        public int getVolumeInOz(){return (int)BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(volume);}
         public float getPercentage(){return percentage;}
     }
 }

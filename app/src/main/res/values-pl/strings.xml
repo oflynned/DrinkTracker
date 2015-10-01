@@ -9,47 +9,47 @@
     <string name="action_removeads">Remove Ads</string>
 
     <!--Custom Drinks Titles-->
-    <string name="shot_glass_title">Shot Glass</string>
-    <string name="water_glass_title">Glass</string>
-    <string name="pint_glass_title">Pint Glass</string>
-    <string name="wine_glass_title">Wine Glass</string>
+    <string name="shot_glass_title">Kieliszek</string>
+    <string name="water_glass_title">Szklanka</string>
+    <string name="pint_glass_title">Pokal</string>
+    <string name="wine_glass_title">Lampka Wina</string>
     <!-- End of Custom Drinks Titles -->
 
     <!--Custom Drinks SetPercentage Dialog-->
-    <string name="setPercentage_dialog_title">Set Percentage</string>
-    <string name="setVolume_dialog_title">Set Volume</string>
-    <string name="cancel">Cancel</string>
-    <string name="done">Done</string>
+    <string name="setPercentage_dialog_title">Ustaw Zawawrtaosc Alkoholu</string>
+    <string name="setVolume_dialog_title">Ustaw Objetosc</string>
+    <string name="cancel">Anuluj</string>
+    <string name="done">Gotowe</string>
     <!--End of Custom Drinks SetPercentage Dialog-->
 
     <string-array name="optgender">
-        <item>Male</item>
-        <item>Female</item>
+        <item>Mezczyzna</item>
+        <item>Kobieta</item>
     </string-array>
 
     <string-array name="optunits">
-        <item>Metric</item>
-        <item>Imperial</item>
+        <item>Metryczne</item>
+        <item>Imperialne</item>
     </string-array>
 
     <!-->types of drinks<-->
     <string-array name="period">
-        <item>Current session</item>
-        <item>Last week</item>
-        <item>Last month</item>
+        <item>Terazniejsza sesja</item>
+        <item>Ostatni tydzien</item>
+        <item>Ostatni miesiac</item>
     </string-array>
 
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_list_drinks">ListDrinksActivity</string>
+    <string name="title_activity_settings">Ustawienia</string>
+    <string name="title_activity_list_drinks">WszystkieDrinki</string>
 
     <!--> disclaimer <-->
-    <string name="disclaimertitle">Disclaimer</string>
+    <string name="disclaimertitle">Zastrzezenia</string>
     <string name="disclaimerbody">Please remember that DrinkTracker is only an approximation of your blood alcohol content (BAC), and not a substitute for a breathalyser examination. GlassByte is in no way responsible for any actions carried out under intoxication. Please stay safe under the influence of alcohol. By using this app, you agree to abide by this forewarning.</string>
-    <string name="agree">I agree</string>
-    <string name="disagree">I disagree</string>
+    <string name="agree">Zgadzam sie.</string>
+    <string name="disagree">Nie zgadzam sie.</string>
 
     <!--> dialog warnings <-->
-    <string name="tier0">Sober.</string>
+    <string name="tier0">Trzezwy.</string>
     <string name="tier1">Mildly relaxed and no loss of coordination.</string>
     <string name="tier2">Slight impairment, lowered inhibitions, lowered caution, exaggeration of behaviour.</string>
     <string name="tier3">Mild impairment of balance, speech, vision and reaction time.</string>
