@@ -62,17 +62,31 @@ public class PresetDrink extends Fragment {
         LocalBroadcastManager.getInstance(this.getContext()).registerReceiver(onBackPressedBroadcastReceiver,
                 new IntentFilter(MainActivity.ON_BACK_PRESSED_EVENT));
 
-        beerBottleImageDrawable = this.getContext().getDrawable(R.drawable.bottle);
-        wineGlassImageDrawable = this.getContext().getDrawable(R.drawable.wine);
-        shotGlassImageDrawable = this.getContext().getDrawable(R.drawable.shot);
-        cocktailGlassImageDrawable = this.getContext().getDrawable(R.drawable.cocktail_vectorised);
-        highballGlassImageDrawable = this.getContext().getDrawable(R.drawable.highball_vectorized);
-        lowballImageDrawable = this.getContext().getDrawable(R.drawable.lowball_vectorized);
-        collinsImageDrawable = this.getContext().getDrawable(R.drawable.collins_vectorized);
-        fluteImageDrawable = this.getContext().getDrawable(R.drawable.flute_vectorised);
-        margaritaImageDrawable = this.getContext().getDrawable(R.drawable.margarita_vectorized);
-        pocograndeImageDrawable = this.getContext().getDrawable(R.drawable.poco_grande_vectorized);
-        irishcoffeeVectorised = this.getContext().getDrawable(R.drawable.irish_coffee_vectorized);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            beerBottleImageDrawable = this.getContext().getDrawable(R.drawable.bottle);
+            wineGlassImageDrawable = this.getContext().getDrawable(R.drawable.wine);
+            shotGlassImageDrawable = this.getContext().getDrawable(R.drawable.shot);
+            cocktailGlassImageDrawable = this.getContext().getDrawable(R.drawable.cocktail_vectorised);
+            highballGlassImageDrawable = this.getContext().getDrawable(R.drawable.highball_vectorized);
+            lowballImageDrawable = this.getContext().getDrawable(R.drawable.lowball_vectorized);
+            collinsImageDrawable = this.getContext().getDrawable(R.drawable.collins_vectorized);
+            fluteImageDrawable = this.getContext().getDrawable(R.drawable.flute_vectorised);
+            margaritaImageDrawable = this.getContext().getDrawable(R.drawable.margarita_vectorized);
+            pocograndeImageDrawable = this.getContext().getDrawable(R.drawable.poco_grande_vectorized);
+            irishcoffeeVectorised = this.getContext().getDrawable(R.drawable.irish_coffee_vectorized);
+        } else {
+            beerBottleImageDrawable = this.getContext().getResources().getDrawable(R.drawable.bottle);
+            wineGlassImageDrawable = this.getContext().getResources().getDrawable(R.drawable.wine);
+            shotGlassImageDrawable = this.getContext().getResources().getDrawable(R.drawable.shot);
+            cocktailGlassImageDrawable = this.getContext().getResources().getDrawable(R.drawable.cocktail_vectorised);
+            highballGlassImageDrawable = this.getContext().getResources().getDrawable(R.drawable.highball_vectorized);
+            lowballImageDrawable = this.getContext().getResources().getDrawable(R.drawable.lowball_vectorized);
+            collinsImageDrawable = this.getContext().getResources().getDrawable(R.drawable.collins_vectorized);
+            fluteImageDrawable = this.getContext().getResources().getDrawable(R.drawable.flute_vectorised);
+            margaritaImageDrawable = this.getContext().getResources().getDrawable(R.drawable.margarita_vectorized);
+            pocograndeImageDrawable = this.getContext().getResources().getDrawable(R.drawable.poco_grande_vectorized);
+            irishcoffeeVectorised = this.getContext().getResources().getDrawable(R.drawable.irish_coffee_vectorized);
+        }
 
         categoryPresets = new Preset[4];
         categoryPresets[0] =
@@ -327,9 +341,14 @@ public class PresetDrink extends Fragment {
                             currentChosenVolume = currentPresets[position].getVolume();
                         }
 
-                        dtDb.insertNewDrink("Cocktail", currentChosenVolume, currentChosenPecentage);
-                        Toast.makeText(PresetDrink.this.getContext(), "Drink added!\nPercent: " +
-                                        currentChosenPecentage + "\nVolume: " + currentChosenVolume,
+                        dtDb.insertNewDrink(
+                                getResources().getString(R.string.cocktailsCategory),
+                                currentChosenVolume,
+                                currentChosenPecentage);
+                        Toast.makeText(PresetDrink.this.getContext(),
+                                getResources().getString(R.string.drink_added) + "\n" +
+                                        currentChosenPecentage + "%" + "\n" +
+                                        currentChosenVolume + getResources().getString(R.string.ml) ,
                                 Toast.LENGTH_SHORT).show();
                         return;
                     } else if (currentCategory == PresetCategory.WINE) {
@@ -341,9 +360,13 @@ public class PresetDrink extends Fragment {
                             currentChosenVolume = currentPresets[position].getVolume();
                         }
 
-                        dtDb.insertNewDrink("Wine", currentChosenVolume, currentChosenPecentage);
-                        Toast.makeText(PresetDrink.this.getContext(), "Drink added!\nPercent: " +
-                                        currentChosenPecentage + "\nVolume: " + currentChosenVolume,
+                        dtDb.insertNewDrink(getResources().getString(R.string.wineCategory),
+                                currentChosenVolume,
+                                currentChosenPecentage);
+                        Toast.makeText(PresetDrink.this.getContext(),
+                                getResources().getString(R.string.drink_added) + "\n" +
+                                        currentChosenPecentage + "%" + "\n" +
+                                        currentChosenVolume + getResources().getString(R.string.ml) ,
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -357,9 +380,13 @@ public class PresetDrink extends Fragment {
                             currentChosenVolume = currentPresets[position].getVolume();
                         }
 
-                        dtDb.insertNewDrink("Beer", currentChosenVolume, currentChosenPecentage);
-                        Toast.makeText(PresetDrink.this.getContext(), "Drink added!\nPercent: " +
-                                        currentChosenPecentage + "\nVolume: " + currentChosenVolume,
+                        dtDb.insertNewDrink(getResources().getString(R.string.beerCategory),
+                                currentChosenVolume,
+                                currentChosenPecentage);
+                        Toast.makeText(PresetDrink.this.getContext(),
+                                getResources().getString(R.string.drink_added) + "\n" +
+                                        currentChosenPecentage + "%" + "\n" +
+                                        currentChosenVolume + getResources().getString(R.string.ml) ,
                                 Toast.LENGTH_SHORT).show();
                         return;
                     } else if (currentCategory == PresetCategory.SPIRITS) {
@@ -371,9 +398,13 @@ public class PresetDrink extends Fragment {
                             currentChosenVolume = currentPresets[position].getVolume();
                         }
 
-                        dtDb.insertNewDrink("Spirit", currentChosenVolume, currentChosenPecentage);
-                        Toast.makeText(PresetDrink.this.getContext(), "Drink added!\nPercent: " +
-                                        currentChosenPecentage + "\nVolume: " + currentChosenVolume,
+                        dtDb.insertNewDrink(getResources().getString(R.string.spiritsCategory),
+                                currentChosenVolume,
+                                currentChosenPecentage);
+                        Toast.makeText(PresetDrink.this.getContext(),
+                                getResources().getString(R.string.drink_added) + "\n" +
+                                        currentChosenPecentage + "%" + "\n" +
+                                        currentChosenVolume + getResources().getString(R.string.ml) ,
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
