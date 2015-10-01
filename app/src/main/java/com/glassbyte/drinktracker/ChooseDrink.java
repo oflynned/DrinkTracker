@@ -645,7 +645,6 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
                 avgVol = BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(avgVol);
                 avgVol = BloodAlcoholContent.round(avgVol, 2);
             }
-            fab2.invalidate();
         }
     }
 

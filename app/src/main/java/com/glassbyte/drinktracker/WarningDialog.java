@@ -2,19 +2,14 @@ package com.glassbyte.drinktracker;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.res.Resources;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.content.ContextCompat;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 
@@ -23,23 +18,28 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by ed on 09/09/15.
  */
-public class WarningDialog {
+public class WarningDialog implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     public boolean warning1, warning2, warning3, warning4;
     public final int NOTIFICATION_ID = 1;
     Context context;
     InterstitialAd mInterstitialAd;
 
+    String units, spUnits;
+    double avgVol;
+
     public AlertDialog alertDialog;
 
     public WarningDialog(Context context) {
         this.context = context;
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.context);
+        sp.registerOnSharedPreferenceChangeListener(this);
+        spUnits = (sp.getString(context.getResources().getString(R.string.pref_key_editUnits), ""));
+        setUnits(spUnits);
     }
 
     public static Bitmap getLargeIcon(Context context) {
@@ -202,5 +202,33 @@ public class WarningDialog {
 
     public boolean getWarning4() {
         return warning4;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+
+        if (s == this.context.getString(R.string.pref_key_editUnits)) {
+            SharedPreferences spEditUnits = PreferenceManager.getDefaultSharedPreferences(context);
+
+            //acquire new units and convert
+            String changedUnits = spEditUnits.getString(s, "");
+            if (changedUnits.equalsIgnoreCase("metric")) {
+                setUnits(context.getResources().getString(R.string.ml));
+                avgVol = BloodAlcoholContent.MetricSystemConverter.convertOzToMillilitres(avgVol);
+                avgVol = BloodAlcoholContent.round(avgVol, 2);
+            } else {
+                setUnits(context.getResources().getString(R.string.oz));
+                avgVol = BloodAlcoholContent.MetricSystemConverter.convertMillilitresToOz(avgVol);
+                avgVol = BloodAlcoholContent.round(avgVol, 2);
+            }
+        }
+    }
+
+    protected void setUnits(String spUnits) {
+        if (spUnits.equals("metric") || spUnits.equals("Metric")) {
+            this.units = context.getResources().getString(R.string.ml);
+        } else {
+            this.units = context.getResources().getString(R.string.oz);
+        }
     }
 }
