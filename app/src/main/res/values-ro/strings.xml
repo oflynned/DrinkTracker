@@ -125,7 +125,7 @@
     <string name="ml">ml</string>
     <string name="oz">oz</string>
     <string name="plugins">Plugins Used</string>
-    <string name="plugins_body">App Intro\nby PaoloRotolo\n\nFloatingActionButton\nby Clans\n\nJoda-Time-Android\nby dlew\n\nHelloCharts for Android\nby lecho</string>
+    <string name="plugins_body">App Intro\nby PaoloRotolo\nFloatingActionButton\nby Clans\nGraphView\nby jjoe64\n\nThanks to:\nAlexandru Sulea\n(French, Italian, Portuguese, Romanian, Spanish)\nEdmond O\' Flynn\n(Dutch, Irish, Mandarin)\nKevin Behrens\n(German, Low German)\nMaciej Grabowski\n(Polish)\nPavel Tarasoff\n(Russian)\nYoung Suk Choi\n(Korean, Japanese)</string>
     <string name="libraries">Libraries Used</string>
     <string name="libraries_summary">Here is a list of the libraries we used in the creation of this app</string>
     <string name="apache_summary">Info about the licences we use to distribute software</string>

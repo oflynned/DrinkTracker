@@ -120,7 +120,7 @@
     <string name="oz">oz</string>
     <string name="notice">DrinkTracker</string>
     <string name="plugins">Plugins Used</string>
-    <string name="plugins_body">App Intro\nby PaoloRotolo\n\nFloatingActionButton\nby Clans\n\nJoda-Time-Android\nby dlew\n\nHelloCharts for Android\nby lecho</string>
+    <string name="plugins_body">App Intro\nby PaoloRotolo\nFloatingActionButton\nby Clans\nGraphView\nby jjoe64\n\nThanks to:\nAlexandru Sulea\n(French, Italian, Portuguese, Romanian, Spanish)\nEdmond O\' Flynn\n(Dutch, Irish, Mandarin)\nKevin Behrens\n(German, Low German)\nMaciej Grabowski\n(Polish)\nPavel Tarasoff\n(Russian)\nYoung Suk Choi\n(Korean, Japanese)</string>
     <string name="warning1">You\'re enroute to getting drunk, maybe take it easy if you\'re feeling a bit intoxicated.</string>
     <string name="warning2">You\'ve reached quite a drunk stage, watch yourself and make sure you don\'t lose personal belongings.</string>
     <string name="warning3">You\'re very drunk and should expect a bad hangover tomorrow morning.</string>
