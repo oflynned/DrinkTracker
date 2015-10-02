@@ -253,7 +253,7 @@ public class Statistics extends Activity implements
                 BACvalues = new float[1];
                 BACtime = new String[1];
 
-                if(cursor.getCount()>2) {
+                if(BACLevelArray.size() > 1) {
                     BACvalues[0] = 0;
                     BACtime[0] = String.valueOf(returnFirstNullValue());
                 } else {
