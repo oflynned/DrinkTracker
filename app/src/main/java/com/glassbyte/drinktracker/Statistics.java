@@ -12,8 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.TypedArrayUtils;
-import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +28,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -48,14 +47,12 @@ public class Statistics extends Activity implements
     //we'll use an arraylist to dynamically set n amounts of values
     //and then copy this list to an array of size n when onCreate() is called
     private ArrayList<Float> BACLevelArray = new ArrayList<>();
-    private ArrayList<Date> BACTimeArray = new ArrayList<>();
+    private ArrayList<Time> BACTimeArray = new ArrayList<>();
     private float[] BACvalues = null;
     private String[] BACtime = null;
 
     float[] yValues = null;
     String[] xValues = null;
-
-    private final static int THIRTY_MINS_MILLIS = 30 * 60 * 1000;
 
     int orange, counter;
     double totUnits, maxUnits, BAC, maxBAC;
@@ -68,23 +65,11 @@ public class Statistics extends Activity implements
 
     ChooseDrink chooseDrink;
     String spGender;
-    java.text.DateFormat dateTimeFormatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         //each vertical line depends on the array not being null
-
-        /* Chart gradiation
-         * Each vertical line for the viewport is determined by the array for labels
-          *
-          * -> try to set it to a scrollable horizontal viewport in order to allow nice spacing
-          * -> set value of new BAC to populated automatically and show on spacing
-          * -> the only two labels we need are start and end times
-          *
-          * -> start and end times are determined */
-
-        dateTimeFormatter = DateFormat.getTimeFormat(this);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         sp.registerOnSharedPreferenceChangeListener(this);
         spGender = (sp.getString(getResources().getString(R.string.pref_key_editGender), ""));
@@ -183,10 +168,10 @@ public class Statistics extends Activity implements
                     //as we need to return the value at a certain count, we need the counter value to offset
                     while (!cursor.isAfterLast() && cursor.moveToNext()) {
                         //store and return appropriate BAC & time within row
-                        Date date = new Date(cursor.getLong(1));
-                        BACTimeArray.add(date);
+                        Time time = new Time(cursor.getLong(1));
+                        BACTimeArray.add(time);
                         //traverse and return the value of the current float of the row
-                        BACLevelArray.add(cursor.getFloat(2));
+                        BACLevelArray.add(cursor.getFloat(2) * 40);
 
                         if (BAC > maxBAC) {
                             maxBAC = BAC;
@@ -222,10 +207,10 @@ public class Statistics extends Activity implements
                     //as we need to return the value at a certain count, we need the counter value to offset
                     while (!cursor.isAfterLast() && cursor.moveToNext()) {
                         //store and return appropriate BAC & time within row
-                        Date date = new Date(cursor.getLong(1));
-                        BACTimeArray.add(date);
+                        Time time = new Time(cursor.getLong(1));
+                        BACTimeArray.add(time);
                         //traverse and return the value of the current float of the row
-                        BACLevelArray.add(cursor.getFloat(2));
+                        BACLevelArray.add(cursor.getFloat(2)*40);
 
                         if (BAC > maxBAC) {
                             maxBAC = BAC;
@@ -256,6 +241,12 @@ public class Statistics extends Activity implements
             //now concatenate both initial and raw arrays
             yValues = concatenateFloats(BACvalues, tempLevel);
             xValues = concatenateStrings(BACtime, tempTime);
+
+            xValues[0] = "";
+
+            for(int i = 2; i < xValues.length - 1; i++) {
+                xValues[i] = "";
+            }
 
             db.close();
             cursor.close();
@@ -302,7 +293,7 @@ public class Statistics extends Activity implements
         return result;
     }
 
-    private Date returnFirstNullValue() {
+    private Time returnFirstNullValue() {
         //first time stored in array
         return BACTimeArray.get(0);
     }
@@ -348,7 +339,7 @@ public class Statistics extends Activity implements
         //axes and styling
         chart.setTopSpacing(Tools.fromDpToPx(10))
                 .setBorderSpacing(Tools.fromDpToPx(0))
-                .setAxisBorderValues(0, 1, 1)
+                .setAxisBorderValues(0, 10, 1)
                 .setXLabels(AxisController.LabelPosition.OUTSIDE)
                 .setYLabels(AxisController.LabelPosition.OUTSIDE)
                 .setLabelsColor(getResources().getColor(R.color.white))
