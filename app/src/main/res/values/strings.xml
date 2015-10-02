@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">DrinkTracker</string>
 
+    <!--> Mock Banner Ad Key <-->
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <!--> Real Banner Ad Key <-->
+    <string name="banner_ad_unit_id_real" translatable="false">ca-app-pub-7053740901071844/7714589211</string>
+    <string name="interstitial_ad_unit_id_real" translatable="false">ca-app-pub-7053740901071844/6237856016</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_aboutus">About Us</string>
@@ -131,10 +138,6 @@
     <string name="foot_and">foot and</string>
     <string name="inches">inches</string>
     <string name="pounds">pounds</string>
-
-    <!--> Mock Banner Ad Key <-->
-    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
 
     <string name="warning">Warning</string>
     <string name="ok">OK</string>
