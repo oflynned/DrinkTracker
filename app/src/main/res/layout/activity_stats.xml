@@ -9,13 +9,14 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="10dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/skyblue"
+        android:padding="5dp">
 
-        <com.jjoe64.graphview.GraphView
+        <com.db.chart.view.LineChartView
+            android:id="@+id/linechart"
             android:layout_width="match_parent"
-            android:layout_height="200dip"
-            android:id="@+id/graph"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
@@ -24,13 +25,13 @@
         android:layout_height="fill_parent"
         android:layout_weight="1">
 
-        <Spinner
+        <!--<Spinner
             android:id="@+id/periodSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:entries="@array/period" />
+            android:entries="@array/period" />-->
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
@@ -60,13 +61,13 @@
                 android:text="Rating placeholder" />
 
             <TextView
-                android:layout_marginTop="10dp"
                 android:id="@+id/briefInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ratingBAC"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="Placeholder"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -85,11 +86,10 @@
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id">
-    </com.google.android.gms.ads.AdView>
+        ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
 
 </LinearLayout>

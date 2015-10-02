@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            android:textSize="30sp"
+            android:textSize="40sp"
             android:text="GlassByte Limited"
             android:layout_marginTop="30dp"
             android:id="@+id/logotext"

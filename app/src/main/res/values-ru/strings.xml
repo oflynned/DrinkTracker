@@ -119,7 +119,9 @@
     <string name="ok">OK</string>
     <string name="notice">Сколько Выпил?</string>
     <string name="plugins">Плагины</string>
-    <string name="plugins_body">App Intro\nby PaoloRotolo\n\nFloatingActionButton\nот Clans\n\nJoda-Time-Android\nот dlew\n\nHelloCharts for Android\nот lecho</string>
+
+    <string name="plugins_body">App Intro\nот PaoloRotolo\nFloatingActionButton\nот Clans\nGraphView\nот jjoe64\n\nCпасибо:\nAlexandru Sulea\n(Французский, итальянский, португальский, румынский, испанский)\nEdmond O\' Flynn\n(Голландский, Ирландский, Китайский)\nKevin Behrens\n(Немецкий, Нижненемецкий)\nMaciej Grabowski\n(Польский)\nPavel Tarasoff\n(Русский)\nYoung Suk Choi\n(Корейский, Японский)</string>
+
     <string name="warning1">Вы почти пьяны, возможно пейте помедленнее если вы чувствуете сеья опъяневшим.</string>
     <string name="warning2">Вы пьяны, пожалуйста будьте осторожны и не потеряйте свои вещи.</string>
     <string name="warning3">Вы очень пьяны и можете ожидать похмелье завтрашним утром.</string>

@@ -46,7 +46,7 @@
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_list_drinks">ListDrinksActivity</string>
+    <string name="title_activity_list_drinks">名单饮料</string>
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">免责声明</string>
@@ -118,27 +118,27 @@
     <string name="ml">毫升</string>
     <string name="oz">盎司</string>
     <string name="warning">警告！</string>
-    <string name="ok">	好</string>
-    <string name="notice">DrinkTracker</string>
-    <string name="plugins">Plugins Used</string>
-    <string name="plugins_body">App Intro\nby PaoloRotolo\n\nFloatingActionButton\nby Clans\n\nJoda-Time-Android\nby dlew\n\nHelloCharts for Android\nby lecho</string>
-    <string name="warning1">You\'re enroute to getting drunk, maybe take it easy if you\'re feeling a bit intoxicated.</string>
-    <string name="warning2">You\'ve reached quite a drunk stage, watch yourself and make sure you don\'t lose personal belongings.</string>
-    <string name="warning3">You\'re very drunk and should expect a bad hangover tomorrow morning.</string>
-    <string name="warning4">You\'re extremely drunk, drink any more and you\'re endangering yourself!</string>
-    <string name="libraries">Libraries Used</string>
-    <string name="libraries_summary">Here is a list of the libraries we used in the creation of this app</string>
-    <string name="apache_summary">Info about the licences we use to distribute software</string>
+    <string name="ok">好</string>
+    <string name="notice">轨道酒精</string>
+    <string name="plugins">插件 - 我们已经用&#8230;</string>
+    <string name="plugins_body">App Intro\n由 PaoloRotolo\nFloatingActionButton\n由 Clans\nGraphView\n由 jjoe64\n\n谢谢!\nAlexandru Sulea\n(法语，意大利语，葡萄牙语，罗马尼亚语，西班牙语)\nEdmond O\' Flynn\n(荷兰，爱尔兰，普通话)\nKevin Behrens\n(德语，低地德语)\nMaciej Grabowski\n(波兰语)\nPavel Tarasoff\n(俄语)\nYoung Suk Choi\n(韩语，日语)</string>
+    <string name="warning1">你开始有点醉了，也许慢慢来，如果你感觉有点陶醉。</string>
+    <string name="warning2">你已经达到了一个相当醉酒阶段，观察自己，并确保您不会丢失个人物品。</string>
+    <string name="warning3">你很喝醉了，应该期待一个糟糕的宿醉明天早上。</string>
+    <string name="warning4">你感到非常醉了，如果你再喝酒，你将危及你自己！</string>
+    <string name="libraries">Libraries - 我们已经用&#8230;</string>
+    <string name="libraries_summary">这是我们在创作这个应用程序中使用的列表</string>
+    <string name="apache_summary">软件分发许可证信息</string>
     <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
-    <string name="apache">Apache Licence</string>
-    <string name="about_us">GlassByte is a software development start-up company headquartered in Dublin, Ireland. Our small, ambitious team strives to create innovative and useful software for computing platforms.</string>
-    <string name="about_us_more">For more apps or business enquiries, visit our website!\nhttp://www.glassbyte.com/</string>
+    <string name="apache">阿帕奇执照</string>
+    <string name="about_us">GlassByte是一个软件开发的初创公司，总部设在爱尔兰的都柏林。我们的小，有事业心的团队努力创造创新性和实用软件的计算平台。</string>
+    <string name="about_us_more">欲了解更多的应用程序或业务查询，请访问我们的网站！\nhttp://www.glassbyte.com/</string>
 
     <!-- Preset Categories -->
-    <string name="beerCategory">Beer</string>
-    <string name="wineCategory">Wine</string>
-    <string name="spiritsCategory">Spirits</string>
-    <string name="cocktailsCategory">Cocktails</string>
+    <string name="beerCategory">啤酒</string>
+    <string name="wineCategory">葡萄酒</string>
+    <string name="spiritsCategory">蒸馏酒</string>
+    <string name="cocktailsCategory">鸡尾酒</string>
 
     <!--> Cocktails - The Unforgettables <-->
     <string name="alexander">Alexander</string>
@@ -205,66 +205,66 @@
     <string name="tequila_sunrise_cocktail">Tequila Sunrise</string>
 
     <!--> Cocktail Glasses <-->
-    <string name="cocktail_glass">Cocktail Glass</string>
-    <string name="highball_glass">Highball Glass</string>
-    <string name="collins_glass">Collins Glass</string>
-    <string name="lowball_glass">Lowball Glass</string>
-    <string name="champagne_flute">Champagne Glass</string>
-    <string name="mug">Mug</string>
-    <string name="wine_glass">Wine Glass</string>
-    <string name="margarita_glass">Margarita Glass</string>
-    <string name="poco_grande_glass">Poco Grande Glass</string>
+    <string name="cocktail_glass">鸡尾酒玻璃</string>
+    <string name="highball_glass">高球玻璃</string>
+    <string name="collins_glass">柯林斯玻璃</string>
+    <string name="lowball_glass">虚报低价玻璃</string>
+    <string name="champagne_flute">香槟酒杯</string>
+    <string name="mug">杯子</string>
+    <string name="wine_glass">红酒杯</string>
+    <string name="margarita_glass">玛格丽塔玻璃</string>
+    <string name="poco_grande_glass">小小大玻璃</string>
 
     <!--> Wine volumes <-->
-    <string name="quarter_wine_glass">Quarter Glass</string>
-    <string name="half_wine_glass">Half Glass</string>
-    <string name="three_quarter_wine_glass">Three-Quarter Glass</string>
+    <string name="quarter_wine_glass">一季度玻璃</string>
+    <string name="half_wine_glass">半杯</string>
+    <string name="three_quarter_wine_glass">三季度玻璃</string>
 
     <!--> Shot bases <-->
-    <string name="absinthe_spirit">Absinthe</string>
-    <string name="sambuca_spirit">Sambuca</string>
-    <string name="vodka_spirit">Vodka</string>
-    <string name="tequila_spirit">Tequila</string>
-    <string name="gin_spirit">Gin</string>
-    <string name="rum_spirit">Rum</string>
-    <string name="whiskey_spirit">Whiskey</string>
-    <string name="brandy_spirit">Brandy</string>
-    <string name="jager_spirit">Jäger</string>
+    <string name="absinthe_spirit">苦艾酒</string>
+    <string name="sambuca_spirit">桑布卡酒</string>
+    <string name="vodka_spirit">伏特加酒</string>
+    <string name="tequila_spirit">龙舌兰酒</string>
+    <string name="gin_spirit">杜松子酒</string>
+    <string name="rum_spirit">朗姆酒</string>
+    <string name="whiskey_spirit">威士忌酒</string>
+    <string name="brandy_spirit">白兰地酒</string>
+    <string name="jager_spirit">野格酒</string>
 
     <!--> Shot quantities <-->
-    <string name="q_single">Single</string>
-    <string name="q_double">Double</string>
-    <string name="q_triple">Triple</string>
+    <string name="q_single">单</string>
+    <string name="q_double">双</string>
+    <string name="q_triple">三合一</string>
 
-    <string name="what_are_you_waiting_for">What are you waiting for?</string>
-    <string name="give_drink_tracker_a_go">Give DrinkTracker a go today and make lifestyle changes in realtime that last a lifetime</string>
-    <string name="sober_friend">Your Sober Mobile Friend</string>
-    <string name="warning_beforehand">Be warned beforehand when things are going overboard and prevent over-drinking and ruined nights out</string>
-    <string name="track_drinking">Track Your Drinking</string>
-    <string name="know_exactly">Know exactly how much is too much and educate yourself on alcohol limits</string>
+    <string name="what_are_you_waiting_for">你在等什么？</string>
+    <string name="give_drink_tracker_a_go">尝试轨道酒精今天 - 拿酒精控制</string>
+    <string name="sober_friend">你清醒的朋友</string>
+    <string name="warning_beforehand">获取预先警告，防止饮酒过量和破坏之夜</string>
+    <string name="track_drinking">跟踪你的酒精</string>
+    <string name="know_exactly">了解到底有多少是太多了，并且了解你的酒精含量限制</string>
 
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="units_title">Units</string>
-    <string name="gender_title">Gender</string>
+    <string name="male">男人</string>
+    <string name="female">女人</string>
+    <string name="units_title">单位</string>
+    <string name="gender_title">性别</string>
     <string name="input_info">Input\nInformation</string>
-    <string name="imperial">Imperial</string>
-    <string name="weight">Weight</string>
-    <string name="metric">Metric</string>
-    <string name="kg">kg</string>
-    <string name="height">Height</string>
-    <string name="cm">cm</string>
-    <string name="feet">Feet:</string>
-    <string name="inches_title">Inches:</string>
-    <string name="continue_button">Continue</string>
+    <string name="imperial">美国单位</string>
+    <string name="weight">重量</string>
+    <string name="metric">公制</string>
+    <string name="kg">公斤</string>
+    <string name="height">高低</string>
+    <string name="cm">厘米</string>
+    <string name="feet">英尺:</string>
+    <string name="inches_title">英寸:</string>
+    <string name="continue_button">延续</string>
 
-    <string name="remove_selected">Remove Selected</string>
-    <string name="display_drinks">Display drinks:</string>
-    <string name="date">DATE</string>
-    <string name="title">TITLE</string>
-    <string name="vol">VOL</string>
-    <string name="alc">ALC</string>
-    <string name="next">Next</string>
-    <string name="add_drink">Please add a drink in order to use statistics!</string>
-    <string name="previous">Previous</string>
+    <string name="remove_selected">删除</string>
+    <string name="display_drinks">显示:</string>
+    <string name="date">日期</string>
+    <string name="title">称号</string>
+    <string name="vol">量</string>
+    <string name="alc">酒</string>
+    <string name="next">下一页</string>
+    <string name="add_drink">请补充饮料，让您可以使用统计!</string>
+    <string name="previous">上一页</string>
 </resources>
