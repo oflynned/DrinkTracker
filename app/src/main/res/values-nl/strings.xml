@@ -40,7 +40,7 @@
     </string-array>
 
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_list_drinks">ListDrinksActivity</string>
+    <string name="title_activity_list_drinks">Lijst van Dranken</string>
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Ontkenning</string>
@@ -50,17 +50,17 @@
 
     <!--> dialog warnings <-->
     <string name="tier0">Nuchter.</string>
-    <string name="tier1">Mildly relaxed and no loss of coordination.</string>
-    <string name="tier2">Slight impairment, lowered inhibitions, lowered caution, exaggeration of behaviour.</string>
-    <string name="tier3">Mild impairment of balance, speech, vision and reaction time.</string>
-    <string name="tier4">Significant impairment of coordination, loss of judgement, and feeling of euphoria.</string>
-    <string name="tier5">Lack of physical control, loss of balance, and blurring of vision. Reduced euphoria and increased dysphoria. Severe impairment of perception and judgement.</string>
-    <string name="tier6">Intensifying of dysphoria, increase in nausea, appears &quot;more sloppy&quot;.</string>
-    <string name="tier7">Dazed, confusion, disorientation. May not feel pain if injured. Nausea and vomiting experienced around this level. Gag reflex may be impaired. Blackouts are more likely from this point.</string>
-    <string name="tier8">Severe impairment of all sensory, physical and mental functions. Increased risk of asphyxiation by vomiting and injury.</string>
-    <string name="tier9">Drunken stupor - you have little comprehension of where you are. Passing out and difficulty to be awoken is very likely.</string>
-    <string name="tier10">Equivalent to surgical level anaesthesia.</string>
-    <string name="tier11">Onset of coma and possible death due to respiratory arrest.</string>
+    <string name="tier1">Eenvoudig ontspannen en geen verlies van coördinatie.</string>
+    <string name="tier2">Lichte stoornis, verminderde remmingen, verminderde zorg, verhoging van het gedrag.</string>
+    <string name="tier3">Lichte aantasting van balans, van spraak, en van zien en reactietijd.</string>
+    <string name="tier4">Significante aantasting van de coördinatie, verlies van oordeel en euforische gevoelens.</string>
+    <string name="tier5">Gebrek aan controle over het lichaam, verlies van evenwicht en wazig zien. Verminderde euforie en verhoogde dysforie. Sterke waardevermindering van de waarneming en oordeel.</string>
+    <string name="tier6">Versterking van dysforie, verhoogde misselijkheid, lijkt het erg lastig.</string>
+    <string name="tier7">Benommen - en verwarring, desoriëntatie. Men voelt zich heel goed mogelijk geen pijn wanneer u gewond bent. Misselijkheid en braken optreden op dit niveau. Kokhalsreflex kan verminderd. Bewusteloosheid mogelijk vanaf dit punt.</string>
+    <string name="tier8">Ernstige aantasting van zintuiglijke, fysieke en mentale functies. Verhoogd risico op verstikking door braken en letsel.</string>
+    <string name="tier9">Alcoholvergiftiging - u niet begrijpt waar u bent. Bewusteloosheid en moeilijkheden zijn om wakker te worden zeer waarschijnlijk.</string>
+    <string name="tier10">Equivalent aan chirurgische anesthesie.</string>
+    <string name="tier11">Begin van coma en mogelijk de dood als gevolg van ademstilstand.</string>
 
     <!--> unit warnings <-->
     <string name="pollunits">Totale eenheden gedronken deze week:</string>
@@ -114,24 +114,24 @@
     <string name="oz">oz</string>
     <string name="notice">DrinkTracker</string>
     <string name="plugins">Plugins Used</string>
-    <string name="plugins_body">App Intro\nvan PaoloRotolo\nFloatingActionButton\nvan Clans\nGraphView\nvan jjoe64\n\nThanks to:\nAlexandru Sulea\n(French, Italian, Portuguese, Romanian, Spanish)\nEdmond O\' Flynn\n(Dutch, Irish, Mandarin)\nKevin Behrens\n(German, Low German)\nMaciej Grabowski\n(Polish)\nPavel Tarasoff\n(Russian)\nYoung Suk Choi\n(Korean, Japanese)</string>
+    <string name="plugins_body">App Intro\nvan PaoloRotolo\nFloatingActionButton\nvan Clans\nWilliamChart\nvan Diogo Bernardino\n\nDankzij:\nAlexandru Sulea\n(Frans, Italiaans, Portugees, Roemeens, Spaans)\nEdmond O\' Flynn\n(Nederlands, Iers, Chinees)\nKevin Behrens\n(Duits, Nederduits)\nMaciej Grabowski\n(Pools)\nPavel Tarasoff\n(Rus)\nYoung Suk Choi\n(Koreaans, Japans)</string>
 
-    <string name="warning1">You\'re enroute to getting drunk, maybe take it easy if you\'re feeling a bit intoxicated.</string>
-    <string name="warning2">You\'ve reached quite a drunk stage, watch yourself and make sure you don\'t lose personal belongings.</string>
-    <string name="warning3">You\'re very drunk and should expect a bad hangover tomorrow morning.</string>
-    <string name="warning4">You\'re extremely drunk, drink any more and you\'re endangering yourself!</string>
-    <string name="libraries">Libraries Used</string>
-    <string name="libraries_summary">Here is a list of the libraries we used in the creation of this app</string>
-    <string name="apache_summary">Info about the licences we use to distribute software</string>
+    <string name="warning1">U bent op de weg, dronken te worden. Neem het misschien makkelijk als u een beetje dronken gevoelt.</string>
+    <string name="warning2">U bent heel droken geworden, kijk uit, en zorg ervoor dat u uw persoonlijke bezittingen heeft!</string>
+    <string name="warning3">U bent bijzonder droken geworden, en zou wel morgen aan een slechte kater verwachten.</string>
+    <string name="warning4">U bent buitengewoon droken geworden. Als u meer alcohol drinkt, u brengt uzelf in gevaar!</string>
+    <string name="libraries">Gebruikte Computer-Bibliotheeken</string>
+    <string name="libraries_summary">Hier is een lijst van de bibliotheken die we in de creatie van deze app gebruikt hebben</string>
+    <string name="apache_summary">Informatie over de licenties die we gebruiken om software te verspreiden</string>
     <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
-    <string name="apache">Apache Licence</string>
-    <string name="about_us">GlassByte is a software development start-up company headquartered in Dublin, Ireland. Our small, ambitious team strives to create innovative and useful software for computing platforms.</string>
-    <string name="about_us_more">For more apps or business enquiries, visit our website!\nhttp://www.glassbyte.com/</string>
+    <string name="apache">Apache Licentie</string>
+    <string name="about_us">GlassByte is een software development start-up, met hoofdkantoor in Dublin, Ierland. Onze kleine, ambitieuze team streeft naar innovatieve en nuttige software voor computerplatforms te creëren</string>
+    <string name="about_us_more">Voor meer apps of zakelijke vragen, bezoek onze website!\nhttp://www.glassbyte.com/</string>
 
     <!-- Preset Categories -->
-    <string name="beerCategory">Beer</string>
-    <string name="wineCategory">Wine</string>
-    <string name="spiritsCategory">Spirits</string>
+    <string name="beerCategory">Bier</string>
+    <string name="wineCategory">Wijn</string>
+    <string name="spiritsCategory">Sterkedrank</string>
     <string name="cocktailsCategory">Cocktails</string>
 
     <!--> Cocktails - The Unforgettables <-->
@@ -199,20 +199,20 @@
     <string name="tequila_sunrise_cocktail">Tequila Sunrise</string>
 
     <!--> Cocktail Glasses <-->
-    <string name="cocktail_glass">Cocktail Glass</string>
-    <string name="highball_glass">Highball Glass</string>
-    <string name="collins_glass">Collins Glass</string>
-    <string name="lowball_glass">Lowball Glass</string>
-    <string name="champagne_flute">Champagne Glass</string>
-    <string name="mug">Mug</string>
-    <string name="wine_glass">Wine Glass</string>
-    <string name="margarita_glass">Margarita Glass</string>
-    <string name="poco_grande_glass">Poco Grande Glass</string>
+    <string name="cocktail_glass">Cocktailglas</string>
+    <string name="highball_glass">Longdrinkglas</string>
+    <string name="collins_glass">Collinsglas</string>
+    <string name="lowball_glass">Lowballglas</string>
+    <string name="champagne_flute">Champagneglass</string>
+    <string name="mug">Kopje</string>
+    <string name="wine_glass">Wijnglas</string>
+    <string name="margarita_glass">Margaritaglas</string>
+    <string name="poco_grande_glass">Poco-Grande-Glas</string>
 
     <!--> Wine volumes <-->
-    <string name="quarter_wine_glass">Quarter Glass</string>
-    <string name="half_wine_glass">Half Glass</string>
-    <string name="three_quarter_wine_glass">Three-Quarter Glass</string>
+    <string name="quarter_wine_glass">Kwartaalglas</string>
+    <string name="half_wine_glass">Halfglas</string>
+    <string name="three_quarter_wine_glass">Drie-Kwartaalglas</string>
 
     <!--> Shot bases <-->
     <string name="absinthe_spirit">Absint</string>
