@@ -232,7 +232,7 @@
     <string name="jager_spirit">Jäger</string>
 
     <!--> Shot quantities <-->
-    <string name="q_single">Single</string>
+    <string name="q_single">Seul</string>
     <string name="q_double">Double</string>
     <string name="q_triple">Triple</string>
 
