@@ -21,13 +21,13 @@ import android.widget.Toast;
 import com.db.chart.Tools;
 import com.db.chart.model.LineSet;
 import com.db.chart.view.AxisController;
+import com.db.chart.view.ChartView;
 import com.db.chart.view.LineChartView;
 import com.db.chart.view.animation.Animation;
 import com.db.chart.view.animation.style.DashAnimation;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,6 +65,8 @@ public class Statistics extends Activity implements
 
     ChooseDrink chooseDrink;
     String spGender;
+
+    double maxYValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +181,35 @@ public class Statistics extends Activity implements
                         cursor.moveToNext();
                     }
                 }
+                //initial value has to be set to BAC of 0 at the time of first drink added...
+                BACvalues = new float[1];
+                BACtime = new String[1];
+
+                if(BACLevelArray.size() > 1) {
+                    BACvalues[0] = 0;
+                    BACtime[0] = String.valueOf(returnFirstNullValue());
+                } else {
+                    BACvalues[0] = 0;
+                    BACtime[0] = "";
+                }
+
+                float[] tempLevel = new float[BACLevelArray.size()];
+                String[] tempTime = new String[BACTimeArray.size()];
+
+                for (int i = 0; i < tempLevel.length; i++) {
+                    tempLevel[i] = BACLevelArray.get(i);
+                    tempTime[i] = String.valueOf(BACTimeArray.get(i));
+                }
+
+                //now concatenate both initial and raw arrays
+                yValues = concatenateFloats(BACvalues, tempLevel);
+                xValues = concatenateStrings(BACtime, tempTime);
+
+                xValues[0] = "";
+
+                for(int i = 2; i < xValues.length - 1; i++) {
+                    xValues[i] = "";
+                }
             }
             //else if the table has been populated before and needs to retrieve new values
             else if (cursor.getCount() > 0) {
@@ -218,42 +249,46 @@ public class Statistics extends Activity implements
                         cursor.moveToNext();
                     }
                 }
+                //initial value has to be set to BAC of 0 at the time of first drink added...
+                BACvalues = new float[1];
+                BACtime = new String[1];
+
+                if(cursor.getCount()>2) {
+                    BACvalues[0] = 0;
+                    BACtime[0] = String.valueOf(returnFirstNullValue());
+                } else {
+                    BACvalues[0] = 0;
+                    BACtime[0] = "";
+                }
+
+                float[] tempLevel = new float[BACLevelArray.size()];
+                String[] tempTime = new String[BACTimeArray.size()];
+
+                for (int i = 0; i < tempLevel.length; i++) {
+                    tempLevel[i] = BACLevelArray.get(i);
+                    tempTime[i] = String.valueOf(BACTimeArray.get(i));
+                }
+
+                //now concatenate both initial and raw arrays
+                yValues = concatenateFloats(BACvalues, tempLevel);
+                xValues = concatenateStrings(BACtime, tempTime);
+
+                xValues[0] = "";
+
+                for(int i = 2; i < xValues.length - 1; i++) {
+                    xValues[i] = "";
+                }
             }
-
-            //initial value has to be set to BAC of 0 at the time of first drink added...
-            BACvalues = new float[1];
-            BACtime = new String[1];
-
-            System.out.println(BACvalues.length);
-            System.out.println(BACtime.length);
-
-            BACvalues[0] = 0;
-            BACtime[0] = String.valueOf(returnFirstNullValue());
-
-            float[] tempLevel = new float[BACLevelArray.size()];
-            String[] tempTime = new String[BACTimeArray.size()];
-
-            for (int i = 0; i < tempLevel.length; i++) {
-                tempLevel[i] = BACLevelArray.get(i);
-                tempTime[i] = String.valueOf(BACTimeArray.get(i));
-            }
-
-            //now concatenate both initial and raw arrays
-            yValues = concatenateFloats(BACvalues, tempLevel);
-            xValues = concatenateStrings(BACtime, tempTime);
-
-            xValues[0] = "";
-
-            for(int i = 2; i < xValues.length - 1; i++) {
-                xValues[i] = "";
-            }
-
             db.close();
             cursor.close();
         } else {
             Toast.makeText(getBaseContext(),
                     getResources().getString(R.string.add_drink),
                     Toast.LENGTH_SHORT).show();
+            xValues = new String[1];
+            xValues[0] = "";
+            yValues = new float[1];
+            yValues[0] = 0;
         }
     }
 
@@ -323,10 +358,13 @@ public class Statistics extends Activity implements
         //assign to base dataset for line of BAC and appropriately logged times
         LineSet dataset = new LineSet(xValues, yValues);
 
+        int[] colours = {R.color.green, R.color.red500};
+
         //modify
         dataset.setColor(getResources().getColor(R.color.orange500))
                 .setSmooth(true)
-                .setDashed(new float[]{20, 20});
+                .setDashed(new float[]{20, 20})
+                .setGradientFill(colours,null);
         chart.addData(dataset);
 
         //gridview using paint
@@ -336,17 +374,16 @@ public class Statistics extends Activity implements
         gridPaint.setAntiAlias(true);
         gridPaint.setStrokeWidth(Tools.fromDpToPx(.75f));
 
-        //axes and styling
-        chart.setTopSpacing(Tools.fromDpToPx(10))
-                .setBorderSpacing(Tools.fromDpToPx(0))
-                .setAxisBorderValues(0, 10, 1)
-                .setXLabels(AxisController.LabelPosition.OUTSIDE)
-                .setYLabels(AxisController.LabelPosition.OUTSIDE)
-                .setLabelsColor(getResources().getColor(R.color.white))
-                .setXAxis(false)
-                .setYAxis(false)
-                .setGrid(LineChartView.GridType.FULL, gridPaint)
-                .canScrollHorizontally(1);
+            chart.setTopSpacing(Tools.fromDpToPx(10))
+                    .setBorderSpacing(Tools.fromDpToPx(0))
+                    .setAxisBorderValues(0, 10, 1)
+                    .setXLabels(AxisController.LabelPosition.OUTSIDE)
+                    .setYLabels(AxisController.LabelPosition.OUTSIDE)
+                    .setLabelsColor(getResources().getColor(R.color.white))
+                    .setXAxis(false)
+                    .setYAxis(false)
+                    .setGrid(LineChartView.GridType.HORIZONTAL, gridPaint)
+                    .canScrollHorizontally(0);
 
         //initial animation and dashes continuous animation
         Animation anim = new Animation().setStartPoint(0, 0);

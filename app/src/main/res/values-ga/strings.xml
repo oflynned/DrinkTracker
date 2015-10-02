@@ -60,7 +60,7 @@
     <string name="tier2">Lagú beag, urchoillte níos lú, aire níos lú, iompar áibhlithe.</string>
     <string name="tier3">Meán-lagú an choirp cothroim, an ghutha, na súile, agus an ama frithghníomhaithe.</string>
     <string name="tier4">Lagú mór comhordaithe, cailltear breithiúnas, agus mothtar treisiú na eofóiria.</string>
-    <string name="tier5">Easpa smachta fisicigh, cailltear an chothromaíocht, agus geamhtear amharc an té. Téann an eofóiria i léig, agus treisíonn an diosfóiria. An-lagú braistinte agus breithiúnais.</string>
+    <string name="tier5">Easpa smachta fisicigh, cailltear an chothromaíocht, agus geamhtar amharc an té. Téann an eofóiria i léig, agus treisíonn an diosfóiria. An-lagú braistinte agus breithiúnais.</string>
     <string name="tier6">Treisíonn mothúcháin diosfóiria, mothú tinn agus tá cuma &quot;níos lú comhordaithe&quot; ar an té.</string>
     <string name="tier7">Tá néal, mearbhall agus easpa fios na h-áite ort. Tá seans ann nach mothfaidh tú gortúchán. Braitear mothú tinn, agus tarraingt urla um an gcéim seo. Is féidir leis an athfhilleadh béil a bheith curtha i laghad freisin. Tá titim faoi laige i bhfad níos dóchaí ón gcéim seo amach.</string>
     <string name="tier8">An-lagú gach aon feidhme céadfaí, fisicí, agus meabhraí! Is mór an priacal bás a fháil dá bharr aisfisce trí chur urlacain aníos, nó gortú.</string>
@@ -127,11 +127,11 @@
     <string name="notice">DrinkTracker</string>
     <string name="plugins">Plugins Used</string>
 
-    <string name="plugins_body">App Intro\nó PaoloRotolo\nFloatingActionButton\nó Clans\nGraphView\nó jjoe64\n\nBuíochas le:\nAlexandru Sulea\n(Fraincis, Iodáilis, Portaingéilis, Rómáinis, Spáinnis)\nEdmond Ó Floinn\n(Ollanais, Gaeilge, Sínis)\nKevin Behrens\n(Gearmáinis, Gearmáinis Íochtarach)\nMaciej Grabowski\n(Polannais)\nPavel Tarasoff\n(Rúisis)\nYoung Suk Choi\n(Coiréis, Seapáinis)</string>
+    <string name="plugins_body">App Intro\nó PaoloRotolo\nFloatingActionButton\nó Clans\nWilliamCharts\nó Diogo Bernardino\n\nBuíochas le:\nAlexandru Sulea\n(Fraincis, Iodáilis, Portaingéilis, Rómáinis, Spáinnis)\nEdmond Ó Floinn\n(Ollanais, Gaeilge, Sínis)\nKevin Behrens\n(Gearmáinis, Gearmáinis Íochtarach)\nMaciej Grabowski\n(Polannais)\nPavel Tarasoff\n(Rúisis)\nYoung Suk Choi\n(Coiréis, Seapáinis)</string>
     <string name="warning1">Tá tú ar an tslí le h-éirí ólta, b\'fhéidir tóg go bog é má tá tú ag mothú saghas faoi thionchar an óil.</string>
     <string name="warning2">Tá céim sroichte agat a chiallaíonn go bhfuil tú sách-ólta, bíodh ar d\'aire agus bíodh cinnte go bhfuil do ghiúirléidí uile agat.</string>
     <string name="warning3">Tá tú an-mheisciúil, agus beidh póit mhór ort amárach.</string>
-    <string name="warning4">Tá tú ólta tríd is tríd. Má ólann tú tuilleadh, cuireann tú do shaol i mbaol!</string>
+    <string name="warning4">Tá tú ólta tríd is tríd. Má ólann tú tuilleadh, cuirfidh tú do shaol i mbaol!</string>
     <string name="libraries">Ríomhleabharlainne Úsáidte</string>
     <string name="libraries_summary">Seo liosta de na ríomhleabharlainne a d\'úsáideamar i gcruthú na h-aipe seo.</string>
     <string name="apache_summary">Eolas faoi cheadúnais a úsáidimid chun bogearraí a dháileadh</string>
