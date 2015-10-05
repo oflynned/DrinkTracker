@@ -124,6 +124,7 @@ public class Statistics extends Activity implements
 
         SQLiteDatabase db = drinkTrackerDbHelper.getReadableDatabase();
         String count = "SELECT count(*) FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME;
+
         Cursor countCursor = db.rawQuery(count, null);
         countCursor.moveToFirst();
         int mCount = countCursor.getInt(0);
@@ -157,10 +158,12 @@ public class Statistics extends Activity implements
                 BACvalues = new float[counter];
                 BACtime = new String[counter];
 
-                while (!cursor.isAfterLast() && cursor.moveToNext()) {
+                while (!cursor.isAfterLast()) {
                     Time time = new Time(cursor.getLong(1));
                     BACTimeArray.add(time);
-                    BACLevelArray.add((cursor.getFloat(2)) * 40);
+                    Float BAClevel = (cursor.getFloat(2)) * 40;
+                    BACLevelArray.add(BAClevel);
+                    System.out.println(BACLevelArray);
 
                     if (BAC > maxBAC) {
                         maxBAC = BAC;
@@ -200,7 +203,7 @@ public class Statistics extends Activity implements
                 BACvalues = new float[counter];
                 BACtime = new String[counter];
 
-                while (!cursor.isAfterLast() && cursor.moveToNext()) {
+                while (!cursor.isAfterLast()) {
                     Time time = new Time(cursor.getLong(1));
                     BACTimeArray.add(time);
                     BACLevelArray.add(cursor.getFloat(2) * 40);
