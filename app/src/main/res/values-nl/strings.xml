@@ -44,7 +44,7 @@
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Ontkenning</string>
-    <string name="disclaimerbody">Please remember that DrinkTracker is only an approximation of your blood alcohol content (BAC), and not a substitute for a breathalyser examination. GlassByte is in no way responsible for any actions carried out under intoxication. Please drive responsibly and stay safe under the influence of alcohol. By using this app, you agree to abide by this forewarning.</string>
+    <string name="disclaimerbody">Vergeet niet dat DrinkTracker reproduceert slechts een schatting van het bloed alcoholgehalte (BAG). Deze app kan slechts bij benadering. Daarom GlassByte aanvaardt op geen enkele wijze verantwoordelijk zijn voor de handelingen die plaatsvinden onder invloed van alcohol. Gelieve zich verantwoordelijk en gewetensvol onder invloed van alcohol. Door het gebruik van deze app, gaat u akkoord met deze waarschuwing.</string>
     <string name="agree">Ik ga akkoord</string>
     <string name="disagree">Ik ben het oneens</string>
 
@@ -235,7 +235,7 @@
     <string name="sober_friend">Uw Sober Vriend</string>
     <string name="warning_beforehand">Wees gewaarschuwd in de tijd als de dingen uit de hand, en te voorkomen dat overmatig drinken en geruïneerd viering nachten</string>
     <string name="track_drinking">Volg Uw Drinken</string>
-    <string name="know_exactly">Kom te weten precies hoeveel is te veel, en onderwijt jezelf op alcohol grenzen</string>
+    <string name="know_exactly">Kom te weten precies hoeveel is te veel, en onderwijt uzelf op alcohol grenzen</string>
 
     <string name="male">Mannelijk</string>
     <string name="female">Vrouwelijk</string>
