@@ -325,7 +325,7 @@ public class Statistics extends Activity implements
         gridPaint.setAntiAlias(true);
         gridPaint.setStrokeWidth(Tools.fromDpToPx(.75f));
 
-        chart.setTopSpacing(Tools.fromDpToPx(10))
+        chart.setTopSpacing(Tools.fromDpToPx(0))
                 .setBorderSpacing(Tools.fromDpToPx(0))
                 .setAxisBorderValues(0, 10, 1)
                 .setXLabels(AxisController.LabelPosition.OUTSIDE)
