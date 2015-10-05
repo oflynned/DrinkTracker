@@ -261,6 +261,6 @@
     <string name="next">Verder</string>
     <string name="add_drink">Voeg een drankje aan om de statistieken te gebruiken!</string>
     <string name="previous">Vorig</string>
-    <string name="summer_nds">Select this option if you wish to use Low German as a language option on relaunching the app.</string>
+    <string name="summer_nds">Selecteer deze optie om Nederduits als een taaloptie te gebruiken.</string>
     <string name="nds_language_option">Nederduitse Taalopties</string>
 </resources>
