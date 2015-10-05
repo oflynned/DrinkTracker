@@ -196,6 +196,14 @@ public class Statistics extends Activity implements
                     xValues[i] = "";
                 }
             } else {
+                long lastBacZeroDate = cursor.getLong(1);
+
+                countQuery = "SELECT * FROM " + DrinkTrackerDatabase.BacTable.TABLE_NAME +
+                        " WHERE " + DrinkTrackerDatabase.BacTable.DATE_TIME + ">" + lastBacZeroDate;
+
+                cursor = db.rawQuery(countQuery,null);
+                cursor.moveToFirst();
+
                 counter = cursor.getCount() + 1;
                 BACvalues = new float[counter];
                 BACtime = new String[counter];
@@ -210,6 +218,7 @@ public class Statistics extends Activity implements
                     }
                     cursor.moveToNext();
                 }
+
                 BACvalues = new float[1];
                 BACtime = new String[1];
 
@@ -528,7 +537,7 @@ public class Statistics extends Activity implements
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (s == this.getString(R.string.pref_key_currentEbac)) {
-            
+            setRecommendations();
         }
     }
 

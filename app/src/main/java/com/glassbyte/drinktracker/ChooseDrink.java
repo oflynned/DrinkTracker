@@ -52,7 +52,7 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
 
     private SelectionSideBar leftSideBar, rightSideBar;
     private TextView bacDisplay, pbBAC;
-    private final int BAC_DECIMAL_PLACES = 4;
+    private final int BAC_DECIMAL_PLACES = 3;
     private final int PROGESS_BAR_RATIO = 300;
     private BloodAlcoholContent bloodAlcoholContent;
     SharedPreferences sp;
