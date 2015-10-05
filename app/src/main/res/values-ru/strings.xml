@@ -120,7 +120,7 @@
     <string name="notice">Сколько Выпил?</string>
     <string name="plugins">Плагины</string>
 
-    <string name="plugins_body">App Intro\nот PaoloRotolo\nFloatingActionButton\nот Clans\nGraphView\nот jjoe64\n\nCпасибо:\nAlexandru Sulea\n(Французский, итальянский, португальский, румынский, испанский)\nEdmond O\' Flynn\n(Голландский, Ирландский, Китайский)\nKevin Behrens\n(Немецкий, Нижненемецкий)\nMaciej Grabowski\n(Польский)\nPavel Tarasoff\n(Русский)\nYoung Suk Choi\n(Корейский, Японский)</string>
+    <string name="plugins_body">App Intro\nот PaoloRotolo\nFloatingActionButton\nот Clans\nWilliamCharts\nот diogobernardino\n\nCпасибо:\nAlexandru Sulea\n(Французский, итальянский, португальский, румынский, испанский)\nEdmond O\' Flynn\n(Голландский, Ирландский, Китайский)\nKevin Behrens\n(Немецкий, Нижненемецкий)\nMaciej Grabowski\n(Польский)\nPavel Tarasoff\n(Русский)\nYoung Suk Choi\n(Корейский, Японский)</string>
 
     <string name="warning1">Вы почти пьяны, возможно пейте помедленнее если вы чувствуете сеья опъяневшим.</string>
     <string name="warning2">Вы пьяны, пожалуйста будьте осторожны и не потеряйте свои вещи.</string>
@@ -277,4 +277,5 @@
     <string name="next">След.</string>
     <string name="add_drink">Пожалуйста, добавьте по крайней мере один напиток для того, чтобы использовать статистику!</string>
     <string name="previous">Пред.</string>
+    <string name="summer_nds">Select this option if you wish to use Low German as a language option on relaunching the app.</string>
 </resources>

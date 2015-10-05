@@ -121,7 +121,7 @@
     <string name="ok">好</string>
     <string name="notice">轨道酒精</string>
     <string name="plugins">插件 - 我们已经用&#8230;</string>
-    <string name="plugins_body">App Intro\n由 PaoloRotolo\nFloatingActionButton\n由 Clans\nGraphView\n由 jjoe64\n\n谢谢!\nAlexandru Sulea\n(法语，意大利语，葡萄牙语，罗马尼亚语，西班牙语)\nEdmond O\' Flynn\n(荷兰，爱尔兰，普通话)\nKevin Behrens\n(德语，低地德语)\nMaciej Grabowski\n(波兰语)\nPavel Tarasoff\n(俄语)\nYoung Suk Choi\n(韩语，日语)</string>
+    <string name="plugins_body">App Intro\n由 PaoloRotolo\nFloatingActionButton\n由 Clans\nWilliamCharts\n由 diogobernardino\n\n谢谢!\nAlexandru Sulea\n(法语，意大利语，葡萄牙语，罗马尼亚语，西班牙语)\nEdmond O\' Flynn\n(荷兰，爱尔兰，普通话)\nKevin Behrens\n(德语，低地德语)\nMaciej Grabowski\n(波兰语)\nPavel Tarasoff\n(俄语)\nYoung Suk Choi\n(韩语，日语)</string>
     <string name="warning1">你开始有点醉了，也许慢慢来，如果你感觉有点陶醉。</string>
     <string name="warning2">你已经达到了一个相当醉酒阶段，观察自己，并确保您不会丢失个人物品。</string>
     <string name="warning3">你很喝醉了，应该期待一个糟糕的宿醉明天早上。</string>
@@ -267,4 +267,5 @@
     <string name="next">下一页</string>
     <string name="add_drink">请补充饮料，让您可以使用统计!</string>
     <string name="previous">上一页</string>
+    <string name="summer_nds">Select this option if you wish to use Low German as a language option on relaunching the app.</string>
 </resources>

@@ -148,7 +148,7 @@
     <string name="notice">DrinkTracker </string>
     <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
     <string name="plugins">Plugins Used</string>
-    <string name="plugins_body">App Intro\nby PaoloRotolo\nFloatingActionButton\nby Clans\nGraphView\nby jjoe64\n\nThanks to:\nAlexandru Sulea\n(French, Italian, Portuguese, Romanian, Spanish)\nEdmond O\' Flynn\n(Dutch, Irish, Mandarin)\nKevin Behrens\n(German, Low German)\nMaciej Grabowski\n(Polish)\nPavel Tarasoff\n(Russian)\nYoung Suk Choi\n(Korean, Japanese)</string>
+    <string name="plugins_body">App Intro\nby PaoloRotolo\nFloatingActionButton\nby Clans\nWilliamChart\nby diogobernardino\n\nThanks to:\nAlexandru Sulea\n(French, Italian, Portuguese, Romanian, Spanish)\nEdmond O\' Flynn\n(Dutch, Irish, Mandarin)\nKevin Behrens\n(German, Low German)\nMaciej Grabowski\n(Polish)\nPavel Tarasoff\n(Russian)\nYoung Suk Choi\n(Korean, Japanese)</string>
     <string name="pref_key_dataCollectionPermission" translatable="false">pref_key_dataCollectionPermission</string>
     <string name="oz">oz</string>
     <string name="ml">ml</string>
@@ -293,6 +293,5 @@
     <string name="next">Next</string>
     <string name="add_drink">Please add a drink in order to use statistics!</string>
     <string name="previous">Previous</string>
-    <string name="credits">Credits</string>
 
 </resources>

@@ -126,7 +126,7 @@
     <string name="notice">DrinkTracker</string>
 
     <string name="plugins">Benutzte Plugins</string>
-    <string name="plugins_body">App Intro\nvon PaoloRotolo\nFloatingActionButton\nvon Clans\nGraphView\nvon jjoe64\n\nVielen Dank an:\nAlexandru Sulea\n(Französisch, Italienisch, Portugiesisch, Rumänisch, Spanisch)\nEdmond O\' Flynn\n(Holländisch, Irisch, Chinesisch)\nKevin Behrens\n(Deutsch, Plattdüütsch)\nMaciej Grabowski\n(Polnisch)\nPavel Tarasoff\n(Russisch)\nYoung Suk Choi\n(Koreanisch, Japanisch)</string>
+    <string name="plugins_body">App Intro\nvon PaoloRotolo\nFloatingActionButton\nvon Clans\nWilliamCharts\nvon diogobernardino\n\nVielen Dank an:\nAlexandru Sulea\n(Französisch, Italienisch, Portugiesisch, Rumänisch, Spanisch)\nEdmond O\' Flynn\n(Holländisch, Irisch, Chinesisch)\nKevin Behrens\n(Deutsch, Plattdüütsch)\nMaciej Grabowski\n(Polnisch)\nPavel Tarasoff\n(Russisch)\nYoung Suk Choi\n(Koreanisch, Japanisch)</string>
 
     <string name="warning1">Sie sind dabei, betrunken zu werden. Vielleicht halten Sie sich etwas zurück, wenn Sie sich bereits leicht betrunken fühlen.</string>
     <string name="warning2">Sie haben ein Level erreicht, an dem Sie ziemlich betrunken sind. Passen Sie auf sich auf, und gehen Sie sicher, dass Sie keine persönliche Wertgegenstände verlieren.</string>

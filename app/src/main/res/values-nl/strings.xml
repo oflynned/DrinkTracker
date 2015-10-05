@@ -114,7 +114,7 @@
     <string name="oz">oz</string>
     <string name="notice">DrinkTracker</string>
     <string name="plugins">Gebruikte Plugins</string>
-    <string name="plugins_body">App Intro\nvan PaoloRotolo\nFloatingActionButton\nvan Clans\nWilliamChart\nvan Diogo Bernardino\n\nDankzij:\nAlexandru Sulea\n(Frans, Italiaans, Portugees, Roemeens, Spaans)\nEdmond O\' Flynn\n(Nederlands, Iers, Chinees)\nKevin Behrens\n(Duits, Nederduits)\nMaciej Grabowski\n(Pools)\nPavel Tarasoff\n(Rus)\nYoung Suk Choi\n(Koreaans, Japans)</string>
+    <string name="plugins_body">App Intro\nvan PaoloRotolo\nFloatingActionButton\nvan Clans\nWilliamChart\nvan diogobernardino\n\nDankzij:\nAlexandru Sulea\n(Frans, Italiaans, Portugees, Roemeens, Spaans)\nEdmond O\' Flynn\n(Nederlands, Iers, Chinees)\nKevin Behrens\n(Duits, Nederduits)\nMaciej Grabowski\n(Pools)\nPavel Tarasoff\n(Rus)\nYoung Suk Choi\n(Koreaans, Japans)</string>
 
     <string name="warning1">U bent op de weg, dronken te worden. Neem het misschien makkelijk als u een beetje dronken gevoelt.</string>
     <string name="warning2">U bent heel droken geworden, kijk uit, en zorg ervoor dat u uw persoonlijke bezittingen heeft!</string>
@@ -261,4 +261,5 @@
     <string name="next">Verder</string>
     <string name="add_drink">Voeg een drankje aan om de statistieken te gebruiken!</string>
     <string name="previous">Vorig</string>
+    <string name="summer_nds">Select this option if you wish to use Low German as a language option on relaunching the app.</string>
 </resources>

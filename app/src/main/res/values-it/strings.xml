@@ -124,7 +124,7 @@
     <string name="oz">oz</string>
     <string name="notice">DrinkTracker</string>
     <string name="plugins">Plugins Usato</string>
-    <string name="plugins_body">App Intro\nby PaoloRotolo\nFloatingActionButton\nby Clans\nGraphView\nby jjoe64\n\nThanks to:\nAlexandru Sulea\n(French, Italian, Portuguese, Romanian, Spanish)\nEdmond O\' Flynn\n(Dutch, Irish, Mandarin)\nKevin Behrens\n(German, Low German)\nMaciej Grabowski\n(Polish)\nPavel Tarasoff\n(Russian)\nYoung Suk Choi\n(Korean, Japanese)</string>
+    <string name="plugins_body">App Intro\nby PaoloRotolo\nFloatingActionButton\nby Clans\nWilliamCharts\nby diogobernardino\n\nThanks to:\nAlexandru Sulea\n(French, Italian, Portuguese, Romanian, Spanish)\nEdmond O\' Flynn\n(Dutch, Irish, Mandarin)\nKevin Behrens\n(German, Low German)\nMaciej Grabowski\n(Polish)\nPavel Tarasoff\n(Russian)\nYoung Suk Choi\n(Korean, Japanese)</string>
     <string name="warning1">Sei in rotta per ubriacarsi , forse prendersela comoda se ti senti un po\'intossicato.</string>
     <string name="warning2">Hai raggiunto un bel palco ubriaco , guardare te stesso e assicurarsi di non perdere gli effetti personali.</string>
     <string name="warning3">Sei molto ubriaco e dovrebbe aspettare un domani mattina brutta sbornia.</string>
@@ -271,4 +271,5 @@
     <string name="add_drink">Si prega di aggiungere una bevanda al fine di utilizzare le statistiche !</string>
     <string name="previous">Precedente</string>
     <string name="nds_language_option">Bassa Opzione Lingua Tedesco</string>
+    <string name="summer_nds">Select this option if you wish to use Low German as a language option on relaunching the app.</string>
 </resources>
