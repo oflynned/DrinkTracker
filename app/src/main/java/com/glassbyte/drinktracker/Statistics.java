@@ -65,8 +65,6 @@ public class Statistics extends Activity implements
     ChooseDrink chooseDrink;
     String spGender;
 
-    double maxYValue;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -163,7 +161,6 @@ public class Statistics extends Activity implements
                     BACTimeArray.add(time);
                     Float BAClevel = (cursor.getFloat(2)) * 40;
                     BACLevelArray.add(BAClevel);
-                    System.out.println(BACLevelArray);
 
                     if (BAC > maxBAC) {
                         maxBAC = BAC;
@@ -529,8 +526,10 @@ public class Statistics extends Activity implements
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if (s == this.getString(R.string.pref_key_currentEbac)) {
+            
+        }
     }
 
     public void setLocale(String language) {
