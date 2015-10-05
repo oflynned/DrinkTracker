@@ -130,6 +130,12 @@ public class Statistics extends Activity implements
 
         //if the table exists & table has had previous BAC values
         if (mCount == 0) {
+            xValues = new String[1];
+            yValues = new float[1];
+
+            xValues[0] = "";
+            yValues[0] = 0;
+
             Toast.makeText(getBaseContext(), R.string.add_drink, Toast.LENGTH_SHORT).show();
         } else if (mCount > 0) {
             String countQuery =
@@ -164,7 +170,7 @@ public class Statistics extends Activity implements
                 BACvalues = new float[1];
                 BACtime = new String[1];
 
-                if (BACLevelArray.size() > 1) {
+                if (BACLevelArray.size() > 0) {
                     BACvalues[0] = 0;
                     BACtime[0] = String.valueOf(returnFirstNullValue());
                 } else {
@@ -177,9 +183,7 @@ public class Statistics extends Activity implements
 
                 for (int i = 0; i < tempLevel.length; i++) {
                     tempLevel[i] = BACLevelArray.get(i);
-                    System.out.println("temp level: " + tempLevel[i]);
                     tempTime[i] = String.valueOf(BACTimeArray.get(i));
-                    System.out.println("temp time: " + tempTime[i]);
                 }
 
                 //now concatenate both initial and raw arrays
@@ -209,7 +213,7 @@ public class Statistics extends Activity implements
                 BACvalues = new float[1];
                 BACtime = new String[1];
 
-                if (BACLevelArray.size() > 1) {
+                if (BACLevelArray.size() > 0) {
                     BACvalues[0] = 0;
                     BACtime[0] = String.valueOf(returnFirstNullValue());
                 } else {
@@ -366,7 +370,7 @@ public class Statistics extends Activity implements
     private void setWeeklyAmounts() {
         // get today and clear time of day
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+        cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.clear(Calendar.MINUTE);
         cal.clear(Calendar.SECOND);
         cal.clear(Calendar.MILLISECOND);
