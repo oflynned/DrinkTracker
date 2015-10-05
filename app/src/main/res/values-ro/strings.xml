@@ -124,22 +124,22 @@
     <string name="notice">DrinkTracker Avertizare</string>
     <string name="ml">ml</string>
     <string name="oz">oz</string>
-    <string name="plugins">Plugins Used</string>
+    <string name="plugins">Plugins Folosite</string>
     <string name="plugins_body">App Intro\nby PaoloRotolo\nFloatingActionButton\nby Clans\nGraphView\nby jjoe64\n\nThanks to:\nAlexandru Sulea\n(French, Italian, Portuguese, Romanian, Spanish)\nEdmond O\' Flynn\n(Dutch, Irish, Mandarin)\nKevin Behrens\n(German, Low German)\nMaciej Grabowski\n(Polish)\nPavel Tarasoff\n(Russian)\nYoung Suk Choi\n(Korean, Japanese)</string>
     <string name="libraries">Libraries Used</string>
-    <string name="libraries_summary">Here is a list of the libraries we used in the creation of this app</string>
-    <string name="apache_summary">Info about the licences we use to distribute software</string>
+    <string name="libraries_summary">Lista librariilor folosite in programarea appului.</string>
+    <string name="apache_summary">Informatie despre licenta</string>
     <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
-    <string name="apache">Apache Licence</string>
-    <string name="about_us">GlassByte is a software development start-up company headquartered in Dublin, Ireland. Our small, ambitious team strives to create innovative and useful software for computing platforms.</string>
-    <string name="about_us_more">For more apps or business enquiries, visit our website!\nhttp://www.glassbyte.com/</string>
+    <string name="apache">Licenta Apache</string>
+    <string name="about_us">GlassByte este o companie de dezvoltare de software de start-up cu sediul în Dublin , Irlanda . Echipa noastra mica , ambițiosa se străduiește să creeze software inovator si util pentru platforme mobile.</string>
+    <string name="about_us_more">Pentru mai multe programe, visita websiteul!\nhttp://www.glassbyte.com/</string>
 
 
     <!-- Preset Categories -->
-    <string name="beerCategory">Beer</string>
-    <string name="wineCategory">Wine</string>
-    <string name="spiritsCategory">Spirits</string>
-    <string name="cocktailsCategory">Cocktails</string>
+    <string name="beerCategory">Bere</string>
+    <string name="wineCategory">Vin</string>
+    <string name="spiritsCategory">Lichior</string>
+    <string name="cocktailsCategory">Coctail</string>
 
     <!--> Cocktails - The Unforgettables <-->
     <string name="alexander">Alexander</string>
