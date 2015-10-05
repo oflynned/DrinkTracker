@@ -125,14 +125,14 @@
     <string name="ml">ml</string>
     <string name="oz">oz</string>
     <string name="plugins">Plugins Folosite</string>
-    <string name="plugins_body">App Intro\nby PaoloRotolo\nFloatingActionButton\nby Clans\nWilliamCharts\nby diogobernardino\n\nThanks to:\nAlexandru Sulea\n(French, Italian, Portuguese, Romanian, Spanish)\nEdmond O\' Flynn\n(Dutch, Irish, Mandarin)\nKevin Behrens\n(German, Low German)\nMaciej Grabowski\n(Polish)\nPavel Tarasoff\n(Russian)\nYoung Suk Choi\n(Korean, Japanese)</string>
+    <string name="plugins_body">App Intro\nby PaoloRotolo\nFloatingActionButton\nby Clans\nWilliamCharts\nby diogobernardino\n\nThanks to:\nAlexandru Sulea\n(Franceza, Italiana, Portughesa, Romana, Spaniola)\nEdmond O\' Flynn\n(Hollandeza, Irlandeza, Chineza)\nKevin Behrens\n(Germana,Germana Saxona)\nMaciej Grabowski\n(Poloneza)\nPavel Tarasoff\n(Rusa)\nYoung Suk Choi\n(Koreana, Japoneza)</string>
     <string name="libraries">Libraries Used</string>
     <string name="libraries_summary">Lista librariilor folosite in programarea appului.</string>
     <string name="apache_summary">Informatie despre licenta</string>
     <string name="apache_licence">Copyright 2015 GlassByte Limited. Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
     <string name="apache">Licenta Apache</string>
     <string name="about_us">GlassByte este o companie de dezvoltare de software de start-up cu sediul în Dublin , Irlanda . Echipa noastra mica , ambițiosa se străduiește să creeze software inovator si util pentru platforme mobile.</string>
-    <string name="about_us_more">Pentru mai multe programe, visita websiteul!\nhttp://www.glassbyte.com/</string>
+    <string name="about_us_more">Pentru mai multe programe, visita websiteul! \n http://www.glassbyte.com/</string>
 
 
     <!-- Preset Categories -->

@@ -125,6 +125,7 @@
     <string name="oz">oz</string>
     <string name="notice">DrinkTracker</string>
     <string name="plugins">Plugins Usado</string>
+    <string name="plugins_body">App Intro\nby PaoloRotolo\nFloatingActionButton\nby Clans\nWilliamChart\nby diogobernardino\n\nThanks to:\nAlexandru Sulea\n(Francés, Italiano, Portugués, Rumano, Español)\nEdmond O\' Flynn\n(Holandés, Irlandés, Chino)\nKevin Behrens\n(Alemán, Bajo Alemán)\nMaciej Grabowski\n(Polaco)\nPavel Tarasoff\n(Ruso)\nYoung Suk Choi\n(Coreano, Japonés)</string>
     <string name="warning1">Estás en camino a emborracharse , a lo mejor tomarlo con calma si te sientes un poco intoxicado.</string>
     <string name="warning2">Has alcanzado una etapa bastante borracho, mira a sí mismo y asegúrese de que no pierda sus pertenencias personales .</string>
     <string name="warning3">Eres muy borracho y debe esperar una mala resaca mañana por la mañana</string>
@@ -270,6 +271,6 @@
     <string name="next">Próximo</string>
     <string name="add_drink">Por favor, añada una bebida con el fin de utilizar las estadísticas !</string>
     <string name="previous">Anterior</string>
-    <string name="plugins_body">App Intro\nby PaoloRotolo\nFloatingActionButton\nby Clans\nWilliamCharts\nby diogobernardino\n\nThanks to:\nAlexandru Sulea\n(French, Italian, Portuguese, Romanian, Spanish)\nEdmond O\' Flynn\n(Dutch, Irish, Mandarin)\nKevin Behrens\n(German, Low German)\nMaciej Grabowski\n(Polish)\nPavel Tarasoff\n(Russian)\nYoung Suk Choi\n(Korean, Japanese)</string>
+
 
 </resources>
