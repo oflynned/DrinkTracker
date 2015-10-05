@@ -50,7 +50,7 @@
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Aviso</string>
-    <string name="disclaimerbody">Por favor, lembre-se que DrinkTracker é apenas uma aproximação seu conteúdo de álcool no sangue (BAC), não é um substituto para um exame de alcoolemia. GlassByte é de modo algum responsável por quaisquer ações realizadas no âmbito intoxicação. Por favor, fique seguro sob a influência de álcool. Ao usar este aplicativo, você concorda em respeitar esta advertência.</string>
+    <string name="disclaimerbody">Por favor, lembre-se que DrinkTracker é apenas uma aproximação seu conteúdo de álcool no sangue (CAS), não é um substituto para um exame de alcoolemia. GlassByte é de modo algum responsável por quaisquer ações realizadas no âmbito intoxicação. Por favor, fique seguro sob a influência de álcool. Ao usar este aplicativo, você concorda em respeitar esta advertência.</string>
     <string name="agree">Eu concordo</string>
     <string name="disagree">Eu discordo</string>
 
@@ -79,16 +79,16 @@
     <string name="avg_drink_strength">Average strength of drinks:</string>
     <string name="avg_drink_volume">Average volume of drinks:</string>
     <string name="avg_calories">Alcohol calories this week:</string>
-    <string name="max_bac">Maximum BAC achieved:</string>
+    <string name="max_bac">Maximum CAS achieved:</string>
     <string name="calories">calories</string>
 
     <!--> miscellaneous <-->
-    <string name="current_BAC">Atual\nBAC:\n</string>
-    <string name="current_BAC_level">Nível BAC atual:</string>
+    <string name="current_BAC">Atual\nCAS:\n</string>
+    <string name="current_BAC_level">Nível CAS atual:</string>
     <string name="preset_drinks">BEBIDASPREDEFINIÇÕES</string>
     <string name="custom_drinks">BEBIDASPERSONALIZADAS</string>
     <string name="time">Tempo</string>
-    <string name="BAC">BAC</string>
+    <string name="BAC">CAS</string>
 
     <!--> presets <-->
     <string name="drink_added">Bebida adicionado com sucesso</string>
@@ -101,7 +101,7 @@
     <string name="language_options">Opções de Idioma</string>
     <string name="irish_language_option">Opção língua Irlandesa</string>
     <string name="summer_irish">Selecione esta opção se você deseja usar gaélico irlandês como uma opção de idioma</string>
-    <string name="more_from_glassbyte">More from Glassbyte</string>
+    <string name="more_from_glassbyte">More from GlassByte</string>
     <string name="visit_website">Visite-nos no nosso site!</string>
     <string name="summer_glassbyte">Clique aqui para ver o nosso site para mais produtos e notícias</string>
     <string name="remove_ads">Remover propagandas e ajudar a apoiar -nos</string>

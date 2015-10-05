@@ -247,7 +247,7 @@
     <string name="female">女人</string>
     <string name="units_title">单位</string>
     <string name="gender_title">性别</string>
-    <string name="input_info">Input\nInformation</string>
+    <string name="input_info">输入信息</string>
     <string name="imperial">美国单位</string>
     <string name="weight">重量</string>
     <string name="metric">公制</string>
@@ -267,6 +267,6 @@
     <string name="next">下一页</string>
     <string name="add_drink">请补充饮料，让您可以使用统计!</string>
     <string name="previous">上一页</string>
-    <string name="summer_nds">Select this option if you wish to use Low German as a language option on relaunching the app.</string>
-    <string name="nds_language_option">Low German Language Option</string>
+    <string name="summer_nds">如果你想使用低地德语作为一种语言选项，请选择此选项.</string>
+    <string name="nds_language_option">低地德语语言选项</string>
 </resources>

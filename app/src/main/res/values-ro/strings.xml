@@ -49,7 +49,7 @@
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Aviz</string>
-    <string name="disclaimerbody">Vă rugăm să vă amintiți programul DrinkTracker este numai un program care aproximează volumul de alcol in sange (BAC), el nu este un substitut pentru un bretilizator. GlassByte nu este responsabil pentru acțiunile facute de indivizi sub influenta alcolului. Va rugăm sa aveți grija cand sub influența alcolului. Prin folosinrea programului sunteți de acord cu termenurile de utilizare.</string>
+    <string name="disclaimerbody">Vă rugăm să vă amintiți programul DrinkTracker este numai un program care aproximează volumul de alcol in sange (AS), el nu este un substitut pentru un bretilizator. GlassByte nu este responsabil pentru acțiunile facute de indivizi sub influenta alcolului. Va rugăm sa aveți grija cand sub influența alcolului. Prin folosinrea programului sunteți de acord cu termenurile de utilizare.</string>
     <string name="agree">Accept</string>
     <string name="disagree">Nu accept</string>
 
@@ -78,16 +78,16 @@
     <string name="avg_drink_strength">Puterea medie a băuturii:</string>
     <string name="avg_drink_volume">Volumul medie al băuturii</string>
     <string name="avg_calories">Calorii alcolice saptamanale</string>
-    <string name="max_bac">Maximum BAC ajuns:</string>
+    <string name="max_bac">Maximum AS ajuns:</string>
     <string name="calories">calorii</string>
 
     <!--> miscellaneous <-->
-    <string name="current_BAC">Current\nBAC:\n</string>
-    <string name="current_BAC_level">Current BAC level:</string>
+    <string name="current_BAC">Current\nAS:\n</string>
+    <string name="current_BAC_level">Current AS level:</string>
     <string name="preset_drinks">BăuturiPresetate</string>
     <string name="custom_drinks">BăuturiCustomizate</string>
     <string name="time">Timp</string>
-    <string name="BAC">BAC</string>
+    <string name="BAC">AS</string>
 
     <!--> presets <-->
     <string name="drink_added">Băutura adăunată</string>

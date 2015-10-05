@@ -50,7 +50,7 @@
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Aviso</string>
-    <string name="disclaimerbody">Por favor recuerde que DrinkTracker es sólo una aproximación de su contenido de alcohol en sangre (BAC),no es un sustituto para un examen de alcoholemia.GlassByte es en ningún caso responsable de cualesquiera acciones llevadas a cabo bajo la intoxicación.Por favor maneje con responsabilidad . Mediante el uso de esta aplicación, usted acepta cumplir con esta advertencia .</string>
+    <string name="disclaimerbody">Por favor recuerde que DrinkTracker es sólo una aproximación de su contenido de alcohol en sangre (CAS),no es un sustituto para un examen de alcoholemia.GlassByte es en ningún caso responsable de cualesquiera acciones llevadas a cabo bajo la intoxicación.Por favor maneje con responsabilidad . Mediante el uso de esta aplicación, usted acepta cumplir con esta advertencia .</string>
     <string name="agree">Estoy de acuerdo</string>
     <string name="disagree">Estoy en desacuerdo</string>
 
@@ -79,16 +79,16 @@
     <string name="avg_drink_strength">Resistencia promedio de bebidas :</string>
     <string name="avg_drink_volume">El volumen medio de las bebidas :</string>
     <string name="avg_calories">Calorías del alcohol en esta semana:</string>
-    <string name="max_bac">BAC máximo logrado :</string>
+    <string name="max_bac">CAS máximo logrado :</string>
     <string name="calories">calorías</string>
 
     <!--> miscellaneous <-->
-    <string name="current_BAC">Current\nBAC:\n</string>
-    <string name="current_BAC_level">Current BAC level:</string>
+    <string name="current_BAC">Current\nCAS:\n</string>
+    <string name="current_BAC_level">Current CAS level:</string>
     <string name="preset_drinks">BEBIDASPREESTABLECIDO</string>
     <string name="custom_drinks">BEBIDASPERSONALIZADO</string>
     <string name="time">Hora</string>
-    <string name="BAC">BAC</string>
+    <string name="BAC">CAS</string>
 
     <!--> presets <-->
     <string name="drink_added">Bebida añadido correctamente</string>

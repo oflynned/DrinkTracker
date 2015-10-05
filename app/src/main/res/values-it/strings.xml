@@ -50,11 +50,7 @@
 
     <!--> disclaimer <-->
     <string name="disclaimertitle">Avviso</string>
-    <string name="disclaimerbody">Si ricorda che DrinkTracker è solo un\'approssimazione della tua
-        alcolemia(BAC), e non un sostituto per un esame etilometro. GlassByte è in alcun modo
-        responsabile di eventuali azioni svolte nell\'ambito intossicazione. Si prega di rimanere
-        al sicuro sotto l\'influenza di alcool. Utilizzando questa applicazione , l\'utente accetta
-        di rispettare questo preavviso .</string>
+    <string name="disclaimerbody">Si ricorda che DrinkTracker è solo un\'approssimazione della tua alcolemia (TA), e non un sostituto per un esame etilometro. GlassByte è in alcun modo responsabile di eventuali azioni svolte nell\'ambito intossicazione. Si prega di rimanere al sicuro sotto l\'influenza di alcool. Utilizzando questa applicazione, l\'utente accetta di rispettare questo preavviso.</string>
     <string name="agree">Sono d\'accordo</string>
     <string name="disagree">Non sono d\'accordo</string>
 
@@ -83,16 +79,16 @@
     <string name="avg_drink_strength">Potenza media di bevande:</string>
     <string name="avg_drink_volume">Volume medio di bevande:</string>
     <string name="avg_calories">Calorie Alcol questa settimana:</string>
-    <string name="max_bac">Maximo BAC raggiunto:</string>
+    <string name="max_bac">Maximo TA raggiunto:</string>
     <string name="calories">caloria</string>
 
     <!--> miscellaneous <-->
-    <string name="current_BAC">Corrente\nBAC:\n</string>
-    <string name="current_BAC_level">Corrente BAC livello:</string>
+    <string name="current_BAC">Corrente\nTA:\n</string>
+    <string name="current_BAC_level">Corrente TA livello:</string>
     <string name="preset_drinks">PRESET BIBITAS</string>
     <string name="custom_drinks">USANZA BIBITAS</string>
     <string name="time">Tempo</string>
-    <string name="BAC">BAC</string>
+    <string name="BAC">TA</string>
 
     <!--> presets <-->
     <string name="drink_added">Bevada aggiunto con successo</string>
