@@ -278,4 +278,5 @@
     <string name="add_drink">Пожалуйста, добавьте по крайней мере один напиток для того, чтобы использовать статистику!</string>
     <string name="previous">Пред.</string>
     <string name="summer_nds">Select this option if you wish to use Low German as a language option on relaunching the app.</string>
+    <string name="nds_language_option">Низкий немецкого языка</string>
 </resources>

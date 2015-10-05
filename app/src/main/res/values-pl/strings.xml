@@ -262,5 +262,6 @@
     <string name="add_drink">Please add a drink in order to use statistics!</string>
     <string name="previous">Previous</string>
     <string name="summer_nds">Select this option if you wish to use Low German as a language option on relaunching the app.</string>
+    <string name="nds_language_option">Low German Language Option</string>
 
 </resources>
