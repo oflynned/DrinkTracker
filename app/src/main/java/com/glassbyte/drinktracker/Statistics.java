@@ -225,9 +225,7 @@ public class Statistics extends Activity implements
                 String[] tempTime = new String[BACTimeArray.size()];
 
                 for (int i = 0; i < tempLevel.length; i++) {
-                    System.out.println("temp level: " + tempLevel[i]);
                     tempLevel[i] = BACLevelArray.get(i);
-                    System.out.println("temp time: " + tempTime[i]);
                     tempTime[i] = String.valueOf(BACTimeArray.get(i));
                 }
 
@@ -395,8 +393,7 @@ public class Statistics extends Activity implements
         totUnits = 0;
 
         if (cursor.getCount() != 0) {
-            cursor.moveToFirst();
-            do {
+            while (cursor.moveToNext() && Long.parseLong(cursor.getString(1)) < startOfNextWeek) {
                 if (Long.parseLong(cursor.getString(1)) > startOfWeek &&
                         Long.parseLong(cursor.getString(1)) < startOfNextWeek) {
                     //if date lies within period
@@ -407,14 +404,10 @@ public class Statistics extends Activity implements
                     cursor.moveToNext();
                 }
             }
-            while (cursor.moveToNext() && Long.parseLong(cursor.getString(1)) < startOfNextWeek);
-
             setTotalUnits(BloodAlcoholContent.round(totUnits, 2));
-
-            //close operations and sum
-            db.close();
-            cursor.close();
         }
+        db.close();
+        cursor.close();
     }
 
     private void setRecommendations() {
