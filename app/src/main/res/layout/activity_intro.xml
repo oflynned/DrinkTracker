@@ -178,6 +178,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/height"
+        android:layout_toLeftOf="@id/height"
         android:layout_alignBaseline="@+id/feetHeightET"
         android:visibility="invisible"/>
     <EditText
@@ -189,14 +190,15 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:layout_below="@id/height"
-        android:visibility="invisible"
-        tools:ignore="LabelFor" />
+        android:layout_toRightOf="@id/feetHeightT"
+        android:visibility="invisible"/>
     <TextView
-        android:text="@string/inches_title"
+        android:text="@string/inches"
         android:id="@+id/inchesHeightT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/height"
+        android:layout_toRightOf="@id/feetHeightET"
         android:layout_alignBaseline="@+id/inchesHeightET"
         android:visibility="invisible"/>
     <EditText
@@ -208,10 +210,9 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:layout_below="@id/height"
-        android:visibility="invisible"
-        tools:ignore="LabelFor" />
+        android:layout_toRightOf="@id/inchesHeightT"
+        android:visibility="invisible"/>
     <!--End of Imperial height editText fields-->
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
