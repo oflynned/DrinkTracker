@@ -30,7 +30,5 @@ dependencies {
     compile 'com.android.support:design:23.0.1'
     compile 'com.github.clans:fab:1.6.0'
     compile 'com.google.android.gms:play-services-ads:8.1.0'
-    compile 'com.jjoe64:graphview:4.0.1'
     compile 'com.diogobernardino:williamchart:2.0.1'
-    compile 'org.apache.commons:commons-collections4:4.0'
 }

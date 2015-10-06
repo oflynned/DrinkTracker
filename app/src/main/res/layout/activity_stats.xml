@@ -25,14 +25,6 @@
         android:layout_height="fill_parent"
         android:layout_weight="1">
 
-        <!--<Spinner
-            android:id="@+id/periodSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:entries="@array/period" />-->
-
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
@@ -90,6 +82,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
+        ads:adUnitId="@string/banner_ad_unit_id"/>
 
 </LinearLayout>
