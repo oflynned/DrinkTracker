@@ -17,6 +17,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -691,18 +692,32 @@ public class ChooseDrink extends Fragment implements SharedPreferences.OnSharedP
         protected void onDraw(Canvas c) {
             super.onDraw(c);
 
-            if (isLeft) {
-                float textWidth = textPaint.measureText(LEFT_SIDE_BAR_TEXT);
-                c.translate(SIDE_BAR_WIDTH / 2 - FONT_SIZE / 2, this.getHeight() / 2 - textWidth / 2);
-                c.rotate(90);
-                c.drawText(LEFT_SIDE_BAR_TEXT, 0, 0, textPaint);
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                if (isLeft) {
+                    float textWidth = textPaint.measureText(LEFT_SIDE_BAR_TEXT);
+                    c.translate(SIDE_BAR_WIDTH / 2 - FONT_SIZE / 2, this.getHeight() / 2 - textWidth / 2);
+                    c.rotate(90);
+                    c.drawText(LEFT_SIDE_BAR_TEXT, 0, 0, textPaint);
+                } else {
+                    float textWidth = textPaint.measureText(RIGHT_SIDE_BAR_TEXT);
+                    c.translate(SIDE_BAR_WIDTH / 2 + FONT_SIZE / 2, this.getHeight() / 2 + textWidth / 2);
+                    c.rotate(270);
+                    c.drawText(RIGHT_SIDE_BAR_TEXT, 0, 0, textPaint);
+                }
+                c.restore();
             } else {
-                float textWidth = textPaint.measureText(RIGHT_SIDE_BAR_TEXT);
-                c.translate(SIDE_BAR_WIDTH / 2 + FONT_SIZE / 2, this.getHeight() / 2 + textWidth / 2);
-                c.rotate(-90);
-                c.drawText(RIGHT_SIDE_BAR_TEXT, 0, 0, textPaint);
+                if (isLeft) {
+                    float textWidth = textPaint.measureText(LEFT_SIDE_BAR_TEXT);
+                    c.translate(SIDE_BAR_WIDTH / 2 - FONT_SIZE / 2, this.getHeight() / 2 - textWidth / 2);
+                    c.rotate(90);
+                    c.drawText(LEFT_SIDE_BAR_TEXT, 0, 0, textPaint);
+                } else {
+                    float textWidth = textPaint.measureText(RIGHT_SIDE_BAR_TEXT);
+                    c.translate(SIDE_BAR_WIDTH / 2 + FONT_SIZE / 2, this.getHeight() / 2 + textWidth / 2);
+                    c.rotate(270);
+                    c.drawText(RIGHT_SIDE_BAR_TEXT, 0, 0, textPaint);
+                }
             }
-            c.restore();
         }
     }
 
