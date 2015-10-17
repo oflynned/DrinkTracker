@@ -1,8 +1,4 @@
 package com.glassbyte.drinktracker;
-/*
-* To do:
-* -change all the fonts and dimensions to be expressed in dp or dpi
-* */
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -43,7 +39,6 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
 import java.util.Calendar;
-
 
 /**
  * Created by Maciej on 27/05/15.
