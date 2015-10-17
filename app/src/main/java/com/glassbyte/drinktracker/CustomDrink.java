@@ -124,7 +124,7 @@ public class CustomDrink extends Fragment implements SharedPreferences.OnSharedP
         alcVolDisplay.setId(View.generateViewId());
         alcVolDisplay.setTextColor(Color.WHITE);
         alcVolDisplay.setTypeface(null, Typeface.BOLD);
-        alcVolDisplay.setText(alcPercentage + "% Alc.");
+        //alcVolDisplay.setText(alcPercentage + "% Alc.");
 
         drinkButton = new Button(thisActivity);
         drinkButton.setTypeface(null, Typeface.BOLD);
