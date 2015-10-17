@@ -6,7 +6,6 @@
     <string name="action_aboutus">O nas</string>
     <string name="action_listDrinks">Lista Drinków</string>
     <string name="action_stats">Statystyki</string>
-    <string name="action_removeads">Usuń Reklamy</string>
 
     <!--Custom Drinks Titles-->
     <string name="shot_glass_title">Kieliszek</string>

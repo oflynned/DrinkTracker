@@ -6,7 +6,6 @@
     <string name="action_aboutus">About Us</string>
     <string name="action_listDrinks">List Drinks</string>
     <string name="action_stats">Statistics</string>
-    <string name="action_removeads">Remove Ads</string>
 
     <!--Custom Drinks Titles-->
     <string name="shot_glass_title">Shot Glass</string>

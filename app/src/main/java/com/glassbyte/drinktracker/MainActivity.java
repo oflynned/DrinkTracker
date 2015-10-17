@@ -125,9 +125,6 @@ public class MainActivity extends AppCompatActivity {
             Intent aboutUsIntent = new Intent(this, AboutUs.class);
             startActivity(aboutUsIntent);
             return true;
-        } else if (id == R.id.action_removeads){
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.glassbyte.com/")));
-            return true;
         }
 
         return super.onOptionsItemSelected(item);

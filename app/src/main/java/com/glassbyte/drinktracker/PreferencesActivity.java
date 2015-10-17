@@ -56,11 +56,6 @@ public class PreferencesActivity extends PreferenceActivity {
                     Uri.parse("http://www.glassbyte.com"));
             glassbyteWebsite.setIntent(visitGlassbyteWebsiteIntent);
 
-            Preference removeAds = new Preference(this.getActivity());
-            removeAds.setTitle(R.string.remove_ads);
-            removeAds.setSummary(R.string.summary_ads);
-            removeAds.setIntent(visitGlassbyteWebsiteIntent);
-
             Preference libraries = new Preference(this.getActivity());
             libraries.setTitle(R.string.libraries);
             libraries.setSummary(getString(R.string.libraries_summary));
@@ -100,7 +95,6 @@ public class PreferencesActivity extends PreferenceActivity {
             });
 
             moreCategory.addPreference(glassbyteWebsite);
-            moreCategory.addPreference(removeAds);
             moreCategory.addPreference(libraries);
             moreCategory.addPreference(apache);
             

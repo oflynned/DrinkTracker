@@ -6,7 +6,6 @@
     <string name="action_aboutus">Over ons</string>
     <string name="action_listDrinks">Lijst van Dranken</string>
     <string name="action_stats">Statistiek</string>
-    <string name="action_removeads">Verwijder advertenties</string>
 
     <!--Custom Drinks Titles-->
     <string name="shot_glass_title">Shotglas</string>

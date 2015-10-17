@@ -13,7 +13,6 @@
     <string name="action_aboutus">About Us</string>
     <string name="action_listDrinks">List Drinks</string>
     <string name="action_stats">Statistics</string>
-    <string name="action_removeads">Remove Ads</string>
 
     <!-- Intro Screen -->
     <string name="pref_key_run" translatable="false">pref_key_run</string>
